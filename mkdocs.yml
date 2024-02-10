@@ -1,0 +1,99 @@
+site_name: V1CeVersa's Notebook
+theme: 
+  name: material
+  language: zh
+  # logo: material/notebook-outline
+  # favicon: material/notebook-outline
+  # custom_dir: overrides
+  features:
+    - header.autohide
+    - content.code.annotate
+    - toc.follow
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.indexes
+    - navigation.top
+    - navigation.tabs.sticky
+    - search.share
+    - search.highlight # 搜索出的文章关键词加入高亮
+    - search.suggest # 搜索输入一些字母时推荐补全整个单词
+  font:
+    text: LXGW WenKai Screen
+    code: JetBrains Mono, LXGW WenKai Screen
+  palette: 
+    - media: "(prefers-color-scheme: light)" 
+      scheme: default  
+      primary: brown  
+      accent: brown  
+      toggle:
+        icon: material/weather-sunny 
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"  
+      scheme: slate  
+      toggle:
+        icon: material/weather-night  #图标，月亮
+        name: Switch to light mode
+
+
+markdown_extensions:
+  - toc:
+      permalink: true
+      toc_depth: 4
+  - meta
+  - def_list
+  - attr_list
+  - md_in_html
+  - sane_lists
+  - admonition
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.snippets
+  - pymdownx.magiclink
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.smartsymbols  #智能符号
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.tabbed:
+      alternate_style: true 
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.arithmatex:
+      generic: true
+
+
+extra_css:
+  - https://gcore.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css
+  - https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css
+  - https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css
+  - css/custom.css
+  - css/card.css
+  - css/tasklist.css
+  - css/flink.css
+  - css/more_changelog.css
+
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - https://gcore.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/V1CeVersaa
+
+# plugins:
+#   - changelog
+#   - search
+#   - git-revision-date-localized:
+#       type: datetime
+#       timezone: Asia/Shanghai
+#       locale: zh
+#       enable_creation_date: true
