@@ -11,6 +11,7 @@ theme:
     - toc.follow
     - navigation.tracking
     - navigation.tabs
+    - navigation.prune
     - navigation.indexes
     - navigation.top
     - navigation.tabs.sticky
@@ -19,7 +20,7 @@ theme:
     - search.suggest # 搜索输入一些字母时推荐补全整个单词
   font:
     text: LXGW WenKai Screen
-    code: JetBrains Mono, LXGW WenKai Screen
+    code: [JetBrains Mono, LXGW WenKai Screen]
   palette: 
     - media: "(prefers-color-scheme: light)" 
       scheme: default  
@@ -64,6 +65,8 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.highlight:
       anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.arithmatex:
       generic: true
 
@@ -83,6 +86,10 @@ extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   - https://gcore.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js
+  - Javascripts/mathjax.js
+  # Table Sort
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+  - Javascripts/tablesort.js
 
 extra:
   social:
@@ -97,3 +104,43 @@ extra:
 #       timezone: Asia/Shanghai
 #       locale: zh
 #       enable_creation_date: true
+
+nav:
+  - Home: index.md
+  - Computer Science: 
+    - Computer Science/index.md
+    - Programing Basis: 
+      - Computer Science/Programming Basis/index.md
+      - MIT Missing Semester: Computer Science/Programming Basis/MIT Missing Semester.md
+    - Programing language:
+      - Computer Science/Programming Language/index.md
+      - C: Computer Science/Programming Language/EVERYTHING begins with C.md
+      - C++: Computer Science/Programming Language/C++.md
+      - Python: Computer Science/Programming Language/Python saves the world.md
+      - Java: Computer Science/Programming Language/Java.md
+      - YAML: Computer Science/Programming Language/YAML.md
+      - HTML: Computer Science/Programming Language/HTML.md
+      - CSS: Computer Science/Programming Language/CSS.md
+    - Alogrithm: 
+      - Computer Science/Alogorithm/index.md
+      - Fundamental Data Structure: Computer Science/Alogrithm/fds.md
+      - Advanced Data Structure and Alogrithm Analysis: Computer Science/Alogrithm/ads.md
+      - Alogrithms: Computer Science/Alogrithm/Alogrithms.md
+    - System:
+      - CSAPP: Computer Science/System/CSAPP.md
+  - Math:
+    - Math/index.md
+    - Algebra:
+      - Linear Algebra: Math/Linear Algebra.md
+      - Abstract Algebra: Math/Abstract Algebra.md
+    - Analysis: 
+      - Mathematical Analysis: Math/Mathematical Analysis.md
+      - Complex Analysis: Math/Complex Analysis.md
+      - Real Analysis: Math/Real Analysis.md
+      - Manifold: Math/Manifold.md
+    - Topology: Math/General Topology.md
+  - Reading: 
+    - Reading/index.md
+    - History: 
+      - Reading/The Western Heritage.md
+  - Varia: Varia/Learning Plan.md

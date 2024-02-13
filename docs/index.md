@@ -1,17 +1,10 @@
-# Welcome to MkDocs
+# Welcome to My Notebook!
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Hi！欢迎来到我的笔记本，我会在这里更新我的**课程笔记**.
 
-## Commands
+如果发现错误或者想要联系我，请向邮箱`v1epislon#gmail.com`发送邮件（将`#`替换为`@`）
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
 
-## Project layout
+<!-- # Who Am I？
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+我是浙江大学竺可桢学院图灵班的一名大一新生，主修专业为人工智能， -->
