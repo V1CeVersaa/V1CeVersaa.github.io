@@ -121,23 +121,18 @@ nav:
       - YAML: Computer Science/Programming Language/YAML.md
       - HTML: Computer Science/Programming Language/HTML.md
       - CSS: Computer Science/Programming Language/CSS.md
-    - Alogrithm: 
-      - Computer Science/Alogorithm/index.md
-      - Fundamental Data Structure: Computer Science/Alogrithm/fds.md
-      - Advanced Data Structure and Alogrithm Analysis: Computer Science/Alogrithm/ads.md
-      - Alogrithms: Computer Science/Alogrithm/Alogrithms.md
+    - Algorithm: 
+      - Computer Science/Algorithm/index.md
+      - Fundamental Data Structure: Computer Science/Algorithm/fds.md
+      - Advanced Data Structure and Alogrithm Analysis: Computer Science/Algorithm/ads.md
+      - Algorithms: Computer Science/Algorithm/Algorithms.md
     - System:
+      - Computer Science/System/index.md
       - CSAPP: Computer Science/System/CSAPP.md
   - Math:
     - Math/index.md
-    - Algebra:
-      - Linear Algebra: Math/Linear Algebra.md
-      - Abstract Algebra: Math/Abstract Algebra.md
-    - Analysis: 
-      - Mathematical Analysis: Math/Mathematical Analysis.md
-      - Complex Analysis: Math/Complex Analysis.md
-      - Real Analysis: Math/Real Analysis.md
-      - Manifold: Math/Manifold.md
+    - Algebra: Math/Algebra.md
+    - Analysis: Math/Analysis.md
     - Topology: Math/General Topology.md
   - Reading: 
     - Reading/index.md
