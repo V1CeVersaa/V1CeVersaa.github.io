@@ -138,4 +138,6 @@ nav:
     - Reading/index.md
     - History: 
       - Reading/The Western Heritage.md
-  - Varia: Varia/Learning Plan.md
+  - Varia: 
+    - Learning Plan: Varia/Learning Plan.md
+    - Booklist: Varia/Booklist.md
