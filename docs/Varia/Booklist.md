@@ -18,6 +18,12 @@
 
 ## Varia
 
+### Philosophy
+
+- [ ] 《哲学导论》 王德峰 著
+
+- [ ] 《西方现代思想讲义》 刘擎 著
+
 ### History
 
 - [ ] 《The Western Heritage》 
