@@ -111,6 +111,9 @@ nav:
     - Computer Science/index.md
     - Programing Basis: 
       - Computer Science/Programming Basis/index.md
+      - Shell: Computer Science/Programming Basis/Shell.md
+      - Linux: Computer Science/Programming Basis/Linux.md
+      - Assembly: Computer Science/Programming Basis/Assembly.md
       - MIT Missing Semester: Computer Science/Programming Basis/MIT Missing Semester.md
     - Programing language:
       - Computer Science/Programming Language/index.md
@@ -123,17 +126,19 @@ nav:
       - CSS: Computer Science/Programming Language/CSS.md
     - Algorithm: 
       - Computer Science/Algorithm/index.md
-      - Fundamental Data Structure: Computer Science/Algorithm/fds.md
+      - Fundamental Data Structure: Computer Science/Algorithm/Foundamental Data Structure.md
       - Advanced Data Structure and Alogrithm Analysis: Computer Science/Algorithm/ads.md
       - Algorithms: Computer Science/Algorithm/Algorithms.md
     - System:
       - Computer Science/System/index.md
+      - Verilog: Computer Science/System/Verilog.md
       - CSAPP: Computer Science/System/CSAPP.md
+      - 计算机系统 I: Computer Science/System/System1.md
   - Math:
     - Math/index.md
-    - Algebra: Math/Algebra.md
-    - Analysis: Math/Analysis.md
-    - Topology: Math/General Topology.md
+    # - Algebra: Math/Algebra.md
+    # - Analysis: Math/Analysis.md
+    # - Topology: Math/General Topology.md
   - Reading: 
     - Reading/index.md
     - History: 

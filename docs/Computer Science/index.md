@@ -7,17 +7,23 @@
 
 ## Table of Contents
 
+### Programming Basis
+
+- [ ] [Programming Basis: Shell](./Programming%20Basis/Shell.md)
+
+- [ ] [Programming Basis: Linux](./Programming%20Basis/Linux.md)
+
 ### Programming Language
 
-- [ ] [Programming Language：C](./Programming%20Language/EVERYTHING%20begins%20with%20C.md)
+- [ ] [Programming Language: C](./Programming%20Language/EVERYTHING%20begins%20with%20C.md)
 
-- [ ] [Programming Language：C++](./Programming%20Language/C++.md)
+- [ ] [Programming Language: C++](./Programming%20Language/C++.md)
 
-- [ ] [Programming Language：Python](./Programming%20Language/Python%20saves%20the%20world.md)
+- [ ] [Programming Language: Python](./Programming%20Language/Python%20saves%20the%20world.md)
 
-- [ ] [Programming Language：Java](./Programming%20Language/Java.md)
+- [ ] [Programming Language: Java](./Programming%20Language/Java.md)
 
-- [x] [Programming Language：YAML](./Programming%20Language/YAML.md)
+- [x] [Programming Language: YAML](./Programming%20Language/YAML.md)
 
 ### System
 

@@ -4,12 +4,24 @@
     这是我对《深入理解计算机系统》一书的读书笔记。
 
     参考：
-    
+
     - 《深入理解计算机系统》
 
     - 《Comptuer System: A Programmer's Perspective》
 
 ## Chapter 01 A Tour of Computer Systems
+
+### 1.4.1 Hardware Organization of a System
+
+计算机系统的硬件组成包括：**总线/Bus**，**I/O设备/IO devices**，**主存/Main memory**，**处理器/Processor**。
+
+- 总线是贯穿整个系统的一组电子管道，携带信息字节并负责在各个设备之间传输。总线被设计成传送定长的字节块，被称为**字/Word**，现代的计算机的字长大多为4个字节/32位或者8个字节/64位。
+
+- I/O设备
+
+- 主存是一个临时存储设备，在处理器执行程序的时候，用来存放程序和程序处理的数据。主存是由一组动态随机存取存储器/Dynamic random access memory/DRAM组成的，在逻辑上看是一个线性的字节数组，每个字节都有唯一的地址，且地址从零开始。
+
+- **中央处理器单元/Central processing unit**简称为处理器，处理器负责解释（或者执行）主存中的指令。处理器的核心是大小为一个字的**寄存器/Register**，称为**程序计数器/Program counter/PC**，
 
 ### 1.9.1 Amdahl's Law
 
@@ -33,4 +45,4 @@ $$S=\frac{1}{1-\alpha}.$$
 
 并发（concurrency）和并行（parallelism）是两个不同的概念。并发是一个通用的概念，指一个同时具有多个活动的系统。并行是指使用并发来使一个系统运行得更快。并行可以在计算机系统的多个抽象层次上运用，我们按照系统层次结构中从高到底的顺序重点强调三个层次：
 
-- 线程级并发：
+- 线程级并发：使用
