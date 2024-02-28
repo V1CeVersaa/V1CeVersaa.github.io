@@ -9,9 +9,7 @@ Hi！欢迎来到我的笔记本，我会在这里更新我的**课程笔记**.
 ## 最近在学什么？
 
 - [ ] 计算机系统：[CSAPP](./Computer%20Science/System/CSAPP.md)
-
 - [ ] 某种古老又强大的命令语言：[Shell](./Computer%20Science/Programming%20Basis/Shell.md)
-
 - [ ] CPU给我干烧了：[Foundamental Data Structure](./Computer%20Science/Algorithm/Foundamental%20Data%20Structure.md)
 
 <!-- # Who Am I？

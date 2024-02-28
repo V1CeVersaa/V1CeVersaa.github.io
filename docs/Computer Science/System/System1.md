@@ -11,3 +11,8 @@
 
 ## Lecture 1: Introduction
 
+## Lab 0-1
+
+### SPICE 仿真
+
+反相器有两组/四个引脚，V_PWR和V_GND分别代表电源引脚和接地引脚；
