@@ -1,13 +1,15 @@
 site_name: V1CeVersa's Notebook
 theme: 
   name: material
-  language: zh
+  language: 'zh'
+  # icon:
   # logo: material/notebook-outline
   # favicon: material/notebook-outline
   # custom_dir: overrides
   features:
     - header.autohide
     - content.code.annotate
+    - content.action.edit
     - toc.follow
     - navigation.tracking
     - navigation.tabs
@@ -21,7 +23,8 @@ theme:
   font:
     text: LXGW WenKai Screen
     code: [JetBrains Mono, LXGW WenKai Screen]
-  palette: 
+  palette:
+    # - scheme: default 
     - media: "(prefers-color-scheme: light)" 
       scheme: default  
       primary: brown  
@@ -87,6 +90,7 @@ extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   - https://gcore.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js
   - Javascripts/mathjax.js
+  - Javascripts/katex.js
   # Table Sort
   - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
   - Javascripts/tablesort.js
@@ -97,13 +101,13 @@ extra:
       link: https://github.com/V1CeVersaa
 
 # plugins:
-#   - changelog
-#   - search
-#   - git-revision-date-localized:
-#       type: datetime
-#       timezone: Asia/Shanghai
-#       locale: zh
-#       enable_creation_date: true
+  # - changelog
+  # - search
+  # - git-revision-date-localized:
+  #     type: datetime
+  #     timezone: Asia/Shanghai
+  #     locale: zh
+  #     enable_creation_date: true
 
 nav:
   - Home: index.md
