@@ -4,7 +4,7 @@
     有关数学的都在这了，目前正在学习的有：
 
     - 数学分析
-    - 傅立叶分析
+    - 复分析
     - 线性代数 
 
 ## Analysis
@@ -25,16 +25,18 @@
 <a class="down-button" target="_blank" href="A Little More Analysis.pdf" markdown="1">:fontawesome-solid-download: 下载</a>
 </div>
 
-##＃ Fourier Analysis
+### Analysis All in One
 
 !!! Warning
     什么？还没写？
+    
+    先学再说！
 
 ## Algebra
 
 ### Linear Algebra
 
 !!! Abstract
-    真的在写了！
+    真的在写了！哦，只是抄抄书啊……
 
 ## Topology
