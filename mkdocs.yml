@@ -130,9 +130,9 @@ nav:
     - Algorithm: 
       - Computer Science/Algorithm/index.md
       - Discrete Mathematics: Computer Science/Algorithm/Discrete Mathematics.md
-      - Fundamental Data Structure: Computer Science/Algorithm/Foundamental Data Structure.md
-      - Advanced Data Structure and Alogrithm Analysis: Computer Science/Algorithm/ads.md
-      - Algorithms: Computer Science/Algorithm/Algorithms.md
+      - Algorithms and Data Structure:
+        - Computer Science/Algorithm/Algorithms and Data Structure.md
+        - Algorithm Analysis: Computer Science/Algorithm/01 Algorithm Analysis.md
     - System:
       - Computer Science/System/index.md
       - Verilog: Computer Science/System/Verilog.md
