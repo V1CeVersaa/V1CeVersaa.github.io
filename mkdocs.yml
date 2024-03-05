@@ -3,11 +3,11 @@ theme:
   name: material
   language: 'zh'
   # icon:
-  # logo: material/notebook-outline
+  logo: material/notebook-outline
   # favicon: material/notebook-outline
   # custom_dir: overrides
   features:
-    - header.autohide
+    # - header.autohide
     - content.code.annotate
     - content.action.edit
     - toc.follow
@@ -130,6 +130,7 @@ nav:
       - CSS: Computer Science/Programming Language/CSS.md
     - Algorithm: 
       - Computer Science/Algorithm/index.md
+      - Discrete Mathematics: Computer Science/Algorithm/Discrete Mathematics.md
       - Fundamental Data Structure: Computer Science/Algorithm/Foundamental Data Structure.md
       - Advanced Data Structure and Alogrithm Analysis: Computer Science/Algorithm/ads.md
       - Algorithms: Computer Science/Algorithm/Algorithms.md
