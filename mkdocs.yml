@@ -141,6 +141,12 @@ nav:
       - Verilog: Computer Science/System/Verilog.md
       - CSAPP: Computer Science/System/CSAPP.md
       - 计算机系统 I: Computer Science/System/System1.md
+    - Web:
+      - Computer Science/Web/index.md
+      - CSS: Computer Science/Web/CSS.md
+      - HTML: Computer Science/Web/HTML.md
+      - JavaScript: Computer Science/Web/JavaScript.md
+      - YAML: Computer Science/Web/YAML.md
   - Math:
     - Math/index.md
     # - Algebra: Math/Algebra.md
