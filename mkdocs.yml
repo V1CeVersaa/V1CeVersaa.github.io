@@ -2,8 +2,8 @@ site_name: V1CeVersa's Notebook
 theme: 
   name: material
   language: 'zh'
-  # icon:
-  logo: material/notebook-outline
+  icon:
+    logo: material/notebook-outline
   # favicon: material/notebook-outline
   # custom_dir: overrides
   features:
@@ -100,7 +100,9 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/V1CeVersaa
 
-# plugins:
+plugins:
+  - search
+
   # - changelog
   # - search
   # - git-revision-date-localized:
