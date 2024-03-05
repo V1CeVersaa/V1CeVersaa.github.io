@@ -22,7 +22,7 @@
 <div class="file-title">A Little More Analysis</div>
 <div class="file-meta">383 KB / 63 P / 2024-02-16</div>
 </div>
-<a class="down-button" target="_blank" href="A Little More Analysis.pdf" markdown="1">:fontawesome-solid-download: 下载</a>
+<a class="down-button" target="_blank" href="Analysis/A Little More Analysis.pdf" markdown="1">:fontawesome-solid-download: 下载</a>
 </div>
 
 ### Analysis All in One
