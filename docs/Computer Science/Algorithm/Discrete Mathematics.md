@@ -29,11 +29,30 @@ Construction of a **truth table**:
 - Columns.1: Need a column for the compound proposition (usually at far right)
 - Columns.2: Need a column for the truth value of each expression that occurs in the compound proposition as it is built up. (This includes the atomic propositions.)
 
+The truth value of $p\leftrightarrow q$ is the same as the truth value of $(p\to q)\land (q\to p)$, that is to say, $p\leftrightarrow q$ is true if and only if $p$ and $q$ have the same truth value.
+
 **Precedence of Logical Operators**: From highest to lowest, the precedence of logical operators is $\neg$, $\land$, $\lor$, $\to$, and $\leftrightarrow$.
 
 ### 1.3 Logical Equivalence
 
-Compound propositions that have the same truth values for all possible cases are called **logically equivalent**. The compound propositions $p$ and $q$ are called **logically equivalent** if $p\leftrightarrow q$ is a tautology. We denote this by $p\equiv q$.
+Basic terminology and its concepts:
+- **tautologies/永真式**: A tautology is a proposition which is always true, e.g. $p\lor \neg p$;
+- **Contradictions/矛盾式**: A contradiction is a proposition which is always false, e.g. $p\land \neg p$;
+- **Contingencies/可能式**: A contingency is a proposition which is neither a tautology nor a contradiction, e.g. $p$.
+
+Two compound propositions $p$ amd $q$ are **logically equivalent** if $q\leftrightarrow q$ is a tautology. We denote this by $p\equiv q$ or $p\Leftrightarrow q$.
+
+Compound propositions that have the same truth values for all possible cases, in other words, the columns in a truth table giving their truth values agree, are called **equivalent**.
+
+**(Important) Conditional-disjunction equivalence** states that for any propositions $p$ and $q$, we have
+
+$$p\to q\equiv \neg p\lor q.$$
+
+**Absorption laws** states that for any propositions $p$ and $q$, we have
+
+$$p\lor (p\land q)\equiv p.$$
+
+$$p\land (p\lor q)\equiv p.$$
 
 **De Morgan's Laws** states that for any propositions $p$ and $q$, we have 
 
@@ -41,18 +60,66 @@ $$\neg(p\land q)\equiv \neg p\lor \neg q$$
 
 $$\neg(p\lor q)\equiv \neg p\land \neg q.$$
 
-**Conditional-disjunction equivalence** states that for any propositions $p$ and $q$, we have
-
-$$p\to q\equiv \neg p\lor q.$$
-
 **Distribution laws** states that for any propositions $p$, $q$, and $r$, we have
 
 $$p\lor (q\land r)\equiv (p\lor q)\land (p\lor r).$$
 
 $$p\land (q\lor r)\equiv (p\land q)\lor (p\land r).$$
 
-**Absorption laws** states that for any propositions $p$ and $q$, we have
+**Identity Laws** states that for any propositions $p$, we have
 
-$$p\lor (p\land q)\equiv p.$$
+$$p\land T\equiv p.$$
 
-$$p\land (p\lor q)\equiv p.$$
+$$p\lor F\equiv p.$$
+
+**Domination Laws** states that for any propositions $p$, we have
+
+$$p\lor T\equiv T.$$
+
+$$p\land F\equiv F.$$
+
+**Idempotent Laws** states that for any propositions $p$, we have
+
+$$p\lor p\equiv p.$$
+
+$$p\land p\equiv p.$$
+
+Moreover, **Commutative Laws** and **Associative Laws** are also valid for logical connectives: for any propositions $p$, $q$, and $r$, we have
+
+$$p\lor q\equiv q\lor p.$$
+
+$$p\land q\equiv q\land p.$$
+
+$$(p\lor q)\lor r\equiv p\lor (q\lor r).$$
+
+$$(p\land q)\land r\equiv p\land (q\land r).$$
+
+Involving Conditional and Biconditional statements, we have
+
+$$p\to q\equiv \neg q\lor p.$$
+
+$$p\to q\equiv \neg q\to \neg p.$$
+
+$$(p\to q)\land (p\to r)\equiv p\to (q\land r).$$
+
+$$(p\to q)\lor (p\to r)\equiv p\to (q\lor r).$$
+
+$$(p\to r)\land (q\to r)\equiv (p\lor q)\to r.$$
+
+$$(p\to r)\lor (q\to r)\equiv (p\land q)\to r.$$
+
+$$p\leftrightarrow q\equiv (p\to q)\land (q\to p).$$
+
+$$p\leftrightarrow q\equiv \neg p\leftrightarrow \neg q.$$
+
+$$p\leftrightarrow q\equiv (p\land q)\lor (\neg p\land \neg q).$$
+
+$$\neg(p\leftrightarrow q)\equiv p\leftrightarrow \neg q.$$
+
+The **Dual** of compound proposition that contains only the logic operators $\land$, $\lor$, and $\neg$ the proposition obtained by replacing each $\land$ by $\lor$, each $\lor$ by $\land$, each $T$ by $F$, and each $F$ by $T$. The dual of $S$ is denoted by $S^*$. For example, the dual of $p\lor (q\land \neg r)$ is $\neg p\land (q\lor \neg r)$.
+
+### 1.4 Applications of Propositional Logic
+
+A list of propositions is **consistent** if it is possible to assign truth values to the proposition variables so that each proposition is true.
+
+### 1.5 
