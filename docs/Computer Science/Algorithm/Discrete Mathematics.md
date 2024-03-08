@@ -36,7 +36,7 @@ The truth value of $p\leftrightarrow q$ is the same as the truth value of $(p\to
 ### 1.3 Logical Equivalence
 
 Basic terminology and its concepts:
-- **tautologies/永真式**: A tautology is a proposition which is always true, e.g. $p\lor \neg p$;
+- **Tautologies/永真式**: A tautology is a proposition which is always true, e.g. $p\lor \neg p$;
 - **Contradictions/矛盾式**: A contradiction is a proposition which is always false, e.g. $p\land \neg p$;
 - **Contingencies/可能式**: A contingency is a proposition which is neither a tautology nor a contradiction, e.g. $p$.
 
@@ -96,7 +96,9 @@ $$(p\land q)\land r\equiv p\land (q\land r).$$
 
 Involving Conditional and Biconditional statements, we have
 
-$$p\to q\equiv \neg q\lor p.$$
+![Conditional and Biconditional statements](images/image.png)
+
+<!-- $$p\to q\equiv \neg q\lor p.$$
 
 $$p\to q\equiv \neg q\to \neg p.$$
 
@@ -114,12 +116,41 @@ $$p\leftrightarrow q\equiv \neg p\leftrightarrow \neg q.$$
 
 $$p\leftrightarrow q\equiv (p\land q)\lor (\neg p\land \neg q).$$
 
-$$\neg(p\leftrightarrow q)\equiv p\leftrightarrow \neg q.$$
+$$\neg(p\leftrightarrow q)\equiv p\leftrightarrow \neg q.$$ -->
 
 The **Dual** of compound proposition that contains only the logic operators $\land$, $\lor$, and $\neg$ the proposition obtained by replacing each $\land$ by $\lor$, each $\lor$ by $\land$, each $T$ by $F$, and each $F$ by $T$. The dual of $S$ is denoted by $S^*$. For example, the dual of $p\lor (q\land \neg r)$ is $\neg p\land (q\lor \neg r)$.
+
+We already know that only two logical operators $\{\neg,\land\}$ or $\{\neg,\lor\}$ are enough to express all logical propositions. Thus, a collection of logical operators is called **functionally complete** if every possible logical proposition is logically equivalent to a compound proposition involving only these operators. 
+
+The **Sheffer Stroke/与非** is a functionally complete set of logical operators. It is denoted by $p|q$, and $p|q$ is false when both $p$ and $q$ are true, and true otherwise. The **Peirce Arrow/或非** is also a functionally complete set of logical operators. It is denoted by $p\downarrow q$, and $p\downarrow q$ is true when both $p$ and $q$ are false, and false otherwise.
+
+A compound proposition is **satisfiable** if there is an assignment of truth values to its variables that makes it true. When no such assignments exits, the compound proposition is **unsatisfiable**.
+
+A compound proposition is unsatisfiable if and only if it is a contradiction or its negation is a tautology.
 
 ### 1.4 Applications of Propositional Logic
 
 A list of propositions is **consistent** if it is possible to assign truth values to the proposition variables so that each proposition is true.
 
-### 1.5 
+### 1.5 Propositional Normal Forms
+
+**Propositional formula/命题公式** is a compound proposition that is built up from atomic propositions using logical connectives with the following criteria:
+
+- Each propositional variable is a formula, and the truth values T and F are formulas.
+- If $A$ is a formula, then $\neg A$ is a formula.
+- If $A$ and $B$ are formulas, then $(A\land B)$, $(A\lor B)$, $(A\to B)$, and $(A\leftrightarrow B)$ are formulas.
+- A string of symbols is a formula if and only if it is determined by (**finitely** maly applications of) the above three rules.
+
+Formulas can be transformed into **standard forms** so that they become more convenient for symbolic manipulations and make identification and comparison of two formulas easier. There are two types of normal forms in propositional calculus:
+
+- the **Disjunctive Normal Form/DNF/析取范式**: A formula is said to be in DNF if it written as a disjuction, in which all terms are conjunctions of literals.   
+  For example, $(p\land q)\lor (\neg p\land r)$, $p\lor (q\land r)$, $\neg p\lor T$ are in DNF, and the disjunction $\neg(p\land q)\lor r$ is not.
+
+- the **Conjunctive Normal Form/CNF/合取范式**: A formula is said to be in CNF if it written as a conjunction, in which all terms are disjunctions of literals.
+
+We can introduce the concept of **Clauses/字句** to simplify the concept of DNF and CNF. A disjunction/conjunction with literials as disjuncts/conjuncts are called a **Disjunctive/Conjunctive clause/析取字句/合取字句**. Disjunctive/conjunctive clauses are simply called **clauses**. Moreover, conjunctive clause is also called **Basic product** and disjunctive clause is also called **Basic addition**.
+
+Thus, a CNF is a **conjunction of disjunctive clauses**, and a DNF is a **disjunction of conjunctive clauses**.
+
+### 1.6 Predicates and Quantifiers
+
