@@ -149,7 +149,7 @@ Formulas can be transformed into **standard forms** so that they become more con
 
 - the **Conjunctive Normal Form/CNF/合取范式**: A formula is said to be in CNF if it written as a conjunction, in which all terms are disjunctions of literals.
 
-We can introduce the concept of **Clauses/字句** to simplify the concept of DNF and CNF. A disjunction/conjunction with literials as disjuncts/conjuncts are called a **Disjunctive/Conjunctive clause/析取字句/合取字句**. Disjunctive/conjunctive clauses are simply called **clauses**. Moreover, conjunctive clause is also called **Basic product** and disjunctive clause is also called **Basic addition**.
+We can introduce the concept of **Clauses/子句** to simplify the concept of DNF and CNF. A disjunction/conjunction with literials as disjuncts/conjuncts are called a **Disjunctive/Conjunctive clause/析取子句/合取子句**. Disjunctive/conjunctive clauses are simply called **clauses**. Moreover, conjunctive clause is also called **Basic product** and disjunctive clause is also called **Basic addition**.
 
 Thus, a CNF is a **conjunction of disjunctive clauses**, and a DNF is a **disjunction of conjunctive clauses**.
 
