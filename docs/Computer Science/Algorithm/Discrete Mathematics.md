@@ -157,7 +157,7 @@ A **Midterm/极小项** is a **conjunction** of literials in which each variable
 
 **(IMPORTANT)** There are $2n$ different minterm for $n$ propositional variables. For example there $4$ different minterm for $p$, $q$, they are $p\land q$, $p\land\neg q$, $\neg p \land q$, $\neg p\land\neg q$. For the sake of simplification, we use $m_j$ denote the minterms. Where $j$ is a integer, **its binary representation corresponds the evaluation of variables that make $m_j$ be equal to T**.
 
-If a proposition form is denoted by: $f=m_j\lor m_k\lor\cdots\lor m^l$, then we simply denote 
+If a proposition form is denoted by: $f=m_j\lor m_k\lor\cdots\lor m_l$, then we simply denote 
 
 $$f=\sum m(j,k,\cdots,l).$$
 
