@@ -36,6 +36,7 @@ The truth value of $p\leftrightarrow q$ is the same as the truth value of $(p\to
 ### 1.3 Logical Equivalence
 
 Basic terminology and its concepts:
+
 - **Tautologies/永真式**: A tautology is a proposition which is always true, e.g. $p\lor \neg p$;
 - **Contradictions/矛盾式**: A contradiction is a proposition which is always false, e.g. $p\land \neg p$;
 - **Contingencies/可能式**: A contingency is a proposition which is neither a tautology nor a contradiction, e.g. $p$.
