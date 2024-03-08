@@ -152,5 +152,38 @@ We can introduce the concept of **Clauses/字句** to simplify the concept of DN
 
 Thus, a CNF is a **conjunction of disjunctive clauses**, and a DNF is a **disjunction of conjunctive clauses**.
 
+A **Midterm/极小项** is a **conjunction** of literials in which each variable is represented **exactly once**.
+
+**(IMPORTANT)** There are $2n$ different minterm for $n$ propositional variables. For example there $4$ different minterm for $p$, $q$, they are $p\land q$, $p\land\neg q$, $\neg p \land q$, $\neg p\land\neg q$. For the sake of simplification, we use $m_j$ denote the minterms. Where $j$ is a integer, **its binary representation corresponds the evaluation of variables that make $m_j$ be equal to T**.
+
+If a proposition form is denoted by: $f=m_j\lor m_k\lor\cdots\lor m^l$, then we simply denote 
+
+$$f=\sum m(j,k,\cdots,l).$$
+
+Properties of minterms:
+
+- Each minterm is true for exactly one assignment.
+- The conjunction of two different minterm is always false.
+- The disjunction of all minterms is T.
+- A disjinction of minterms is true only if at least one of the constituent minterms is ture.
+
+If a function, as $f$, is given by truth table, we know exactly for which assignments it is true. Consequently, we can select the minterms that make the function true and form the disjunction of these minterms.
+
+If a Boolean function is expressed as a disjunction of minterms, it is said to be in **full disjunctive form**.
+
+All above is the concept of DNF and the concept and use of minterms. Now we turn to CNF.
+
+A compound proposition is in CNF if it is a conjunction of disjunctive clauses. **Every proposition can be put in an equivalent CNF**. CNF is useful in the study of resolution theorem proving used in AI.
+
+A compound proposition can be put in conjunctive normal form through repeated application of the logical equivalences covered earlier.
+
+A **Maxterm/极大项** is a **disjunction** of literials in which each variable is represented **exactly once**. If a Boolean function is expressed as a conjunction of maxterms, it is said to be in **full conjunctive form**.
+
+We can get the full conjunctive form of a Boolean function from its full disjunction form: Let $f=\sum f(j,k,\cdots,l)$, $g=\sum m(\{0,1,2,\cdots,2^{n-1}\}-\{j,k,\cdots,l\})$, then $f\lor g = T$, $f\land g = F$.
+
+$$f = \neg g = \prod M(\{0,1,2,\cdots,2^{n-1}\}-\{j,k,\cdots,l\}).$$
+
+The $M_i$ is a maxterm defined by $M_i=\neg m_i$.
+
 ### 1.6 Predicates and Quantifiers
 
