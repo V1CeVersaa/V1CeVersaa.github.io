@@ -118,6 +118,7 @@ nav:
     - Programing Basis: 
       - Computer Science/Programming Basis/index.md
       - Shell: Computer Science/Programming Basis/Shell.md
+      - GNU Make: Computer Science/Programming Basis/GNU Make.md
       - Linux: Computer Science/Programming Basis/Linux.md
       - Assembly: Computer Science/Programming Basis/Assembly.md
       - MIT Missing Semester: Computer Science/Programming Basis/MIT Missing Semester.md
@@ -129,7 +130,6 @@ nav:
       - Java: Computer Science/Programming Language/Java.md
     - Algorithm: 
       - Computer Science/Algorithm/index.md
-      - Discrete Mathematics: Computer Science/Algorithm/Discrete Mathematics.md
       - Algorithms and Data Structure:
         - Computer Science/Algorithm/Algorithms and Data Structure.md
         - Algorithm Analysis: Computer Science/Algorithm/01 Algorithm Analysis.md
@@ -146,6 +146,10 @@ nav:
       - YAML: Computer Science/Web/YAML.md
   - Math:
     - Math/index.md
+    - Discrete Mathematics: 
+      - Math/Discrete Mathematics/Discrete Mathematics.md
+      - Propositional Logic: Math/Discrete Mathematics/01 Propositional Logic.md
+      - Graph Theory: Math/Discrete Mathematics/04 Graph Theory.md
     # - Algebra: Math/Algebra.md
     # - Analysis: Math/Analysis.md
     # - Topology: Math/General Topology.md

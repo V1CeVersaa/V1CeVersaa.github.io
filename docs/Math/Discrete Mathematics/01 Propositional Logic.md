@@ -1,16 +1,6 @@
-# Discrete Mathematics
+# Part 01 Propositional Logic
 
-!!! Abstract
-    这是我在2023-2024学年春夏学期修读《离散数学理论基础》的课程笔记，由于我实在不想将它安排在数学一类，加之其以`markdown`编写，所以就放在了这里。
-
-    参考书籍：
-
-    - 《Discrete Mathematics and Its Applications》 By Kenneth H. Rosen
-    - 《Concrete Mathmatics》 By Ronald L. Graham 
-
-## Part 01 Propositional Logic
-
-### 1.1 Propositions
+## 1.1 Propositions
 
 A **proposition** is a declarative sentence that is either true or false, but not both. We use letters to denote **propositional variables**, or sentential variables, i.e. variables that represent propositions. The **truth value** of a proposition is true, denoted by **T**, if it is a true proposition, and similiarly, the truth value of a proposition is false, denoted by **F**, if it is a false proposition.Propositions that cannot be expressed in terms of simpler propositions are called **atomic propositions**.
 
@@ -33,7 +23,7 @@ The truth value of $p\leftrightarrow q$ is the same as the truth value of $(p\to
 
 **Precedence of Logical Operators**: From highest to lowest, the precedence of logical operators is $\neg$, $\land$, $\lor$, $\to$, and $\leftrightarrow$.
 
-### 1.3 Logical Equivalence
+## 1.3 Logical Equivalence
 
 Basic terminology and its concepts:
 
@@ -129,11 +119,11 @@ A compound proposition is **satisfiable** if there is an assignment of truth val
 
 A compound proposition is unsatisfiable if and only if it is a contradiction or its negation is a tautology.
 
-### 1.4 Applications of Propositional Logic
+## 1.4 Applications of Propositional Logic
 
 A list of propositions is **consistent** if it is possible to assign truth values to the proposition variables so that each proposition is true.
 
-### 1.5 Propositional Normal Forms
+## 1.5 Propositional Normal Forms
 
 **Propositional formula/命题公式** is a compound proposition that is built up from atomic propositions using logical connectives with the following criteria:
 
@@ -186,5 +176,5 @@ $$f = \neg g = \prod M(\{0,1,2,\cdots,2^{n-1}\}-\{j,k,\cdots,l\}).$$
 
 The $M_i$ is a maxterm defined by $M_i=\neg m_i$.
 
-### 1.6 Predicates and Quantifiers
+## 1.6 Predicates and Quantifiers
 
