@@ -120,7 +120,7 @@ nav:
       - Shell: Computer Science/Programming Basis/Shell.md
       - GNU Make: Computer Science/Programming Basis/GNU Make.md
       - Linux: Computer Science/Programming Basis/Linux.md
-      - Assembly: Computer Science/Programming Basis/Assembly.md
+      - Regular Expression: Computer Science/Programming Basis/Regular Expression.md
       - MIT Missing Semester: Computer Science/Programming Basis/MIT Missing Semester.md
     - Programing language:
       - Computer Science/Programming Language/index.md
@@ -135,6 +135,7 @@ nav:
         - Algorithm Analysis: Computer Science/Algorithm/01 Algorithm Analysis.md
     - System:
       - Computer Science/System/index.md
+      - Assembly: Computer Science/System/Assembly.md
       - Verilog: Computer Science/System/Verilog.md
       - CSAPP: Computer Science/System/CSAPP.md
       - 计算机系统 I: Computer Science/System/System1.md

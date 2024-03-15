@@ -178,3 +178,11 @@ The $M_i$ is a maxterm defined by $M_i=\neg m_i$.
 
 ## 1.6 Predicates and Quantifiers
 
+In this section, we will introduce **Predicate logic/谓词逻辑**. A predicate refers to a property that the subject of the statement can have. We can denote the statement "$x$ is greater than $3$" by $P(x)$, where $P$ denotes the predicate "is greater than $3$" and $x$ is the variable. The statement $P(x)$ is also said to be the value of the **propositional function** $P$ at $x$.
+
+Propositional functions become propositions when their variables are each replaced by a value from the domain.
+
+We need **quantifiers/量词** to express the meaning of English words including *all* and *some*. Two most important quantifiers are:
+
+- **Universal Quantifier**: $\exist$ means "There exists";
+- **Existential Quantifier**: $\forall$ means "For all".
