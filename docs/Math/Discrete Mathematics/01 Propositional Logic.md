@@ -184,5 +184,95 @@ Propositional functions become propositions when their variables are each replac
 
 We need **quantifiers/量词** to express the meaning of English words including *all* and *some*. Two most important quantifiers are:
 
-- **Universal Quantifier**: $\exist$ means "There exists";
+- **Universal Quantifier**: $\exists$ means "There exists";
 - **Existential Quantifier**: $\forall$ means "For all".
+
+Domain/domain or discourse/universe of discourse: the range of the possible values of the variable.
+
+Given the domain as $\{x_1, x_2, \cdots, x_n\}$, the proposition $\forall xP(x)$ is equivalent to $P(x_1)\land P(x_2)\land\cdots\land P(x_n)$, and the proposition $\exists xP(x)$ is equivalent to $P(x_1)\lor P(x_2)\lor\cdots\lor P(x_n)$.
+
+**Uniqueness Quantifier**: $\exists !$ means "There exists a unique", that is $P(x)$ is true for **one and only one** $x$ in the domain. The uniqueness quantifier can be expressed without the symbol $!$ : $\exists x(P(x)\land \forall y(P(x)\to y=x))$.
+
+**Precedence of Quantifiers**: The quantifiers $\forall$ and $\exists$ have higher precedence than the logical connectives $\neg$, $\land$, $\lor$, $\to$, and $\leftrightarrow$. For example, $\forall xP(x)\land Q(x)$ means $(\forall xP(x))\land Q(x)$. 
+
+**Bound Variable**: A variable is bound if it is known or quantified. A variable is free if it is neither quantified or specified with a value.
+
+All the variables in a propositional function must be quantified or set equal to a particular value to turn it into a proposition.
+
+**Scope** of a quantifier: the part of a logical expression to which the quantifier is applied
+
+**Logical Equivalence with Logical Quantifiers**: 
+
+![alt text](images/image1-1.png)
+
+**De Morgan's Laws for Quantifiers**: 
+
+$$\neg\forall xP(x)\equiv \exists x\neg P(x).$$
+
+$$\neg\exists xP(x)\equiv \forall x\neg P(x).$$
+
+## 1.7 Nested Quantifiers
+
+**Nested Quantifiers**: Two quantifiers are nested if one is within the scope of the other. For example, $\forall x\exists yP(x,y)$ means "For every $x$, there exists a $y$ such that $P(x,y)$ is true".
+
+**Order of Quantifiers**: Only both quantifiers are universal or both are existential, the order of quantifiers can be changed. 
+![alt text](images/image1-2.png)
+
+**Distributions for Quantifiers over Logical Connectives**: Here I list two examples: $\forall x(P(x)\land Q(x))\equiv \forall xP(x)\land \forall xQ(x)$ is True, whereas $\forall x(P(x)\to Q(x))\equiv \forall xP(x)\to \forall xQ(x)$ is False.
+
+## 1.8 Rules of Inference
+
+**Valid Argumemts**:An argument in propositional logic is a sequence of propositions. All but the final proposition are called **premises/前提**. The last statement is the **conclusion/结论**. The argument is **valid/有效** if the premises imply the conclusion. An argument form is an argument that is valid no matter what propositions are substituted into its propositional variables.
+
+If the premises are $p_1, p_2,\dots, p_n$ and the conclusion is $q$ then $(p_1\land p2 \land \cdots\land p_n )\to q$ is a tautology.
+
+**Inference Rules** are all argument simple argument forms that will be used to construct more complex argument forms.
+
+**Modus Ponens/假言推理**: If $p\to q$ and $p$ are true, then $q$ is true. Corresponding Tautology: $(p\land (p\to q))\to q$.
+
+**Modus Tollens/取拒式**: If $p\to q$ and $\neg q$ are true, then $\neg p$ is true. Corresponding Tautology: $((p\to q)\land \neg q)\to \neg p$.
+
+**Hypothetical Syllogism/假言三段论**: If $p\to q$ and $q\to r$ are true, then $p\to r$ is true. Corresponding Tautology: $((p\to q)\land (q\to r))\to (p\to r)$.
+
+**Disjunctive Syllogism/析取三段论**: If $p\lor q$ and $\neg p$ are true, then $q$ is true. Corresponding Tautology: $((p\lor q)\land \neg p)\to q$.
+
+**Addition/附加律**: If $p$ is true, then $p\lor q$ is true. Corresponding Tautology: $p\to (p\lor q)$.
+
+**Simplification/简化律**: If $p\land q$ is true, then $p$ is true. Corresponding Tautology: $(p\land q)\to p$.
+
+**Conjunction/合取律**: If $p$ and $q$ are true, then $p\land q$ is true. Corresponding Tautology: $(p\land q)\to (p\land q)$.
+
+**Resolution/消解律**: If $p\lor q$ and $\neg p\lor r$ are true, then $q\lor r$ is true. Corresponding Tautology: $((p\lor q)\land (\neg p\lor r))\to (q\lor r)$.
+
+**Universal Instantiation/全称实例**: If $\forall xP(x)$ is true, then $P(c)$ is true for any $c$ in the domain. Corresponding Tautology: $\forall xP(x)\to P(c)$.
+
+**Universial Generalization/全称引入**: If $P(c)$ is true for any $c$ in the domain, then $\forall xP(x)$ is true. Corresponding Tautology: $P(c)\to \forall xP(x)$.
+
+**Existential Instantiation/存在实例**: If $\exists xP(x)$ is true, then $P(c)$ is true for some $c$ in the domain. Corresponding Tautology: $\exists xP(x)\to P(c)$.
+
+**Existential Generalization/存在引入**: If $P(c)$ is true for some $c$ in the domain, then $\exists xP(x)$ is true. Corresponding Tautology: $P(c)\to \exists xP(x)$.
+
+**Universial Modus Ponens/全称假言推理**: If $\forall x(p(x)\to q(x))$ and $p(a)$ are true, then $q(a)$ is true. Corresponding Tautology: $(\forall x(p(x)\to q(x))\land p(a))\to q(a)$.
+
+## 1.9 Introduction to Proofs
+
+A **proof** is a valid argument that establishes the truth of a statement. In math, CS, and other disciplines, informal proofs which are generally shorter, are generally used.
+
+A **theorem/定理** is a statement that can be shown to be true using: definitions, other theorems, axioms (statements which are given as true), rules of inference.
+
+A **lemma/引理** is a 'helping theorem' or a result which is needed to prove a theorem.
+
+A **corollary/推论** is a result which follows directly from a theorem.
+
+Less important theorems are sometimes called **propositions/命题**.
+
+A **conjecture/猜想** is a statement that is being proposed to be true. Once a proof of a conjecture is found, it becomes a theorem. It may turn out to be false.
+
+**Direct Proof**: Assume that $p$ is true. Use rules of inference, axioms, and logical equivalences to show that $q$ must also be true.
+
+Proof by **Contraposition/反证法**: Assume $\neg q$ and show $\neg p$ is true also. This is sometimes called an **indirect proof method**. If we give a direct proof of $\neg q\to\neg p$ then we have a proof of $p\to q$.
+
+
+Proof by **Contradiction/归谬证明法/reductio ad absurdum**: To prove $p$, assume $\neg p$ and derive a contradiction such as $r\land \neg r$. (an indirect form of proof). Since we have shown that $\neg p\to F$ is true , it follows that the contrapositive $T\to p$ also holds.
+
+## 1.10 Proof Method and Strategy

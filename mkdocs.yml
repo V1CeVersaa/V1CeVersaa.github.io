@@ -162,5 +162,7 @@ nav:
       - Reading/Taking Sides/index.md
       - Sustainability: Reading/Taking Sides/Sustainability.md
   - Varia: 
+    - Typst Learning Report: Varia/Typst.md
     - Learning Plan: Varia/Learning Plan.md
     - Booklist: Varia/Booklist.md
+    - Environment Configuration: Varia/Envs.md
