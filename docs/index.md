@@ -8,9 +8,15 @@ Hi！欢迎来到我的笔记本，我会在这里更新我的**课程笔记**.
 
 ## 最近在学什么？
 
-- [ ] 计算机系统：[CSAPP](./Computer%20Science/System/CSAPP.md)
+- [ ] 计算机系统: [CSAPP](./Computer%20Science/System/CSAPP.md)
+- [ ] 板子好玩喵: [Verilog](./Computer%20Science/System/Verilog.md)
+- [ ] 看起来更像CS人: [GNU Make](./Computer%20Science/Programming%20Basis/GNU%20Make.md)
+- [ ] CPU给我干烧了: [Algorithms and Data Structure](./Computer%20Science/Algorithm/Algorithms%20and%20Data%20Structure.md)
+- [ ] 真是离离又散散啊: [Discrete Mathematics](./Math/Discrete%20Mathematics/Discrete%20Mathematics.md)
+
+## 学不完了
+
 - [ ] 某种古老又强大的命令语言：[Shell](./Computer%20Science/Programming%20Basis/Shell.md)
-- [ ] CPU给我干烧了：[Algorithms and Data Structure](./Computer%20Science/Algorithm/Algorithms%20and%20Data%20Structure.md)
 
 <!-- # Who Am I？
 
