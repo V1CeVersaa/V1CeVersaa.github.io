@@ -150,6 +150,7 @@ nav:
     - Discrete Mathematics: 
       - Math/Discrete Mathematics/Discrete Mathematics.md
       - Propositional Logic: Math/Discrete Mathematics/01 Propositional Logic.md
+      - Basic Structures: Math/Discrete Mathematics/02 Basic Structures.md
       - Graph Theory: Math/Discrete Mathematics/04 Graph Theory.md
     # - Algebra: Math/Algebra.md
     # - Analysis: Math/Analysis.md

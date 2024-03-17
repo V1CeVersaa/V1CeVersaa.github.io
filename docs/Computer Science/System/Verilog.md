@@ -21,6 +21,7 @@ module main(
 ```
 
 **wire**的电器特性：
+
 - wire必须被**有且仅有**一个`assign`输入；
 - wire可以有0个或者多个`assign`输出.
 
@@ -141,7 +142,7 @@ module SegDecoder (
     assign c = LE | ( data[1] &  data[2] &  data[3] |
                      ~data[0] &  data[1] & ~data[2] & ~data[3] |
                      ~data[0] &  data[2] &  data[3] );
-    assign d = LE | (~data[0] &  data[1] & ~data[2] & data[3]  |
+    assign d = LE | (~data[0] &  data[1] & ~data[2] &  data[3] |
                       data[0] &  data[1] &  data[2] |
                      ~data[0] & ~data[1] &  data[2] & ~data[3] |
                       data[0] & ~data[1] & ~data[2] & ~data[3] );

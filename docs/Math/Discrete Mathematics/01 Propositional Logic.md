@@ -273,6 +273,10 @@ A **conjecture/猜想** is a statement that is being proposed to be true. Once a
 Proof by **Contraposition/反证法**: Assume $\neg q$ and show $\neg p$ is true also. This is sometimes called an **indirect proof method**. If we give a direct proof of $\neg q\to\neg p$ then we have a proof of $p\to q$.
 
 
-Proof by **Contradiction/归谬证明法/reductio ad absurdum**: To prove $p$, assume $\neg p$ and derive a contradiction such as $r\land \neg r$. (an indirect form of proof). Since we have shown that $\neg p\to F$ is true , it follows that the contrapositive $T\to p$ also holds.
+Proof by **Contradiction/归谬证明法/Reductio ad absurdum**: To prove $p$, assume $\neg p$ and derive a contradiction such as $r\land \neg r$. (an indirect form of proof). Since we have shown that $\neg p\to F$ is true , it follows that the contrapositive $T\to p$ also holds.
 
 ## 1.10 Proof Method and Strategy
+
+**Proof by cases**: To prove $(p_1\lor p_2\lor \cdots\lor p_n)\to q$, using the tautology $(p_1\to q)\land (p_2\to q)\land\cdots\land (p_n\to q)\leftrightarrow (p_1\lor p_2\lor \cdots\lor p_n)\to q$, we need to prove $p_1\to q$, $p_2\to q$, $\cdots$, and $p_n\to q$.
+
+**Existence Proofs/存在性证明**,**Without Loss of Generality/不失一般性**,**Nonconstructive Proofs/非构造性证明**,**Proof by Counterexample/反例证明**,**Uniqueness Proofs/唯一性证明**,**Backward Proof/逆向证明**.
