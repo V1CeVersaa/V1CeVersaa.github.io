@@ -12,8 +12,10 @@
 
 ### Programming Basis
 
-- [ ] [Programming Basis: Shell](./Programming%20Basis/Shell.md) <**IN-PROGRESS**>
+- [ ] [Programming Basis: Shell](./Programming%20Basis/Shell.md) <**SUSPENDING**>
+- [ ] [Programming Basis: GNU Make](./Programming%20Basis/GNU%20Make.md) <**IN-PROGRESS**>
 - [ ] [Programming Basis: Linux](./Programming%20Basis/Linux.md)
+- [ ] [Programming Basis: Regular Expression](./Programming%20Basis/Regular%20Expression.md)
 
 ### Programming Language
 
@@ -32,5 +34,4 @@
 ### System
 
 - [ ] [System: Verilog](./System/Verilog.md)
-
 - [ ] [System: CSAPP](./System/CSAPP.md) <**IN-PROGRESS**>
