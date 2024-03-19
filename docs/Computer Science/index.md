@@ -17,9 +17,9 @@
 
 ### Programming Language
 
-- [ ] [Programming Language: C](./Programming%20Language/EVERYTHING%20begins%20with%20C.md)
+- [ ] [Programming Language: C](./Programming%20Language/C.md)
 - [ ] [Programming Language: C++](./Programming%20Language/C++.md)
-- [ ] [Programming Language: Python](./Programming%20Language/Python%20saves%20the%20world.md)
+- [ ] [Programming Language: Python](./Programming%20Language/Python.md)
 - [ ] [Programming Language: Java](./Programming%20Language/Java.md) <**IN-PROGRESS**>
 
 ### Web

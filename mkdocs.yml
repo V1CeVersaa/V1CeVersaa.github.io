@@ -1,4 +1,6 @@
 site_name: V1CeVersa's Notebook
+copyright: Copyright &copy; 2024 V1CeVersa
+
 theme: 
   name: material
   language: 'zh'
@@ -124,15 +126,14 @@ nav:
       - MIT Missing Semester: Computer Science/Programming Basis/MIT Missing Semester.md
     - Programing language:
       - Computer Science/Programming Language/index.md
-      - C: Computer Science/Programming Language/EVERYTHING begins with C.md
+      - C: Computer Science/Programming Language/C.md
       - C++: Computer Science/Programming Language/C++.md
-      - Python: Computer Science/Programming Language/Python saves the world.md
+      - Python: Computer Science/Programming Language/Python.md
       - Java: Computer Science/Programming Language/Java.md
     - Algorithm: 
-      - Computer Science/Algorithm/index.md
-      - Algorithms and Data Structure:
-        - Computer Science/Algorithm/Algorithms and Data Structure.md
-        - Algorithm Analysis: Computer Science/Algorithm/01 Algorithm Analysis.md
+      - Computer Science/Algorithm/Algorithms and Data Structure.md
+      - Algorithm Analysis: Computer Science/Algorithm/01 Algorithm Analysis.md
+      - Linear List: Computer Science/Algorithm/02 Linear List.md
     - System:
       - Computer Science/System/index.md
       - Assembly: Computer Science/System/Assembly.md
@@ -146,7 +147,7 @@ nav:
       - JavaScript: Computer Science/Web/Javascript.md
       - YAML: Computer Science/Web/YAML.md
   - Math:
-    - Math/index.md
+    - Basic Courses: Math/index.md
     - Discrete Mathematics: 
       - Math/Discrete Mathematics/Discrete Mathematics.md
       - Propositional Logic: Math/Discrete Mathematics/01 Propositional Logic.md
@@ -163,7 +164,7 @@ nav:
       - Reading/Taking Sides/index.md
       - Sustainability: Reading/Taking Sides/Sustainability.md
   - Varia: 
-    - Typst Learning Report: Varia/Typst.md
     - Learning Plan: Varia/Learning Plan.md
+    - Typst Learning Report: Varia/Typst.md
     - Booklist: Varia/Booklist.md
     - Environment Configuration: Varia/Envs.md
