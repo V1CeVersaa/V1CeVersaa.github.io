@@ -17,7 +17,8 @@ module main(
     input I0,
     input I1.
     input I2,
-    output O );
+    output O
+);
 ```
 
 **wire**的电器特性：
@@ -25,6 +26,28 @@ module main(
 - wire必须被**有且仅有**一个`assign`输入；
 - wire可以有0个或者多个`assign`输出.
 
+## Chapter 2 Basic Syntax
+
+### 2.1 数值系统
+
+Verilog这种硬件描述语言都基于基本的硬件逻辑之上，因此Verilog具有一套独特的基于电平逻辑的数值系统，使用下面四种基本数值表示电平逻辑：
+
+- 0：表示低电平或者False；
+- 1：表示高电平或者True；
+- X：表示电平未知，实际情况可能是高电平或者低电平，甚至都不是；
+- Z：表示高阻态，这种情况就是来源于信号没有驱动.
+
+我们还经常用到整数，可以**简单使用十进制表示**，也可以使用**立即数**表示，基于如下的基数规则表示:`<bits>'<radix><value>`，其中`<bits>`表示二进制位宽，空缺不填就会根据后边的数值自动分配；`<radix>`表示进制，`<radix>`可以是b/o/d/h，分别是二进制，八进制，十进制以及十六进制；`<value>`表示数值，插入下划线`_`可以有效提升可读性。
+
+### 2.2 标识符与变量类型
+
+- **wire**
+  用于声明线网型数据。wire本质上对应着一根没有任何其他逻辑的导线，仅仅将输入自身的信号原封不动地传递到输出端。该类型数据用来表示以assign语句内赋值的组合逻辑信号，其默认初始值是 Z（高阻态）。
+
+  wire是Verilog的默认数据类型。也就是说，对于没有显式声明类型的信号，Verilog一律将其默认为wire类型。
+
+- **reg**
+  用于声明在`always`语句内部进行赋值操作的信号。一般而言，reg型变量对应着一种存储单元，其默认初始值是x（未知状态）。为了避免可能的错误，凡是在`always`语句内部被赋值的信号，都应该被定义成reg类型。
 
 ### 运算符
 
@@ -34,7 +57,13 @@ module main(
 - `|`：按位或；
 - `^`：按位异或；
 - `~`：按位取反；
-- `~^`：按位同或；
+- `~^`或者`^~`：按位同或；
+- **Note**：如果运算符的两个操作数位宽不相等，则利用0向左扩展补充较短的操作数.
+
+算数运算符：
+
+
+
 
 
 ## Example
@@ -112,52 +141,96 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
 七段数码管的显示译码的对应关系如下，使用复合多路选择器，就不难得到下面源码。解释源码的方法很简单，把它的接口`a`到`g`分开，当卡诺图写就好了。
 
 ![alt text](images/img-Verilog/5.png)
-![alt text](images/img-Verilog/7.png)
 
-=== "SegDecoder"
-```Verilog
-module SegDecoder (
-    input wire [3:0] data,
-    input wire point,
-    input wire LE,
 
-    output wire a,
-    output wire b,
-    output wire c,
-    output wire d,
-    output wire e,
-    output wire f,
-    output wire g,
-    output wire p
-);
+=== "与或版本"
+    这个是对应的图片，非常的朴素。
+    ![alt text](images/img-Verilog/7.png)
+    但是这个是老实人写法，就直接按照真值表画电路硬刚，千万别这么写，丑死了。
+    ```verilog
+    module SegDecoder (
+        input wire [3:0] data,
+        input wire point,
+        input wire LE,
+        output wire a,
+        output wire b,
+        output wire c,
+        output wire d,
+        output wire e,
+        output wire f,
+        output wire g,
+        output wire p
+    );
+        
+        assign a = LE | ( data[0] &  data[1] & ~data[2] &  data[3] | 
+                          data[0] & ~data[1] &  data[2] &  data[3] | 
+                         ~data[0] & ~data[1] &  data[2] & ~data[3] | 
+                          data[0] & ~data[1] & ~data[2] & ~data[3] );
+        assign b = LE | ( data[0] &  data[1] &  data[3] | 
+                         ~data[0] &  data[2] &  data[3] |
+                         ~data[0] &  data[1] &  data[2] | 
+                          data[0] & ~data[1] &  data[2] & ~data[3] );
+        assign c = LE | ( data[1] &  data[2] &  data[3] |
+                         ~data[0] &  data[1] & ~data[2] & ~data[3] |
+                         ~data[0] &  data[2] &  data[3] );
+        assign d = LE | (~data[0] &  data[1] & ~data[2] &  data[3] |
+                          data[0] &  data[1] &  data[2] |
+                         ~data[0] & ~data[1] &  data[2] & ~data[3] |
+                          data[0] & ~data[1] & ~data[2] & ~data[3] );
+        assign e = LE | ( data[0] & ~data[1] & ~data[2] |
+                         ~data[1] &  data[2] & ~data[3] |
+                          data[0] & ~data[3] );
+        assign f = LE | ( data[0] &  data[1] & ~data[3] |
+                          data[1] & ~data[2] & ~data[3] |
+                          data[0] & ~data[2] & ~data[3] |
+                          data[0] & ~data[1] &  data[2] &  data[3] );
+        assign g = LE | (~data[0] & ~data[1] &  data[2] &  data[3] |
+                          data[0] &  data[1] &  data[2] & ~data[3] |
+                         ~data[1] & ~data[2] & ~data[3] );
+        assign p = ~point;
+
+    endmodule //SegDecoder
+    ```
+
+=== "index版本"
+
+    好看一点了。
+    ```verilog 
+    module SegDecoder_new (
+        input wire [3:0] data,
+        input wire point,
+        input wire LE,
+        output wire a,
+        output wire b,
+        output wire c,
+        output wire d,
+        output wire e,
+        output wire f,
+        output wire g,
+        output wire p
+    );
     
-    assign a = LE | ( data[0] &  data[1] & ~data[2] &  data[3] | 
-                      data[0] & ~data[1] &  data[2] &  data[3] | 
-                     ~data[0] & ~data[1] &  data[2] & ~data[3] | 
-                      data[0] & ~data[1] & ~data[2] & ~data[3] );
-    assign b = LE | ( data[0] &  data[1] &  data[3] | 
-                     ~data[0] &  data[2] &  data[3] |
-                     ~data[0] &  data[1] &  data[2] | 
-                      data[0] & ~data[1] &  data[2] & ~data[3] );
-    assign c = LE | ( data[1] &  data[2] &  data[3] |
-                     ~data[0] &  data[1] & ~data[2] & ~data[3] |
-                     ~data[0] &  data[2] &  data[3] );
-    assign d = LE | (~data[0] &  data[1] & ~data[2] &  data[3] |
-                      data[0] &  data[1] &  data[2] |
-                     ~data[0] & ~data[1] &  data[2] & ~data[3] |
-                      data[0] & ~data[1] & ~data[2] & ~data[3] );
-    assign e = LE | ( data[0] & ~data[1] & ~data[2] |
-                     ~data[1] &  data[2] & ~data[3] |
-                      data[0] & ~data[3] );
-    assign f = LE | ( data[0] &  data[1] & ~data[3] |
-                      data[1] & ~data[2] & ~data[3] |
-                      data[0] & ~data[2] & ~data[3] |
-                      data[0] & ~data[1] &  data[2] &  data[3] );
-    assign g = LE | (~data[0] & ~data[1] &  data[2] &  data[3] |
-                      data[0] &  data[1] &  data[2] & ~data[3] |
-                     ~data[1] & ~data[2] & ~data[3] );
-    assign p = ~point;
+        wire [6:0] segs [15:0];
+        assign segs[0] = 7'b0000001;
+        assign segs[1] = 7'b1001111;
+        assign segs[2] = 7'b0010010;
+        assign segs[3] = 7'b0000110;
+        assign segs[4] = 7'b1001100;
+        assign segs[5] = 7'b0100100;
+        assign segs[6] = 7'b0100000;
+        assign segs[7] = 7'b0001111;
+        assign segs[8] = 7'b0000000;
+        assign segs[9] = 7'b0000100;
+        assign segs[10] = 7'b0001000;
+        assign segs[11] = 7'b1100000;
+        assign segs[12] = 7'b0110001;
+        assign segs[13] = 7'b1000010;
+        assign segs[14] = 7'b0110000;
+        assign segs[15] = 7'b0111000;
 
-endmodule //SegDecoder
-```
+        assign {a, b, c, d, e, f, g} = {7{LE}} | segs[data];
 
+        assign p = ~point;
+
+    endmodule //SegDecoder
+    ```

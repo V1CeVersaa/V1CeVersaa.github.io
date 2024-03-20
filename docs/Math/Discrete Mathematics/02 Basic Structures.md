@@ -6,7 +6,7 @@ A **set** is an unordered collection of distinct objects, called **elements** or
 
 **Roster method**: A set can be described by listing its elements between braces. For example, the set of vowels in the English alphabet can be written as $V=\{a,e,i,o,u\}$. Listing an element more than once does not change the set. The set $\{a,e,i,o,u\}$ is the same as the set $\{a,e,i,o,u,u\}$.
 
-**Set-builder notation**: A set can be described by specifying a property that its members must satisfy.
+**Set-builder notation**: A set can be described by specifying a property that its members must satisfy, for example $\{x:x\equiv 0(\mod 2)\}$
 
 **Universal Set**: The set $U$ containing all the objects currently under consideration.
 

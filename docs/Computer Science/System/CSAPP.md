@@ -6,8 +6,8 @@
     参考：
 
     - 《深入理解计算机系统》
-
-    - 《Comptuer System: A Programmer's Perspective》
+    - Comptuer System: A Programmer's Perspective
+    - CMU 15-213
 
 ## Chapter 01 A Tour of Computer Systems
 
@@ -48,6 +48,11 @@ $$S=\frac{1}{1-\alpha}.$$
 - 线程级并发：使用
 
 ## Chapter 02 Representing and Manipulating Information
+
+??? note "CMU 15-213"
+    **Why Bits?**
+
+    Because of electronic implementation: Easy to store bistable elements, and reliable transmitted on noisy and inaccurate wires. 
 
 ### 2.1 Information Storage
 
