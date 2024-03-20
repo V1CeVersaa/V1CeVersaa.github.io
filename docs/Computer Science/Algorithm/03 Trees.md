@@ -74,11 +74,11 @@ typedef struct TreeNode {
 
 ### 3.1.3 Traversals
 
-=== "Level Order"
+遍历时间复杂度都是$O(n)$，空间复杂度是$O(n)$.
+
+=== "Levelorder"
 
     层序遍历从顶部到底**逐层**遍历二叉树，并且按照从左到右的顺序遍历每一层的节点，从本质上来讲，层序遍历其实属于**广度优先遍历/Breadth-first Traversal**.我们一般借助**队列**来实现层序遍历.
-
-    层序遍历的时间复杂度是$O(n)$，空间复杂度是$O(n)$.
 
     ```C
     int *levelOrder (TreeNode *root, int *size) {
@@ -109,7 +109,54 @@ typedef struct TreeNode {
     ```
 
 === "Preorder"
+
+    先访问根节点，再访问子树，左子树优先于右子树.
+
     ```C
-    void preOrder(TreeNode *root, int *size){
+    int *arr = malloc(sizeof(int) * MAX_SIZE);
+    void preOrder(TreeNode *root, int *size, int *arr) {
+        if (root == NULL)
+            return;
+        arr[(*size)++] = root->val;
+        preOrder(root->left, size, arr);
+        preOrder(root->right, size, arr);
+    }
+    arr = realloc(arr, sizeof(int) *(*size));
+    ```
+
+=== "Postorder"
+
+    先访问子树，左子树先于右子树，再访问根节点.
+
+    ```C
+    void postOrder(TreeNode *root, int *size) {
+        if (root == NULL)
+            return;
+        postOrder(root->left, size);
+        postOrder(root->right, size);
+        arr[(*size)++] = root->val;
+    }
+    ```
+
+=== "Inorder & Recursive"
+
+    先访问左子树，再访问根，最后访问右子树.
+
+    ```C
+    void inOrder(TreeNode *root, int *size) {
+        if (root == NULL)
+            return;
+        inOrder(root->left, size);
+        arr[(*size)++] = root->val;
+        inOrder(root->right, size);
+    }
+    ```
+
+=== "Inorder & Iterative"
+
+    ```C
+    void iter_inOrder(TreeNode *root, int *size) {
 
     }
+    ```
+
