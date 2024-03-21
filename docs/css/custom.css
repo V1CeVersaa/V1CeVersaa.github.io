@@ -1,12 +1,16 @@
   @font-face {
-    font-family: "LXGW WenKai Screen", "Monaspace Argon Light", "JetBrains Mono";
+    font-family: "Monaspace Argon Light";
     src: url("MonaspaceArgon-Light.woff");
   }
   
   :root {
     --md-text-font: "LXGW WenKai Screen", "JetBrains Mono"; 
     --md-code-font: 'Monaspace Argon Light', "JetBrains Mono", 'LXGW WenKai Screen';
-    src: url('MonaspaceArgon-Light.woff') format("woff");
+  }
+  p code,
+  li code {
+    font-family: 'Monaspace Argon Light', 'LXGW WenKai Screen';
+    src: url(https://v1ceversaa.github.io/docs/css/MonaspaceArgon-Light.woff) format("woff");
   }
   .md-typeset code,
   .md-typeset kbd,
@@ -19,11 +23,6 @@
     font-family: "Times New Roman", "Songti SC";
     font-weight: 600;
   } */
-  p code,
-  li code {
-    font-family: 'Monaspace Argon Light', 'LXGW WenKai Screen';
-    src: url(https://v1ceversaa.github.io/docs/css/MonaspaceArgon-Light.woff) format("woff");
-  }
   .md-nav__link {
     zoom: 105%
   }
