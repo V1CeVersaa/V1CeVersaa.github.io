@@ -163,5 +163,3 @@ typedef struct TreeNode {
     你需要在循环里边手动建一个堆栈来模仿系统堆栈的行为，想想都觉得受不了，消停写你的递归版得了。
 
 ## 3.2 Binary Search Trees
-
-blinksmoblinkblinkphapphasd
