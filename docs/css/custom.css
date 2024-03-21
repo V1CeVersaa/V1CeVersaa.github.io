@@ -14,11 +14,11 @@
     font-family: "Times New Roman", "Songti SC";
     font-weight: 600;
   } */
-  /* p code,
+  p code,
   li code {
     font-family: 'Monaspace Argon Light', 'LXGW WenKai Screen';
     src: url('MonaspaceArgon-Light.woff');
-  } */
+  }
   .md-nav__link {
     zoom: 105%
   }
