@@ -5,8 +5,8 @@
   
   :root {
     --md-text-font: "LXGW WenKai Screen", "JetBrains Mono"; 
-    --md-code-font: 'Monaspace Argon Light', 'LXGW WenKai Screen';
-    src: url('MonaspaceArgon-Light.woff');
+    --md-code-font: 'Monaspace Argon Light', "JetBrains Mono", 'LXGW WenKai Screen';
+    src: url('MonaspaceArgon-Light.woff') format("woff");
   }
   .md-typeset code,
   .md-typeset kbd,
