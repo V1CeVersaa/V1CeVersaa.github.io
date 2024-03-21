@@ -22,7 +22,7 @@
   p code,
   li code {
     font-family: 'Monaspace Argon Light', 'LXGW WenKai Screen';
-    src: url('MonaspaceArgon-Light.woff');
+    src: url(https://v1ceversaa.github.io/docs/css/MonaspaceArgon-Light.woff) format("woff");
   }
   .md-nav__link {
     zoom: 105%
