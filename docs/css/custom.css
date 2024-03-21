@@ -1,4 +1,9 @@
-:root {
+  /* @font-face {
+    font-family: "LXGW WenKai Screen", "Monaspace Argon Light", "JetBrains Mono";
+    src: url("MonaspaceArgon-Light.woff");
+  } */
+  
+  :root {
     --md-text-font: "LXGW WenKai Screen", "JetBrains Mono"; 
     --md-code-font: 'Monaspace Argon Light', 'LXGW WenKai Screen';
     src: url('MonaspaceArgon-Light.woff');
