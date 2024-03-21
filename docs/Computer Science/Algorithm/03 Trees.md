@@ -28,9 +28,13 @@
 
 **Descendants of a node**: all nodes in its subtrees.
 
+Every tree can be transformed into a binary tree with **FirstChild-NextSibling** representation.
+
 ## 3.1 Binary Trees
 
 A **binary tree** is a tree in which no node can have more than two children.
+
+**Expression Trees**: a binary tree used to represent expressions. Intresting.
 
 ### 3.1.1 Node Implementation
 
@@ -154,9 +158,10 @@ typedef struct TreeNode {
 
 === "Inorder & Iterative"
 
-    ```C
-    void iter_inOrder(TreeNode *root, int *size) {
+    什么？你还想折磨自己？
+    
+    你需要在循环里边手动建一个堆栈来模仿系统堆栈的行为，想想都觉得受不了，消停写你的递归版得了。
 
-    }
-    ```
+## 3.2 Binary Search Trees
 
+blinksmoblinkblinkphapphasd
