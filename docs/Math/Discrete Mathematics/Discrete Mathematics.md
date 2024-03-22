@@ -13,4 +13,5 @@
 ## Table of Contents
 
 - [ ] [Propositional Logic](./01%20Propositional%20Logic.md)
+- [ ] [Basic Structures](./02%20Basic%20Structures.md)
 - [ ] [Graph Theory](./04%20Graph%20Theory.md)

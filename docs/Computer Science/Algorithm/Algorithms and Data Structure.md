@@ -13,3 +13,5 @@
 
 - [ ] [Algorithm Analysis](./01%20Algorithm%20Analysis.md)
 - [ ] [Linear List](./02%20Linear%20List.md)
+- [ ] [Trees](./03%20Trees.md)
+- [ ] [Hash](./05%20Hash.md)
