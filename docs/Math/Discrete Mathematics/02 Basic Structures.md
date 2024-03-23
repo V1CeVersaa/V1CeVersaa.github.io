@@ -38,7 +38,7 @@ $$A\times B=\{(a,b):a\in A\land b\in B\}$$
 
 $$\{x\in D:P(x)\}$$
 
-## 2.1 Set Operations
+## 2.2 Set Operations
 
 **Union**: The union of sets $A$ and $B$, denoted by $A\cup B$, is the set containing all elements that are in $A$ or in $B$ or in both.
 
@@ -60,6 +60,35 @@ $$A\oplus B=\{x:x\in A\oplus x\in B\}=(A-B)\cup(B-A)$$
 
 $$\overline{A}=\{x:x\in U\land x\notin A\}$$
 
-**Includsion-Exclusion Principle**: For any two sets $A$ and $B$,
+**Includsion-Exclusion Principle**: For anzy two sets $A$ and $B$,
 
 $$|A\cup B|=|A|+|B|-|A\cap B|$$
+
+![alt text](./images/image2-1.png)
+
+To prove set identies, the most effective way is to show that each side of the identity is a subset of the other side, builder notation and propositional logic are also used in our proof.
+
+## 2.3 Functions
+
+**Function**: Let $A$ and $B$ be nonempty sets. A **function** $f$ from $A$ to $B$ denoted by $f:A\rightarrow B$ is an assignment of exactly one element of $B$ to each element of $A$. We write $f(a)=b$ if $b$ is the unique element of $B$ assigned by $f$ to the element $a$ of $A$. Functions are sometimes called **mappings** or **transformations**.
+
+$$\forall a(a\in A\rightarrow \exists!b(b\in B\land f(a)=b))$$
+
+A function $f:A\rightarrow B$ can also be defined as a subset of the Cartesian product $A\times B$, that is a relation. This subset is restricted be a relation where no two elements of the relation have the first element. 
+
+$$\forall x(x\in A\to\exists y(y\in B\land (x,y)\in f))$$
+
+$$\forall x,y_1,y_2((x,y_1)\in f\land (x,y_2)\in f\to y_1=y_2)$$
+
+**Domain**: The set $A$ is called the **domain** of the function $f:A\rightarrow B$.
+
+**Codomain**: The set $B$ is called the **codomain** of the function $f:A\rightarrow B$.
+
+**Range**: The set of all images of elements in the domain is called the **range** of the function.
+
+Two functions are **equal** if and only if they have the same domain, the same codomain, and assign the same value to each element in their domain.
+
+Definitions of **Injection** **Surjection** **Bijection** **Inverse Function** **Composition** and **Graph of Function** are omitted, because I assume you know them well.
+
+## 2.4 Sequences and Summations
+
