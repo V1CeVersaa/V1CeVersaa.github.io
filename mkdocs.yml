@@ -120,6 +120,7 @@ nav:
     - Programing Basis: 
       - Computer Science/Programming Basis/index.md
       - Shell: Computer Science/Programming Basis/Shell.md
+      - Git: Computer Science/Programming Basis/Git.md
       - GNU Make: Computer Science/Programming Basis/GNU Make.md
       - Linux: Computer Science/Programming Basis/Linux.md
       - Regular Expression: Computer Science/Programming Basis/Regular Expression.md
