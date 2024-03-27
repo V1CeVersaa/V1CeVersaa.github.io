@@ -88,6 +88,7 @@ Verilog 这种硬件描述语言都基于基本的硬件逻辑之上，因此 Ve
 
   非阻塞赋值属于并行执行语句，即下一条语句的执行和当前语句的执行是同时进行的，它不会阻塞位于同一个语句块中后面语句的执行。非阻塞赋值语句使用小于等于号 <= 作为赋值符。
 
+#### 2.4.4 `generate`语句
 
 
 
@@ -258,4 +259,48 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
         assign p = ~point;
 
     endmodule //SegDecoder
+    ```
+
+### 1.4 全加器(Full Adder)
+
+=== "ripple-carry adder"
+
+=== "4-bit lookahead adder"
+
+    ```verilog
+    module Lookahead_Adder4(
+    input [3:0] a,
+    input [3:0] b,
+    input c_in,
+    output [3:0] s,
+    output c_out
+    );
+
+    wire [3:0] G;
+    wire [3:0] P;
+    wire [4:0] c;
+
+    genvar i;
+    generate
+        for(i = 0; i<4; i=i+1)begin
+            assign G[i] = a[i] & b[i];
+            assign P[i] = a[i] ^ b[i];
+        end
+    endgenerate
+
+    assign c[0] = c_in;
+    assign c[1] = G[0] | P[0] & c[0];
+    // assign c[2] = G[1] | P[1] & c[1];
+    assign c[2] = G[1] | P[1] & G[0] | P[1] & P[0] & c[0];
+    assign c[3] = G[2] | P[2] & G[1] | P[2] & P[1] & G[0] | P[2] & P[1] & P[0] & c[0];
+    assign c[4] = G[3] | P[3] & G[2] | P[3] & P[2] & G[1] | P[3] & P[2] & P[1] & G[0] | P[3] & P[2] & P[1] & P[0] & c[0];
+    assign c_out = c[4];
+
+    generate
+        for(i = 0; i<4; i=i+1)begin
+            assign s[i] = P[i] ^ c[i];
+        end
+    endgenerate
+    
+    endmodule
     ```
