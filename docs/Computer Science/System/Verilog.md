@@ -263,44 +263,88 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
 
 ### 1.4 全加器(Full Adder)
 
+
+=== "1-bit full adder"
+    ```verilog
+    module Adder(
+        input a,
+        input b,
+        input c_in,
+        output s,
+        output c_out
+    );
+        
+        assign s = a ^ b ^ c_in;
+        assign c_out = a & b | a & c_in | b & c_in;
+
+    endmodule 
+    ```
+
 === "ripple-carry adder"
+
+    ```verilog
+    module Adders #(
+        parameter LENGTH = 32
+    )(
+        input [LENGTH-1:0] a,
+        input [LENGTH-1:0] b,
+        input c_in,
+        output [LENGTH-1:0] s,
+        output c_out
+    );
+    
+        wire c[LENGTH:0];
+        assign c[0] = c_in;
+
+        genvar i;
+        generate
+            for(i = 0; i < LENGTH; i = i + 1)begin
+                Adder adder(.a(a[i]), .b(b[i]), .c_in(c[i]), .s(s[i]), .c_out(c[i+1]));
+            end      
+        endgenerate
+        assign c_out = c[LENGTH];
+    
+    endmodule
+    ```
 
 === "4-bit lookahead adder"
 
     ```verilog
     module Lookahead_Adder4(
-    input [3:0] a,
-    input [3:0] b,
-    input c_in,
-    output [3:0] s,
-    output c_out
+        input [3:0] a,
+        input [3:0] b,
+        input c_in,
+        output [3:0] s,
+        output c_out
     );
 
-    wire [3:0] G;
-    wire [3:0] P;
-    wire [4:0] c;
+        wire [3:0] G;
+        wire [3:0] P;
+        wire [4:0] c;
 
-    genvar i;
-    generate
-        for(i = 0; i<4; i=i+1)begin
-            assign G[i] = a[i] & b[i];
-            assign P[i] = a[i] ^ b[i];
-        end
-    endgenerate
+        genvar i;
+        generate
+            for(i = 0; i<4; i=i+1)begin
+                assign G[i] = a[i] & b[i];
+                assign P[i] = a[i] ^ b[i];
+            end
+        endgenerate
 
-    assign c[0] = c_in;
-    assign c[1] = G[0] | P[0] & c[0];
-    // assign c[2] = G[1] | P[1] & c[1];
-    assign c[2] = G[1] | P[1] & G[0] | P[1] & P[0] & c[0];
-    assign c[3] = G[2] | P[2] & G[1] | P[2] & P[1] & G[0] | P[2] & P[1] & P[0] & c[0];
-    assign c[4] = G[3] | P[3] & G[2] | P[3] & P[2] & G[1] | P[3] & P[2] & P[1] & G[0] | P[3] & P[2] & P[1] & P[0] & c[0];
-    assign c_out = c[4];
+        assign c[0] = c_in;
+        assign c[1] = G[0] | P[0] & c[0];
+        // assign c[2] = G[1] | P[1] & c[1];
+        assign c[2] = G[1] | P[1] & G[0] | P[1] & P[0] & c[0] ;
+        assign c[3] = G[2] | P[2] & G[1] | P[2] & P[1] & G[0] | 
+                      P[2] & P[1] & P[0] & c[0] ;
+        assign c[4] = G[3] | P[3] & G[2] | P[3] & P[2] & G[1] | 
+                      P[3] & P[2] & P[1] & G[0] | P[3] & P[2] & P[1] & P[0] & c[0] ;
+        assign c_out = c[4];
 
-    generate
-        for(i = 0; i<4; i=i+1)begin
-            assign s[i] = P[i] ^ c[i];
-        end
-    endgenerate
+        generate
+            for(i = 0; i<4; i=i+1)begin
+                assign s[i] = P[i] ^ c[i];
+            end
+        endgenerate
     
     endmodule
     ```
