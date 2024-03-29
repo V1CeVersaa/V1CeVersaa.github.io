@@ -139,8 +139,6 @@ nav:
       - Hash: Computer Science/Algorithm/05 Hash.md
     - System:
       - Computer Science/System/index.md
-      - Assembly: Computer Science/System/Assembly.md
-      - Verilog: Computer Science/System/Verilog.md
       - CSAPP: 
         - Computer Science/System/CSAPP/CSAPP.md
         - A Tour of Computer Systems: Computer Science/System/CSAPP/Chapter1.md
@@ -153,6 +151,8 @@ nav:
         # - Exceptional Control Flow: Computer Science/System/CSAPP/Chapter8.md
         # - Virtual Memory: Computer Science/System/CSAPP/Chapter9.md
         # - System-Level I/O: Computer Science/System/CSAPP/Chapter10.md
+      - Assembly: Computer Science/System/Assembly.md
+      - Verilog: Computer Science/System/Verilog.md
         
       # - 计算机系统 I: Computer Science/System/System1.md
     - Web:
