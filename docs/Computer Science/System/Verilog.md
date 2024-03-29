@@ -155,7 +155,7 @@ Verilog 这种硬件描述语言都基于基本的硬件逻辑之上，因此 Ve
 
 
 
-if-else 必须在always块中使用，并且输出必须是reg类型。但是在always@(*)中，内部的reg被综合成wire类型
+if-else 必须在always块中使用，并且输出必须是reg类型。但是在`always@(*)`中，内部的reg被综合成wire类型
 
 ### 1.2 复合多路选择器/Cascaded Mux
 
@@ -337,7 +337,7 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
         assign c[3] = G[2] | P[2] & G[1] | P[2] & P[1] & G[0] | 
                       P[2] & P[1] & P[0] & c[0] ;
         assign c[4] = G[3] | P[3] & G[2] | P[3] & P[2] & G[1] | 
-                      P[3] & P[2] & P[1] & G[0] | P[3] & P[2] & P[1] & P[0] & c[0] ;
+                      P[3] & P[2] & P[1] & G[0] | P[3] & P[2] & P[1] & P[0] & c[0];
         assign c_out = c[4];
 
         generate
