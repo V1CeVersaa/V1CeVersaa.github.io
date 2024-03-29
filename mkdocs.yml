@@ -142,7 +142,7 @@ nav:
       - Assembly: Computer Science/System/Assembly.md
       - Verilog: Computer Science/System/Verilog.md
       - CSAPP: 
-        - Computer Science/System/CSAPP.md
+        - Computer Science/System/CSAPP/CSAPP.md
         - A Tour of Computer Systems: Computer Science/System/CSAPP/Chapter1.md
         - Presenting and Manipulating Information: Computer Science/System/CSAPP/Chapter2.md
         - Machine-Level Representation of Programs: Computer Science/System/CSAPP/Chapter3.md
