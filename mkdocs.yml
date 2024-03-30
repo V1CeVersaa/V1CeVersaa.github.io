@@ -144,13 +144,16 @@ nav:
         - A Tour of Computer Systems: Computer Science/System/CSAPP/Chapter1.md
         - Presenting and Manipulating Information: Computer Science/System/CSAPP/Chapter2.md
         - Machine-Level Representation of Programs: Computer Science/System/CSAPP/Chapter3.md
-        # - Processor Architecture: Computer Science/System/CSAPP/Chapter4.md
-        # - Optimizing Program Performance: Computer Science/System/CSAPP/Chapter5.md
-        # - The Memory Hierarchy: Computer Science/System/CSAPP/Chapter6.md
-        # - Linking: Computer Science/System/CSAPP/Chapter7.md
-        # - Exceptional Control Flow: Computer Science/System/CSAPP/Chapter8.md
-        # - Virtual Memory: Computer Science/System/CSAPP/Chapter9.md
-        # - System-Level I/O: Computer Science/System/CSAPP/Chapter10.md
+        - Processor Architecture: Computer Science/System/CSAPP/Chapter4.md
+        - Optimizing Program Performance: Computer Science/System/CSAPP/Chapter5.md
+        - The Memory Hierarchy: Computer Science/System/CSAPP/Chapter6.md
+        - Linking: Computer Science/System/CSAPP/Chapter7.md
+        - Exceptional Control Flow: Computer Science/System/CSAPP/Chapter8.md
+        - Virtual Memory: Computer Science/System/CSAPP/Chapter9.md
+        - System-Level I/O: Computer Science/System/CSAPP/Chapter10.md
+        - Network Programming: Computer Science/System/CSAPP/Chapter11.md
+        - Concurrent Programming: Computer Science/System/CSAPP/Chapter12.md
+        - Supplement: ./Computer Science/System/CSAPP/Supplement.md
       - Assembly: Computer Science/System/Assembly.md
       - Verilog: Computer Science/System/Verilog.md
         
