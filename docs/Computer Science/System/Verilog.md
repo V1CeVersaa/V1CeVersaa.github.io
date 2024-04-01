@@ -50,7 +50,7 @@ Verilog 这种硬件描述语言都基于基本的硬件逻辑之上，因此 Ve
 - **`wire`**
   用于声明线网型数据。`wire` 本质上对应着一根没有任何其他逻辑的导线，仅仅将输入自身的信号原封不动地传递到输出端。该类型数据用来表示以 `assign` 语句内赋值的组合逻辑信号，其默认初始值是 Z（高阻态）。
 
-  `wire` 是 Verilog 的默认数据类型。也就是说，对于没有显式声明类型的信号，Verilog 一律将其默认为 `wire` 类型。
+  `wire` 是 Verilog 的**默认数据类型**。也就是说，对于没有显式声明类型的信号，Verilog 一律将其默认为 `wire` 类型。
 
 - **`reg`**
   用于声明在 `always` 语句内部进行赋值操作的信号。一般而言，`reg` 型变量对应着一种存储单元，其默认初始值是 X（未知状态）。为了避免可能的错误，凡是在 `always` 语句内部被赋值的信号，都应该被定义成 `reg` 类型。
@@ -70,7 +70,30 @@ Verilog 这种硬件描述语言都基于基本的硬件逻辑之上，因此 Ve
 
 算数运算符：
 
-### 2.4 内置组合逻辑门
+### 2.4 模块：结构与例化
+
+Verilog 的基本单元就是**模块**，模块是具有输入输出端口的逻辑块，可以代表一个物理器件，也可以代表一个复杂的逻辑系统，比如基础逻辑门器件或者通用的逻辑单元。一个数字电路系统一般由一个或者多个模块组成，模块化设计将总的逻辑功能分块实现，通过模块之间的互联关系实现所需要的整体系统需求。
+
+#### 2.4.1 模块结构
+
+所有模块以关键词 `module` 开始，以关键词 `endmodule` 结束，从 `module` 开始到第一个分号的部分是**模块声明**，类似于 C 中的函数声明，包括了模块名称、参数列表与输入输出口列表。模块内部可以包括内部变量声明、数据流赋值语句 `assign`、过程赋值语句 `always` 以及底层模块例化。
+
+**端口**是模块与外界交互的接口，对于外部环境来说，模块内部的信号与逻辑都是不可见的，端口的存在允许我们将端口视为一个黑盒，只需要正确链接端口并且了解模块作用，而不需要关心模块内部实现细节。端口的类型有三种：输入端口 `input`，输出端口 `output`，和双向端口 `inout`。端口会被默认声明为 `wire` 类型，如果声明为 `reg` 类型就不能省略对应的 `reg` 声明。
+
+模块名与模块输入输出列表之间可以加入形如 `#(parameter 参数=默认值)` 的**参数列表**，参数可以有多个，拿逗号隔开，可以提供默认值也可以不提供默认值。
+
+下面举个小小的例子，模块内部的内容就省略了吧：
+
+```verilog
+module example #(
+    parameter LENGTH = 32,
+    parameter TIMES = 8
+)(
+    input [LENGTH-1:0] a,
+    input reg rs1, rs2,
+    output [LENGTH-1:0] s
+);
+```
 
 ### 2.5 Verilog 语句
 
@@ -111,7 +134,7 @@ Verilog 这种硬件描述语言都基于基本的硬件逻辑之上，因此 Ve
         input I1,
         input S,
         output O
-        );
+    );
         wire S0_n;
         NOT not0 (S0_n, S);
         // assign S0_n = ~S;
@@ -129,7 +152,7 @@ Verilog 这种硬件描述语言都基于基本的硬件逻辑之上，因此 Ve
         input [1:0] I,
         input S,
         output O
-        );
+    );
         assign O = I[0] & ~S | I[1] & S;
     ```
     并且这种写法还需要注意优先级的问题，Verilog的优先级是`~`>`&`>`|`，所以这里的写法是正确的。
@@ -149,7 +172,7 @@ Verilog 这种硬件描述语言都基于基本的硬件逻辑之上，因此 Ve
         input I1,
         input S,
         output O
-        );
+    );
         assign O = S ? I1 : I0;
     ```
 
@@ -170,11 +193,55 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
 
 ![alt text](images/img-Verilog/5.png)
 
+=== "index版本"
+
+    好看一点并且比较符合**选择**想法的写法。
+
+    ```verilog
+    module SegDecoder_new (
+        input wire [3:0] data,
+        input wire point,
+        input wire LE,
+        output wire a,
+        output wire b,
+        output wire c,
+        output wire d,
+        output wire e,
+        output wire f,
+        output wire g,
+        output wire p
+    );
+
+        wire [6:0] segs [15:0];
+        assign segs[0] = 7'b0000001;
+        assign segs[1] = 7'b1001111;
+        assign segs[2] = 7'b0010010;
+        assign segs[3] = 7'b0000110;
+        assign segs[4] = 7'b1001100;
+        assign segs[5] = 7'b0100100;
+        assign segs[6] = 7'b0100000;
+        assign segs[7] = 7'b0001111;
+        assign segs[8] = 7'b0000000;
+        assign segs[9] = 7'b0000100;
+        assign segs[10] = 7'b0001000;
+        assign segs[11] = 7'b1100000;
+        assign segs[12] = 7'b0110001;
+        assign segs[13] = 7'b1000010;
+        assign segs[14] = 7'b0110000;
+        assign segs[15] = 7'b0111000;
+
+        assign {a, b, c, d, e, f, g} = {7{LE}} | segs[data];
+
+        assign p = ~point;
+
+    endmodule //SegDecoder
+    ```
 
 === "与或版本"
     这个是对应的图片，非常的朴素。
     ![alt text](images/img-Verilog/7.png)
     但是这个是老实人写法，就直接按照真值表画电路硬刚，千万别这么写，丑死了。
+
     ```verilog
     module SegDecoder (
         input wire [3:0] data,
@@ -215,49 +282,6 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
         assign g = LE | (~data[0] & ~data[1] &  data[2] &  data[3] |
                           data[0] &  data[1] &  data[2] & ~data[3] |
                          ~data[1] & ~data[2] & ~data[3] );
-        assign p = ~point;
-
-    endmodule //SegDecoder
-    ```
-
-=== "index版本"
-
-    好看一点了。
-    ```verilog 
-    module SegDecoder_new (
-        input wire [3:0] data,
-        input wire point,
-        input wire LE,
-        output wire a,
-        output wire b,
-        output wire c,
-        output wire d,
-        output wire e,
-        output wire f,
-        output wire g,
-        output wire p
-    );
-    
-        wire [6:0] segs [15:0];
-        assign segs[0] = 7'b0000001;
-        assign segs[1] = 7'b1001111;
-        assign segs[2] = 7'b0010010;
-        assign segs[3] = 7'b0000110;
-        assign segs[4] = 7'b1001100;
-        assign segs[5] = 7'b0100100;
-        assign segs[6] = 7'b0100000;
-        assign segs[7] = 7'b0001111;
-        assign segs[8] = 7'b0000000;
-        assign segs[9] = 7'b0000100;
-        assign segs[10] = 7'b0001000;
-        assign segs[11] = 7'b1100000;
-        assign segs[12] = 7'b0110001;
-        assign segs[13] = 7'b1000010;
-        assign segs[14] = 7'b0110000;
-        assign segs[15] = 7'b0111000;
-
-        assign {a, b, c, d, e, f, g} = {7{LE}} | segs[data];
-
         assign p = ~point;
 
     endmodule //SegDecoder
@@ -378,3 +402,5 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
     
     endmodule
     ```
+
+## 1.5 七段数码管驱动
