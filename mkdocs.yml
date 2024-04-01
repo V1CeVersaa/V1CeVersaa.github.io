@@ -104,6 +104,7 @@ extra:
 
 plugins:
   - search
+  - statistics
 
   # - changelog
   # - search
