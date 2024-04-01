@@ -70,15 +70,17 @@ Verilog 这种硬件描述语言都基于基本的硬件逻辑之上，因此 Ve
 
 算数运算符：
 
-### 2.4 Verilog 语句
+### 2.4 内置组合逻辑门
 
-#### 2.4.1 连续赋值 `assign`
+### 2.5 Verilog 语句
 
-#### 2.4.2 过程赋值 `always`/`initial`
+#### 2.5.1 连续赋值 `assign`
+
+#### 2.5.2 过程赋值 `always`/`initial`
 
 除了直接使用信号作为敏感变量，Verilog 还支持通过使用 `posedge` 和 `negedge` 关键字将电平变化作为敏感变量。其中 `posedge` 对应上升沿，`negedge` 对应下降沿。我们将电平从低电平变成高电平的时刻称为**上升沿**，从高电平变为低电平的时刻称为**下降沿**.
 
-#### 2.4.3 阻塞赋值与非阻塞赋值
+#### 2.5.3 阻塞赋值与非阻塞赋值
 
 - 阻塞赋值
 
@@ -88,7 +90,7 @@ Verilog 这种硬件描述语言都基于基本的硬件逻辑之上，因此 Ve
 
   非阻塞赋值属于并行执行语句，即下一条语句的执行和当前语句的执行是同时进行的，它不会阻塞位于同一个语句块中后面语句的执行。非阻塞赋值语句使用小于等于号 <= 作为赋值符。
 
-#### 2.4.4 `generate`语句
+#### 2.5.4 `generate`语句
 
 
 
@@ -265,6 +267,7 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
 
 
 === "1-bit full adder"
+
     ```verilog
     module Adder(
         input a,
@@ -304,6 +307,33 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
         endgenerate
         assign c_out = c[LENGTH];
     
+    endmodule
+    ```
+
+=== "sub-adder"
+
+    ```verilog
+    module AddSubers #(
+        parameter LENGTH = 32
+    )(
+        input [LENGTH-1:0] a,
+        input [LENGTH-1:0] b,
+        input do_sub,
+        output [LENGTH-1:0] s,
+        output c
+    );
+        //fill your code here
+        wire [LENGTH-1:0] res_adder;
+        assign res_adder = {LENGTH{do_sub}};
+        wire [LENGTH-1:0] tmp;
+        assign tmp = res_adder ^ b;
+        wire [LENGTH-1:0] added;
+        wire [LENGTH-1:0] res;
+        assign res = {{(LENGTH-1){1'b0}},do_sub};
+        wire [1:0]carry;
+        Adders #(.LENGTH(LENGTH))adder(.a(a), .b(tmp), .c_in(1'b0), .s(added), .c_out(carry[1]));
+        Adders #(.LENGTH(LENGTH))adder1(.a(added), .b(res), .c_in(1'b0), .s(s), .c_out(carry[0]));
+        assign c = |carry;
     endmodule
     ```
 
