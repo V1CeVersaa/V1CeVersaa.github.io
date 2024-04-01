@@ -154,6 +154,8 @@ nav:
         - Network Programming: Computer Science/System/CSAPP/Chapter11.md
         - Concurrent Programming: Computer Science/System/CSAPP/Chapter12.md
         - Supplement: ./Computer Science/System/CSAPP/Supplement.md
+      - Lab Record:
+        - ZJU System I: Computer Science/System/Lab Record/ZJU System I.md
       - Assembly: Computer Science/System/Assembly.md
       - Verilog: Computer Science/System/Verilog.md
         
