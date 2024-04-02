@@ -53,9 +53,9 @@ Verilog 这种硬件描述语言都基于基本的硬件逻辑之上，因此 Ve
   `wire` 是 Verilog 的**默认数据类型**。也就是说，对于没有显式声明类型的信号，Verilog 一律将其默认为 `wire` 类型。
 
 - **`reg`**
-  用于声明在 `always` 语句内部进行赋值操作的信号。一般而言，`reg` 型变量对应着一种存储单元，其默认初始值是 X（未知状态）。为了避免可能的错误，凡是在 `always` 语句内部被赋值的信号，都应该被定义成 `reg` 类型。
+  用于声明在 `always` 语句内部进行赋值操作的信号。一般而言，`reg` 型变量对应着一种存储单元，可以在赋值之间存储数据，其默认初始值是 X（未知状态）。为了避免可能的错误，凡是在 `always` 语句内部被赋值的信号，都应该被定义成 `reg` 类型。
 
-  如果 `always` 描述的是组合逻辑，那么 `reg` 就会综合成一根线，如果 `always` 描述的是时序逻辑，那么 `reg` 才会综合成一个寄存器。
+  如果 `always` 描述的是组合逻辑，那么 `reg` 就会综合成一根线，如果 `always` 描述的是时序逻辑，那么 `reg` 才会综合成一个寄存器/触发器。
 
 ### 2.3 运算符
 
@@ -113,5 +113,63 @@ module example #(
 
   非阻塞赋值属于并行执行语句，即下一条语句的执行和当前语句的执行是同时进行的，它不会阻塞位于同一个语句块中后面语句的执行。非阻塞赋值语句使用小于等于号 <= 作为赋值符。
 
-#### 2.5.4 `generate`语句
+#### 2.5.4 `generate` 语句
+
+
+## Chapter 3 SystemVerilog 高级语法
+
+### 3.1 `logic` 与 `bit`
+
+除了熟悉的 0 与 1 之外，还拥有**未知值/Unknown** (x) 与**高阻态/High-impedance** (Z) 的值的类型叫做 **4 状态类型/4-state types**。注意到常用的 `reg` 只可以在像 `initial` 和 `always` 的过程赋值中被驱动，而 `wire` 只可以在连续赋值 `assign` 中被驱动，这就很不方便，所以 SystemVerilog 就引入了一种新的4状态类型 `logic`，它的默认值为 x，可以出现在过程赋值与连续赋值之中。
+
+在一般的测试程序之中，我们并不需要未知值与高阻态值，所以衍生了只有 0 和 1 的 **2 状态类型**。使用 2 状态类型有很多好处，比如减少内存使用、提升模拟速度，因而在数字设计中很好用。当 4 状态类型转化为 2 状态类型的时候，未知值和高阻态都会被转换成 0。 SystemVerilog 引入的最重要的 2 状态类型就是 `bit`，表示单独 1 位的值（电平）。
+
+### 3.2 `typedef` 语法
+
+### 3.3 `enum` 枚举
+
+直接上代码。
+
+```verilog
+typedef enum logic [2:0] {S0, S1, S2, S3, S4, S5, S6, S7} state_t;
+
+state_t state;
+always@(pposedge clk or negedge rstn)begin
+    if(~rstn)begin
+        state <= S0;
+    end else begin
+        case(state)
+            S0:if(X) state<=S1; else state<=S0; 
+            S1:if(X) state<=S2; else state<=S0;
+            S2:if(X) state<=S3; else state<=S0;
+            S3:if(X) state<=S3; else state<=S4;
+            S4:if(X) state<=S1; else state<=S5;
+            S5:if(X) state<=S6; else state<=S0;
+            S6:if(X) state<=S2; else state<=S7;
+            S7:if(X) state<=S1; else state<=S0;
+        endcase
+    end
+end
+```
+
+需要逐句逐字分析的只有不几行：
+
+- `enum` 定义了一个枚举类型，`logic [2:0]` 表示这个枚举类型是一个3位的逻辑类型，所有的枚举变量和长度都是3位数据。
+- `{S0, S1, S2, S3, S4, S5, S6, S7}` 一次性定义了枚举常量，从左到右依次是 0-7 的逻辑常量，这就避免了显示提供立即数的麻烦。
+- `typedef` 和 `state_t` 是类型定义，将这个枚举变量定义为 `state_t` 类型，使用 `state_t` 类型的变量 `state` 代替了原来的 `logic [2:0]` 类型，就不用费尽心思保持位宽相同了。
+- 对于定义的枚举变量 `state`，其可以存储定义的枚举类型的任意一个值。
+
+### 3.4 数组
+
+### 3.5 `queue` 队列
+
+??? info "ZJU System 1"
+  `queue` 语法仅用于仿真，不要用它实现电路，但是作为基本数据结构辅助还是很好的，
+
+### 3.6 结构
+
+### 3.7 `package` 包
+
+
+
 
