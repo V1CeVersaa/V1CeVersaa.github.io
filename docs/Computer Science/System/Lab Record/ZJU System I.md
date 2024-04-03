@@ -210,6 +210,7 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
                 Adder adder(.a(a[i]), .b(b[i]), .c_in(c[i]), .s(s[i]), .c_out(c[i+1]));
             end      
         endgenerate
+
         assign c_out = c[LENGTH];
     
     endmodule
@@ -227,18 +228,12 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
         output [LENGTH-1:0] s,
         output c
     );
-        //fill your code here
         wire [LENGTH-1:0] res_adder;
         assign res_adder = {LENGTH{do_sub}};
         wire [LENGTH-1:0] tmp;
         assign tmp = res_adder ^ b;
-        wire [LENGTH-1:0] added;
-        wire [LENGTH-1:0] res;
-        assign res = {{(LENGTH-1){1'b0}},do_sub};
-        wire [1:0]carry;
-        Adders #(.LENGTH(LENGTH))adder(.a(a), .b(tmp), .c_in(1'b0), .s(added), .c_out(carry[1]));
-        Adders #(.LENGTH(LENGTH))adder1(.a(added), .b(res), .c_in(1'b0), .s(s), .c_out(carry[0]));
-        assign c = |carry;
+        Adders #(.LENGTH(LENGTH))adder_sub(.a(a), .b(tmp), .c_in(do_sub), .s(s), .c_out(c));
+    
     endmodule
     ```
 
@@ -284,4 +279,51 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
     endmodule
     ```
 
-# 5 七段数码管驱动
+## 5 七段数码管驱动
+
+## 6 有限状态机
+
+说是有限状态机，其实就是完成 C 程里面一个常见的小程序，记录输入 a 的数量，当连续输入三个 a 的时候，结束程序，当输入 b 的时候，计数清零。
+
+=== "FSM"
+
+    ```verilog
+    module FSM(
+        input rstn,
+        input clk,
+        input a,
+        input b,
+        output [1:0] state
+    );
+    
+    typedef enum logic [1:0] {st0, st1, st2, st3} fsm_state_t;
+    fsm_state_t state_s;
+    
+    always @(posedge clk or negedge rstn) begin
+        if(~rstn)
+            state_s <= st0;
+        else begin
+            case(state_s)
+                st0: begin
+                    if(a) state_s <= st1; 
+                    else if(b) state_s <= st0;
+                end
+                st1: begin
+                    if(a) state_s <= st2;
+                    else if(b) state_s <= st0;
+                end
+                st2: begin
+                    if(a) state_s <= st3;
+                    else if(b) state_s <= st0;
+                end
+                st3: state_s <= st3;
+            endcase
+        end
+    end
+
+    assign state = state_s;
+
+    endmodule
+    ```
+
+
