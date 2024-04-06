@@ -325,11 +325,160 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
 
     endmodule
     ```
-=== "RTFSC"
+=== "RTFSC: ClkDiv"
 
-    读源码，还没读，咕咕咕
+    实现了一个分频器，将输入的时钟信号分频为 1/2 的幂的频率输出。
+
+    ```Verilog 
+    module ClkDiv(
+        input clk,
+        input rstn,
+        output reg [31:0] clk_div
+    );
+        always@(posedge clk)begin
+            if(~rstn)clk_div<=32'b0;
+            else clk_div<=clk_div+32'b1;
+        end
+
+    endmodule
+    ```
+
+    很简单有效的实现，`clk_div[0]` 每个时钟周期翻转一次，其频率是时钟频率的一半，而翻转的时候会向上产生进位，从而 `clk_div[1]` 的频率是 `clk_div[0]` 的 1/2，也就是时钟频率的 1/4，后边的频率依次减半。
+
+=== "RTFSC：Debouncer"
+    
+    ```Verilog
+    module Debouncer ( // repo/sys-project/lab3-1/syn/Debouncer.v
+        input  wire  clk,//100Mhz 2^10
+        input  wire  btn,
+        output wire  btn_dbnc
+    );
+
+        reg [7:0] shift = 0;
+
+        always @ (posedge clk) begin
+            shift <= {shift[6:0], btn};
+        end
+
+        assign btn_dbnc = &shift;
+    endmodule
+    ```
+   
+=== "RTFSC：PosSample"
+
+    ```Verilog
+    module PosSample ( // repo/sys-project/lab3-1/syn/Debouncer.v
+        input clk,
+        input data,
+        output sample
+    );
+
+        reg old_data;
+        always@(posedge clk)begin
+            old_data <= data;
+        end
+
+        assign sample = ~old_data & data;
+
+    endmodule
+    ```
 
 ## 7 计数器 & 定时器
 
+=== "Cnt ver1"
 
+    丑陋版，因为当初做的时候改了好多，这种形式比较好 debug，当然可能用枚举会好看一丢丢，不过好看不到哪里去。
+    ```verilog
+    module Cnt #(
+        parameter BASE = 10,
+        parameter INITIAL = 0
+    ) (
+        input clk,
+        input rstn,
+        input low_co,
+        input high_rst,
+        output co,
+        output reg [3:0] cnt
+    );
 
+    logic [3:0] state;
+    reg carryFlag;
+    always @(posedge clk)begin
+        if (~rstn)begin
+            state <= {INITIAL[3], INITIAL[2], INITIAL[1], INITIAL[0]};
+        end else if (high_rst)begin
+            state <= 4'b0;
+        end else if (low_co)
+            case(state)
+                4'b0: begin 
+                    state <= 4'b1;
+                    carryFlag = 0;
+                end
+                4'b1: state <= 4'b10;
+                4'b10: state <= 4'b11;
+                4'b11: state <= 4'b100;
+                4'b100: state <= 4'b101;
+                4'b101: state <= 4'b110;
+                4'b110: state <= 4'b111;
+                4'b111: state <= 4'b1000;
+                4'b1000: begin 
+                    state <= 4'b1001;
+                    carryFlag = 0;
+                end
+                4'b1001: begin
+                    state <= 4'b0;
+                    carryFlag = 1;
+                end
+                default: state <= state + 4'b1;
+            endcase
+        else carryFlag = 0;
+    end
+
+    assign cnt = state;
+    assign co = carryFlag;
+
+    endmodule
+    ```
+=== "Cnt_24 ver1"
+
+    还有优化的空间，但是最重要的想法在于**全局使能信号**，只有当低位有进位的时候，也就是 `low_co` 为 `1` 的时候，传给高位的信号（包括低位向高位的信号）才会有意义，否则就有可能出现乱进位的情况。
+    ```verilog
+    module Cnt2num #(
+        parameter BASE = 24,
+        parameter INITIAL = 16
+    )(
+        input clk,
+        input rstn,
+        input high_rst,
+        input low_co,
+        output co,
+        output [7:0] cnt
+    );
+    
+        localparam HIGH_BASE = 10;
+        localparam LOW_BASE  = 10;
+        localparam HIGH_INIT = INITIAL/10;
+        localparam LOW_INIT  = INITIAL%10;
+        localparam HIGH_CO   = (BASE-1)/10;
+        localparam LOW_CO    = (BASE-1)%10;
+
+        wire low_carry, low_carry_flag;
+        assign low_carry = low_co & low_carry_flag;
+        reg HIGH_rst, tmp;
+        reg [7:0] ALL_CO;
+        assign ALL_CO = {HIGH_CO[3], HIGH_CO[2], HIGH_CO[1], HIGH_CO[0], LOW_CO[3], LOW_CO[2], LOW_CO[1], LOW_CO[0]};
+        always @(posedge clk) begin
+            if(cnt == ALL_CO)begin
+                HIGH_rst = 1'b1;
+            end else begin
+                HIGH_rst = 1'b0;
+            end
+        end
+        assign co = tmp | HIGH_rst;
+    
+        Cnt #(.BASE(HIGH_BASE), .INITIAL(HIGH_INIT))cnt_high(.clk(clk), .rstn(rstn), .high_rst(HIGH_rst), .low_co(low_carry), .co(tmp), .cnt(cnt[7:4]));
+        Cnt #(.BASE(LOW_BASE), .INITIAL(LOW_INIT))cnt_low(.clk(clk), .rstn(rstn), .high_rst(HIGH_rst), .low_co(low_co), .co(low_carry_flag), .cnt(cnt[3:0]));
+    
+    
+    endmodule
+    ```
