@@ -31,7 +31,6 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$
 使用 vim 打开 `~/.zshrc`，修改 `ZSH_THEME` 为 `ZSH_THEME="half-life"`：
 ```shell
 vim ~/.zshrc
-
 ZSH_THEME="half-life"       // 这步是在 vim 里边写入的
 ```
 
@@ -58,7 +57,7 @@ tar xzvf nvim-linux64.tar.gz
 vim ~/.zshrc
 export PATH=$PATH:~/nvim-linux64/bin    // 这步是在 vim 里边写入的
 source ~/.zshrc
-sudo apt install git make pip python npm node cargo ripgrep
+sudo apt install git make python3 pip npm nodejs cargo ripgrep
 LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh)
 nvim ~/.zshrc
 export PATH=$PATH:~/.local/bin          // 这步是在 vim 里边写入的
