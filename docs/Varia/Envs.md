@@ -183,3 +183,37 @@ make verilator
         cd $(PK_BUILD); make -j$(nproc)
         cd $(PK_BUILD); make install
     ```
+
+### gcc 版本切换
+
+首先添加 ppa 源：
+
+```Shell
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo -E add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt-get update
+```
+
+下面利用 `update-alternatives` 进行 gcc 版本切换：
+
+```Shell
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 70 --slave /usr/bin/g++ g++ /usr/bin/g++-13
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 60 --slave /usr/bin/g++ g++ /usr/bin/g++-11
+sudo update-alternatives --config gcc
+```
+
+之后按照提示选择 gcc 版本即可。
+
+添加不了就拉倒，手动装就好了，但是可能用不了几个版本了，因为这样默认的 gcc 就是 gcc-13 了，但是仍然不建议手动编译安装，因为会出现坑爹的情况。
+
+```Shell
+mkdir package && cd package
+wget http://ftp.gnu.org/gnu/gcc/gcc-13.1.0/gcc-13.1.0.tar.gz
+tar xf gcc-13.1.0.tar.gz
+cd gcc-13.1.0/
+./contrib/download_prerequisites
+mkdir build && cd build
+../configure -enable-checking=release -enable-languages=c,c++ -disable-multilib
+sudo make -j8           // 给我编译半小时！
+sudo make install
+```
