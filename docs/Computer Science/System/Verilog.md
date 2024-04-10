@@ -204,6 +204,18 @@ always@(posedge clk or posedge rstn) // 上升沿触发和上升沿复位
 
 #### 2.5.4 `generate` 语句
 
+为了提升代码变量的局部性（毕竟对于常用的迭代参数，最好是每一个 `generate` 块对应一个 `genvar` 变量），所以我们常用下面的语法：
+
+```verilog
+generate
+    genvar i;
+    for(i=0; i<iteration_times; i=i+1)begin
+        // do something
+    end
+endgenerate
+```
+
+在使用 `generate` 语句之后，Verilog 会在对应的模块内生成一个专用的命名空间 `genblk`，参数式编程下，相同的模块会对应不同的名字，比如 `genblk[i]:module_name`，这就不需要担心命名冲突的问题。
 
 ### 2.6 元件的 Verilog 实现
 

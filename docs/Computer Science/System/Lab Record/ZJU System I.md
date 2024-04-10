@@ -482,3 +482,131 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
     
     endmodule
     ```
+
+## 8 乘法器
+
+=== "Multipler ver1"
+
+    ```verilog
+    module Multiplier #(
+        parameter LEN = 32
+    )(
+        input clk,
+        input rst,
+        input [LEN-1:0] multiplicand,
+        input [LEN-1:0] multiplier,
+        input start,
+    
+        output [LEN*2-1:0] product,
+        output finish
+    );
+    
+        localparam PRODUCT_LEN = LEN*2;
+        logic [LEN-1:0] multiplicand_reg;
+        logic [PRODUCT_LEN-1:0] product_reg;
+    
+        localparam CNT_LEN = $clog2(LEN);
+        localparam CNT_NUM = LEN - 1;
+        typedef enum logic [1:0] {IDLE, WORK, FINAL} fsm_state;
+        fsm_state fsm_state_reg;
+        logic [CNT_LEN-1:0] work_cnt;
+        
+        logic finish_reg;
+        logic start_load;
+        assign product = product_reg;
+        assign finish = finish_reg;
+
+        always @(posedge clk or posedge rst)begin
+            if(rst)begin
+                fsm_state_reg <= IDLE;
+            end else begin
+                if(start) begin
+                   start_load = 1'b1; 
+                end
+                if(start_load)begin
+                    case(fsm_state_reg)
+                        IDLE:begin
+                            multiplicand_reg <= multiplicand;
+                            product_reg[PRODUCT_LEN-1:LEN] = {LEN{1'b0}};
+                            product_reg[LEN-1:0] = multiplier; 
+                            fsm_state_reg <= WORK;
+                            start_load = 1'b1;
+                            work_cnt <= {CNT_LEN{1'b0}};
+                        end
+                        WORK:begin
+                            if(product_reg[0])begin
+                                product_reg[PRODUCT_LEN-1:LEN] = product_reg[PRODUCT_LEN-1:LEN] + multiplicand_reg;
+                                work_cnt <= work_cnt + 1;
+                                product_reg = product_reg >> 1;
+                                product_reg[PRODUCT_LEN-1] = (product_reg[PRODUCT_LEN-2:LEN-1] < multiplicand_reg); 
+                            end else begin
+                                product_reg = product_reg >> 1;
+                                work_cnt <= work_cnt + 1;
+                            end
+                            if(work_cnt == CNT_NUM[CNT_LEN-1:0]) begin
+                                fsm_state_reg <= FINAL;
+                                finish_reg <= 1'b1;
+                            end
+                        end
+                        FINAL:begin
+                            finish_reg <= 1'b0;
+                            start_load = 1'b0;
+                            fsm_state_reg <= IDLE;
+                        end
+                        default: fsm_state_reg <= IDLE;
+                    endcase
+                end
+            end 
+        end
+
+    endmodule
+    ```
+
+=== "RTFSC: judge"
+
+    ```verilog
+    import "DPI-C" function int mul_judge(
+        input int unsigned multiplicand,
+        input int unsigned multiplier,
+        input longint unsigned product
+    );
+
+    module Judge (
+        input clk,
+        input rstn,
+        input [31:0] multiplicand,
+        input [31:0] multiplier,
+        input start,
+        input [63:0] product,
+        input finish,
+        output reg error
+    );
+    
+        reg [31:0] multiplicand_reg;
+        reg [31:0] multiplier_reg;
+        always@(posedge clk or negedge rstn)begin
+            if(~rstn)begin
+                multiplicand_reg <= 32'b0;
+                multiplier_reg <= 32'b0;
+            end else if(start)begin
+                multiplicand_reg <= multiplicand;
+                multiplier_reg <= multiplier;
+            end
+        end
+    
+        always@(posedge clk or negedge rstn)begin
+            if(~rstn)begin
+                error <= 1'b0;
+            end else begin
+                if(finish)begin
+                    if(mul_judge(multiplicand,multiplier,product)==32'b1)begin
+                        error <= 1'b0;
+                    end else begin
+                        error <= 1'b1;
+                    end
+                end
+            end
+        end
+    
+    endmodule
+    ```
