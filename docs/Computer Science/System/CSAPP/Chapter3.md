@@ -73,3 +73,31 @@
 ### 3.6.6 Switch
 
 ## 3.7 Procedures
+
+### 3.7.1 The Run-Time Stack
+
+### 3.7.2 Control Transfer
+
+### 3.7.3 Data Transfer
+
+x86-64中，可以使用寄存机最多传送 6 个整型（包括整数和指针）参数，寄存器的使用是有特殊顺序的，使用的名字取决于要传递的数据类型的大小，比如 64 位的指针类型就可能用到寄存器 `%rdi`，并且这个还是作为第一个参数传递，而 32 位的整数就可能用到寄存器 `%esi`，并且这个还是作为第二个参数传递。下边这个表还是记一下，不然查表很痛苦 ~~（谁愿意看代码的时候被打断呢）~~，不过看多了汇编就会形成肌肉记忆了。
+
+::spantable::
+
+| 操作数大小(位) @span | 参数数量  @span |        |        |        |        |        |
+|----------------|:-----------:|:------:|:------:|:------:|:------:|:------:|
+|                |      1      |   2    |   3    |   4    |   5    |   6    |
+| 64             |   `%rdi`    | `%rsi` | `%rdx` | `%rcx` | `%r8`  | `%r9`  |
+| 32             |   `%edi`    | `%esi` | `%edx` | `%ecx` | `%r8d` | `%r9d` |
+| 16             |    `%di`    | `%si`  | `%dx`  | `%cx`  | `%r8w` | `%r9w` |
+| 8              |   `%dil`    | `%sil` | `%dl`  | `%cl`  | `%r8b` | `%r9b` |
+
+::end-spantable::
+
+### 3.7.4 Local Storage on the Stack
+
+### 3.7.5 Local Storage in Registers
+
+### 3.7.6 Recursive Procedures
+
+## 3.8 Array Allocation and Access

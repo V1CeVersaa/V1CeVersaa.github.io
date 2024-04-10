@@ -61,6 +61,7 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.inlinehilite
   - pymdownx.smartsymbols  #智能符号
+  - neoteroi.spantable
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
@@ -86,6 +87,7 @@ extra_css:
   - css/tasklist.css
   - css/flink.css
   - css/more_changelog.css
+  - css/neoteroi-mkdocs.css
 
 extra_javascript:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
@@ -139,6 +141,7 @@ nav:
       - Algorithm Analysis: Computer Science/Algorithm/01 Algorithm Analysis.md
       - Linear List: Computer Science/Algorithm/02 Linear List.md
       - Trees: Computer Science/Algorithm/03 Trees.md
+      - Heap: Computer Science/Algorithm/04 Heap.md
       - Hash: Computer Science/Algorithm/05 Hash.md
     - System:
       - Computer Science/System/index.md
@@ -159,9 +162,15 @@ nav:
         - Supplement: ./Computer Science/System/CSAPP/Supplement.md
       - Lab Record:
         - ZJU System I: Computer Science/System/Lab Record/ZJU System I.md
+#        - ZJU System II: Computer Science/System/Lab Record/ZJU System II.md
+#        - ZJU System III: Computer Science/System/Lab Record/ZJU System III.md
 #        - NJU ICS PA: Computer Science/System/Lab Record/NJU ICS PA.md
-#        - CMU 15-213: Computer Science/System/Lab Record/CMU 15-213.md
-      - RISC-V: Computer Science/System/RISC-V.md
+        - CMU 15-213: Computer Science/System/Lab Record/CMU-15-213.md
+#        - UCB CS61C: Computer Science/System/Lab Record/UCB CS61C.md
+      - RISC-V: 
+        - Computer Science/System/RISC-V/RISC-V.md
+        - Unprivileged ISA: Computer Science/System/RISC-V/RISC-V-upr.md
+        - Privileged ISA: Computer Science/System/RISC-V/RISC-V-pr.md
       - Verilog: Computer Science/System/Verilog.md
         
       # - 计算机系统 I: Computer Science/System/System1.md

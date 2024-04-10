@@ -34,7 +34,7 @@ Every tree can be transformed into a binary tree with **FirstChild-NextSibling**
 
 A **binary tree** is a tree in which no node can have more than two children.
 
-**Expression Trees**: a binary tree used to represent expressions. Intresting.
+**Expression Trees**: a binary tree used to represent expressions. Interesting.
 
 ### 3.1.1 Node Implementation
 
