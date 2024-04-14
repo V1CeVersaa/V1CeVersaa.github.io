@@ -17,4 +17,5 @@
 - [ ] [Algorithms](./03%20Algorithms.md)
 - [ ] [Number Theory](./04%20Number%20Theory.md)
 - [ ] [Induction and Recursion](./05%20Induction%20and%20Recursion.md)
+- [ ] [Counting](./06%20Counting.md)
 - [ ] [Graph Theory](./06%20Graph%20Theory.md)
