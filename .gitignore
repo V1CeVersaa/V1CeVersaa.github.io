@@ -2,3 +2,4 @@ ProblemSet.md
 .idea
 .vscode
 .fleet
+*.sh
