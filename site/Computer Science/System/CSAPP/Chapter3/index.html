@@ -1,0 +1,2614 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Chapter2/">
+      
+      
+        <link rel="next" href="../Chapter4/">
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>Machine-Level Representation of Programs - V1CeVersa's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.bcfcd587.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=LXGW+WenKai+Screen:300,300i,400,400i,700,700i%7C['Monaspace+Argon+Light',+'JetBrains+Mono',+'LXGW+WenKai+Screen']:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"LXGW WenKai Screen";--md-code-font:"['Monaspace Argon Light', 'JetBrains Mono', 'LXGW WenKai Screen']"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="../../../../css/custom.css">
+    
+      <link rel="stylesheet" href="../../../../css/card.css">
+    
+      <link rel="stylesheet" href="../../../../css/tasklist.css">
+    
+      <link rel="stylesheet" href="../../../../css/flink.css">
+    
+      <link rel="stylesheet" href="../../../../css/more_changelog.css">
+    
+      <link rel="stylesheet" href="../../../../css/neoteroi-mkdocs.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="brown" data-md-color-accent="brown">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-3-machine-level-representation-of-programs" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../.." title="V1CeVersa&#39;s Notebook" class="md-header__button md-logo" aria-label="V1CeVersa's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 4v6l-2-2-2 2V4H9v16h10V4h-2M3 7V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3m2-2v2h2V5H5m0 14h2v-2H5v2m0-6h2v-2H5v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            V1CeVersa's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Machine-Level Representation of Programs
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="brown" data-md-color-accent="brown"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../" class="md-tabs__link">
+          
+  
+    
+  
+  Computer Science
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../Math/" class="md-tabs__link">
+          
+  
+    
+  
+  Math
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../Reading/" class="md-tabs__link">
+          
+  
+    
+  
+  Reading
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../Varia/Learning%20Plan/" class="md-tabs__link">
+          
+  
+    
+  
+  Varia
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="V1CeVersa&#39;s Notebook" class="md-nav__button md-logo" aria-label="V1CeVersa's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 4v6l-2-2-2 2V4H9v16h10V4h-2M3 7V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3m2-2v2h2V5H5m0 14h2v-2H5v2m0-6h2v-2H5v2Z"/></svg>
+
+    </a>
+    V1CeVersa's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Computer Science
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Computer Science
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Programming%20Basis/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Programing Basis
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Programming%20Language/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Programing language
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Algorithm/Algorithms%20and%20Data%20Structure/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Algorithm
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    System
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            System
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_5_2" id="__nav_2_5_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    CSAPP
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_5_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            CSAPP
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CSAPP/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CSAPP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A Tour of Computer Systems
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Presenting and Manipulating Information
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Machine-Level Representation of Programs
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Machine-Level Representation of Programs
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#34-accessing-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 Accessing Information
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35-arithmetic-and-logical-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5 Arithmetic and Logical Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6 Control
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6 Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#361-conditional-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.1 Conditional Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#362-accessing-the-conditional-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.2 Accessing the Conditional Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#363-jump-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.3 Jump Instructions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#364-implementing-conditional-branches" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.4 Implementing Conditional Branches
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6.4 Implementing Conditional Branches">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3641-conditional-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.4.1 Conditional Control
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3642-conditional-move" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.4.2 Conditional Move
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#365-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.5 Loop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#366-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.6 Switch
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#37-procedures" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7 Procedures
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.7 Procedures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#371-the-run-time-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7.1 The Run-Time Stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#372-control-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7.2 Control Transfer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#373-data-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7.3 Data Transfer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#374-local-storage-on-the-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7.4 Local Storage on the Stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#375-local-storage-in-registers" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7.5 Local Storage in Registers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#376-recursive-procedures" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7.6 Recursive Procedures
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#38-array-allocation-and-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8 Array Allocation and Access
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.8 Array Allocation and Access">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#381-basic-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8.1 Basic Principles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#382-pointer-arithmetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8.2 Pointer Arithmetic
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#383-nested-arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8.3 Nested Arrays
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#384-fixed-size-arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8.4 Fixed-Size Arrays
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#385-variable-size-arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8.5 Variable-Size Arrays
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#39-heterogeneous-data-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.9 Heterogeneous Data Structures
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.9 Heterogeneous Data Structures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#391-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.9.1 Structures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#392-unions" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.9.2 Unions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#393-data-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.9.3 Data Alignment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#310-combining-control-and-data-in-machine-level-programs" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.10 Combining Control and Data in Machine-Level Programs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.10 Combining Control and Data in Machine-Level Programs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3101-understanding-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.10.1 Understanding Pointers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3102-using-the-gdb-debugger" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.10.2 Using the GDB Debugger
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3103-out-of-bounds-memory-references-and-buffer-overflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.10.3 Out-of-Bounds Memory References and Buffer Overflow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3104-thwarting-buffer-overflow-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.10.4 Thwarting Buffer Overflow Attacks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3105-supporting-variable-length-stack-frames" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.10.5 Supporting Variable-Length Stack Frames
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#311-floating-point-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11 Floating-Point Code
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.11 Floating-Point Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3111-floating-point-movement-and-conversion-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11.1 Floating-Point Movement and Conversion Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3112-floating-point-code-in-procedures" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11.2 Floating-Point Code in Procedures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3113-floating-point-arithmetic-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11.3 Floating-Point Arithmetic Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3114-defining-and-using-floating-point-constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11.4 Defining and Using Floating-Point Constants
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3115-using-bitwise-operations-in-the-floating-point-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11.5 Using Bitwise Operations in the Floating-Point Code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3116-floating-point-comparison-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11.6 Floating-Point Comparison Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3117-observations-about-floating-point-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11.7 Observations about Floating-Point Code
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Processor Architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Optimizing Program Performance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Memory Hierarchy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Linking
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exceptional Control Flow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtual Memory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter10/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    System-Level I/O
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter11/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Network Programming
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter12/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concurrent Programming
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Supplement/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supplement
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../Lab%20Record/ZJU%20System%20I/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Lab Record
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../RISC-V/RISC-V/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    RISC-V
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Verilog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Verilog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Web/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Web
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../Math/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Math
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../Reading/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Reading
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../Varia/Learning%20Plan/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Varia
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#34-accessing-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 Accessing Information
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35-arithmetic-and-logical-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5 Arithmetic and Logical Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6 Control
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6 Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#361-conditional-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.1 Conditional Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#362-accessing-the-conditional-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.2 Accessing the Conditional Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#363-jump-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.3 Jump Instructions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#364-implementing-conditional-branches" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.4 Implementing Conditional Branches
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6.4 Implementing Conditional Branches">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3641-conditional-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.4.1 Conditional Control
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3642-conditional-move" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.4.2 Conditional Move
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#365-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.5 Loop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#366-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6.6 Switch
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#37-procedures" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7 Procedures
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.7 Procedures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#371-the-run-time-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7.1 The Run-Time Stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#372-control-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7.2 Control Transfer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#373-data-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7.3 Data Transfer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#374-local-storage-on-the-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7.4 Local Storage on the Stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#375-local-storage-in-registers" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7.5 Local Storage in Registers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#376-recursive-procedures" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7.6 Recursive Procedures
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#38-array-allocation-and-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8 Array Allocation and Access
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.8 Array Allocation and Access">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#381-basic-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8.1 Basic Principles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#382-pointer-arithmetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8.2 Pointer Arithmetic
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#383-nested-arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8.3 Nested Arrays
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#384-fixed-size-arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8.4 Fixed-Size Arrays
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#385-variable-size-arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8.5 Variable-Size Arrays
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#39-heterogeneous-data-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.9 Heterogeneous Data Structures
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.9 Heterogeneous Data Structures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#391-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.9.1 Structures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#392-unions" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.9.2 Unions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#393-data-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.9.3 Data Alignment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#310-combining-control-and-data-in-machine-level-programs" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.10 Combining Control and Data in Machine-Level Programs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.10 Combining Control and Data in Machine-Level Programs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3101-understanding-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.10.1 Understanding Pointers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3102-using-the-gdb-debugger" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.10.2 Using the GDB Debugger
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3103-out-of-bounds-memory-references-and-buffer-overflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.10.3 Out-of-Bounds Memory References and Buffer Overflow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3104-thwarting-buffer-overflow-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.10.4 Thwarting Buffer Overflow Attacks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3105-supporting-variable-length-stack-frames" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.10.5 Supporting Variable-Length Stack Frames
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#311-floating-point-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11 Floating-Point Code
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.11 Floating-Point Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3111-floating-point-movement-and-conversion-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11.1 Floating-Point Movement and Conversion Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3112-floating-point-code-in-procedures" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11.2 Floating-Point Code in Procedures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3113-floating-point-arithmetic-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11.3 Floating-Point Arithmetic Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3114-defining-and-using-floating-point-constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11.4 Defining and Using Floating-Point Constants
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3115-using-bitwise-operations-in-the-floating-point-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11.5 Using Bitwise Operations in the Floating-Point Code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3116-floating-point-comparison-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11.6 Floating-Point Comparison Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3117-observations-about-floating-point-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11.7 Observations about Floating-Point Code
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="chapter-3-machine-level-representation-of-programs">Chapter 3 Machine-Level Representation of Programs<a class="headerlink" href="#chapter-3-machine-level-representation-of-programs" title="Permanent link">&para;</a></h1>
+<div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8V2m6.78 1a.69.69 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38-2.5-2.5Z"/></svg></span> 约 2925 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3L12.5 13Z"/></svg></span> 预计阅读时间 10 分钟</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">CMU 15-213</p>
+<p>这里使用的 x86-64 汇编的形式是 AT&amp;T 语法，而不是 Intel 语法。AT&amp;T 语法与 Intel 语法的区别在于操作数的顺序，AT&amp;T 语法是 <code>source, destination</code>，而 Intel 语法是 <code>destination, source</code>。这种描述的语法会用在 Linux 系统之中，但是当我们阅读 Intel 和 Microsoft 的代码与文档的时候，就要换换脑筋了。</p>
+</div>
+<details class="info">
+<summary>Tools: Disassembler</summary>
+</details>
+<h2 id="34-accessing-information">3.4 Accessing Information<a class="headerlink" href="#34-accessing-information" title="Permanent link">&para;</a></h2>
+<p>一个 x86-64 的 CPU 包含一组 16 个存储 64 位值的<strong>通用目的寄存器/General-Purpose Registers</strong>，这些寄存器可以用来存储整数数据和指针。这些寄存器用来存储整数数据和指针。由于指令集与处理器架构的历史演化，它们的长度从 16 位逐渐变成 64 位，名字也并不规则，但是寄存器的分布保证了令人震惊的向下兼容性。虽然他们的名字是<strong>通用目的</strong>的，但是根据 x86-64 规定的使用惯例，每个寄存器都有一定的<strong>特殊用途</strong>，这样就保证了后调用的进程可以接受传递过来的参数，同时运行的过程之中不会覆盖调用进程的寄存器的值。</p>
+<p><img alt="img.png" src="../../images/img-CSAPP/image3-1.png" /></p>
+<h2 id="35-arithmetic-and-logical-operations">3.5 Arithmetic and Logical Operations<a class="headerlink" href="#35-arithmetic-and-logical-operations" title="Permanent link">&para;</a></h2>
+<h2 id="36-control">3.6 Control<a class="headerlink" href="#36-control" title="Permanent link">&para;</a></h2>
+<h3 id="361-conditional-codes">3.6.1 Conditional Codes<a class="headerlink" href="#361-conditional-codes" title="Permanent link">&para;</a></h3>
+<p>除了整数寄存器，CPU 还维护着一组<strong>单个位</strong>的<strong>条件码/Conditional Code</strong> 寄存器，他们描述了最近一次算术或者逻辑操作的结果。这些条件码寄存器包括：</p>
+<ul>
+<li><strong>CF/Carry Flag</strong>：进位标志。如果最近一次的操作导致了一个无符号数的溢出，这也就是进位，那么 CF 就会被设置为 1。</li>
+<li><strong>ZF/Zero Flag</strong>：零标志。如果最近一次的操作的结果为 0，那么 ZF 就会被设置为 1。</li>
+<li><strong>SF/Sign Flag</strong>：符号标志。如果最近一次的操作的结果为负数，那么 SF 就会被设置为 1。</li>
+<li><strong>OF/Overflow Flag</strong>：溢出标志。如果最近一次的操作导致了一个有符号数/补码的溢出，那么 OF 就会被设置为 1。</li>
+</ul>
+<p>以算数操作 <code>t = a + b</code> 举例，设置条件码的操作与逻辑类似于下面的 C 代码：</p>
+<ul>
+<li>CF：<code>(unsigned) t &lt; (unsigned) a</code></li>
+<li>ZF：<code>t == 0</code></li>
+<li>SF：<code>t &lt; 0</code></li>
+<li>OF：<code>((a &lt; 0 ) == (b &lt; 0)) &amp;&amp; ((a &lt; 0) != (t &lt; 0))</code></li>
+</ul>
+<p>除了 <code>leaq</code> 指令类以外——因为 <code>leaq</code> 是用来完成地址计算的——所有操作都会<strong>隐式的</strong>设置操作码。对于逻辑操作而言，进位标志与溢出标志都会被设置成 <code>0</code>。对于移位操作，进位标志被设置成为最后一个被移出的位，溢出标志设置成 <code>0</code>. <code>inc</code> 和 <code>dec</code> 指令会会设置溢出标志和零标志，但是不会改变进位标志。</p>
+<p><code>cmp</code>和<code>test</code>指令类会设置条件码，但是不会改变目的寄存器的值。<code>cmp</code>指令会计算第二个操作数减去第一个操作数的结果，但是不会存储结果。<code>test</code>指令会计算两个操作数的按位与，但是不会存储结果。</p>
+<h3 id="362-accessing-the-conditional-codes">3.6.2 Accessing the Conditional Codes<a class="headerlink" href="#362-accessing-the-conditional-codes" title="Permanent link">&para;</a></h3>
+<p>条件码一般不会直接读取，常用的使用方法有三种：</p>
+<ul>
+<li>根据条件码的某种组合，将一个字节设置为 0 或者 1，这类指令就是 <code>set</code> 指令。</li>
+<li>可以条件跳转到程序的某个其他的部分。</li>
+<li>可以有条件地传送数据。</li>
+</ul>
+<h3 id="363-jump-instructions">3.6.3 Jump Instructions<a class="headerlink" href="#363-jump-instructions" title="Permanent link">&para;</a></h3>
+<p><code>jmp</code> 指令会导致程序执行切换到程序中的一个全新的位置，这些跳转的目的地通常用一个标号来标识。<code>jmp</code> 指令可以是直接跳转，亦即跳转目标是作为指令的一部分编码的，直接在跳转指令后边跟上一个标号作为跳转目标；也可以是间接跳转，亦即跳转目标是从寄存器或者内存之中读出来的。我们还允许有条件的跳转，这就可以对程序进行控制。</p>
+<h3 id="364-implementing-conditional-branches">3.6.4 Implementing Conditional Branches<a class="headerlink" href="#364-implementing-conditional-branches" title="Permanent link">&para;</a></h3>
+<h4 id="3641-conditional-control">3.6.4.1 Conditional Control<a class="headerlink" href="#3641-conditional-control" title="Permanent link">&para;</a></h4>
+<h4 id="3642-conditional-move">3.6.4.2 Conditional Move<a class="headerlink" href="#3642-conditional-move" title="Permanent link">&para;</a></h4>
+<p>实现条件操作的传统方法就是通过使用<strong>控制</strong>的条件转移，当条件满足的时候，就沿着一条路径进行运行，不满足就使用另一种路径。这种策略简单而通用，但是在现代计算机上可能很低效，原因就是现代计算机使用<strong>流水线/Pipelining</strong>来获得高性能，流水线中，每条指令的处理都被分为了多个小阶段，每个阶段执行操作的一小个部分，通过重叠连续指令的方法来获得高性能，比如在取一条指令的同时，执行前面一条指令的算数运算。要做到这一点，就需要实现确定要执行的指令序列，这样才能保持整个流水线充满了指令，进而保持最优的性能。</p>
+<p>一旦遇到条件跳转了（也就是分支），流水线处理器就会采用<strong>分支预测</strong>，猜测每条跳转指令是否会执行，猜对了还好，猜错了就会遇到招致很严重的惩罚，会浪费大约 15~30 个时钟周期，程序性能会大幅下降。为了减少这种性能损失，除了不断提升分支预测的正确率之外，现代处理器会使用<strong>条件传送</strong>指令，这种指令会根据条件码的值来决定是否传送数据，这样就可以避免分支预测错误的惩罚，并且极大避免随机情况下分支预测的错误。</p>
+<p>但是条件传送也不总是好的，下面三种情况会让条件传送变得难办：</p>
+<ul>
+<li>两个计算都很难办，比如对于：<code>val = Test(x) ? Hard1(x) : Hard2(x);</code>，这样我们就要算两个很难算的东西，反而更加浪费时间；</li>
+<li>计算有可能出错，比如对于：<code>val = p ? *p : 0;</code>，这样就有可能会出现段错误；</li>
+<li>计算有副作用，比如对于：<code>val = x &gt; 0 ? x*=7 : x+=13;</code>，这样算出来的结果就不对了。</li>
+</ul>
+<p>所以我们的编译器（gcc）当分支的计算比较简单（至少多算一个花费的时间要比预测错误惩罚低）、比较安全并且没有副作用的时候，才会使用条件传送进行优化。</p>
+<h3 id="365-loop">3.6.5 Loop<a class="headerlink" href="#365-loop" title="Permanent link">&para;</a></h3>
+<details class="info">
+<summary>Aside: Reverse engineer loops</summary>
+</details>
+<h3 id="366-switch">3.6.6 Switch<a class="headerlink" href="#366-switch" title="Permanent link">&para;</a></h3>
+<h2 id="37-procedures">3.7 Procedures<a class="headerlink" href="#37-procedures" title="Permanent link">&para;</a></h2>
+<h3 id="371-the-run-time-stack">3.7.1 The Run-Time Stack<a class="headerlink" href="#371-the-run-time-stack" title="Permanent link">&para;</a></h3>
+<h3 id="372-control-transfer">3.7.2 Control Transfer<a class="headerlink" href="#372-control-transfer" title="Permanent link">&para;</a></h3>
+<h3 id="373-data-transfer">3.7.3 Data Transfer<a class="headerlink" href="#373-data-transfer" title="Permanent link">&para;</a></h3>
+<p>在 x86-64 中，绝大多数的过程之间的数据传送是通过寄存器实现的，我们可以将被调用过程需要用到的参数<strong>按照约定的顺序</strong>塞到<strong>某些特定的</strong>寄存器之中，这样被调用的过程就可以使用这些参数了。类似地，当被调用过程返回的时候，要先将返回值放到特定的寄存器 <code>%rax</code> 之中，这样就可以让调用者使用这个返回值了。</p>
+<p>在 x86-64 之中，我们可以使用寄存器最多传送 6 个整型（包括整数和指针）参数，寄存器的使用是有特殊顺序的，使用的名字取决于要传递的数据类型的大小，比如 64 位的指针类型就可能用到寄存器 <code>%rdi</code>，并且这个还是作为第一个参数传递，而 32 位的整数就可能用到寄存器 <code>%esi</code>，并且这个还是作为第二个参数传递。下边这个表还是记一下，不然查表很痛苦 <del>（谁愿意看代码的时候被打断呢）</del>，不过看多了汇编就会形成肌肉记忆了。</p>
+<div class="span-table-wrapper">
+<table class="span-table">
+<tr>
+<td rowspan="2">操作数大小(位)</td>
+<td colspan="6">参数数量</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>64</td>
+<td><code>%rdi</code></td>
+<td><code>%rsi</code></td>
+<td><code>%rdx</code></td>
+<td><code>%rcx</code></td>
+<td><code>%r8</code></td>
+<td><code>%r9</code></td>
+</tr>
+<tr>
+<td>32</td>
+<td><code>%edi</code></td>
+<td><code>%esi</code></td>
+<td><code>%edx</code></td>
+<td><code>%ecx</code></td>
+<td><code>%r8d</code></td>
+<td><code>%r9d</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>%di</code></td>
+<td><code>%si</code></td>
+<td><code>%dx</code></td>
+<td><code>%cx</code></td>
+<td><code>%r8w</code></td>
+<td><code>%r9w</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>%dil</code></td>
+<td><code>%sil</code></td>
+<td><code>%dl</code></td>
+<td><code>%cl</code></td>
+<td><code>%r8b</code></td>
+<td><code>%r9b</code></td>
+</tr>
+</table>
+</div>
+<p>如果有超过 6 个参数，我们就需要使用栈来传递参数了，前 6 个参数照常被复制到寄存器传递，后边的参数依次被<strong>放入</strong>栈中，参数 7 置于栈顶，所有的数据大小都向着 8 的倍数<strong>对齐</strong>，所以一般我们不使用 <code>pushq</code> 指令，而是使用 <code>subq</code> 指令来调整栈的大小，然后使用 <code>movq</code> 指令来将参数放入栈中。</p>
+<h3 id="374-local-storage-on-the-stack">3.7.4 Local Storage on the Stack<a class="headerlink" href="#374-local-storage-on-the-stack" title="Permanent link">&para;</a></h3>
+<p>有些时候，局部数据必须存储在内存之中，常见的情况包括：</p>
+<ul>
+<li>寄存器不足够存放所有的本地数据；</li>
+<li>代码之中对某一个局部变量使用了取地址操作 <code>&amp;</code>，而寄存器是没有地址而言的；</li>
+<li>某些局部变量是一个数组或者结构体，这样就需要通过数组和结构引用来访问。</li>
+</ul>
+<p>可以通过减小栈指针 <code>%rsp</code> 的方法来在栈上分配空间，一般分配的空间都是 8 字节的倍数，分配的结果作为栈帧的一部分，标号为局部变量。局部变量的存储不需要考虑向 8 的倍数对齐，能存下就行。在程序结束之前，需要将栈指针恢复，释放掉局部变量的空间。</p>
+<h3 id="375-local-storage-in-registers">3.7.5 Local Storage in Registers<a class="headerlink" href="#375-local-storage-in-registers" title="Permanent link">&para;</a></h3>
+<h3 id="376-recursive-procedures">3.7.6 Recursive Procedures<a class="headerlink" href="#376-recursive-procedures" title="Permanent link">&para;</a></h3>
+<h2 id="38-array-allocation-and-access">3.8 Array Allocation and Access<a class="headerlink" href="#38-array-allocation-and-access" title="Permanent link">&para;</a></h2>
+<h3 id="381-basic-principles">3.8.1 Basic Principles<a class="headerlink" href="#381-basic-principles" title="Permanent link">&para;</a></h3>
+<h3 id="382-pointer-arithmetic">3.8.2 Pointer Arithmetic<a class="headerlink" href="#382-pointer-arithmetic" title="Permanent link">&para;</a></h3>
+<h3 id="383-nested-arrays">3.8.3 Nested Arrays<a class="headerlink" href="#383-nested-arrays" title="Permanent link">&para;</a></h3>
+<p>没啥好说的，多维数组其实就是数组的数组，数组的分配和引用的一般原则也成立，并且会在内存里面分配连续的空间。比如对于声明成 <code>ElementType D[R][C]</code> 的数组，它的数组元素 <code>D[i][j]</code> 的地址就是 <code>&amp;D[i][j] = D + L(C * i + j)</code>，其中 <code>L=sizeof(ElementType)</code>。</p>
+<h3 id="384-fixed-size-arrays">3.8.4 Fixed-Size Arrays<a class="headerlink" href="#384-fixed-size-arrays" title="Permanent link">&para;</a></h3>
+<h3 id="385-variable-size-arrays">3.8.5 Variable-Size Arrays<a class="headerlink" href="#385-variable-size-arrays" title="Permanent link">&para;</a></h3>
+<h2 id="39-heterogeneous-data-structures">3.9 Heterogeneous Data Structures<a class="headerlink" href="#39-heterogeneous-data-structures" title="Permanent link">&para;</a></h2>
+<h3 id="391-structures">3.9.1 Structures<a class="headerlink" href="#391-structures" title="Permanent link">&para;</a></h3>
+<p>结构的所有组成部分都存放在内存的一段连续的区域内，指向结构的指针就是结构第一个字节的地址。</p>
+<p>也没啥好说的，只需要知道编译器维护每个字段的字节偏移量进而产生内存引用指令的位移，从而产生对结构元素的引用，进而操纵字段。值得注意的是，结构之中的数组等元素是嵌入在结构之中的，而不是存储指向数组的指针，所以产生结构体 <code>struct {int* i; long array[2];}</code> 需要分配 24 字节的空间，而不是 16 字节。</p>
+<p>最需要注意的是对齐的问题，下边马上就讲了。</p>
+<details class="info">
+<summary>CMU 15-213</summary>
+<ol>
+<li>Structure represented as block of memory, which is big enough to hold all the fields.</li>
+<li>Field are ordered according to declaration, even if another order could yeild a more compact representation.</li>
+<li>Compiler determines  overall size + positions of fields. Machine-level program has no understanding of the structures in the source code.</li>
+</ol>
+</details>
+<h3 id="392-unions">3.9.2 Unions<a class="headerlink" href="#392-unions" title="Permanent link">&para;</a></h3>
+<p>联合可以有效规避 C 的类型系统。一个联合的总的大小等于它的最大字段的大小，而不是所有字段的大小之和。联合的字段是共享存储空间的，所以修改一个字段会影响到其他字段。联合的字段的地址都是相同的，所以可以通过一个字段来访问其他字段。联合还可以用来实现类型转换，换句话说就是访问不同数据类型的位模式，比如在联合可以包含一个长整形 <code>long</code> 和一个整数数组 <code>int [2]</code>，这样就可以令两个 <code>int</code> 的位组合来表示一个 <code>long</code>。</p>
+<h3 id="393-data-alignment">3.9.3 Data Alignment<a class="headerlink" href="#393-data-alignment" title="Permanent link">&para;</a></h3>
+<p>数据对齐要求对基本数据类型的合法地址进行了一些限制，要求地址必须是某个值的倍数，这个值一般是 2、4 或 8。这是为了提升内存访问的效率，并且还可以简化处理器和内存之间的接口的硬件设计。基本原则是<strong>任何 K 字节的基本对象的地址必须是 K 的倍数</strong>。比如 4 字节的整数 <code>int</code> 的地址必须是 4 的倍数，8 字节的双精度浮点数 <code>double</code> 的地址必须是 8 的倍数。编译器会在汇编代码中放入命令，指明全局数据要求的对齐，比如在跳转表前放入伪指令 <code>.align 8</code>，这样就可以保证<strong>后边紧接着的的数据的起始地址是 8 的倍数</strong>，因为每个表项都长为 8 个字节，所以后边的元素就都遵守 8 字节对齐的限制了，自然而然就对齐了。</p>
+<p>对于含有结构体的数据，编译器会在字段的分配之中加入间隙，保证每个字段元素都满足对齐要求，并且结构对本身的地址也有一些要求，对齐要求是结构体中最大的字段的对齐要求，比如一个结构体 <code>struct {char c; int i;}</code>，<code>c</code> 的对齐要求是 1，<code>i</code> 的对齐要求是 4，所以整个结构体的对齐要求是 4，结构体的地址就要是 4 的倍数。</p>
+<details class="info">
+<summary>Aside: Mandatory Alignment</summary>
+<p>如果数据没有对齐，某些行好的处理器对于某些实现多媒体操作的 SSE 指令就无法正确执行，这些指令对 16 字节数据块进行操作，在 SSE 单元和内存之间传送数据的指令要求内存地址必须是 16 的倍数，任何以不满足对齐要求的资质访问内存就会导致异常。所以任何针对 x86-64 处理器的编译器和运行时系统都必须保证分配用来保存可能会被 SSE 寄存器读或写的数据结构的内存，都必须满足 16 字节对齐，所以就有下面两个后果：</p>
+<ul>
+<li>任何内存分配函数，比如 <code>malloc</code> 分配的内存块的起止地址都要是 16 的倍数；</li>
+<li>大多数函数的栈帧边界都必须是 16 的倍数。</li>
+</ul>
+<p>这其实也解释了有一些“莫名其妙”在栈上多分配 8 字节内存的现象，这是为了保证栈帧的对齐要求。</p>
+</details>
+<h2 id="310-combining-control-and-data-in-machine-level-programs">3.10 Combining Control and Data in Machine-Level Programs<a class="headerlink" href="#310-combining-control-and-data-in-machine-level-programs" title="Permanent link">&para;</a></h2>
+<h3 id="3101-understanding-pointers">3.10.1 Understanding Pointers<a class="headerlink" href="#3101-understanding-pointers" title="Permanent link">&para;</a></h3>
+<p>指针类型只不过是 C 提供的一种类型抽象，并不是机器代码的一部分。这里只是介绍一些基本原则：</p>
+<ul>
+<li>每个指针都对应一个类型，虽然存在通用指针 <code>void *</code>；</li>
+<li>每个指针都有一个值，这个值是某个指定类型的地址，地址可以为 0，也就是 <code>NULL</code>；</li>
+<li>指针通过对左值使用 <code>&amp;</code> 操作符来获得，反过来，通过对指针使用 <code>*</code> 操作符来间接引用指针；</li>
+<li>将一种指针转换为另外一种指针，只改变它的类型，并不改变它的值；</li>
+<li>甚至存在函数指针，函数指针的值是函数机器代码中第一条指令的地址，对于函数 <code>int func(int x, int* y)</code>，可以令一个函数指针 <code>int (*fp)(int, int*) = func</code>，这样就可以通过 <code>fp(1, &amp;x)</code> 来调用函数 <code>func</code>。</li>
+</ul>
+<h3 id="3102-using-the-gdb-debugger">3.10.2 Using the GDB Debugger<a class="headerlink" href="#3102-using-the-gdb-debugger" title="Permanent link">&para;</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Important Tool</p>
+</div>
+<h3 id="3103-out-of-bounds-memory-references-and-buffer-overflow">3.10.3 Out-of-Bounds Memory References and Buffer Overflow<a class="headerlink" href="#3103-out-of-bounds-memory-references-and-buffer-overflow" title="Permanent link">&para;</a></h3>
+<p>在 Linux 的存储结构之中，栈位于最顶部，尽管 64 位允许访问的空间非常大，由于硬件因素，当时（CMU 15-213 fa15 上课时）只能使用 47 位的地址空间，栈底的地址因此是 <code>0x7fffffffffff</code>，并且栈的空间是有限的，一般只有 8MB，我们使用 <code>limit</code> 命令可以查看栈的大小。</p>
+<h3 id="3104-thwarting-buffer-overflow-attacks">3.10.4 Thwarting Buffer Overflow Attacks<a class="headerlink" href="#3104-thwarting-buffer-overflow-attacks" title="Permanent link">&para;</a></h3>
+<h3 id="3105-supporting-variable-length-stack-frames">3.10.5 Supporting Variable-Length Stack Frames<a class="headerlink" href="#3105-supporting-variable-length-stack-frames" title="Permanent link">&para;</a></h3>
+<h2 id="311-floating-point-code">3.11 Floating-Point Code<a class="headerlink" href="#311-floating-point-code" title="Permanent link">&para;</a></h2>
+<h3 id="3111-floating-point-movement-and-conversion-operations">3.11.1 Floating-Point Movement and Conversion Operations<a class="headerlink" href="#3111-floating-point-movement-and-conversion-operations" title="Permanent link">&para;</a></h3>
+<h3 id="3112-floating-point-code-in-procedures">3.11.2 Floating-Point Code in Procedures<a class="headerlink" href="#3112-floating-point-code-in-procedures" title="Permanent link">&para;</a></h3>
+<h3 id="3113-floating-point-arithmetic-operations">3.11.3 Floating-Point Arithmetic Operations<a class="headerlink" href="#3113-floating-point-arithmetic-operations" title="Permanent link">&para;</a></h3>
+<h3 id="3114-defining-and-using-floating-point-constants">3.11.4 Defining and Using Floating-Point Constants<a class="headerlink" href="#3114-defining-and-using-floating-point-constants" title="Permanent link">&para;</a></h3>
+<h3 id="3115-using-bitwise-operations-in-the-floating-point-code">3.11.5 Using Bitwise Operations in the Floating-Point Code<a class="headerlink" href="#3115-using-bitwise-operations-in-the-floating-point-code" title="Permanent link">&para;</a></h3>
+<h3 id="3116-floating-point-comparison-operations">3.11.6 Floating-Point Comparison Operations<a class="headerlink" href="#3116-floating-point-comparison-operations" title="Permanent link">&para;</a></h3>
+<h3 id="3117-observations-about-floating-point-code">3.11.7 Observations about Floating-Point Code<a class="headerlink" href="#3117-observations-about-floating-point-code" title="Permanent link">&para;</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 V1CeVersa
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/V1CeVersaa" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.annotate", "content.action.edit", "toc.follow", "navigation.tracking", "navigation.tabs", "navigation.prune", "navigation.indexes", "navigation.top", "search.share", "search.highlight", "search.suggest"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://gcore.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+      
+        <script src="../../../../Javascripts/mathjax.js"></script>
+      
+        <script src="../../../../Javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
+      
+        <script src="../../../../Javascripts/tablesort.js"></script>
+      
+    
+  </body>
+</html>
