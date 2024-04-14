@@ -10,3 +10,4 @@
 
 **The Sum Rule in Terms of Sets**: If $A$ and $B$ are disjoint sets, then $|A \cup B| = |A| + |B|$.
 
+## 6.2 The Pigeonhole Principle
