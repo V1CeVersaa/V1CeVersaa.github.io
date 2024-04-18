@@ -141,7 +141,7 @@ nav:
       - Algorithm Analysis: Computer Science/Algorithm/01 Algorithm Analysis.md
       - Linear List: Computer Science/Algorithm/02 Linear List.md
       - Trees: Computer Science/Algorithm/03 Trees.md
-      - Heap: Computer Science/Algorithm/04 Heap.md
+      - Heap: Computer Science/Algorithm/04 Graph.md
       - Hash: Computer Science/Algorithm/05 Hash.md
     - System:
       - Computer Science/System/index.md

@@ -6,7 +6,7 @@ A **set** is an unordered collection of distinct objects, called **elements** or
 
 **Roster method**: A set can be described by listing its elements between braces. For example, the set of vowels in the English alphabet can be written as $V=\{a,e,i,o,u\}$. Listing an element more than once does not change the set. The set $\{a,e,i,o,u\}$ is the same as the set $\{a,e,i,o,u,u\}$.
 
-**Set-builder notation**: A set can be described by specifying a property that its members must satisfy, for example $\{x:x\equiv 0(\mod 2)\}$
+**Set-builder notation**: A set can be described by specifying a property that its members must satisfy, for example $\{x:x\equiv 0\pmod 2\}$
 
 **Universal Set**: The set $U$ containing all the objects currently under consideration.
 
@@ -18,7 +18,7 @@ $$\forall x(x\in A\leftrightarrow x\in B)$$
 
 **Subset**: A set $A$ is a subset of a set $B$ if every element of $A$ is also an element of $B$. We write $A\subseteq B$.
 
-$$forall x(x\in A\rightarrow x\in B)$$
+$$\forall x(x\in A\rightarrow x\in B)$$
 
 **Proper Subset**: If $A\subseteq B$ and $A\neq B$, then $A$ is a proper subset of $B$, denoted by $A\subset B$.
 
@@ -91,4 +91,23 @@ Two functions are **equal** if and only if they have the same domain, the same c
 Definitions of **Injection** **Surjection** **Bijection** **Inverse Function** **Composition** and **Graph of Function** are omitted, because I assume you know them well.
 
 ## 2.4 Sequences and Summations
+
+## 2.5 Cardinality of Sets
+
+**Cantor Diagonalization Method**: The set of real numbers is uncountable.
+
+**Proof**: To show that the set of real numbers is uncountable, we suppose that the set of real numbers is countable and arrive at a contradiction. Then, the subset of all real numbers that fall between $0$ and $1$ would also be countable (because any subset of a countable set is also countable). Under this assumption, the real numbers between $0$ and $1$ can be listed in some order, say, $r_1$, $r_2$, $r_3$, $\dots$. Let the decimal representation of these real numbers be
+
+$$r_1=0.d_{11}d_{12}d_{13}\cdots$$
+
+$$r_2=0.d_{21}d_{22}d_{23}\cdots$$
+
+$$r_3=0.d_{31}d_{32}d_{33}\cdots$$
+
+$$\vdots$$
+
+where $d_{ij}$ is the $j$th digit in the decimal representation of $r_i$. We construct a real number $r$ between $0$ and $1$ as follows: We choose the first digit of $r$ to be different from the first digit of $r_1$, the second digit of $r$ to be different from the second digit of $r_2$, and so on. In general, we choose the $i$th digit of $r$ to be different from the $i$th digit of $r_i$. The real number $r$ is different from every real number in the list, so the list does not contain all real numbers between $0$ and $1$. This contradiction shows that the set of real numbers between $0$ and $1$ is uncountable, which finishes the proof.
+
+Moreover, we can prove a stronger result: The set of all real numbers with decimal representations consisting only of $0$ and $1$ is uncountable. This comes from the observation that the Cantor diagonalization method only need two distinct digits to construct a real number that is different from every real number in the list.
+
 
