@@ -14,3 +14,4 @@
 
 ## Table of Contents
 
+- [ ] [Basic Syntax](./Basic%20Syntax.md)

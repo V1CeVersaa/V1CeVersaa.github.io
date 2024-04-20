@@ -35,7 +35,7 @@ public class FirstSample{
 }
 ```
 
-关键词`public`被称为**访问修饰符/Access modifier**，决定了控制程序其他部分对这部分代码的访问级别。`class`表示Java程序中的**全部内容**都包含在类中，类是Java应用的构建模块。一个源文件只能有一个公共类，但是可以有任意数量的非公共类，源文件的文件名必须和公共类的类名相同，并且用`.java`作为扩展名。
+关键词`public`被称为**访问修饰符/Access modifier**，决定了控制程序其他部分对这部分代码的访问级别。`class`表示Java程序中的**全部内容**都包含在类中，类是Java应用的构建模块。**一个源文件只能有一个公共类**，**但是可以有任意数量的非公共类**，源文件的文件名必须和公共类的类名相同，并且用`.java`作为扩展名。
 
 在执行已经编译的程序的时候，虚拟机总是从指定类的`main`方法的代码开始执行，所以类的源代码中必须包含一个`main`方法，且`main`方法必须声明为`public`，当然直接声明全套`public static`也是极好的。方法其实就是函数的另外一种说法，我们也可以自行定义方法并且添加到类中。
 
@@ -89,7 +89,7 @@ Java是一种**纯粹的**面对对象的语言，面对对象的程序是由对
 
 #### 1.3.3 自定义类
 
-我们不仅仅需要学会使用常用的类与配套的方法，还需要学会编写类。我们经常写的一种类叫做**主力类/Workhorse class**，这种类没有`main`方法，但是有自己的实例字段和实力方法，是构建一个完整程序的众多部分之一。
+我们不仅仅需要学会使用常用的类与配套的方法，还需要学会编写类。我们经常写的一种类叫做**主力类/Workhorse class**，这种类没有 `main` 方法，但是有自己的实例字段和实力方法，是构建一个完整程序的众多部分之一。
 
 最简单的类形式为：
 
@@ -101,7 +101,7 @@ type class ClassName{
 }
 ```
 
-实例字段可以是基本类型，也可以是对象。我们一般需要**将实例字段声明为`private`**，这确保只有这个类的方法可以访问这种字段，这就是封装的一部分。而方法可以声明为`private`或者`public`，`public`方法可以被任何类的任何方法调用。`private`方法只可以被本类的其他方法调用。
+实例字段可以是基本类型，也可以是对象。我们一般需要**将实例字段声明为 `private`**，这确保只有这个类的方法可以访问这种字段，这就是封装的一部分。而方法可以声明为 `private` 或者 `public`，`public` 方法可以被任何类的任何方法调用。`private` 方法只可以被本类的其他方法调用。
 
 我们先看一个自定义类的例子：
 
@@ -153,9 +153,54 @@ public class Employee{
 
 比如`private final StringBuilder evaluations = new StringBuilder();`，这里的`evaluations`就不能指向别的对象了，但是这个对象可以修改，比如`evaluations.append(LocalDate.now() + ":Yes!")`。`final`修饰符对于类型为基本类型或者**不可变类**的字段尤其有用，并且`final`修饰符一般与`static`修饰符一起使用。
 
-#### 1.3.4 静态字段与静态方法
+#### 1.3.4 `static` 静态
 
-我们发现，先前的很多方法都标记了`static`修饰符，下面
+我们发现，先前的很多方法都标记了 `static` 修饰符，下面会讨论这个修饰符的含义。
+
+- 静态字段：如果将一个字段定义为 `static`，那么这个字段并不会出现在每个类的对象之中。静态字段只有一个副本，可以认为这个字段属于整个类，这个类的所有实例将共享这个字段。
+- 静态常量相对很常用，就比如 `Math` 类的 `PI` 字段，这个字段是一个不会改变的常量，事实上被定义为 `public static final double PI = 3.14159265358979323846;`。`System.out` 也是一个经常使用的 `final` 的静态常量。
+- 静态方法是**不操作对象的方法**：这个方法没有隐式参数，因此不能访问实例字段，也不能使用 `this` 关键字，但是可以访问静态字段。一般使用类名来调用静态方法，比如 `Math.pow(2, 3)`，但是甚至可以使用对象调用静态方法，虽然静态方法的调用的结果和这个对象毫无关系。
+  当方法不需要访问对象状态的时候，可以使用静态方法，这种情况下所有的参数都由现实参数提供；只要访问静态字段的时候，当然应该使用静态方法。
+- 工厂方法：工厂方法是静态方法最为常见的用途。工厂方法是一个返回类的对象的静态方法，这样我们就可以使用这个方法来构造对象，而不使用构造器。比如 `LocalDate.now()` 就是一个工厂方法。
+- `main` 方法：`main` 方法是一个特殊的静态方法，是程序的入口，虚拟机调用这个方法来执行程序。事实上启动程序的时候还没有对象，就只好让入口方法是静态的了。
+
+#### 1.3.5 参数与调用
+
+程序设计语言中，将参数传递给方法一般有两种方法，**按值调用/Call by Value**与**按引用调用/Call by Reference**。在 Java 中，所有的参数**总是按值调用的**，也就是说，方法得到的是所有参数值的一个拷贝。下面看三段代码：
+
+=== "Case 1"
+
+    ```java
+    public static void tripleValue(double x){
+        x = 3 * x;
+    }
+    double percent = 10;
+    tripleValue(percent);
+    ```
+    如果我们企图使用这段代码令 `percent` 的值变为 `30`，那么我们就错了，`percent` 的值仍然是 `10`。这是因为传递的是 `percent` 的值，`x` 被初始化为 `percent` 的值的一个副本，然后 `x` 被修改，这个方法结束之后，参数 `x` 被丢弃，但是 `percent` 没有被修改。这个例子表明**一个方法是无法修改基本数据类型的参数的**。
+
+=== "Case 2"
+
+    尽管基本数据类型的参数无法被修改，但是毕竟方法参数有两种，另一种是对象引用。对象参数还是可以修改的，尤其是作为隐式参数的对象的字段。
+    ```java
+    class Employee{
+        private int salary;
+        public Employee(int sal){
+            salary = sal;
+        }
+        public void RaiseSalary(int times){
+            salary *= times;
+        }
+        public static void s_RaiseSalary(Employee x, int times){
+            x.salary *= times;
+        }
+    }
+    Employee sam = new Employee(100);
+    sam.RaiseSalary(3);
+    s_RaiseSalary(sam, 3);
+    ```
+
+#### 1.3.6 对象构造
 
 
 ### 1.4 数据类型
@@ -194,5 +239,74 @@ Java最基本的类型有下面几种，六种数字类型，一种字符类型�
 
 ### 1.6 字符串
 
+概念上讲，Java 字符串就是字符序列，Java 没有内置的字符串类型，但是标准库中提供了预定义类 `String`，每个被双引号括起来的都是一个 `String` 类的实例，下面聊的主要是 `String` 类的使用。
+
+首先，字符串可以为空，比如 `String emp = "";`，空串是一个长度为 0 的字符串，可以使用 `""` 表示，`null` 是一个特殊的值，表示没有任何对象和这个对象关联。不能对 `null` 调用任何方法，否则会抛出 `NullPointerException` 异常。 
+
+如果要检查某个字符串既不是空串也不是 `null`，一般会这样做 `if (str != null && str.length() != 0)`。
+
+#### 1.6.1 子串与拼接
+
+子串更像切片，我们可以使用 `substring` 方法来获取一个字符串的子串，`substring` 方法有两个参数，第一个参数是子串的起始位置，第二个参数是子串的结束位置，但是**不包括结束位置的字符**，我们也可以认为第二个参数指的是**尾后字符**，这种尾后元素的使用其实蛮常见的，在 C++ 的学习中就可以看见这一点。比如 `String greeting = "Hello"; String s = greeting.substring(0, 3);`，这样 `s` 就是 `Hel`。
+
+拼接很简单，使用 `+` 号就可以了，比如 `String expletive = "Expletive"; String PG13 = "deleted"; String message = expletive + PG13;`，这样 `message` 就是 `Expletivedeleted`。任何非字符串的值和字符串进行拼接的时候，Java 会将非字符串的值转换为字符串，甚至**任何一个 Java 对象都可以转换成字符串**。
+
+值得一提的是，`String` 的运算符 `+` 和 `+=` 是 Java 里边仅有的重载的运算符，Java 不允许程序员重载别的运算符。
+
+#### 1.6.2 字符串的不可变性
+
+如果我们查看 JDK 文档，就会发现 `String` 类其实是不可变的/Immutable，每个看似会修改 `String` 值的方法，实际上都创建并且返回了一个全新的 `String` 对象，这个对象包括了修改后的字符串内容，但是原始的 `String` 对象保持不变。这样设计的原因之一是：参数一般是用来提供信息的，而不是用来修改的，这对代码的可读性和可理解性有很大的帮助。同时，编译器甚至可以让字符串共享。
+
+```Java
+public class Immutable{
+    public static String upcase(String s){
+        return s.toUpperCase();
+    }
+    public static void main(String[] args){
+        String greeting = "Hello";
+        System.out.println(greeting);       // Hello
+        String GREETING = upcase(greeting);
+        System.out.println(greeting);       // Hello
+        System.out.println(GREETING);       // HELLO
+    }
+}
+```
+
+#### 1.6.3 比较字符串
+
+使用 `equal` 方法检测两个字符串是否相等，对于表达式 `s.equals(t)`，如果相等就返回 `true`，否则返回 `false`，这个方法是区分大小写的，如果不区分大小写，可以使用 `equalsIgnoreCase` 方法。
+
+由于每个被双引号括起来的字符串都是一个 `String` 类的实例，所以我们可当然可以对其使用 `equals` 方法，`"HeLLo".equals("HeLLo")` 就是 `true`。
+
+`int compareTo(String other)` 和 `int compareToIgnoreCase(String other)` 方法用于比较两个字符串，如果调用字符串 `this` 在字典中排在参数字符串 `other` 之前，就返回一个负数，如果调用字符串在字典中排在参数字符串之后，就返回一个正数，如果两个字符串相等，就返回 `0`。
+
+`matches`
+
+#### 1.6.4 码点和代码单元
+
+#### 1.6.5 String API
+
+- `int length()`：返回字符串的长度。
+- `boolean isEmpty()` 和 `boolean isBlank()`：判断字符串是否为空或者由空白符组成。
+- `boolean startsWith(String prefix)` 和 `boolean endsWith(String suffix)`：判断字符串是否以指定的前缀或者后缀开始或者结束。
+
+
+
 ### 1.7 输入输出
 
+#### 1.7.3 格式化输出
+
+
+#### 1.7.2 格式化输入
+
+从人类可读的文件或者标准输入中读取输入非常重要，但是比较痛苦，一般的解决方法是读入一行文本，然后进行分词解析，再使用 `Integer` 类和 `Double` 类中的方法解析数据。但是 Java 提供的 `Scanner` 类就大大减轻了这个负担。
+
+传统一点的做法是：
+
+但是使用 `Scanner` 类就简单多了，`Scanner` 类定义在 `java.util` 包之中，首先还是需要构造一个与输入流相关联的 `Scanner` 对象，`Scanner in = new Scanner(System.in);`，然后就可以使用 `nextInt`、`nextDouble`、`next` 等方法来读取输入了。
+
+- `Scanner(InputStream in)` 用给定的额输入流构造一个 `Scanner` 对象。
+- `String nextLine()` 读取下一行输入。
+- `int nextInt()` 和 `int nextDouble()` 读取下一个整数或浮点数，`String next()` 读取下一个单词，这些都是以空白符作为分隔符的。
+- `boolean hasNext()` 用于检查是否还有其他单词。
+- `boolean hasNextInt()` 和 `boolean hasNextDouble()` 用于检查下一个字符序列是否表示整数或浮点数。
