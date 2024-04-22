@@ -4,7 +4,7 @@
   }
   
   :root {
-    --md-text-font: "Monaspace Argon Light", "LXGW WenKai Screen"; 
+    --md-text-font: "LXGW WenKai Screen", "Monaspace Argon Light"; 
     --md-code-font: 'Monaspace Argon Light', "JetBrains Mono", 'LXGW WenKai Screen';
   }
   p code,
