@@ -219,7 +219,7 @@ endgenerate
 
 ### 2.6 元件的 Verilog 实现
 
-#### 2.6.x 触发器
+#### 2.6.1 触发器
 
 最简单的触发器塞了两个寄存器和一根输入的线，在时钟上升沿的时候，将输入的值非阻塞地赋给第一个寄存器，在时钟下降沿的时候，将第一个寄存器的值非阻塞地赋给第二个寄存器。
 
@@ -235,7 +235,7 @@ always @(negedge clk) begin
 end
 ```
 
-#### 2.6.x+1 使能寄存器
+#### 2.6.2 使能寄存器
 
 某些寄存器会有一个额外的**使能引脚**EN，只有当 `EN=1` 的时候，寄存器才会载入输入信号，相应的 Verilog 语法如下：
 
@@ -251,7 +251,7 @@ end
 !!! info
     我们之前将 `always@(*)` 的时候，`if` 是需要搭配 `else` 使用的，不然会导致环路错误，但是这里不需要，因为 `always@(*)` 综合得到的电路是用 `wire` 搭建的，它只是借用了 `reg` 的 `always` 块语法而已。但是 `always@(posedge clk)` 得到的电路使用真实的寄存器搭建的，是不会形成环路问题的。
 
-#### 2.6.x+2 寄存器的初始化
+#### 2.6.3 寄存器的初始化
 
 === "异步初始化"
 
@@ -321,6 +321,44 @@ end
     assign rst = ~rstn;
     ```
 
+### 2.6.4 移位寄存器
+
+```verilog
+wire in_data;
+reg [3:0] left_shift_reg;
+reg [3:0] right_shift_reg;
+always@(posedge clk)begin
+    if(en)begin
+        left_shift_reg <= {left_shift_reg[2:0], in_data};
+        right_shift_reg <= {in_data, right_shift_reg[3:1]};
+    end
+end
+```
+
+```Verilog
+wire [3:0] in_data;
+reg [3:0] left_shift_reg [3:0];
+reg [3:0] right_shift_reg [3:0];
+
+integer i;
+always@(posedge clk)begin
+    if(en)begin
+        for(i=0;i<3;i=i+1)begin
+            left_shift_reg[i+1] <= left_shift_reg[i];
+        end
+        left_shift_reg[0] <= in_data;
+    end
+end
+always@(posedge clk)begin
+    if(en)begin 
+        for(i=0;i<3;i=i+1)begin
+            right_shift_reg[i] <= right_shift_reg[i+1];
+        end
+        right_shift_reg[3] <= in_data;
+    end
+end
+```
+
 ## Chapter 3 SystemVerilog 高级语法
 
 ### 3.1 `logic` 与 `bit`
@@ -330,6 +368,13 @@ end
 在一般的测试程序之中，我们并不需要未知值与高阻态值，所以衍生了只有 0 和 1 的 **2 状态类型**。使用 2 状态类型有很多好处，比如减少内存使用、提升模拟速度，因而在数字设计中很好用。当 4 状态类型转化为 2 状态类型的时候，未知值和高阻态都会被转换成 0。 SystemVerilog 引入的最重要的 2 状态类型就是 `bit`，表示单独 1 位的值（电平）。
 
 ### 3.2 `typedef` 语法
+
+```SystemVerilog
+parameter WIDTH = 64;
+
+typedef logic [WIDTH-1:0] data_t;
+typedef logic [WIDTH*2-1:0] sum_t;
+```
 
 ### 3.3 `enum` 枚举
 
@@ -371,9 +416,38 @@ end
 ??? info "ZJU System 1"
     `queue` 语法仅用于仿真，不要用它实现电路，但是作为基本数据结构辅助还是很好的，
 
-### 3.6 结构
+### 3.6 `struct` 结构
+
+```SystemVerilog
+parameter LEN = 4;
+
+typedef struct{
+    data_t data [LEN-1:0];
+} data_vector;
+```
+
+对应的模块端口语法需要是 `#!SystemVerilog input/output data_vector d`
 
 ### 3.7 `package` 包
+
+> 包是用来定义一堆杂七杂八的参数用的。
+
+```SystemVerilog
+package Conv;
+    parameter WIDTH = 64;
+    parameter LEN   = 4;
+    
+    typedef logic [WIDTH-1:0] data_t;
+    typedef logic [WIDTH*2-1:0] sum_t;
+    
+    typedef struct{
+        data_t data [LEN-1:0];
+    } data_vector;
+    
+endpackage
+```
+
+使用类似于 C++ 中的命名空间的语法来使用包中的定义，比如 `#!SystemVerilog output Conv::data_vector result;`，如果要引入 `Conv` 内的所有定义，可以使用 `#!SystemVerilog import Conv::*;` 来实现。
 
 ### 3.8 `always_comb` 扩展
 

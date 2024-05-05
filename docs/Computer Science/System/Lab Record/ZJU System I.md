@@ -120,7 +120,7 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
 
 === "与或版本"
     这个是对应的图片，非常的朴素。
-    ![alt text](images/img-Verilog/7.png)
+    ![alt text](../images/img-Verilog/7.png)
     但是这个是老实人写法，就直接按照真值表画电路硬刚，千万别这么写，丑死了。
 
     ```verilog
@@ -610,3 +610,15 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
     
     endmodule
     ```
+
+## 9 卷积模块
+
+## 10 串口使用
+
+## 11 汇编实验
+
+=== "环境配置"
+
+    
+
+## 12 单周期 CPU

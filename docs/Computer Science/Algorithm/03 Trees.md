@@ -1,6 +1,6 @@
-# Chapter 3 Trees
+# Trees
 
-## 3.0 Concepts and Terminology
+## Concepts and Terminology
 
 **Degree of a node**: the number of subtrees of the node.
 
@@ -30,13 +30,13 @@
 
 Every tree can be transformed into a binary tree with **FirstChild-NextSibling** representation.
 
-## 3.1 Binary Trees
+## 1 Binary Trees
 
 A **binary tree** is a tree in which no node can have more than two children.
 
 **Expression Trees**: a binary tree used to represent expressions. Interesting.
 
-### 3.1.1 Node Implementation
+### 1.1 Node Implementation
 
 ```C
 typedef struct TreeNode {
@@ -47,7 +47,7 @@ typedef struct TreeNode {
 } TreeNode;
 ```
 
-### 3.1.2 Basic Operations
+### 1.2 Basic Operations
 
 !!! info
     这种版本的节点的定义包括了节点的高度，但是在一般的树中，这是没有必要的，只是在AVL树中，节点高度才尤其重要.在下面的操作中就干脆省略了.
@@ -66,6 +66,7 @@ typedef struct TreeNode {
 
 === "Insertion and Deletion"
     这是在`n1->n2`中插入新节点`p`或者删除这个节点的操作.
+
     ```C
     TreeNode *p = newTreeNode(1);
     p->left = n2;
@@ -76,9 +77,9 @@ typedef struct TreeNode {
     free(del);
     ```
 
-### 3.1.3 Traversals
+### 1.3 Traversals
 
-遍历时间复杂度都是$O(n)$，空间复杂度是$O(n)$.
+遍历时间复杂度都是$O(n)$，迭代的空间复杂度是$O(n)$.
 
 === "Levelorder"
 
@@ -162,26 +163,104 @@ typedef struct TreeNode {
     
     你需要在循环里边手动建一个堆栈来模仿系统堆栈的行为，想想都觉得受不了，消停写你的迭代版得了。
 
-## 3.2 Binary Search Trees
+## 2 Binary Search Trees
 
-## 3.3 Heap/Priority Queue
+二叉搜索树满足以下性质：
 
-### 3.3.1 ADT Model
+- 所有的节点都有一个以整数表示的键值，且互不相同；
+- 所有左节点
 
-Heap/Priority Queue
+=== "Find"
 
-- Object: A finite ordered list with zero or more elements.
-- Operations:
-    - `PriorityQueue Initialize(int MaxElements)`: Create and return an empty priority queue.
-    - `void Insert(ElementType X, PriorityQueue H)`: Insert the element X into the priority queue H.
-    - `ElementType DeleteMin(PriorityQueue H)`: Delete the minimum element from the priority queue H.
-    - `ElementType FindMin(PriorityQueue H)`: Return the minimum element from the priority queue H.
-- Order Property: The priority queue H is a min-heap if for every node X with parent P in H, the key in P is less than or equal to the key in X, and is a max-heap if the key in P is greater than or equal to the key in X.
-- Heap Property: A binary heap is a complete binary tree that satisfies the heap order property.
+    ```C
+    TreeNode *rec_find(TreeNode *root, int val) {
+        if (root == NULL)
+            return NULL;
+        if (root->val < val)
+            return find(root->right, val);
+        else if (root->val > val)
+            return find(root->left, val);
+        else
+            return root;
+    ```
 
-### 3.3.2 Binary Heap
+    ```C
+    TreeNode *ite_find(TreeNode *root, int val) {
+        while (root != NULL) {
+            if (root->val < val)
+                root = root->right;
+            else if (root->val > val)
+                root = root->left;
+            else
+                return root;
+        }
+        return NULL;
+    }
+    ```
 
-#### 3.3.2.1 Heap Implementation
+=== "Find Min/Max"
+
+    ```C
+    TreeNode *ite_findMin(TreeNode *root) {
+        if (root == NULL)
+            return NULL;
+        while (root->left != NULL)
+            root = root->left;
+        return root;
+    }
+    ```
+
+    ```C
+    TreeNode *rec_findMin(TreeNode *root) {
+        if (root == NULL)
+            return NULL;
+        if (root->left == NULL)
+            return root;
+        return findMin(root->left);
+    }
+    ```
+
+    ```C
+    TreeNode *findMax(TreeNode *root) {
+        if (root == NULL)
+            return NULL;
+        while (root->right != NULL)
+            root = root->right;
+        return root;
+    }
+    ```
+    
+    ```C
+    TreeNode *rec_findMax(TreeNode *root) {
+        if (root == NULL)
+            return NULL;
+        if (root->right == NULL)
+            return root;
+        return findMax(root->right);
+    }
+    ```
+
+=== "Insert"
+
+    ```C
+    TreeNode *insert(TreeNode *root, int val) {
+        if (root == NULL) {
+            root = newTreeNode(val);
+        } else if (root->val < val) {
+            root->right = insert(root->right, val);
+        } else if (root->val > val) {
+            root->left = insert(root->left, val);
+        }
+    }
+    ```
+
+## 3 Heap/Priority Queue
+
+### 3.1 Binary Heap
+
+二叉堆首先是一个满足**堆性质**的完全二叉树，对于最大堆为例，所谓堆性质是：某个树的所有子树的根节点值都大于等于子节点值。同理，我们可以定义最小堆。
+
+### 3.2 Heap Implementation
 
 堆其实是一个完全二叉树，完全二叉树又很容易表示成数组，所以堆基于数组来实现，但是存储数组的时候很有讲究：数组的元素代表二叉树的节点值，索引代表层序遍历中节点在二叉树中的位置，所有的索引将由 `1` 开始，这样就可以很方便的通过索引来找到节点的父节点和子节点。下面是获取父节点、左子节点、右子节点的函数：
 
@@ -197,4 +276,6 @@ Heap/Priority Queue
 
 === "getRight"
 
-## 3.4 Disjoint Set
+## 4 Disjoint Set
+
+并查集只不过是数据结构画在图上很像树

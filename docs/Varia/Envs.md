@@ -5,6 +5,10 @@
     
     什么？配环境不痛苦？那你给我配。
 
+## 脚本
+
+忍不了了！所以写了个配环境的脚本！
+
 ## WSL
 
 ### 安装
@@ -57,7 +61,7 @@ tar xzvf nvim-linux64.tar.gz
 vim ~/.zshrc
 export PATH=$PATH:~/nvim-linux64/bin    // 这步是在 vim 里边写入的
 source ~/.zshrc
-sudo apt install git make python3 pip npm nodejs cargo ripgrep
+sudo apt install pip npm nodejs ripgrep
 LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh)
 nvim ~/.zshrc
 export PATH=$PATH:~/.local/bin          // 这步是在 vim 里边写入的
@@ -66,21 +70,22 @@ source ~/.zshrc
 
 开始享受 lunarvim 吧！
 
-### FPGA: Verilator
+### 计算机系统相关
 
 首先需要安装依赖：
 ```shell
-sudo apt-get install git perl python3 make autoconf g++ flex bison ccache
-sudo apt-get install autoconf automake libtool
-sudo apt-get install help2man
+sudo apt-get install git perl python3 make autoconf g++ flex bison ccache autoconf automake libtool help2man
 ```
 
 其实就是按照系统 I 的文档开抄：
 
 ```Shell
-git submodule update --init repo/verilator
-cd repo
-make verilator
+cd sys1-sp24/repo
+git submodule update --init verilator riscv-isa-cosim riscv-openocd risv-pk
+sudo make verilator
+sudo make spike
+sudo make pk
+sudo make openocd
 ```
 
 说是使用 `git submodule`，其实就是 `git clone https://github.com/verilator/verilator.git`
@@ -215,4 +220,11 @@ mkdir build && cd build
 ../configure -enable-checking=release -enable-languages=c,c++ -disable-multilib
 sudo make -j8           // 给我编译半小时！
 sudo make install
+```
+
+## Rust
+
+```Shell
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+. "$HOME/.cargo/env"
 ```

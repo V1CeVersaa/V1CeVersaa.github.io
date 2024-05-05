@@ -20,7 +20,7 @@
 ### Programming Language
 
 - [ ] [Programming Language: C](./Programming%20Language/C.md)
-- [ ] [Programming Language: C++](./Programming%20Language/C++.md)
+- [ ] [Programming Language: C++](Programming%20Language/C++/C++.md)
 - [ ] [Programming Language: Python](./Programming%20Language/Python.md)
 - [ ] [Programming Language: Java](./Programming%20Language/Java.md) <**SUSPENDING**>
 
@@ -28,12 +28,13 @@
 
 - [ ] [Web: CSS](./Web/CSS.md)
 - [ ] [Web: HTML](./Web/HTML.md)
-- [ ] [Web: JavaScript](./Web/JavaScript.md)
-- [x] [Web: YAML](./Programming%20Language/YAML.md) 
+- [ ] [Web: JavaScript](./Web/Javascript.md)
+- [x] [Web: YAML](./Web/YAML.md) 
 
 ### System
 
-- [ ] [System: Verilog](./System/Verilog.md)<**IN-PROGRESS**>
 - [ ] [System: CSAPP](./System/CSAPP/CSAPP.md) <**IN-PROGRESS**>
-- [ ] [System: RISC-V](./System/RISC-V.md)<**IN-PROGRESS**>
+- [ ] [System: Computer Organization](./System/COAD/COAD.md)
+- [ ] [System: Verilog](./System/Verilog.md)<**IN-PROGRESS**>
+- [ ] [System: RISC-V](./System/RISC-V/RISC-V.md)<**IN-PROGRESS**>
 - [ ] [System: Lab Record](./System/Lab%20Record/ZJU%20System%20I.md) <**IN-PROGRESS**>

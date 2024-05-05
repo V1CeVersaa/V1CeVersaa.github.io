@@ -185,7 +185,7 @@
 
 ### 3.10.3 Out-of-Bounds Memory References and Buffer Overflow
 
-在 Linux 的存储结构之中，栈位于最顶部，尽管 64 位允许访问的空间非常大，由于硬件因素，当时（CMU 15-213 fa15 上课时）只能使用 47 位的地址空间，栈底的地址因此是 `0x7fffffffffff`，并且栈的空间是有限的，一般只有 8MB，我们使用 `limit` 命令可以查看栈的大小。
+在 Linux 的存储结构之中，栈位于最顶部，尽管 64 位允许访问的空间非常大，由于硬件与 ISA 设计因素，当时（CMU 15-213 fa15 上课时）只能使用 47 位的地址空间，栈底的地址因此是 `0x7fffffffffff`，并且栈的空间是有限的，一般只有 8MB，我们使用 `limit` 命令可以查看栈的大小。
 
 ### 3.10.4 Thwarting Buffer Overflow Attacks
 
