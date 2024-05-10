@@ -59,6 +59,10 @@ Verilog 这种硬件描述语言都基于基本的硬件逻辑之上，因此 Ve
 
 算数运算符：
 
+### `localparam` 与 `parameter`
+
+`localparam` 类似于 C 中的 `const` 变量，看似是定义了一个变量，其实在生成的时候，只会生成一个立即数代替 `localparam` 变量。`localparam` 只能被赋值一次，赋值表达式可以是任意的 `localparam`、`parameter` 与立即数的计算结果，但不能是电路输出，这就类似于 C++ 的常量表达式 `constexpr`。
+
 ### 2.4 模块：结构与例化
 
 Verilog 的基本单元就是**模块**，模块是具有输入输出端口的逻辑块，可以代表一个物理器件，也可以代表一个复杂的逻辑系统，比如基础逻辑门器件或者通用的逻辑单元。一个数字电路系统一般由一个或者多个模块组成，模块化设计将总的逻辑功能分块实现，通过模块之间的互联关系实现所需要的整体系统需求。
@@ -420,17 +424,21 @@ end
 
 ```SystemVerilog
 parameter LEN = 4;
-
+typedef logic [LEN-1:0] data_t;
 typedef struct{
     data_t data [LEN-1:0];
 } data_vector;
 ```
 
-对应的模块端口语法需要是 `#!SystemVerilog input/output data_vector d`
+对应的模块端口语法需要是 `#!SystemVerilog input/output data_vector data_instance;`
+
+这样就将很多个数据打包成一个数据结构，输入与输出的结构端口可以直接用结构变量进行链接，结构变量之间可以直接赋值，方便传输与处理。
 
 ### 3.7 `package` 包
 
 > 包是用来定义一堆杂七杂八的参数用的。
+
+我们可以在包中定义各种需要的**参数/parameter**，**类型/typedef**，**结构/struct**，**函数/function**。
 
 ```SystemVerilog
 package Conv;
@@ -449,7 +457,41 @@ endpackage
 
 使用类似于 C++ 中的命名空间的语法来使用包中的定义，比如 `#!SystemVerilog output Conv::data_vector result;`，如果要引入 `Conv` 内的所有定义，可以使用 `#!SystemVerilog import Conv::*;` 来实现。
 
-### 3.8 `always_comb` 扩展
+将包的定义放在一个文件的开头就可以引用包定义的内容，我们一般使用 Verilog 头文件 `.vh` 与宏实现，比如 `#!SystemVerilog `include "Conv.vh"`。
+
+### 3.8 `interface` 接口
+
+`interface` 接口是用来简化交互信号处理的。
+
+```verilog
+interface Decoupled_ift #(
+    parameter DATA_WIDTH = 64
+);
+
+    typedef logic [DATA_WIDTH-1:0] data_t;
+    typedef logic ctrl_t;
+    data_t data;
+    ctrl_t valid, ready;
+    
+    modport Master(
+        output data;
+        output valid;
+        input  ready;
+    );
+    
+    modport Slave(
+        input data;
+        input valid;
+        output ready;
+    );
+    
+endinterface
+```
+
+`interface name ... endinterface` 定义一个 `interface` 块，并且可以进行参数配置。
+
+
+### 3.9 `always_comb` 扩展
 
 ## Chapter 4 SystemVerilog 与 C 的接口
 

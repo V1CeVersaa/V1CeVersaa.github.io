@@ -7,30 +7,6 @@
     - 复分析
     - 线性代数 
 
-## Analysis
-
-!!! Abstract
-    这里是我的分析学笔记，我打算在分析学稍微深耕一点点，所以这里的内容可能会比较多。
-
-    我会奋力学，奋力更的！
-
-### Mathematical Analysis
-
-<div class="card file-block" markdown="1">
-<div class="file-icon"><img src="/assets/images/pdf.svg" style="height: 3em;"></div>
-<div class="file-body">
-<div class="file-title">A Little More Analysis</div>
-<div class="file-meta">383 KB / 63 P / 2024-02-16</div>
-</div>
-<a class="down-button" target="_blank" href="/Math/Analysis/A Little More Analysis.pdf" markdown="1">:fontawesome-solid-download: 下载</a>
-</div>
-
-### Analysis All in One
-
-!!! Warning
-    什么？还没写？
-    
-    先学再说！
 
 ## Algebra
 
