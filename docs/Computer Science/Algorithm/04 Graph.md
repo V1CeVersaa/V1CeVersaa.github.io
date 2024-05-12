@@ -21,7 +21,7 @@
 - 邻接表/Adjacency List
     ```C
     typedef struct ArcNode {
-        int adjvex;
+        int adjvex;           // 顶点下标
         int weight;
         struct ArcNode *next;
     } ArcNode;                // 边表结点 
@@ -66,7 +66,7 @@
   - Tip：拓扑排序不唯一；
 
 ```C
-void TopologicalSort(Graph G) {
+void TopologicalSort(ALGraph G) {
     Queue Q = CreateQueue(NumVertex(G));
     int cnt;
     Vertex V, W;
@@ -83,21 +83,81 @@ void TopologicalSort(Graph G) {
 }
 ```
 
-### 4.5 最短路径
+## 4.5 BFS 和 DFS
+
+广度优先搜索/Breadth First Search：从一个点出发，依次访问其邻接点，再访问邻接点的邻接点，以此类推，直到所有点都被访问过；
+
+=== "邻接矩阵"
+
+=== "邻接表"
+
+    时间复杂度：$O(V+E)$（若不使用队列硬遍历则$T=O(V^2)$）
+
+    ```C
+    define MAXN 100
+    int visited[MAXN];
+    int prev[MAXN];
+  
+    void BFS(ALGraph G, int src, int dst) {
+        int queue[MAXN] = {0};
+        int front = 0, rear = 0;
+        queue[rear++] = src;
+        visited[src] = 1;
+        while(front < rear) {
+            int v = queue[front++];
+            for(ArcNode *arc = G->vertices[v].first; arc != NULL; arc = arc->next) {
+                int w = arc->adjvex;
+                if(!visited[w]) {
+                    prev[w] = v;
+                    iqueue[rear++] = w;
+                    visited[w] = 1;
+                    if(w == dst) return;
+                }
+            }
+        }
+    }
+    ```
+
+深度优先搜索/Depth First Search：从一个点出发，访问其邻接点，再访问邻接点的邻接点，以此类推，直到所有点都被访问过，再回溯到上一个点，继续访问其他邻接点；
+
+=== "邻接矩阵"
+
+=== "邻接表"
+
+
+
+## 4.6 最短路径
 
 单源最短路径/Single Source Shortest Path：从一个点到其他所有点的最短路径
 
 - 无向无权图：广度优先搜索/BFS
-- 无向正权图：Dijkstra 算法
+- 无向/有向正权图：Dijkstra 算法
     ```C
     #define INFINITY INT_MAX
-    void Dijkstra(ALGraph G, ins src){
+    void Dijkstra(ALGraph G, ins src){          // 确定源点 src 到其他所有点的最短路径长度
         int dist[MaxN] = {0};
-        int visited[MaxN] = {0};
+        int visited[MaxN] = {0};                // 记录是否已经访问
         for (int i = 0; i < G->vexnum; i++)
-            dist[i] = INFINITY;
+            dist[i] = INFINITY;                 // 初始化
         dist[src] = 0;
-        visited[src] = 0;
+        visited[src] = 1;
         for (ArcNode *arc = G->vertices[src].first; arc != NULL; arc = arc->next)
-            
+            dist[arc->adjvex] = arc->weight;    // 更新原点的邻接点距离
+        for (int i = 0; i < G->vexnum; i++) {   // 重复 n-1 次
+            int min = INFINITY, v = -1;
+            for (int j = 0; j < G->vexnum; j++) {
+                if (!visited[j] && dist[j] < min) {
+                    min = dist[j];
+                    v = j;                      // 找到未访问的最小距离点
+                }
+            }
+            if (v == -1) break;                 // 未找到则剩下所有节点都不可达
+            visited[v] = 1;
+            for (ArcNode *arc = G->vertices[v].first; arc != NULL; arc = arc->next) {
+                if (!visited[arc->adjvex] && dist[v] + arc->weight < dist[arc->adjvex])
+                    dist[arc->adjvex] = dist[v] + arc->weight;
+            }                                   // 更新其他点的距离
+        }
+    }
     ```
+    这种实现的时间复杂度为 $O(V^2+E)$ 原因之一是内部寻找未访问的最小距离点的步骤是纯粹的线性搜索。

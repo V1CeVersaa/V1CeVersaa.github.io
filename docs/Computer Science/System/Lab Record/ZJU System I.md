@@ -613,6 +613,214 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
 
 ## 9 卷积模块
 
+=== "Conv 包"
+
+    定义了需要的参数与数据类型。
+
+    ```verilog
+    package Conv;
+        parameter WIDTH = 64;
+        parameter LEN   = 4;
+
+        typedef logic [WIDTH-1:0] data_t;
+        typedef logic [WIDTH*2-1:0] result_t;
+
+        typedef struct{
+            data_t data [LEN-1:0];
+        } data_vector;
+
+    endpackage
+    ```
+
+=== "ConvUnit"
+
+    作为外壳调用移位器与卷积计算模块
+
+    ```verilog
+    module ConvUnit (
+        input clk,
+        input rst,
+        input Conv::data_t in_data,
+        input Conv::data_vector kernel,
+        input in_valid,
+        output in_ready,
+
+        output Conv::result_t result,
+        output out_valid,
+        input out_ready
+    );
+
+        Conv::data_vector trans_data;
+        logic trans_valid, trans_ready;
+        Shift shift(.clk(clk), .rst(rst), .in_data(in_data), .in_valid(in_valid), .in_ready(in_ready), .data(trans_data), .out_valid(trans_valid), .out_ready(trans_ready));
+        ConvOperator operator(.clk(clk), .rst(rst), .kernel(kernel), .data(trans_data), .in_valid(trans_valid), .in_ready(trans_ready), .result(result), .out_valid(out_valid), .out_ready(out_ready));
+
+    endmodule
+    ```
+
+=== "Shift"
+
+    移位器模块，读入数据并且输出，注意结构体与数组/向量的转换与链接。
+
+    ```verilog
+    module Shift (
+        input clk,
+        input rst,
+        input Conv::data_t in_data,
+        input in_valid,
+        output reg in_ready,
+
+        output Conv::data_vector data,
+        output reg out_valid,
+        input out_ready
+    );
+
+        typedef enum logic {RDATA, TDATA} fsm_state;
+        fsm_state state_reg;
+        Conv::data_t data_reg [Conv::LEN-1:0];
+
+        Conv::data_vector tmp;    
+        assign tmp = '{data_reg};
+        always @(posedge clk or posedge rst)begin
+            if(rst)begin
+                state_reg <= RDATA;
+                in_ready <= 1'b1;
+                out_valid <= 1'b0;
+            end else ;
+            case(state_reg)
+                RDATA:begin
+                    if(in_ready & in_valid)begin
+                        in_ready <= 1'b0;
+                        data_reg[Conv::LEN-2:0] <= data_reg[Conv::LEN-1:1];
+                        data_reg[Conv::LEN-1] <= in_data;
+                        state_reg <= TDATA;
+                        out_valid <= 1'b1;
+                    end else begin
+                        ;
+                    end
+                end
+                TDATA:begin
+                    if(out_ready & out_valid)begin
+                        out_valid <= 1'b0;
+                        data <= tmp;
+                        state_reg <= RDATA;
+                        in_ready <= 1'b1;
+                    end else begin
+                        ;
+                    end 
+                end
+            endcase
+        end
+    endmodule
+    ```
+
+=== "ConvOperator"
+
+    卷积计算模块，乘法器调用的是前一个实验的乘法器。需要注意卷积核与数据的乘积（调用乘法器）与加法树在宏观上其实是组合逻辑的想法，我们完全将其作为模块化硬件的实现，不依赖于有限状态机。乘法器完成计算的时候需要传递信号给有限状态机，这里的实现容易被忽略，需要注意一下。
+
+    ```verilog
+    module ConvOperator(
+        input clk,
+        input rst,
+        input Conv::data_vector kernel,
+        input Conv::data_vector data,
+        input in_valid,
+        output reg in_ready,
+
+        output Conv::result_t result,
+        output reg out_valid,
+        input out_ready
+    );
+
+        localparam VECTOR_WIDTH = 2*Conv::WIDTH;
+        typedef struct {
+            Conv::result_t data;
+            logic valid;
+        } mid_vector;
+
+        mid_vector vector_stage1 [Conv::LEN-1:0]; 
+        mid_vector vector_stage2;
+
+        typedef enum logic [1:0] {RDATA, WORK, TDATA} fsm_state;
+        fsm_state state_reg;
+
+        Conv::result_t add_tmp [Conv::LEN-1:1] /* verilator split_var */;
+        integer i;
+        localparam CNT_LEN = $clog2(Conv::LEN);
+        logic [CNT_LEN-1:0] work_cnt;
+        logic TDATA_FLAG;
+        Conv::result_t stage1 [Conv::LEN-1:0];
+        logic [Conv::LEN-1:0] start_flag, finish_flag;
+        generate
+            for(genvar i=0;i<Conv::LEN;i=i+1)begin
+                assign stage1[i] = vector_stage1[i].data;
+            end
+        endgenerate
+        generate
+            for(genvar i = 1;i < Conv::LEN;i=i+1)begin
+                if(i<Conv::LEN/2)begin
+                    assign add_tmp[i] = add_tmp[i*2] + add_tmp[i*2+1];
+                end else begin
+                    assign add_tmp[i] =stage1[(i-Conv::LEN/2)*2] + stage1[(i-Conv::LEN/2)*2+1]; 
+                end
+            end
+        endgenerate
+        Conv::data_t tmp_multipler [Conv::LEN-1:0];
+        generate
+            for(genvar j = 0; j <= Conv::LEN-1; j = j + 1)begin
+                assign tmp_multipler[j] = data.data[j];
+                Multiplier #(.LEN(Conv::WIDTH)) mul (.clk(clk), .rst(rst), .multiplicand(kernel.data[j]), .multiplier(tmp_multipler[j]), .start(start_flag[j]), .product(vector_stage1[j].data), .finish(finish_flag[j]));
+            end
+        endgenerate
+
+        always @(posedge clk or posedge rst)begin
+            if (rst)begin
+                state_reg <= RDATA;
+                in_ready <= 1'b1;
+                out_valid <= 1'b0;
+                i = 0;
+            end
+            case(state_reg)
+                RDATA: begin
+                    if (in_ready & in_valid)begin
+                        in_ready <= 1'b0;
+                        work_cnt <= {CNT_LEN{1'b0}};
+                        for(i = 0; i <= Conv::LEN-1; i = i + 1)begin
+                            vector_stage1[i].data = {VECTOR_WIDTH{1'b0}};
+                            vector_stage1[i].valid = 1'b0;
+                        end
+                        vector_stage2.data = {VECTOR_WIDTH{1'b0}};
+                        vector_stage2.valid = 1'b0;
+                        start_flag <= {Conv::LEN{1'b1}};
+                        state_reg <= WORK;              
+                    end else begin
+                        ;
+                    end
+                end   
+                WORK: begin
+                    if (&finish_flag == 1)begin
+                        start_flag <= {Conv::LEN{1'b0}};
+                        state_reg <= TDATA;
+                        vector_stage2.data = add_tmp[1];
+                        result <= vector_stage2.data;
+                        out_valid <= 1'b1;
+                        vector_stage2.valid = 1'b1;
+                    end else begin ; end
+                end
+                TDATA:begin 
+                    if(out_ready & out_valid & vector_stage2.valid)begin
+                        out_valid <= 1'b0;
+                        state_reg <= RDATA;
+                        in_ready <= 1'b1;
+                        // result <= vector_stage2.data;
+                    end
+                end
+                default: begin ; end
+            endcase
+        end
+    endmodule
+    ```
+
 ## 10 串口使用
 
 ## 11 汇编实验
