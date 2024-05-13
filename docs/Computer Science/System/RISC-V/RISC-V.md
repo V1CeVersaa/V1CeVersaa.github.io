@@ -43,9 +43,9 @@ A **Load/Store Architecture** is an instruction set architecture that requires v
 The RISC-V ISA is a **Load/Store Architecture**. Hence, to perform operations (e.g. arithmetic operations), on data stored on memory, it requires the data to be first retrieved from memory into a register by executing a load instruction. As an example, let us consider the following assembly code, which loads a value from memory, multiply it by two, and stores the result on memory.
 
 ```asm
-lw  a5, 0(a0)    # load the value at address a0 into register a5
+lw  a5, 0(a0)     # load the value at address a0 into register a5
 add a6, a5, a5    # multiply the value in a5 by 2 and store the result
-sw  a6, 0(a1)    # store the value in a6 at address a1
+sw  a6, 0(a1)     # store the value in a6 at address a1
 ```
 
 ## Toolchain

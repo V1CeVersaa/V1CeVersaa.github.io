@@ -206,6 +206,9 @@ nav:
       - Advanced Counting Techniques: Math/Discrete Mathematics/08 Advanced Counting Techniques.md
       - Relations: Math/Discrete Mathematics/09 Relations.md
       - Graph Theory: Math/Discrete Mathematics/10 Graph Theory.md
+      - Trees: Math/Discrete Mathematics/11 Trees.md
+      - Boolean Algebra: Math/Discrete Mathematics/12 Boolean Algebra.md
+      - Modeling Computation: Math/Discrete Mathematics/13 Modeling Computation.md
     # - Topology: Math/General Topology.md
   - Reading: 
     - Reading/index.md

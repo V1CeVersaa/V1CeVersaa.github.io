@@ -745,17 +745,19 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
         fsm_state state_reg;
 
         Conv::result_t add_tmp [Conv::LEN-1:1] /* verilator split_var */;
-        integer i;
-        localparam CNT_LEN = $clog2(Conv::LEN);
-        logic [CNT_LEN-1:0] work_cnt;
-        logic TDATA_FLAG;
         Conv::result_t stage1 [Conv::LEN-1:0];
         logic [Conv::LEN-1:0] start_flag, finish_flag;
+
         generate
             for(genvar i=0;i<Conv::LEN;i=i+1)begin
                 assign stage1[i] = vector_stage1[i].data;
+                assign finish_flag[i] = vector_stage1[i].valid;
+                Multiplier #(.LEN(Conv::WIDTH)) mul (.clk(clk), .rst(rst), .multiplicand(kernel.data[i]),
+                            .multiplier(data.data[i]), .start(start_flag[i]), .product(vector_stage1[i].data), 
+                            .finish(vector_stage1[i].valid));
             end
         endgenerate
+
         generate
             for(genvar i = 1;i < Conv::LEN;i=i+1)begin
                 if(i<Conv::LEN/2)begin
@@ -765,37 +767,26 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
                 end
             end
         endgenerate
-        Conv::data_t tmp_multipler [Conv::LEN-1:0];
-        generate
-            for(genvar j = 0; j <= Conv::LEN-1; j = j + 1)begin
-                assign tmp_multipler[j] = data.data[j];
-                Multiplier #(.LEN(Conv::WIDTH)) mul (.clk(clk), .rst(rst), .multiplicand(kernel.data[j]), .multiplier(tmp_multipler[j]), .start(start_flag[j]), .product(vector_stage1[j].data), .finish(finish_flag[j]));
-            end
-        endgenerate
 
         always @(posedge clk or posedge rst)begin
             if (rst)begin
                 state_reg <= RDATA;
                 in_ready <= 1'b1;
                 out_valid <= 1'b0;
-                i = 0;
-            end
+            end else begin ; end
             case(state_reg)
                 RDATA: begin
                     if (in_ready & in_valid)begin
                         in_ready <= 1'b0;
-                        work_cnt <= {CNT_LEN{1'b0}};
-                        for(i = 0; i <= Conv::LEN-1; i = i + 1)begin
+                        for(integer i = 0; i <= Conv::LEN-1; i = i + 1)begin
                             vector_stage1[i].data = {VECTOR_WIDTH{1'b0}};
                             vector_stage1[i].valid = 1'b0;
                         end
                         vector_stage2.data = {VECTOR_WIDTH{1'b0}};
                         vector_stage2.valid = 1'b0;
                         start_flag <= {Conv::LEN{1'b1}};
-                        state_reg <= WORK;              
-                    end else begin
-                        ;
-                    end
+                        state_reg <= WORK;  
+                    end else begin ; end
                 end   
                 WORK: begin
                     if (&finish_flag == 1)begin
@@ -812,8 +803,7 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
                         out_valid <= 1'b0;
                         state_reg <= RDATA;
                         in_ready <= 1'b1;
-                        // result <= vector_stage2.data;
-                    end
+                    end else begin ; end
                 end
                 default: begin ; end
             endcase

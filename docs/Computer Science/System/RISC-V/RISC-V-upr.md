@@ -134,7 +134,7 @@ pow:
     addi a1, a1, -1  # a1--
     j 1b             # goto 1b/repeat
 1:
-    ret             # done and return
+    ret              # done and return
 ```
 
 ### Location Counter and Assembling Process
