@@ -171,6 +171,13 @@ nav:
           - Computer Science/System/COAD/COAD.md
           - Chapter 1: Computer Science/System/COAD/Chapter1.md
           - Chapter 2: Computer Science/System/COAD/Chapter2.md
+          - Chapter 3: Computer Science/System/COAD/Chapter3.md
+          - Chapter 4: Computer Science/System/COAD/Chapter4.md
+      - RISC-V: 
+        - Computer Science/System/RISC-V/RISC-V.md
+        - Unprivileged ISA: Computer Science/System/RISC-V/RISC-V-upr.md
+        - Privileged ISA: Computer Science/System/RISC-V/RISC-V-pr.md
+      - Verilog: Computer Science/System/Verilog.md
       - Lab Record:
         - ZJU System I: Computer Science/System/Lab Record/ZJU System I.md
 #        - ZJU System II: Computer Science/System/Lab Record/ZJU System II.md
@@ -178,11 +185,6 @@ nav:
         - NJU ICS PA: Computer Science/System/Lab Record/NJU ICS PA.md
         - CMU 15-213: Computer Science/System/Lab Record/CMU-15-213.md
 #        - UCB CS61C: Computer Science/System/Lab Record/UCB CS61C.md
-      - RISC-V: 
-        - Computer Science/System/RISC-V/RISC-V.md
-        - Unprivileged ISA: Computer Science/System/RISC-V/RISC-V-upr.md
-        - Privileged ISA: Computer Science/System/RISC-V/RISC-V-pr.md
-      - Verilog: Computer Science/System/Verilog.md
       # - 计算机系统 I: Computer Science/System/System1.md
     - Web:
       - Computer Science/Web/index.md

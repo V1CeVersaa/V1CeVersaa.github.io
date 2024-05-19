@@ -513,7 +513,8 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
         
         logic finish_reg;
         logic start_load;
-        assign product = product_reg;
+        logic [LEN-1:0] product_trans;
+        assign product = product_trans;
         assign finish = finish_reg;
 
         always @(posedge clk or posedge rst)begin
@@ -532,20 +533,21 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
                             fsm_state_reg <= WORK;
                             start_load = 1'b1;
                             work_cnt <= {CNT_LEN{1'b0}};
+                            product_trans = 0;
                         end
                         WORK:begin
                             if(product_reg[0])begin
                                 product_reg[PRODUCT_LEN-1:LEN] = product_reg[PRODUCT_LEN-1:LEN] + multiplicand_reg;
-                                work_cnt <= work_cnt + 1;
                                 product_reg = product_reg >> 1;
                                 product_reg[PRODUCT_LEN-1] = (product_reg[PRODUCT_LEN-2:LEN-1] < multiplicand_reg); 
                             end else begin
                                 product_reg = product_reg >> 1;
-                                work_cnt <= work_cnt + 1;
                             end
+                            work_cnt <= work_cnt + 1;
                             if(work_cnt == CNT_NUM[CNT_LEN-1:0]) begin
                                 fsm_state_reg <= FINAL;
                                 finish_reg <= 1'b1;
+                                product_trans = product_reg;
                             end
                         end
                         FINAL:begin
@@ -553,7 +555,7 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
                             start_load = 1'b0;
                             fsm_state_reg <= IDLE;
                         end
-                        default: fsm_state_reg <= IDLE;
+                        default: begin fsm_state_reg <= IDLE; end
                     endcase
                 end
             end 
@@ -679,37 +681,43 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
         fsm_state state_reg;
         Conv::data_t data_reg [Conv::LEN-1:0];
 
-        Conv::data_vector tmp;    
-        assign tmp = '{data_reg};
+        generate
+            for(genvar i = 0; i < Conv::LEN; i = i + 1)begin
+                assign data.data[i] = data_reg[i];
+            end
+        endgenerate
+        
         always @(posedge clk or posedge rst)begin
             if(rst)begin
                 state_reg <= RDATA;
                 in_ready <= 1'b1;
                 out_valid <= 1'b0;
-            end else ;
-            case(state_reg)
-                RDATA:begin
-                    if(in_ready & in_valid)begin
-                        in_ready <= 1'b0;
-                        data_reg[Conv::LEN-2:0] <= data_reg[Conv::LEN-1:1];
-                        data_reg[Conv::LEN-1] <= in_data;
-                        state_reg <= TDATA;
-                        out_valid <= 1'b1;
-                    end else begin
-                        ;
+                for(integer i = 0; i < Conv::LEN; i = i + 1)begin
+                    data_reg[i] <= 0;
+                end
+            end else begin
+                case(state_reg)
+                    RDATA:begin
+                        if(in_ready & in_valid)begin
+                            data_reg[Conv::LEN-2:0] <= data_reg[Conv::LEN-1:1]; // transfer data
+                            data_reg[Conv::LEN-1] <= in_data;
+                            state_reg <= TDATA;
+                            in_ready <= 1'b0;
+                        end else begin ; end
                     end
-                end
-                TDATA:begin
-                    if(out_ready & out_valid)begin
-                        out_valid <= 1'b0;
-                        data <= tmp;
-                        state_reg <= RDATA;
-                        in_ready <= 1'b1;
-                    end else begin
-                        ;
-                    end 
-                end
-            endcase
+                    TDATA:begin
+                        out_valid <= 1'b1;
+                        if(out_ready & out_valid)begin
+                            out_valid <= 1'b0;
+                            data <= tmp;
+                            state_reg <= RDATA;
+                            in_ready <= 1'b1;
+                        end else begin
+                            ;
+                        end 
+                    end
+                endcase
+            end
         end
     endmodule
     ```
@@ -753,8 +761,8 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
                 assign stage1[i] = vector_stage1[i].data;
                 assign finish_flag[i] = vector_stage1[i].valid;
                 Multiplier #(.LEN(Conv::WIDTH)) mul (.clk(clk), .rst(rst), .multiplicand(kernel.data[i]),
-                            .multiplier(data.data[i]), .start(start_flag[i]), .product(vector_stage1[i].data), 
-                            .finish(vector_stage1[i].valid));
+                             .multiplier(data.data[i]), .start(start_flag[i]), .product(vector_stage1[i].data), 
+                             .finish(vector_stage1[i].valid));
             end
         endgenerate
 
@@ -763,7 +771,7 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
                 if(i<Conv::LEN/2)begin
                     assign add_tmp[i] = add_tmp[i*2] + add_tmp[i*2+1];
                 end else begin
-                    assign add_tmp[i] =stage1[(i-Conv::LEN/2)*2] + stage1[(i-Conv::LEN/2)*2+1]; 
+                    assign add_tmp[i] = stage1[(i-Conv::LEN/2)*2] + stage1[(i-Conv::LEN/2)*2+1]; 
                 end
             end
         endgenerate
@@ -815,7 +823,38 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
 
 ## 11 汇编实验
 
-=== "环境配置"
+=== "Fibonacci"
+
+    ```asm title="fibonacci.s"
+    # implementing fibonacci in RISC-V assembly
+    # n in a0
+    fibonacci:
+        li t0, 2                # test if n < 2    
+        blt a0, t0, fib_base    # if n < 2, return 1
+
+        addi sp, sp, -8         # allocate stack space
+        sw   ra, 4(sp)          # store return address
+        sw   a0, 0(sp)          # store original n
+
+        addi a0, a0, -1         # n-1 in a0
+        jal  x1, fibonacci      # calculate fib(n-1)
+
+        lw   t0, 0(sp)          # load original n to t0
+        sw   a0, 0(sp)          # store fib(n-1) to stack
+        addi a0, t0, -2         # now n-2 in a0
+        jal  x1, fibonacci      # calculate fib(n-2)
+
+        lw   t0, 0(sp)          # load fib(n-1) to t0
+        add  a0, a0, t0         # calculate fib(n) = fib(n-1) + fib(n-2)
+        lw   ra, 4(sp)          # load return address
+        addi sp, sp, 8          # clean up stack
+        ret
+
+    fib_base:                   # base case, return 1
+        li a0, 1
+        ret
+    ```
+
 
     
 

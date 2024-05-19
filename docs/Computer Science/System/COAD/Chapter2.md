@@ -1,5 +1,72 @@
 # Instructions: Language of the Computer
 
+## Temporary Variables
+
+在 RV32I 之中只有寄存器 `x5` `x6` `x7` 是临时寄存器,被命名为 `t0` `t1` `t2`，这些寄存器可以用于存储临时变量或者任意修改，同时可以将临时变量存储在栈之中，这就需要调整栈指针 `x2` 也就是 `sp` 的值。下面是几个例子：
+
+```C 
+int a = 5;
+char b[] = "string";
+int c[10];
+uint8_t d = b[3];
+c[4] = a + d;
+c[a] = 20;
+```
+
+```asm
+# a in 0(sp), b in 4(sp), c in 12(sp), d in 52(sp)
+addi    sp, sp, -56
+li      t0, 5
+sw      t0. 0(sp)       # a = 5
+li      t0, 0x69727473
+sw      t0, 4(sp)
+li      t0, 0x0000676E
+sw      t0, 8(sp)       # b = "string"
+lb      t0, 7(sp)
+sb      t0, 52(sp)      # d = b[3]
+lw      t0, 0(sp)
+lbu     t1, 52(sp)
+add     t2, t0, t1
+sw      t2, 28(sp)      # c[4] = a + d
+li      t0, 20
+lw      t1, 0(sp)
+slli    t1, t1, 2       # a * 4
+addi    t1, t1, 12
+add     t1, t1, sp
+sw      t0, 0(t1)       # c[a] = 20     
+```
+
+## Control Flow
+
+### `if-then` statements
+
+<div class="grid" markdown>
+
+```C title="if-then in C"
+if (x >= 10)
+    y = x;
+// reduce with goto
+if (x < 10) goto skip;
+    y = x;
+skip: ...
+```
+
+```asm title="if-then in RISC-V"
+# assume x in a3, y in a4
+    li  t0, 10
+    blt a3, t0, skip 
+    add a4, a3, zero
+skip: ...
+```
+
+</div>
+
+### `while` loop
+
+### `do-while` loop
+
+### `for` loop
+
 使用移位指令与 `lw` 实现 `lbu` 指令。
 
 ```asm
@@ -81,6 +148,89 @@ add:
     jr   ra
 ```
 
+Basic structure of a function:
+
+```asm
+Prologue
+    func_label:
+    addi sp, sp, -framesize
+    sw   ra, (framesize-4)(sp)
+    # store other callee-saved registers
+    # save other regs if needed
+Body
+    # function body
+Epilogue
+    # restore other regs if needed
+    # restore callee-saved registers
+    lw ra, (framesize-4)(sp)
+    addi sp, sp, framesize
+    jr ra   # or ret
+```
+
+## Recursion in RISC-V
+
+```C title="Factorial in C"
+int factorial(int n) {
+    if (n == 0) return 1;
+    return n * factorial(n-1);
+}
+```
+
+```asm title="Factorial in RISC-V"
+factorial:
+    addi sp, sp, -16
+    sw   ra, 12(sp)
+    li   t0, 1
+    blt  a0, t0, else
+    sw   a0, 8(sp)
+    addo a0, a0, -1
+    jal  ra, factorial
+    lw   t0, 8(sp)
+    mul  a0, t0, a0
+    j    fact_end
+else:
+    li   a0, 1
+fact_end:
+    lw   ra, 12(sp)
+    addi sp, sp, 16
+    ret
+```
+
+```C title="Fibonacci in C"
+int fibonacci(int n) {
+    if (n < 2) return 1;
+    return fibonacci(n-1) + fibonacci(n-2);
+}
+```
+
+```asm title="Fibonacci in RISC-V"
+fibonacci:
+    li t0, 2                # test if n < 2    
+    blt a0, t0, fib_base    # if n < 2, return 1
+
+    addi sp, sp, -8         # allocate stack space
+    sw   ra, 4(sp)          # store return address
+    sw   a0, 0(sp)          # store original n
+
+    addi a0, a0, -1         # n-1 in a0
+    jal  x1, fibonacci      # calculate fib(n-1)
+
+    lw   t0, 0(sp)          # load original n to t0
+    sw   a0, 0(sp)          # store fib(n-1) to stack
+    addi a0, t0, -2         # now n-2 in a0
+    jal  x1, fibonacci      # calculate fib(n-2)
+
+    lw   t0, 0(sp)          # load fib(n-1) to t0
+    add  a0, a0, t0         # calculate fib(n) = fib(n-1) + fib(n-2)
+    lw   ra, 4(sp)          # load return address
+    addi sp, sp, 8          # clean up stack
+    ret
+
+fib_base:                   # base case, return 1
+    li a0, 1
+    ret
+```
+
 ## local Storage for variables
 
 Stack Pointer `sp` holds the address of the bottom of the stack.
@@ -94,6 +244,7 @@ addi sp, sp, -4  # allocate space
 sw   t0, sp      # store t0
 addi sp, sp, 4   # clean up
 ```
+
 
 
 

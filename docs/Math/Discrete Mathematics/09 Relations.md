@@ -130,4 +130,22 @@ Let $R$ and $S$ be equivalence relations on the set $A$, then $R\cap S$ is also 
 
 - Reflexive: $(a, a)\in R$ and $(a, a)\in S$, then $(a, a)\in R\cap S$.
 - Symmetric: Since $R^{-1} = R$ and $S^{-1} = S$, then $(R\cap S)^{-1} = R^{-1}\cap S^{-1} = R\cap S$.
-- Transitive: Since 
+- Transitive: Since $R$ and $S$ are transitive, then $R^2\subseteq R$ and $S^2\subseteq S$, then $(R\cap S)^2 = R^2 \cap R\circ S\cap S \circ R \cap R^2 \subseteq R\cap S$. Then $R\cap S$ is transitive.
+
+However, $R\cup S$ is not necessarily an equivalence relation. It is indeed reflexive and symmetric. And $(R\cup S)^*$ is an equivalence relation.
+
+### 9.6 Partial Orderings
+
+**Partial Ordering**: A relation $R$ on a set $A$ is called a **partial ordering** or **partial order** if and only if $R$ is reflexive, antisymmetric and transitve. A set with a partial ordering is called a **partially ordered set** or **poset** and denoted by $(A, R)$.
+
+**Comparability**: The elements $a$ and $b$ of a poset $(S, \leq)$ are **comparable** if and only if either $a\leq b$ or $b\leq a$. Otherwise, $a$ and $b$ are **incomparable**.
+
+**Total Ordering**: A partial ordering $R$ on a set $A$ is called a **total ordering** or **total order** if and only if for all $a, b\in A$, either $aRb$ or $bRa$. A totally ordered set is called a **chain**.
+
+**Well-ordered**: A set $A$ with a partial ordering $R$ is called **well-ordered** if and only if $R$ is totally ordered and every nonempty subset of $A$ has a least element.
+
+**Lexicographic Order**
+
+**Hasse Diagram**: A **Hasse diagram** is a visual representation of a partial ordering that leaves out edges that must be present because of the reflexive and transitive properties.
+
+**Hasse Diagram Terminology**: $a$ is a **maximal** in $(A, \leq)$ if there is no $b\in A$ such that $a\leq b$. 
