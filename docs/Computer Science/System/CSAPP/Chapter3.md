@@ -75,6 +75,53 @@
 
 ### 3.6.6 Switch
 
+`switch` 语句可以根据一个整数索引值来进行多重分支，我们使用**跳转表/Jump Table** 这种数据结构来让实现更加高效。跳转表是一个数组，数组的每一个元素都是一个代码段的地址，在代码段内实现当开关的索引值等于 `i` 的时候程序应该采取的动作。当开关情况值的数量比较大而且跨度比较小的情况下，跳转表是一个很好的选择。
+
+下面是描述 `switch` 的实现的一个例子，右侧依赖了 gcc 对跳转表语法的支持
+
+<div class="grid" markdown>
+
+```C title="Original Code"
+void switch_eg(long x, long n, long *dest){
+    long val = x;
+    switch (n) {
+        case 100:
+            val *= 13;
+            break;
+        case 102:
+            val += 10; // Fall through
+        case 103:
+            val += 11;
+            break;
+        case 104:
+        case 106:
+            val *= val;
+            break;
+        default:
+            val = 0;
+    }
+    *dest = val;
+}
+```
+
+```C title="Implemented with Jump Table"
+void switch_eg_impl(long x, long n, long *dest){
+    static void *jt[7] = {&&loc_A, &&loc_def, &&loc_B, &&loc_C, &&loc_D, &&loc_def, &&loc_D};
+    unsigned long index = n - 100;
+    long val;
+    if (index > 6) goto loc_def;
+    goto *jt[index];
+    loc_A: val = x * 13; goto done; // case 100
+    loc_B: val = x + 10; // case 102
+    loc_C: val = x + 11; goto done; // case 103
+    loc_D: val = x * x; goto done; // case 104, 106
+    loc_def: val = 0; // default case
+    done: *dest = val;
+}
+```
+
+</div>
+
 ## 3.7 Procedures
 
 ### 3.7.1 The Run-Time Stack
