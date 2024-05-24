@@ -12,7 +12,7 @@
 |   `x3`   |   `gp`   | 全局指针（global pointer）             |              |              |
 |   `x4`   |   `tp`   | 线程指针（thread pointer）             |              |              |
 |   `x5`   |   `t0`   | 临时变量/备用链接寄存器（alternate link reg） |     yes      |              |
-|  `x6-7`  | `t1-t2`  | 临时变量                             |              |     yes      |
+|  `x6-7`  | `t1-t2`  | 临时变量                             |      yes        |             |
 |   `x8`   | `s0/fp`  | 需要保存的寄存器/帧指针（frame pointer）      |              |     yes      |
 |   `x9`   |   `s1`   | 需要保存的寄存器                         |              |     yes      |
 | `x10-11` | `a0-a1`  | 函数参数/返回值                         |     yes      |              |

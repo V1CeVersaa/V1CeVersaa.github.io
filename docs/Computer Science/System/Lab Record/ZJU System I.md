@@ -925,7 +925,39 @@ endmodule
         ret
     ```
 
+=== "Bubble Sort"
 
-    
+    ```asm title="bubble_sort.s"
+    bubble_sort:
+        # arr in a0, len in a1
+        # i in t0, j in t1, len - i - 1 in t2
+        # swap procedure uses t3 and t4
+        li   t0, 0
+    outer_loop_begin:
+        bge  t0, a1, outer_loop_end
+        li   t1, 0              # j = 0
+        sub  t2, a1, t0         # len - i
+        addi t2, t2, -1         # t2 = len - i - 1
+    inner_loop_begin:
+        bge  t1, t2, inner_loop_end
+        # read from array uses t5 for the address
+        slli t5, t1, 3
+        add  t5, t5, a0         # t5 = &arr[j]
+        ld   t3, 0(t5)          # t3 = arr[j]
+        ld   t4, 8(t5)          # t4 = arr[j + 1]
+        bge  t4, t3, no_swap
+        # swap procedure
+        sd   t4, 0(t5)          # arr[j] = arr[j + 1]
+        sd   t3, 8(t5)          # arr[j + 1] = arr[j] 
+    no_swap:
+        addi t1, t1, 1          # j++
+        j    inner_loop_begin
+    inner_loop_end:
+        addi t0, t0, 1          # i++
+        j    outer_loop_begin
+    outer_loop_end:
+        ret
+    ```
+
 
 ## 12 单周期 CPU

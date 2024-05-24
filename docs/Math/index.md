@@ -7,12 +7,4 @@
     - 复分析
     - 线性代数 
 
-
-## Algebra
-
-### Linear Algebra
-
-!!! Abstract
-    真的在写了！哦，只是抄抄书啊……
-
 ## Topology

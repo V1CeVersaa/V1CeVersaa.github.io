@@ -149,7 +149,8 @@ nav:
       - Linear List: Computer Science/Algorithm/02 Linear List.md
       - Trees: Computer Science/Algorithm/03 Trees.md
       - Graph: Computer Science/Algorithm/04 Graph.md
-      - Hash: Computer Science/Algorithm/05 Hash.md
+      - Sorting: Computer Science/Algorithm/05 Sorting.md
+      - Hash: Computer Science/Algorithm/06 Hash.md
     - System:
       - Computer Science/System/index.md
       - CSAPP: 

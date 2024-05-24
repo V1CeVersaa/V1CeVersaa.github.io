@@ -15,4 +15,5 @@
 - [ ] [Linear List](./02%20Linear%20List.md)
 - [ ] [Trees](./03%20Trees.md)
 - [ ] [Graph](./04%20Graph.md)
-- [ ] [Hash](./05%20Hash.md)
+- [ ] [Sorting](./05%20Sorting.md)
+- [ ] [Hash](./06%20Hash.md)
