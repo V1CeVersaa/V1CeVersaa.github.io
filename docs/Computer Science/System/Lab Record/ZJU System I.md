@@ -821,6 +821,76 @@ if-else 必须在always块中使用，并且输出必须是reg类型。但是在
 
 ## 10 串口使用
 
+```Verilog title="UartLoop.sv"
+`include"uart_struct.vh"
+module UartLoop(
+    input clk,
+    input rstn,
+    Decoupled_ift.Slave uart_rdata,
+    Decoupled_ift.Master uart_tdata,
+    input UartPack::uart_t debug_data,
+    input logic debug_send,
+    output UartPack::uart_t debug_rdata,
+    output UartPack::uart_t debug_tdata
+);
+    import UartPack::*;
+
+    uart_t rdata;
+    logic rdata_valid;
+
+    uart_t tdata;
+    logic tdata_valid;
+
+    assign debug_rdata = rdata;
+    assign debug_tdata = tdata;
+    typedef enum logic [1:0] { RDATA, TRANS, TDATA } fsm_t;
+    fsm_t fsm;
+    always @(posedge clk or negedge rstn) begin
+        if(~rstn)begin
+            rdata_valid <= 0;
+            tdata_valid <= 0;
+            uart_rdata.ready <= 1;
+            uart_tdata.valid <= 0;
+            fsm <= RDATA;
+        end
+        else begin 
+            case(fsm)
+                RDATA:begin
+                    if(uart_rdata.valid && uart_rdata.ready)begin
+                        rdata <= uart_rdata.data;
+                        rdata_valid <= 1;
+                        tdata_valid <= 0;
+                        uart_rdata.ready <= 0;
+                        uart_tdata.valid <= 0;
+                        fsm <= TRANS;
+                    end
+                end
+                TRANS: begin
+                    if(rdata_valid)begin
+                        tdata = rdata;
+                        uart_tdata.data <= tdata;
+                        rdata_valid <= 0;
+                        tdata_valid <= 1;
+                        uart_rdata.ready <= 1;
+                        uart_tdata.valid <= 1;
+                        fsm <= TDATA;
+                    end
+                end
+                TDATA: begin
+                    if(tdata_valid && uart_tdata.ready)begin
+                        uart_tdata.valid <= 0;
+                        tdata_valid <= 0;
+                        fsm <= RDATA;
+                    end
+                end
+                default: ;
+            endcase
+        end
+    end
+
+endmodule
+```
+
 ## 11 汇编实验
 
 === "Fibonacci"
