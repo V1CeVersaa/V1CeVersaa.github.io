@@ -79,8 +79,6 @@
 
 下面是描述 `switch` 的实现的一个例子，右侧依赖了 gcc 对跳转表语法的支持
 
-<div class="grid" markdown>
-
 ```C title="Original Code"
 void switch_eg(long x, long n, long *dest){
     long val = x;
@@ -119,8 +117,6 @@ void switch_eg_impl(long x, long n, long *dest){
     done: *dest = val;
 }
 ```
-
-</div>
 
 ## 3.7 Procedures
 
