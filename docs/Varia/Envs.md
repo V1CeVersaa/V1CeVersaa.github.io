@@ -9,6 +9,34 @@
 
 忍不了了！所以写了个配环境的脚本！
 
+??? "Makefile"
+    ```Makefile
+    install:
+    sudo apt update
+    sudo apt install python3 pip autoconf automake gcc g++ flex bison ccache help2man libtool gtkwave perl-doc
+    sudo apt install build-essential gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu qemu-user gdb-multiarch pkg-config device-tree-compiler
+    sudo apt install npm nodejs zsh llvm llvm-dev libreadline-dev
+    download: install
+    git clone https://git.zju.edu.cn/zju-sys/sys1/sys1-sp24.git
+    git submodule update --init sys1-sp24/repo/riscv-isa-cosim
+    git submodule update --init sys1-sp24/repo/riscv-pk
+    git submodule update --init sys1-sp24/repo/riscv-openocd
+    git submodule update --init sys1-sp24/repo/sys-project
+    git submodule update --init sys1-sp24/repo/verilator
+    cd sys1-sp24/repo/sys-project && git checkout other
+    cd sys1-sp24/repo && make verilator
+    cd sys1-sp24/repo && make spike
+    cd sys1-sp24/repo && sudo make pk
+    cd sys1-sp24/repo && make openocd
+    cd /usr/local && sudo mkdir riscv64-unknown-elf && sudo mkdir riscv64-unknown-elf/bin && sudo cp riscv64-linux-gnu/bin/pk riscv64-unknown-elf/bin
+    cd ~ && mkdir package
+    cd ~/package && wget https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
+    $ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+    cd ~/package && tar xzvf nvim-linux64.tar.gz
+    cd ~ && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    cd ~ && git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/half-life
+    ```
+
 ## WSL
 
 ### 安装
