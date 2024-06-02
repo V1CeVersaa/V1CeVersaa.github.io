@@ -75,6 +75,8 @@ For $G = (V, E)$ and $H = (W, F)$.
 
 ## 10.3 Representing Graphs and Graph Isomorphism
 
+**Adjacency Matrix**: A simple graph $G = (V, E)$ with $n$ vertices $(v_1,v_2,\cdots, v_n)$ can be represented by its adjacency matrix, A, with respect to this listing of the vertices, where
+
 ## 10.4 Connectivity
 
 ## 10.5 Euler and Hamilton Paths

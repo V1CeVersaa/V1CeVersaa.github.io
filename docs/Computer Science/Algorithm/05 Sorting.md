@@ -13,3 +13,8 @@ void insertSort (int arr[], int len) {
     }
 }
 ```
+
+
+## Merge Sort
+
+归并排序的时间复杂度在任何情况下都是 $O(N\log N)$。
