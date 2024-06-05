@@ -169,7 +169,9 @@ void TopologicalSort(ALGraph G) {
 求解方法：建立残差图，残差网络的边权如下，每在残差网络中寻找到一条增广路径，就更新一下残差图，知道找不到增广路径为止。
 
 \[
-    c_f(u, v) = \begin{cases} c(u, v) - f(u, v) & \text{if } (u, v) \in E \\ f(v, u) & \text{if } (v, u) \in E \\ 0 & \text{otherwise } \end{cases}
+    c_f(u, v) = \begin{cases} c(u, v) - f(u, v) & \text{if } (u, v) \in E \\
+     f(v, u) & \text{if } (v, u) \in E \\
+      0 & \text{otherwise } \end{cases}
 \]
 
 增广路径：从源点到汇点的一条简单路径路径，流量是路径上的最短路径。
