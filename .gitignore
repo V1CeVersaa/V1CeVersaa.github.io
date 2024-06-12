@@ -3,6 +3,7 @@ ProblemSet.md
 .vscode
 .fleet
 *.sh
+.DS_Store
 site
 
 BSC++.md
