@@ -22,5 +22,3 @@
 - [x] [Relations](./09%20Relations.md)
 - [ ] [Graph Theory](./10%20Graph%20Theory.md) (Omiting some proofs)
 - [ ] [Trees](./11%20Trees.md)
-- [ ] [Boolean Algebra](./12%20Boolean%20Algebra.md)
-- [ ] [Modeling Computation](./13%20Modeling%20Computation.md)

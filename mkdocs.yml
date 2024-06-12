@@ -137,6 +137,7 @@ nav:
       - C++:
         - Computer Science/Programming Language/C++/C++.md
         - Basic Syntax: Computer Science/Programming Language/C++/Basic Syntax.md
+        - Standard Library: Computer Science/Programming Language/C++/Standard Library.md
       - Python: Computer Science/Programming Language/Python.md
       - Java: Computer Science/Programming Language/Java.md
       - Rust:
