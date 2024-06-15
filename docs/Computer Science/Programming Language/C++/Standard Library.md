@@ -140,13 +140,6 @@ vector<ElementType> v7 = {a, b, c, d};  // 和 v6 等价
 
 除了最初提到的通用操作，vector 还有下面的操作：
 
-<!-- - `vec.size()`：返回 vector 中元素的个数；
-- `vec.empty()` ：判断 vector 是否为空；
-- `vec.begin()`：返回指向 vector 第一个元素的迭代器；
-- `vec.end()`：返回指向 vector 尾元素的下一个位置的迭代器；
-- `vec.clear()`：删除 vector 中所有元素，返回 `void`；
-- `vec1.swap(vec2)`：交换两个 vector 的元素； -->
-
 - `vec.at(n)`：返回 vector 中第 n 个元素的引用，同时检查是否越界；
 - `vec.front()`：返回 vector 的第一个元素的引用；
 - `vec.back()`：返回 vector 的最后一个元素的引用；

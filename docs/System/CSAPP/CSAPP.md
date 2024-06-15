@@ -6,7 +6,7 @@
     参考：
 
     - 《深入理解计算机系统》
-    - Comptuer System: A Programmer's Perspective
+    - Computer System: A Programmer's Perspective
     - CMU 15-213
 
 ## Table of Content
