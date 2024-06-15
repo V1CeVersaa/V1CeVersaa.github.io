@@ -173,7 +173,7 @@ nav:
       - COAD-Arithmetic for Computers: System/COAD/Chapter2.md
     - Machine-Level Representation of Programs:
       - CSAPP-Machine-Level Representation of Programs: System/CSAPP/Chapter3.md
-      - COAD-Instructions Language of the Computer: System/COAD/Chapter2.md
+      - COAD-Instructions Language of the Computer: System/COAD/Chapter3.md
       - CSAPP-Optimizing Program Performance: System/CSAPP/Chapter5.md
       - RISC-V Assembly: 
         - System/RISC-V/RISC-V.md
@@ -183,7 +183,7 @@ nav:
         - System/x86 Assembly/x86.md
     - Processor Architecture:
       - CSAPP-Processor Architecture: System/CSAPP/Chapter4.md
-      - COAD-The Processor: System/COAD/Chapter3.md
+      - COAD-The Processor: System/COAD/Chapter4.md
     - Memory Hierarchy:
       - CSAPP-The Memory Hierarchy: System/CSAPP/Chapter6.md
       - COAD-Large and Fast Exploiting Memory Hierarchy: System/COAD/Chapter5.md
