@@ -1,10 +1,11 @@
 # Math
 
-!!! Abstract 
-    有关数学的都在这了，目前正在学习的有：
+!!! Info
+    这是我在浙江大学图灵班学习期间的数学笔记，
 
-    - 数学分析
-    - 复分析
-    - 线性代数 
+## Table of Contents
 
-## Topology
+- [ ] [Analysis](./Analysis.md)
+- [ ] [Discrete Mathematics](./Discrete%20Mathematics/Discrete%20Mathematics.md)
+- [ ] [Abstract Algebra](./Abstract%20Algebra/index.md)
+
