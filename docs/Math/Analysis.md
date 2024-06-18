@@ -6,7 +6,7 @@
 <div class="file-title"> 复习：级数 </div>
 <div class="file-meta"> 6.10 MB / 17 P / 2024-06-18</div>
 </div>
-<a class="down-button" target="_blank" href="/Math/Analysis/mul_integral.pdf" markdown="1">:fontawesome-solid-download: 下载</a>
+<a class="down-button" target="_blank" href="/Math/Analysis/series.pdf" markdown="1">:fontawesome-solid-download: 下载</a>
 </div>
 
 <div class="card file-block" markdown="1">
