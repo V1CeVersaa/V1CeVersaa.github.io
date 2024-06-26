@@ -134,7 +134,7 @@ Let $R$ and $S$ be equivalence relations on the set $A$, then $R\cap S$ is also 
 
 However, $R\cup S$ is not necessarily an equivalence relation. It is indeed reflexive and symmetric. And $(R\cup S)^*$ is an equivalence relation.
 
-### 9.6 Partial Orderings
+## 9.6 Partial Orderings
 
 **Partial Ordering**: A relation $R$ on a set $A$ is called a **partial ordering** or **partial order** if and only if $R$ is reflexive, antisymmetric and transitve. A set with a partial ordering is called a **partially ordered set** or **poset** and denoted by $(A, R)$.
 

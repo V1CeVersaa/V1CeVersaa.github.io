@@ -20,5 +20,5 @@
 - [x] [Counting](./06%20Counting.md)
 - [ ] [Advanced Counting Techniques](./08%20Advanced%20Counting%20Techniques.md)
 - [x] [Relations](./09%20Relations.md)
-- [ ] [Graph Theory](./10%20Graph%20Theory.md) (Omiting some proofs)
+- [x] [Graph Theory](./10%20Graph%20Theory.md) (Omiting some proofs)
 - [ ] [Trees](./11%20Trees.md)

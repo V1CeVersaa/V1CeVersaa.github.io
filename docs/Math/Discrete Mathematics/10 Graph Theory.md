@@ -246,11 +246,13 @@ There is one unbounded region in a planar graph.
 
 **Theorem 15** (Euler's Formula): Let $G$ be a **connected planar simple graph** with $e$ edges and $v$ vertices. Let $r$ be the number of regions in a planar representation of $G$. Then $r=e-v+2$.
 
-**Proof**:
+**Proof**: **OMITTED**.
 
-**Degree of a Region**:  Suppose $R$ is a region of a connected planar simple graph, the **number** of the edges on the boundary of $R$ is called the **Degree** of $R$, denoted by $\mathrm{Deg}(R)$.
+**Degree of a Region**:  Suppose $R$ is a region of a connected planar simple graph, the **number of the edges on the boundary** of $R$ is called the **Degree** of $R$, denoted by $\mathrm{Deg}(R)$. 
 
 **Corollary**: If $G$ is a connected planar simple graph with $e$ edges and $v$ vertices where $v\geqslant 3$, then $e\leqslant 3v-6$. The equality holds if and only if every region has exactly three edges.
+
+**Proof**: From $2e = \sum \mathrm{Deg}(R) > 3r$, we can derive $r \leqslant \dfrac{2e}{3}$. Under the Euler's formula, we have $r = e - v + 2$, so $e - v + 2 \leqslant \dfrac{2e}{3}$, which means $e \leqslant 3v - 6$.
 
 **Corollary**: If $G$ is a connected planar simple graph, then $G$ has a vertex of degree not exceeding five.
 
@@ -268,4 +270,43 @@ $$e \leqslant \frac{k(v - 2)}{k - 2}.$$
 
 ## 10.8 Graph Coloring 
 
+Each map in the plane can be represented by a graph, namely **the dual graph of the map**.
+
+- Each region of the map is represented by a vertex.
+- An edge connect two vertices if the regions represented by these vertices have a common border.
+- Two regions that touch at only one point are not considered adjacent.
+
+**Coloring**: A **coloring of a simple graph** is the assignment of a color to each vertex of the graph so that no two adjacent vertices are assigned the same color.
+
+**Chromatic number/色数**: The **Chromatic number** of a graph is the **least number of colors needed** for a coloring of this graph, denoted by $x(G)$.
+
+
+**The Four Color Theorem**: Every planar graph is $4$-colorable.
+
 ## 10.9 Netflow
+
+**Flowgraph**: Directed graph with distinguished vertices s/source and t/sink.
+
+**Capacities** on the edges: $:c(e) \geqslant 0$.
+
+**Target**: Maximize the flow from $s$ to $t$ with the constraint that the flow on each edge does not exceed its capacity.
+
+**Cut**: Partition of $V$ into disjoint sets $S$, $T$ with $s$ in $S$ and $t$ in $T$.
+
+$Cap(S, T)$: Sum of the capacities of edges from $S$ to $T$.
+
+$Flow(S, T)$: Net flow out of $S$, i.e. the sum of flows out of $S$ minus sum of flows into $S$.
+
+**Residual Graph**: For flow graph $G$, the residual graph $G_f$ is defined as follows:
+
+- $G$: Edge $e$ from $u$ to $v$ with capacity $c$ and flow $f$.
+- $G_R$: Edge $e$ from $v$ to $u$ with capacity $f$.
+- $G_R$: Edge $e$ from $u$ to $v$ with capacity $c-f$.
+
+**Argumenting Path**: A path from $s$ to $t$ whose flow can be increased. Iff for all edges $f(u, v) < c(u, v)$ and $f(v, u) > 0$.
+
+**Ford-Fulkerson Algorithm**: Build argument path until there is no forward path from source to sink.
+
+**Augmenting path theorem**: Flow $f$ is a max flow iff there are no augmenting paths.
+
+**Max-flow Min-cut Theorem**: The value of the max flow equals the capacity of the min cut.
