@@ -45,8 +45,26 @@ Generating functions can be used to solve a wide variety of counting problems, s
 - Count the number of combinations from a set when repetition is allowed and additional constraints exist.
 - Count the number of permutations.
 
-
+??? info "Using generating functions to solve recurrence relations"
+    ![Using generating functions to solve recurrence relations](./images/08-01.png)
 
 ## 8.5 Inclusion-Exclusion
 
+**Principle of Inclusion-Exclusion**: For any two sets $A$ and $B$,
+
+$$\left\vert A \cup B\right\vert = \vert A\vert + \vert B\vert - \left\vert A \cap B\right\vert.$$
+
+**Generalized Principle of Inclusion-Exclusion**: For any $n$ sets $A_1, A_2, \cdots, A_n$,
+
+\[ \begin{aligned} \left\vert A_1 \cup A_2 \cup \cdots \cup A_n\right\vert &= \sum_{i=1}^{n}\left\vert A_i\right\vert - \sum_{1 \leq i < j \leq n} \left\vert A_i \cap A_j\right\vert + \sum_{1 \leq i < j < k \leq n}\left\vert A_i \cap A_j \cap A_k\right\vert - \cdots \\
+&+ (-1)^{n-1}\left\vert A_1 \cap A_2 \cap \cdots \cap A_n\right\vert. \end{aligned} \]
+
 ## 8.6 Applications of Inclusion-Exclusion
+
+**Derangements**: A derangement is a permutation of objects that leaves no object in the original position.
+
+**Theorem**: The number of derangements of a set with n elements is
+
+\[ D_n = n! \left(1 - \frac{1}{1!} + \frac{1}{2!} - \frac{1}{3!} + \cdots + (-1)^n\frac{1}{n!}\right). \]
+
+**The Hatcheck Problem**: A new employee checks the hats of n people at restaurant, forgetting to put claim check numbers on the hats. When customers return for their hats, the checker gives them back hats chosen at random from the remaining hats. What is the probability that no one receives the correct hat.

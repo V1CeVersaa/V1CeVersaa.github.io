@@ -94,6 +94,10 @@ Definitions of **Injection** **Surjection** **Bijection** **Inverse Function** *
 
 ## 2.5 Cardinality of Sets
 
+**Cardinality**: The cardinality of a set $A$, denoted by $|A|$, is the number of elements in $A$. Two sets $A$ and $B$ have the same cardinality if and only if there is a bijection from $A$ to $B$.
+
+**Countable Set**: A set is said to be **countable** if it is either finite or its elements can be put into one-to-one correspondence with the set of positive integers $\mathbb{Z}^+$. When an **infinite** set is countable/countably infinite, its cardinality is $\aleph_0$.
+
 **Cantor Diagonalization Method**: The set of real numbers is uncountable.
 
 **Proof**: To show that the set of real numbers is uncountable, we suppose that the set of real numbers is countable and arrive at a contradiction. Then, the subset of all real numbers that fall between $0$ and $1$ would also be countable (because any subset of a countable set is also countable). Under this assumption, the real numbers between $0$ and $1$ can be listed in some order, say, $r_1$, $r_2$, $r_3$, $\dots$. Let the decimal representation of these real numbers be

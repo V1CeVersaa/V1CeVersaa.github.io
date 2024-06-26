@@ -2,9 +2,21 @@
 
 ## 11.1 Introduction to Trees
 
+I assume you have learned FDS.
+
 ## 11.2 Application of Trees
 
+**Prefix Codes**: To ensure that no bit string corresponds to more than one sequence of letters, the bit string for a letter must never occur as the first part of the bit string for another letter. Codes with this property are called prefix codes. 
+
+We can use a binary tree to construct prefix codes: The left edge and the right edge at each internal vertex are labeled by 0 and 1 respectiely.
+
+**Huffman Coding**: Minimize the average number of bits per letter: $\mathrm{min}(f_1l_1 + f_2l_2 + \cdots + f_nl_n)$, where $f_i$ is the frequency of the $i$th letter and $l_i$ is the length of the code for the $i$th letter.
+
+> 出现概率最小的两棵树最小在右，第二小在左。
+
 ## 11.3 Tree Traversal
+
+I assume you have learned FDS.
 
 ## 11.4 Spanning Trees
 
