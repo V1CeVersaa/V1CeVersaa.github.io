@@ -1,15 +1,21 @@
 # Chapter 4 Graph
 
-## 4.1 基本概念
+## 1 基本概念
 
 - 有限可空的边集 $E$ 和有限非空的点集 $V$ 组成图 $G=\{V, E\}$；
-- 无向图/Undirected Graph：边没有方向，也就是 $(u, v) = (v, u)$；
-- 有向图/Directed Graph：边有方向，也就是 $(u, v) \neq (v, u)$；
-- Tip：数据结构基础中不考虑自环/Self Loop和多重边/Multigraph；
-- 完全图/Complete Graph：任意两个点之间都有边；
+- **无向图/Undirected Graph**：边没有方向，也就是 $(u, v) = (v, u)$；
+- **有向图/Directed Graph**：边有方向，也就是 $(u, v) \neq (v, u)$；
+    - Tip：数据结构基础中不考虑自环/Self Loop和多重边/Multigraph；
+- **完全图/Complete Graph**：任意两个点之间都有边；
+- 无向图中 $v_i$ 和 $v_j$ 被称为**连通**的，当且仅当 $G$ 中存在一条从 $v_i$ 到 $v_j$ 的路径；
+- 无向图 $G$ 被称为**连通图**，当且仅当 $G$ 中任意两个节点都是连通的；
+- 无向图的**联通成分**是指无向图的极大连通子图；
+- 有向图中 $v_i$ 和 $v_j$ 被称为**强连通**的，当且仅当 $G$ 中存在一条从 $v_i$ 到 $v_j$ 的路径和一条从 $v_j$ 到 $v_i$ 的路径；
+- 有向图 $G$ 被称为**强连通图**，当且仅当 $G$ 中任意两个节点都是强连通的。有向图的**强连通成分**是指有向图的极大强连通子图；
+- 有向图 $G$ 被称为**弱连通图**，当且仅当 $G$ 的基础图（去掉所有边的方向）是连通图；
 
 
-## 4.2 图的表示
+## 2 图的表示
 
 - 邻接矩阵/Adjacency Matrix
     ```C
@@ -37,7 +43,7 @@
     } ALGraph;
     ```
 
-## 4.3 图的建立
+## 3 图的建立
 
 - 邻接矩阵
     ```C
@@ -56,14 +62,14 @@
     void BuildGraph(ALGraph *G)
     ```
 
-## 4.4 拓扑排序
+## 4 拓扑排序
 
-- AOV网/Activity On Vertex Network；有向图，其顶点代表活动，边代表活动之间的先后顺序关系
+- **AOV网/Activity On Vertex Network**；有向图，其顶点代表活动，边代表活动之间的先后顺序关系；
 - 如果存在一条从 $v_i$ 到 $v_j$ 的路径，则 $v_i$ 称为 $v_j$ 的前驱/predecessor，$v_j$ 称为 $v_i$ 的后继/successor；
 - 如果存在一条边 $(v_i, v_j)$，则 $v_i$ 是 $v_j$ 的直接/Immediate 前驱，$v_j$ 是 $v_i$ 的直接后继；
 - 拓扑排序/Topological Order 是一个图的点集的线性序列，满足：
-  - 对于任意的点 $v_i$，$v_j$，如果 $v_i$ 是 $v_j$的前驱，在序列中 $v_i$ 出现在 $v_j$ 之前；
-  - Tip：拓扑排序不唯一；
+    - 对于任意的点 $v_i$，$v_j$，如果 $v_i$ 是 $v_j$的前驱，在序列中 $v_i$ 出现在 $v_j$ 之前；
+    - Tip：拓扑排序不唯一；
 
 ```C
 void TopologicalSort(ALGraph G) {
@@ -83,11 +89,38 @@ void TopologicalSort(ALGraph G) {
 }
 ```
 
-## 4.5 BFS 和 DFS
+## 5 BFS 和 DFS
 
-广度优先搜索/Breadth First Search：从一个点出发，依次访问其邻接点，再访问邻接点的邻接点，以此类推，直到所有点都被访问过；
+**广度优先搜索/Breadth First Search**：从一个点出发，依次访问其邻接点，再访问邻接点的邻接点，以此类推，直到所有点都被访问过；
 
 === "邻接矩阵"
+
+    ```C
+    #define MaxN 100
+    int G[MaxN][MaxN];
+    int pre[MaxN];
+    int visited[MaxN];
+
+    void BFS(int src, int dst) {
+        int queue[MaxN] = {0};
+        int front = 0, rear = 0;
+        queue[rear++] = src;
+        visited[src] = 1;
+        while (front < rear) {
+            int v = queue[front++];
+            for (int w = 0; w < MaxN; w++) {
+                if (G[v][w] && !visited[w]) {
+                    queue[rear++] = w;
+                    visited[w] = 1;
+                    pre[w] = v;
+                    if (w == dst) {
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    ```
 
 === "邻接表"
 
@@ -118,17 +151,57 @@ void TopologicalSort(ALGraph G) {
     }
     ```
 
-深度优先搜索/Depth First Search：从一个点出发，访问其邻接点，再访问邻接点的邻接点，以此类推，直到所有点都被访问过，再回溯到上一个点，继续访问其他邻接点；
+**深度优先搜索/Depth First Search**：从一个点出发，访问其邻接点，再访问邻接点的邻接点，以此类推，直到所有点都被访问过，再回溯到上一个点，继续访问其他邻接点；
 
 === "邻接矩阵"
 
+    ```C
+    #define MaxN 100
+    int G[MaxN][MaxN];
+    int pre[MaxN];
+    int visited[MaxN];
+
+    void DFS(int v, int dst) {
+        visited[v] = 1;
+        for (int w = 0; w < MaxN; w++) {
+            if (G[v][w] && !visited[w]) {
+                pre[w] = v;
+                DFS(w, dst);
+                if (w == dst) {
+                    return;
+                }
+            }
+        }
+    }
+    ``` 
+
 === "邻接表"
 
+    ```C
+    #define MaxN 100
+    int visited[MaxN];
+    int pre[MaxN];
+
+    void DFS(ALGraph *G, int v, int dst) {
+        visited[v] = 1;
+        for (ArcNode *arc = G->vertices[v].firstarc; arc; arc = arc->nextarc) {
+            int w = arc->adjvex;
+            if (!visited[w]) {
+                pre[w] = v;
+                DFS(G, w, dst);
+                if (w == dst) {
+                    return;
+                }
+            }
+        }
+    }
+    ```
 
 
-## 4.6 最短路径
 
-单源最短路径/Single Source Shortest Path：从一个点到其他所有点的最短路径
+## 6 最短路径
+
+**单源最短路径/Single Source Shortest Path**：从一个点到其他所有点的最短路径
 
 - 无向无权图：广度优先搜索/BFS
 - 无向/有向正权图：Dijkstra 算法
@@ -162,9 +235,13 @@ void TopologicalSort(ALGraph G) {
     ```
     这种实现的时间复杂度为 $O(V^2+E)$ 原因之一是内部寻找未访问的最小距离点的步骤是纯粹的线性搜索。
 
-## 4.7 网络流
+**坑**：If the length of each edge in an undirected graph $G(V, E)$ is increased by 1, the shortest path between any pair of nodes $v_i$ and $v_j$ will keep unchanged.
 
-最大流：给定一个正权有向图$G$，每个边上都有一个流量 $c$，从源点 $s$ 到汇点 $t$ 的最大流量。
+> 错！之需要考虑两条权重分别为 2->2->2 与 7 的路径，会发现原来的最短路径不再是最短路径。
+
+## 7 网络流
+
+**最大流**：给定一个正权有向图$G$，每个边上都有一个流量 $c$，从源点 $s$ 到汇点 $t$ 的最大流量。
 
 求解方法：建立残差图，残差网络的边权如下，每在残差网络中寻找到一条增广路径，就更新一下残差图，知道找不到增广路径为止。
 
@@ -183,13 +260,13 @@ int maxFlow(int src, int dst) {
 }
 ```
 
-## 4.8 最小生成树
+## 8 最小生成树
 
-最小生成树/Minimum Spanning Tree：给定一个无向连通图$G$，每个边上都有一个权重 $w$，找到一个树，包含这个图的所有节点并且使得所有边的权重之和最小。可以使用贪心算法！
+**最小生成树/Minimum Spanning Tree**：给定一个无向连通图$G$，每个边上都有一个权重 $w$，找到一个树，包含这个图的所有节点并且使得所有边的权重之和最小。可以使用贪心算法！
 
-Prim 算法：从一个节点开始，每次选择一个与当前生成树距离最小并且不会产生环的节点加入生成树。
+Prim 算法：从一个节点开始，每次选择一个与当前生成树距离最小并且不会产生环的节点加入生成树，很适合稠密图。
 
-Kruskal 算法：从所有边中选择权重最小的边，如果这条边不会产生环就加入生成树。
+Kruskal 算法：从所有边中选择权重最小的边，如果这条边不会产生环就加入生成树，跟适合稀疏图。
 
 === "Prim"
 
@@ -198,7 +275,28 @@ Kruskal 算法：从所有边中选择权重最小的边，如果这条边不会
     ```C
     void Prim(ALGraph G, int src){
         int dist[MaxN] = {0};
-
+        int visited[MaxN] = {0};                // 记录是否已经访问
+        for (int i = 0; i < G->vexnum; i++)
+            dist[i] = INFINITY;                 // 初始化
+        dist[src] = 0;
+        visited[src] = 1;
+        for (ArcNode *arc = G->vertices[src].first; arc != NULL; arc = arc->next)
+            dist[arc->adjvex] = arc->weight;    // 更新原点的邻接点距离
+        for (int i = 0; i < G->vexnum; i++) {
+            int min = INFINITY, v = -1;
+            for (int j = 0; j < G->vexnum; j++) {
+                if (!visited[j] && dist[j] < min) {
+                    min = dist[j];
+                    v = j;                      // 找到未访问的最小距离点
+                }
+            }
+            if (v == -1) break;                 // 未找到则剩下所有节点都不可达
+            visited[v] = 1;
+            for (ArcNode *arc = G->vertices[v].first; arc != NULL; arc = arc->next) {
+                if (!visited[arc->adjvex] && arc->weight < dist[arc->adjvex])
+                    dist[arc->adjvex] = arc->weight;
+            }                                   // 更新其他点的距离
+        }
     }
     ```
 

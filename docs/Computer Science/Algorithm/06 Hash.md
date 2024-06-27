@@ -1,6 +1,6 @@
 # Hashing
 
-## Hash Table
+## 1 Hash Table
 
 **哈希表/Hash Table** 也被称为散列表，将关键字值映射到表中的一个位置来访问记录，以加快查找的速度，哈希表需要支持查找关键词是否在表中，查询关键词，插入关键词，删除关键词等操作。
 
@@ -10,17 +10,17 @@
 
 对于大小为 `b`，最多有 `s` 个槽的哈希表，定义 $T$ 为哈希表关键字可能的所有不同值的个数，$n$ 为哈希表中所有不同关键字的个数，关键字密度定义为 $n / T$， 装载密度定义为 $\lambda = n / (sb)$。
 
-当存在 $i_1 \neq i_2$ 但是 $h(k_1) = h(k_2)$ 的时候，我们称发生了**碰撞/Collision**，当把一个新的标识符映射到一个已经满了的桶的时候，我们称发生了**溢出/Overflow**。
+当存在 $i_1 \neq i_2$ 但是 $\mathrm{hash}(k_1) = \mathrm{hash}(k_2)$ 的时候，我们称发生了**碰撞/Collision**，当把一个新的标识符映射到一个已经满了的桶的时候，我们称发生了**溢出/Overflow**。
 
 在没有溢出的情况下，哈希表的**查找**时间、**插入**时间、**删除**时间都是 $O(1)$，但是在发生溢出的情况下，哈希表的性能会下降。
 
 哈希函数应该满足以下条件：
 
 - 尽可能易于计算，并且减少碰撞的可能性；
-- 应该均匀分布/unbiased，即 $P(h(k) = i) = 1 / b$，这样的哈希函数称之为**均匀哈希函数/Uniform Hash Fuction**；
+- 应该均匀分布/unbiased，即 $P(\mathrm{hash}(k) = i) = 1 / b$，这样的哈希函数称之为**均匀哈希函数/Uniform Hash Fuction**；
 - 对于整数的哈希，比如 $f(x) = x\ \mathrm{ mod }\ \text{Tablesize}$，其中模应该最好选择为素数，因为这样对于随机输入，关键字的分布就会变得更加均匀。
 
-## Solving Collisions
+## 2 Solving Collisions
 
 - **分离链接/Sepatate Chaining**：把有限大小的槽换成一个链表，将哈希映射到同一个值的所有元素都保存在这个链表之中。
     ```C
@@ -37,7 +37,36 @@
         List *TheLists;      // Array of Buckets
     };
     ```
-- **开放寻址/Open Addressing**：使用多个哈希函数 $h_1(x)$, $h_2(x)$, $\cdots$, $h_n(x)$，与增量函数 $f_i(x)$，其中每个哈希函数 $h_i(x)$ 都通过主哈希函数与增量函数来计算，亦即具有 $h_i(x) = \mathrm{hash}(x) + f_i(x)\ \mathrm{mod}\ \text{TableSize}$ 的形式，增量函数有很多种选择，因此衍生出不同的寻址方法，常见的有**线性探测/Linear Probing**，**二次探测/Quadratic Probing**，**双重哈希/Double Hashing** 等。使用开放寻址的哈希表的装载密度 $\lambda$ 不能超过 $0.5$，否则会导致性能下降。
+- **开放寻址/Open Addressing**：使用多个哈希函数 $\mathrm{hash}_1(x)$, $\mathrm{hash}_2(x)$, $\cdots$, $\mathrm{hash}_n(x)$，与增量函数 $f_i(x)$，其中每个哈希函数 $\mathrm{hash}_i(x)$ 都通过主哈希函数与增量函数来计算，亦即具有 $\mathrm{hash}_i(x) = \mathrm{hash}(x) + f_i(x)\ \mathrm{mod}\ \text{TableSize}$ 的形式，增量函数有很多种选择，因此衍生出不同的寻址方法，常见的有**线性探测/Linear Probing**，**二次探测/Quadratic Probing**，**双重哈希/Double Hashing** 等。使用开放寻址的哈希表的装载密度 $\lambda$ 不能超过 $0.5$，否则会导致性能下降。
 - **线性探测/Linear Probing**：
-- **二次探测/Quadratic Probing**：亦即增量函数 $h_i(x) = i ^ 2$，**如果使用二次探测，且表的大小为指数时，那么当表至少有一半是空的时，总能插入一个新的元素**。
+- **二次探测/Quadratic Probing**：亦即增量函数 $f_i(x) = i ^ 2$，**如果使用二次探测，且表的大小为指数时，那么当表至少有一半是空的时，总能插入一个新的元素**。
+    - 查找：$f(i) = f(i-1) + i^2 - (i-1)^2 = f(i-1) + 2i - 1$；
+        ```C
+        Position find(ElementType key, HashTable H) {
+            Position currentPos = hash(key, H->TableSize);
+            int collisionNum = 0;
+            while (H->TheCells[currentPos].Info    != Empty && 
+                   H->TheCells[currentPos].Element != key) {
+                currentPos += 2 * ++collisionNum - 1;
+                if (currentPos >= H->TableSize) currentPos -= H->TableSize;
+            }
+            return currentPos;
+        }
+        ```
+    - 插入：
+        ```C
+        void insert(ElementType key, HashTable H) {
+            Position pos = find(key, H);
+            if (H->TheCells[pos].Info != Legitimate) {
+                H->TheCells[pos].Info = Legitimate;
+                H->TheCells[pos].Element = key;
+            }
+        }
+        ```
+- **双重哈希/Double Hashing**：亦即增量函数 $f_i(x) = i \cdot \mathrm{hash}'(x)$，其中 $\mathrm{hash}'(x)$ 是另一个哈希函数。说白了就是从第一次哈希的位置开始以 $\mathrm{hash}'(x)$ 为步长进行探测。
+- **再哈希/Rehashing**：当哈希表填满一半了，或插入失败以及哈希表达到了某一个特定的装载密度时，我们需要进行再哈希。
+    - 建立一个两倍大的哈希表；
+    - 扫描原始哈希表；
+    - 利用新的哈希函数将元素映射到新的哈希值，并插入；
+    - 如果有原来的哈希表有 $N$ 个元素，则再哈希的时间复杂度为 $O(N)$。
 

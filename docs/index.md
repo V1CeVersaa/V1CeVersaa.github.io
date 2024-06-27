@@ -18,11 +18,14 @@ Hi！欢迎来到我的笔记本，我会在这里更新我的**课程笔记**
 - [ ] 看起来更像CS人: [GNU Make](./Computer%20Science/Programming%20Basis/GNU%20Make.md)
 - [ ] CPU给我干烧了: [Algorithms and Data Structure](./Computer%20Science/Algorithm/Algorithms%20and%20Data%20Structure.md)
 - [ ] 猜猜我为啥学它: [Typst Learning Record](./Varia/Typst.md)
-- [ ] 真是离离又散散啊: [Discrete Mathematics](./Math/Discrete%20Mathematics/Discrete%20Mathematics.md)
 
 ## 学不完了
 
 - [ ] 某种古老又强大的命令语言：[Shell](./Computer%20Science/Programming%20Basis/Shell.md)
+
+## 学完了！
+
+- [x] 真是离离又散散啊: [Discrete Mathematics](./Math/Discrete%20Mathematics/Discrete%20Mathematics.md)
 
 <!-- # Who Am I？
 

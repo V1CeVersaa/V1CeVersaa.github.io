@@ -6,6 +6,6 @@
 ## Table of Contents
 
 - [ ] [Analysis](./Analysis.md)
-- [ ] [Discrete Mathematics](./Discrete%20Mathematics/Discrete%20Mathematics.md)
+- [x] [Discrete Mathematics](./Discrete%20Mathematics/Discrete%20Mathematics.md)
 - [ ] [Abstract Algebra](./Abstract%20Algebra/index.md)
 
