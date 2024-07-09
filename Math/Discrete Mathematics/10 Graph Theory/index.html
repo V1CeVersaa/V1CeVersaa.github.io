@@ -1,0 +1,1657 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://note.v1ceversaa.cc/Math/Discrete%20Mathematics/10%20Graph%20Theory/">
+      
+      
+        <link rel="prev" href="../09%20Relations/">
+      
+      
+        <link rel="next" href="../11%20Trees/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.28">
+    
+    
+      
+        <title>Graph Theory - V1CeVersa's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=LXGW+WenKai+Screen:300,300i,400,400i,700,700i%7C['Monaspace+Argon+Light',+'JetBrains+Mono',+'LXGW+WenKai+Screen']:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"LXGW WenKai Screen";--md-code-font:"['Monaspace Argon Light', 'JetBrains Mono', 'LXGW WenKai Screen']"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="../../../css/custom.css">
+    
+      <link rel="stylesheet" href="../../../css/card.css">
+    
+      <link rel="stylesheet" href="../../../css/tasklist.css">
+    
+      <link rel="stylesheet" href="../../../css/flink.css">
+    
+      <link rel="stylesheet" href="../../../css/more_changelog.css">
+    
+      <link rel="stylesheet" href="../../../css/neoteroi-mkdocs.css">
+    
+      <link rel="stylesheet" href="../../../css/fold_toc.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="brown" data-md-color-accent="brown">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#part-10-graph-theory" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="V1CeVersa&#39;s Notebook" class="md-header__button md-logo" aria-label="V1CeVersa's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 4v6l-2-2-2 2V4H9v16h10V4h-2M3 7V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3m2-2v2h2V5H5m0 14h2v-2H5v2m0-6h2v-2H5v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            V1CeVersa's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Graph Theory
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="brown" data-md-color-accent="brown"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Computer%20Science/" class="md-tabs__link">
+          
+  
+    
+  
+  Computer Science
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../System/" class="md-tabs__link">
+          
+  
+    
+  
+  System
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+    
+  
+  Math
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Reading/" class="md-tabs__link">
+          
+  
+    
+  
+  Reading
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Varia/Learning%20Plan/" class="md-tabs__link">
+          
+  
+    
+  
+  Varia
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="V1CeVersa&#39;s Notebook" class="md-nav__button md-logo" aria-label="V1CeVersa's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 4v6l-2-2-2 2V4H9v16h10V4h-2M3 7V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3m2-2v2h2V5H5m0 14h2v-2H5v2m0-6h2v-2H5v2Z"/></svg>
+
+    </a>
+    V1CeVersa's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Computer%20Science/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Computer Science
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../System/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    System
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Math
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Math
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../Abstract%20Algebra/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Abstract Algebra
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Discrete Mathematics
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Discrete Mathematics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Discrete%20Mathematics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Discrete Mathematics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01%20Propositional%20Logic/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Propositional Logic
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02%20Basic%20Structures/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basic Structures
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03%20Algorithms/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04%20Number%20Theory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Number Theory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05%20Induction%20and%20Recursion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Induction and Recursion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06%20Counting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Counting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08%20Advanced%20Counting%20Techniques/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Advanced Counting Techniques
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09%20Relations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Graph Theory
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Graph Theory
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#101-graphs-and-graph-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.1 Graphs and Graph Models
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#102-graph-terminology-and-special-types-of-graphs" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2 Graph Terminology and Special Types of Graphs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#103-representing-graphs-and-graph-isomorphism" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.3 Representing Graphs and Graph Isomorphism
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#104-connectivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.4 Connectivity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#105-euler-and-hamilton-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.5 Euler and Hamilton Paths
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#106-shortest-path-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.6 Shortest Path Problems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#107-planar-graphs" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.7 Planar Graphs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#108-graph-coloring" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.8 Graph Coloring
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#109-netflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.9 Netflow
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11%20Trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trees
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Reading/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Reading
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Varia/Learning%20Plan/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Varia
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#101-graphs-and-graph-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.1 Graphs and Graph Models
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#102-graph-terminology-and-special-types-of-graphs" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2 Graph Terminology and Special Types of Graphs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#103-representing-graphs-and-graph-isomorphism" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.3 Representing Graphs and Graph Isomorphism
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#104-connectivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.4 Connectivity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#105-euler-and-hamilton-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.5 Euler and Hamilton Paths
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#106-shortest-path-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.6 Shortest Path Problems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#107-planar-graphs" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.7 Planar Graphs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#108-graph-coloring" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.8 Graph Coloring
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#109-netflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.9 Netflow
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="part-10-graph-theory">Part 10 Graph Theory<a class="headerlink" href="#part-10-graph-theory" title="Permanent link">&para;</a></h1>
+<div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8V2m6.78 1a.69.69 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38-2.5-2.5Z"/></svg></span> 约 3221 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3l89.3 89.4-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg></span> 12 行代码 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3L12.5 13Z"/></svg></span> 预计阅读时间 11 分钟</p>
+</div>
+<h2 id="101-graphs-and-graph-models">10.1 Graphs and Graph Models<a class="headerlink" href="#101-graphs-and-graph-models" title="Permanent link">&para;</a></h2>
+<p><strong>Graph</strong>: A graph <span class="arithmatex">\(G = (V, E)\)</span> consists of a nonempty set of <strong>Vertices/Nodes</strong> <span class="arithmatex">\(V\)</span> and a set of <strong>Edges</strong> <span class="arithmatex">\(E\)</span>. Each edge has either one or two vertices associated with it, called its <strong>Endpoints</strong>. An edge is said to <strong>connect</strong> its endpoints. If the edges connect only one vertex, it is called a <strong>Loop</strong>.</p>
+<p><strong>Simple Gpaph</strong>: A graph in which each edge connects two different vertices and no two edges connect the same pair of vertices.</p>
+<p><strong>Multigraph</strong>: A graph that may have multiple edges connecting the same vertices.</p>
+<p><strong>Pseudograph</strong>: A graph that may have loops, and possibly multiple edges connecting the same pair of vertices.</p>
+<p><strong>Directed Graph/Digraph</strong>: A graph <span class="arithmatex">\((V,E)\)</span> consists of a nonempty set of vertices <span class="arithmatex">\(V\)</span> and a set of <strong>Directed Edges/Arcs</strong> <span class="arithmatex">\(E\)</span>. Each directed edge is associated with ann ordered pair of vertices. The directed edge associated with the ordered pair <span class="arithmatex">\((u,v)\)</span> is said to <strong>start</strong> at <span class="arithmatex">\(u\)</span> and <strong>end</strong> at <span class="arithmatex">\(v\)</span>.</p>
+<h2 id="102-graph-terminology-and-special-types-of-graphs">10.2 Graph Terminology and Special Types of Graphs<a class="headerlink" href="#102-graph-terminology-and-special-types-of-graphs" title="Permanent link">&para;</a></h2>
+<p>For an undirected graph <span class="arithmatex">\(G = (V, E)\)</span>: </p>
+<ul>
+<li>Two vertices, <span class="arithmatex">\(u\)</span> and <span class="arithmatex">\(v\)</span> in an undirected graph <span class="arithmatex">\(G\)</span> are called adjacent (or
+neighbors) in <span class="arithmatex">\(G\)</span>, if <span class="arithmatex">\(\{u, v\}\)</span> is an edge of <span class="arithmatex">\(G\)</span>.</li>
+<li>An edge <span class="arithmatex">\(e\)</span> connecting <span class="arithmatex">\(u\)</span> and <span class="arithmatex">\(v\)</span> is called incident with vertices <span class="arithmatex">\(u\)</span> and <span class="arithmatex">\(v\)</span>, or is
+said to connect <span class="arithmatex">\(u\)</span> and <span class="arithmatex">\(v\)</span>.</li>
+<li>The vertices <span class="arithmatex">\(u\)</span> and <span class="arithmatex">\(v\)</span> are called endpoints of edge <span class="arithmatex">\(\{u, v\}\)</span>.</li>
+<li>The degree of a vertex in an undirected graph is the number of edges incident with it, except that a loop at a vertex contributes twice to the degree of that vertex. The degree of <span class="arithmatex">\(v\)</span> is denoted by <span class="arithmatex">\(deg(v)\)</span>. If <span class="arithmatex">\(\deg(v) = 0\)</span>, then <span class="arithmatex">\(v\)</span> is <strong>isolated</strong>. If <span class="arithmatex">\(\deg(v) = 1\)</span>, then <span class="arithmatex">\(v\)</span> is <strong>pendant</strong>.</li>
+<li>The set of all neighbors of a vertex <span class="arithmatex">\(v\)</span> of <span class="arithmatex">\(G\)</span>, denoted by <span class="arithmatex">\(N(v)\)</span>, is called the neighborhood of <span class="arithmatex">\(v\)</span>. If <span class="arithmatex">\(A\)</span> is a subset of <span class="arithmatex">\(V\)</span>, we denote by <span class="arithmatex">\(N(A)\)</span> the set of all vertices in <span class="arithmatex">\(G\)</span> that are adjacent to at least one vertex in <span class="arithmatex">\(A\)</span>. So, <span class="arithmatex">\(N(A) = \cup_{v\in A} N(v)\)</span>.</li>
+</ul>
+<p><strong>The Handshaking Theorem</strong>: Let <span class="arithmatex">\(G = (V, E)\)</span> be an undirected graph with <span class="arithmatex">\(e\)</span> edges. Then</p>
+<div class="arithmatex">\[\sum_{v\in V}\deg(v) = 2e.\]</div>
+<p><strong>Theorem 2</strong>: An undirected graph has an even number of vertices of odd degree.</p>
+<p>For a directed graph <span class="arithmatex">\(G = (V, E)\)</span>:</p>
+<ul>
+<li>Let <span class="arithmatex">\((u, v)\)</span> be an edge in <span class="arithmatex">\(G\)</span>. Then <span class="arithmatex">\(u\)</span> is an initial vertex and is adjacent to <span class="arithmatex">\(v\)</span> and <span class="arithmatex">\(v\)</span> is a terminal vertex and is adjacent from <span class="arithmatex">\(u\)</span>.</li>
+<li>The in degree of a vertex <span class="arithmatex">\(v\)</span>, denoted <span class="arithmatex">\(\deg^-(v)\)</span> is the number of edges which terminate at <span class="arithmatex">\(v\)</span>.</li>
+<li>Similarly, the out degree of <span class="arithmatex">\(v\)</span>, denoted <span class="arithmatex">\(deg^+(v)\)</span>, is the number of edges which initiate at <span class="arithmatex">\(v\)</span>.</li>
+</ul>
+<p><strong>Theorem 3</strong>: Let <span class="arithmatex">\(G = (V, E)\)</span> be a directed graph. Then</p>
+<div class="arithmatex">\[\sum_{v\in V}\deg^-(v) = \sum_{v\in V}\deg^+(v) = |E|.\]</div>
+<p>Some special simple graphs:</p>
+<ul>
+<li><strong>Complete Graph</strong> - <span class="arithmatex">\(K_n\)</span>: A simple graph with <span class="arithmatex">\(n\)</span> vertices and exactly one edge between each pair of distinct vertices.</li>
+<li><strong>Cycles</strong> - <span class="arithmatex">\(C_n\)</span>: A simple graph with <span class="arithmatex">\(n\)</span> vertices and <span class="arithmatex">\(n\)</span> edges that form a cycle.</li>
+<li><strong>Wheels</strong> - <span class="arithmatex">\(W_n\)</span>: Add one additional vertex to the cycle <span class="arithmatex">\(C_n\)</span> and add an edge from each vertex in <span class="arithmatex">\(C_n\)</span> to the new vertex to produce <span class="arithmatex">\(W_n\)</span>.</li>
+<li><span class="arithmatex">\(n\)</span>-<strong>Cubes</strong> - <span class="arithmatex">\(Q_n\)</span>: <span class="arithmatex">\(Q_n\)</span> is the graph with <span class="arithmatex">\(2^n\)</span> vertices representing bit strings of length <span class="arithmatex">\(n\)</span>. An edge exists between two vertices that differ in exactly one bit position.</li>
+<li><strong>Bipartite Graph</strong>: A graph <span class="arithmatex">\(G = (V, E)\)</span> is bipartite if <span class="arithmatex">\(V\)</span> can be partitioned into two disjoint sets <span class="arithmatex">\(V_1\)</span> and <span class="arithmatex">\(V_2\)</span> such that every edge in <span class="arithmatex">\(E\)</span> connects a vertex in <span class="arithmatex">\(V_1\)</span> to a vertex in <span class="arithmatex">\(V_2\)</span>. There are no edges which connect vertices in the same set.</li>
+<li><strong>Complete Bipartite Graph</strong> - <span class="arithmatex">\(K_{m, n}\)</span>: The complete bipartite graph <span class="arithmatex">\(K_{m, n}\)</span> is the simple graph that has its vertex set partitioned into two disjoint subsets <span class="arithmatex">\(V_1\)</span> and <span class="arithmatex">\(V_2\)</span> of size <span class="arithmatex">\(m\)</span> and <span class="arithmatex">\(n\)</span> respectively, and every vertex in <span class="arithmatex">\(V_1\)</span> is adjacent to every vertex in <span class="arithmatex">\(V_2\)</span>.</li>
+<li><strong>Regular Graph</strong>: A graph in which each vertex has the same degree <span class="arithmatex">\(n\)</span> is called an <span class="arithmatex">\(n\)</span>-regular graph.</li>
+</ul>
+<p><strong>Theorem 4</strong>: A simple graph is bipartite if and only if it is possible to assign one of two different colors to each vertex of the graph so that no two adjacent vertices have the same color.</p>
+<p><strong>Matching</strong>: A matching <span class="arithmatex">\(M\)</span> in a simple graph <span class="arithmatex">\(G = (V, E)\)</span> is a subset of <span class="arithmatex">\(E\)</span> such that no two edges are incident with the same vertex.</p>
+<p>A <strong>Maximum matching</strong> is a matching with the largest number of edges.</p>
+<p>We say that a matching <span class="arithmatex">\(M\)</span> in a bipartite graph <span class="arithmatex">\(G = (V, E)\)</span> with bipartition <span class="arithmatex">\((V_1, V_2)\)</span> is a <strong>complete matching from</strong> <span class="arithmatex">\(V_1\)</span> to <span class="arithmatex">\(V_2\)</span> if every vertex in <span class="arithmatex">\(V_1\)</span> is an endpoint of an edge of the matching.</p>
+<p><strong>Hall's Marriage Theorem</strong>: The bipartite graph <span class="arithmatex">\(G = (V, E)\)</span> with bipartition <span class="arithmatex">\((V_1, V_2)\)</span> has a complete matching from <span class="arithmatex">\(V_1\)</span> to <span class="arithmatex">\(V_2\)</span> if and only if <span class="arithmatex">\(\vert N(A)\vert \geqslant \vert A\vert\)</span> for all subsets <span class="arithmatex">\(A\)</span> of <span class="arithmatex">\(V_1\)</span>. A vertex that is the endpoint of an edge of a matching <span class="arithmatex">\(M\)</span> is said to be <strong>matched</strong> by <span class="arithmatex">\(M\)</span>. </p>
+<p>A good but long proof.</p>
+<p><strong>Proof</strong>:</p>
+<ul>
+<li><em>If</em> part:</li>
+<li><em>Only if</em> part:</li>
+</ul>
+<p>For <span class="arithmatex">\(G = (V, E)\)</span> and <span class="arithmatex">\(H = (W, F)\)</span>.</p>
+<ul>
+<li><span class="arithmatex">\(H\)</span> is a <strong>subgraph</strong> of <span class="arithmatex">\(G\)</span> if <span class="arithmatex">\(W \subseteq V\)</span> and <span class="arithmatex">\(F \subseteq E\)</span>.</li>
+<li><span class="arithmatex">\(H\)</span> is a <strong>proper subgraph</strong> of <span class="arithmatex">\(G\)</span> if <span class="arithmatex">\(H\)</span> is a subgraph of <span class="arithmatex">\(G\)</span> and <span class="arithmatex">\(H \neq G\)</span>.</li>
+<li><span class="arithmatex">\(H\)</span> is a <strong>spanning subgraph</strong> of <span class="arithmatex">\(G\)</span> if <span class="arithmatex">\(W = V\)</span> and <span class="arithmatex">\(F \subset E\)</span>.</li>
+<li><span class="arithmatex">\(H\)</span> is a subgraph <strong>induced</strong> by a subset <span class="arithmatex">\(W\)</span> of <span class="arithmatex">\(V\)</span> if <span class="arithmatex">\(F\)</span> contains an edge in <span class="arithmatex">\(E\)</span> is and only if its endpoints are in <span class="arithmatex">\(W\)</span>.</li>
+<li>The <strong>union</strong> of two graphs <span class="arithmatex">\(G\)</span> and <span class="arithmatex">\(H\)</span> is the simple graph <span class="arithmatex">\(G\cup H\)</span> with the vertex set <span class="arithmatex">\(V \cup W\)</span> and edge set <span class="arithmatex">\(E \cup F\)</span>.</li>
+</ul>
+<h2 id="103-representing-graphs-and-graph-isomorphism">10.3 Representing Graphs and Graph Isomorphism<a class="headerlink" href="#103-representing-graphs-and-graph-isomorphism" title="Permanent link">&para;</a></h2>
+<p><strong>Adjacency Matrix</strong>: A simple graph <span class="arithmatex">\(G = (V, E)\)</span> with <span class="arithmatex">\(n\)</span> vertices <span class="arithmatex">\((v_1,v_2,\cdots, v_n)\)</span> can be represented by its adjacency matrix, A, with respect to this listing of the vertices, where </p>
+<div class="arithmatex">\[
+    a_{ij} = \begin{cases} 1 &amp; \text{if } \{v_i, v_j\} \text{ is an edge} \\
+                           0 &amp; \text{otherwise}  \end{cases}
+\]</div>
+<p>For multigraphs and pseudographs, the adjacency matrix is defined similarly, but the entries can't be just <span class="arithmatex">\(0\)</span> or <span class="arithmatex">\(1\)</span> anymore.</p>
+<p><strong>Incidence Martix</strong>: Let <span class="arithmatex">\(G = (V, E)\)</span> be an undirected graph. Suppose that <span class="arithmatex">\(v_1, v_2, \cdots, v_n\)</span> are the vertices and <span class="arithmatex">\(e_1, e_2, \cdots, e_m\)</span> are the edges of <span class="arithmatex">\(G\)</span>. Then the incidence matrix with respect to this ordering of <span class="arithmatex">\(V\)</span> and <span class="arithmatex">\(E\)</span> is <span class="arithmatex">\(n\times m\)</span> matrix <span class="arithmatex">\(M = [m_{ij}]_{n\times m}\)</span>, where</p>
+<div class="arithmatex">\[
+    m_{ij} = 
+    \begin{cases} 1 &amp; \text{when edge } e_j \text{ is incident with } v_i \\
+                  0 &amp; \text{otherwise} \end{cases}
+\]</div>
+<p><strong>Isomorphism of Graphs</strong>: Graphs with the same structure are said to be isomorphic. Formally, two simple graphs <span class="arithmatex">\(G_1= (V_1, E_1)\)</span> and <span class="arithmatex">\(G_2= (V_2, E_2)\)</span> are <strong>isomorphic</strong> if there is a <span class="arithmatex">\(1-1\)</span> and onto bijection <span class="arithmatex">\(f\)</span> from <span class="arithmatex">\(V_1\)</span> to <span class="arithmatex">\(V_2\)</span> such that for all <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(b\)</span> in <span class="arithmatex">\(V_1\)</span>, <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(b\)</span> are adjacent in <span class="arithmatex">\(G_1\)</span> iff <span class="arithmatex">\(f(a)\)</span> and <span class="arithmatex">\(f(b)\)</span> are adjacent in <span class="arithmatex">\(G_2\)</span>. Such a function <span class="arithmatex">\(f\)</span> is called an isomorphism.</p>
+<p>In other words, when two simple graphs are isomorphic, there is a one-to-one correspondence between vertices of the two graphs that preserves the adjacency relationship.</p>
+<p><strong>Important Invariants</strong>: </p>
+<ul>
+<li>The number of vertices;</li>
+<li>The number of edges;</li>
+<li>The degrees of the corresponding vertices;</li>
+<li>If one is bipartite, the other must be bipartite;</li>
+<li>If one is completed, the other must be complete;</li>
+</ul>
+<h2 id="104-connectivity">10.4 Connectivity<a class="headerlink" href="#104-connectivity" title="Permanent link">&para;</a></h2>
+<p>A <strong>path of length</strong> <span class="arithmatex">\(n\)</span> in a simple path is a sequence of vertices <span class="arithmatex">\(v_0, v_1, \cdots, v_n\)</span> such that <span class="arithmatex">\(\{v_0, v_1\}\)</span>, <span class="arithmatex">\(\{v_1, v_2\}\)</span>, <span class="arithmatex">\(\cdots\)</span>, <span class="arithmatex">\(\{v_{n-1}, v_n\}\)</span> are <span class="arithmatex">\(n\)</span> edges of the graph. </p>
+<p>The path is a <strong>circuit</strong> if the beginning and ending vertices are the same and the length of the path is greater than <span class="arithmatex">\(0\)</span>.</p>
+<p>A path is simple if it doesn't contain the same edge more than once.</p>
+<p>A <strong>path of length</strong> <span class="arithmatex">\(n\)</span> in a <strong>directed graph</strong> is a sequence of vertices <span class="arithmatex">\(v_0, v_1, \cdots, v_n\)</span> such that <span class="arithmatex">\((v_0, v_1)\)</span>, <span class="arithmatex">\((v_1, v_2)\)</span>, <span class="arithmatex">\(\cdots\)</span>, <span class="arithmatex">\((v_{n-1}, v_n)\)</span> are <span class="arithmatex">\(n\)</span> edges of the graph. Circuits, cycles and simple paths are defined as before.</p>
+<p><strong>Theorem 5</strong>: The number of different paths of length <span class="arithmatex">\(r\)</span> from <span class="arithmatex">\(v_i\)</span> to <span class="arithmatex">\(v_j\)</span> is equal to the <span class="arithmatex">\((i, j)\)</span> entry in the matrix <span class="arithmatex">\(A^r\)</span>, where <span class="arithmatex">\(A\)</span> is the adjacency matrix of the graph. Easy to prove.</p>
+<p><strong>Connected Graph</strong>: An undirected graph is <strong>connected</strong> if there is a path between every pair of distinct vertices of the graph.</p>
+<p><strong>Theorem 6</strong>: There is a simple path between every pair of distinct vertices in a connected undirected graph. Just the definition.</p>
+<p><strong>Components</strong>: The maximally connected subgraphs of <span class="arithmatex">\(G\)</span> are called the <strong>connected components</strong> or just the components.</p>
+<p><strong>Cut Vertex/Articulation Point</strong>: A vertex is a <strong>cut vertex</strong> or <strong>articulation point</strong> if removing it and all edges incident with is results in more connected compotents than the original graph.</p>
+<p>Similarly, if removal of an edge results in more connected components, then the edge is a <strong>cut edge</strong> or a <strong>bridge</strong>.</p>
+<p><strong>Strongly Connected</strong>: A directed graph is <strong>strongly connected</strong> if there is a directed path from <span class="arithmatex">\(u\)</span> to <span class="arithmatex">\(v\)</span> and a directed path from <span class="arithmatex">\(v\)</span> to <span class="arithmatex">\(u\)</span> for every pair of vertices <span class="arithmatex">\(u\)</span> and <span class="arithmatex">\(v\)</span> in the graph.</p>
+<p><strong>Weakly Connected</strong>: A directed graph is <strong>weakly connected</strong> if the underlying undirected graph is connected. Every strongly connected graph is weakly connected.</p>
+<p><strong>Strongly Connected Components</strong>: For a directed graph, the maximal strongly connected subgraphs are called the <strong>strongly connected components</strong>.</p>
+<p>Left issues: Kosaraju's algorithm and Tarjan's algorithm.</p>
+<p><strong>Some Other Invariants</strong>:</p>
+<ul>
+<li>The number and size of connected components;</li>
+<li>Paths;</li>
+<li>Two graphs are isomorphic only if they have simple circuits of the same length;</li>
+<li>Two graphs are isomorphic only if they contain paths that go through vertices so that the corresponding vertices in the two graphs have the same degree.</li>
+</ul>
+<h2 id="105-euler-and-hamilton-paths">10.5 Euler and Hamilton Paths<a class="headerlink" href="#105-euler-and-hamilton-paths" title="Permanent link">&para;</a></h2>
+<p><strong>Euler Path</strong>: An <strong>Euler Path</strong> is a simple path containing every edge in <span class="arithmatex">\(G\)</span>.</p>
+<p><strong>Euler Circuit</strong>: An <strong>Euler Circuit</strong> is not only an Euler path but also a circuit.</p>
+<p><strong>Euler Graph</strong>: A graph that contains an Euler circuit is called an <strong>Euler graph</strong>.</p>
+<p><strong>Theorem 7</strong>: A connected multigraph has an Euler circuit if and only if each of its vertices has even degree.</p>
+<p><strong>Proof</strong>:</p>
+<ul>
+<li><strong>Necessary Condition</strong>:</li>
+<li><strong>Sufficient Condition</strong>:</li>
+</ul>
+<p><strong>Build and Find a Euler Circuit and Path</strong>:</p>
+<ul>
+<li>Start from a vertex that has even degree.</li>
+<li>Add paths that from a circuit until you can't add any more.</li>
+<li>Ommitting all the edges that have been used, find a vertex that has an odd degree and repeat the process.</li>
+</ul>
+<p>This will produce an Euler circuit, since every path is included and no edge is included more than once.</p>
+<p><strong>Theorem 8</strong>: A connected multigraph has an Euler path but not an Euler circuit if and only if it has <strong>exactly two vertices of odd degree</strong>.</p>
+<p><strong>Theorem 9</strong>: A <strong>directed</strong> multigraph having no isolated vertices has an Euler circuit if and only if the graph is weakly connected <strong>and</strong> the in-degree and out-degree of each vertex are equal.</p>
+<blockquote>
+<p>所有顶点的出度入度相等的弱联通有向多图有欧拉回路。</p>
+</blockquote>
+<p><strong>Theorem 10</strong>: A directed multigraph having no isolated vertices has an Euler path but not an Euler circuit if and only if: </p>
+<ul>
+<li>the graph is weakly connected; </li>
+<li>the in-degree and out-degree of each vertex are equal <strong>for all but two vertices</strong>, one that has <strong>in-degree</strong> <span class="arithmatex">\(1\)</span> <strong>larger</strong> than its out-degree and the other that has <strong>out-degree</strong> <span class="arithmatex">\(1\)</span> <strong>larger</strong> than its in-degree.</li>
+</ul>
+<blockquote>
+<p>没法翻译了，太抽象了。</p>
+</blockquote>
+<p><strong>Hamilton Path</strong>: A <strong>Hamilton path</strong> in a graph <span class="arithmatex">\(G\)</span> is a path which visits every vertex exactly once.</p>
+<p><strong>Hamilton Circuit</strong>: A <strong>Hamilton circuit</strong> is a circuit that visits every vertex exactly once except for the first vertex.</p>
+<p><strong>Hamilton Graph</strong>: A graph that contains a Hamilton circuit is called a <strong>Hamilton graph</strong>.</p>
+<p><strong>Theorem 11</strong> (DIRAC): If <span class="arithmatex">\(G\)</span> is a simple graph with <span class="arithmatex">\(n\)</span> vertices <span class="arithmatex">\((n \geqslant 3)\)</span> and if the degree of each vertex is at least <span class="arithmatex">\(n/2\)</span>, then <span class="arithmatex">\(G\)</span> has a Hamilton circuit.</p>
+<p><strong>Theorem 12</strong> (ORE): If <span class="arithmatex">\(G\)</span> is a simple graph with <span class="arithmatex">\(n\)</span> vertices <span class="arithmatex">\((n \geqslant 3)\)</span> and if for every pair of nonadjacent vertices <span class="arithmatex">\(u\)</span> and <span class="arithmatex">\(v\)</span> of <span class="arithmatex">\(G\)</span>, the sum of the degrees of <span class="arithmatex">\(u\)</span> and <span class="arithmatex">\(v\)</span> is at least <span class="arithmatex">\(n\)</span>, i.e. <span class="arithmatex">\(\deg(u) + \deg(v) \geqslant n\)</span>, then <span class="arithmatex">\(G\)</span> has a Hamilton circuit. </p>
+<p><strong>Necessary Condition for Hamilton Path and Halmiton Circuit</strong>: For undirected graph: The necessary condition for the existence of Hamilton path:</p>
+<ul>
+<li><span class="arithmatex">\(G\)</span> is connected;</li>
+<li>There are at most two vertices which degree are less than <span class="arithmatex">\(2\)</span>. </li>
+</ul>
+<p>The necessary condition for the existence of Hamilton circuit:</p>
+<ol>
+<li>
+<p>The degree of each vertex is larger than <span class="arithmatex">\(1\)</span>.</p>
+<p>Some properties:</p>
+<ul>
+<li>If a vertex in the graph has degree two, then both edges that are incident with this vertex must be part of any Hamilton circuit.</li>
+<li>When a Hamilton circuit is being constructed and this circuit has passed through a vertex, then all remaining edges incident with this vertex, other than the two used in the circuit , can be removed from consideration.</li>
+</ul>
+</li>
+<li>
+<p><span class="arithmatex">\(G\)</span> is a Hamilton graph, for any nonempty subset <span class="arithmatex">\(S\)</span> of set <span class="arithmatex">\(V\)</span>, the number of connected components in <span class="arithmatex">\(G-S\)</span> does not exceed <span class="arithmatex">\(\vert S\vert\)</span>.</p>
+</li>
+</ol>
+<h2 id="106-shortest-path-problems">10.6 Shortest Path Problems<a class="headerlink" href="#106-shortest-path-problems" title="Permanent link">&para;</a></h2>
+<p><strong>Weighted Graph</strong>: <span class="arithmatex">\(G = (V, E, W)\)</span>, where <span class="arithmatex">\(W\)</span> is a function that assigns a real number <span class="arithmatex">\(W(e)\)</span> to each edge <span class="arithmatex">\(e\)</span> in <span class="arithmatex">\(E\)</span>. The number <span class="arithmatex">\(W(e)\)</span> is called the <strong>weight</strong> of edge <span class="arithmatex">\(e\)</span>.</p>
+<p><strong>Length of a Path</strong>: The <strong>length</strong> of a path in a weighted graph is the sum of the weights of the edges in the path.</p>
+<p><strong>Shortest Path</strong>: The <strong>shortest path</strong> between two vertices <span class="arithmatex">\(u\)</span> and <span class="arithmatex">\(v\)</span> in a weighted graph is a path of minimum length between <span class="arithmatex">\(u\)</span> and <span class="arithmatex">\(v\)</span>.</p>
+<ol>
+<li>
+<p>For <strong>undirected graphs with positive graphs</strong>: <strong>Dijkstra's Algorithm</strong>.</p>
+<p><strong>Theorem 13</strong>: Dijkstra’s algorithm finds the length of a shortest path between two vertices in a connected simple undirected weighted graph. </p>
+<p><strong>Theorem 14</strong>: Dijkstra’s algorithm uses <span class="arithmatex">\(O(n^2)\)</span> operations (additions and comparisons) to find the length of the shortest path between two vertices in a connected simple undirected weighted graph.</p>
+</li>
+<li>
+<p><strong>Floyd's Algorithm</strong>: Allow negative weights but no negative cycles.</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a>Procedure Floyd(G: weighted simple graph):
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>    {G has vertices v_1, ..., v_n and weights w(v_i, v_j) with
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>     w(v_i, v_j) = infty if {v_i, v_j} is not an edge}
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>    for i := 1 to n:
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>        for j := 1 to n:
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a>            d(v_i, v_j) := w(v_i, v_j)
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a>    for i := 1 to n:
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a>        for j := 1 to n:
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9"></a>            for k := 1 to n:
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10"></a>                if d(v_j, v_i) + d(v_i, v_k) &lt; d(v_j, v_k):
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11"></a>                    then d(v_j, v_k) := d(v_j, v_i) + d(v_i, v_k)
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12"></a>{d(v_i, v_j) is the length of a shortest path between v_i and v_j}
+</span></code></pre></div></td></tr></table></div>
+</li>
+</ol>
+<h2 id="107-planar-graphs">10.7 Planar Graphs<a class="headerlink" href="#107-planar-graphs" title="Permanent link">&para;</a></h2>
+<p><strong>Planar Graphs</strong>: A graph is called <strong>planar</strong> if it can be drawn in the plane without any edges crossing. Such a drawing is called a <strong>planar representation</strong> of the graph.</p>
+<p><strong>Region</strong>: A <strong>region</strong> is a part of the plane completely disconnected off from other parts of the plane by the edges of the graph. We have <strong>Bounded Region</strong> and <strong>Unbounded Region</strong>.</p>
+<p>There is one unbounded region in a planar graph.</p>
+<p><strong>Theorem 15</strong> (Euler's Formula): Let <span class="arithmatex">\(G\)</span> be a <strong>connected planar simple graph</strong> with <span class="arithmatex">\(e\)</span> edges and <span class="arithmatex">\(v\)</span> vertices. Let <span class="arithmatex">\(r\)</span> be the number of regions in a planar representation of <span class="arithmatex">\(G\)</span>. Then <span class="arithmatex">\(r=e-v+2\)</span>.</p>
+<p><strong>Proof</strong>: <strong>OMITTED</strong>.</p>
+<p><strong>Degree of a Region</strong>:  Suppose <span class="arithmatex">\(R\)</span> is a region of a connected planar simple graph, the <strong>number of the edges on the boundary</strong> of <span class="arithmatex">\(R\)</span> is called the <strong>Degree</strong> of <span class="arithmatex">\(R\)</span>, denoted by <span class="arithmatex">\(\mathrm{Deg}(R)\)</span>. </p>
+<p><strong>Corollary</strong>: If <span class="arithmatex">\(G\)</span> is a connected planar simple graph with <span class="arithmatex">\(e\)</span> edges and <span class="arithmatex">\(v\)</span> vertices where <span class="arithmatex">\(v\geqslant 3\)</span>, then <span class="arithmatex">\(e\leqslant 3v-6\)</span>. The equality holds if and only if every region has exactly three edges.</p>
+<p><strong>Proof</strong>: From <span class="arithmatex">\(2e = \sum \mathrm{Deg}(R) &gt; 3r\)</span>, we can derive <span class="arithmatex">\(r \leqslant \dfrac{2e}{3}\)</span>. Under the Euler's formula, we have <span class="arithmatex">\(r = e - v + 2\)</span>, so <span class="arithmatex">\(e - v + 2 \leqslant \dfrac{2e}{3}\)</span>, which means <span class="arithmatex">\(e \leqslant 3v - 6\)</span>.</p>
+<p><strong>Corollary</strong>: If <span class="arithmatex">\(G\)</span> is a connected planar simple graph, then <span class="arithmatex">\(G\)</span> has a vertex of degree not exceeding five.</p>
+<p><strong>Corollary</strong>:  If a connected planar simple graph has <span class="arithmatex">\(e\)</span> edges and <span class="arithmatex">\(v\)</span> vertices with <span class="arithmatex">\(v\geqslant 3\)</span> and no circuits of length <span class="arithmatex">\(3\)</span>, then <span class="arithmatex">\(e \leqslant 2v-4\)</span>. Generally, if every region of a connected planar simple graph has at least <span class="arithmatex">\(k\)</span> edges, then </p>
+<div class="arithmatex">\[e \leqslant \frac{k(v - 2)}{k - 2}.\]</div>
+<p><strong>Elementary Subdivision</strong>: If a graph is planar, so will be any graph obtained by removing an edge <span class="arithmatex">\(\{u, v\}\)</span> and adding a new vertex <span class="arithmatex">\(w\)</span> together with edges <span class="arithmatex">\(\{u, w\}\)</span> and <span class="arithmatex">\(\{w, v\}\)</span>. Such an operation is called an <strong>elementary subdivision</strong>. </p>
+<blockquote>
+<p>移除度为 2 的顶点或者在边上加一个顶点。</p>
+</blockquote>
+<p><strong>Homeomorphic</strong>: The graph <span class="arithmatex">\(G_1=(V_1,E_1)\)</span> and <span class="arithmatex">\(G_2=(V_2,E_2)\)</span> are called <strong>homeomorphic</strong> if they can be obtained from the same graph by a sequence of elementary subdivision.</p>
+<p><strong>Theorem 16</strong> (KURATOWSKI): A graph is nonplanar if and only if it contains a subgraph homeomorphic to <span class="arithmatex">\(K_{3,3}\)</span> or <span class="arithmatex">\(K_5\)</span>.</p>
+<h2 id="108-graph-coloring">10.8 Graph Coloring<a class="headerlink" href="#108-graph-coloring" title="Permanent link">&para;</a></h2>
+<p>Each map in the plane can be represented by a graph, namely <strong>the dual graph of the map</strong>.</p>
+<ul>
+<li>Each region of the map is represented by a vertex.</li>
+<li>An edge connect two vertices if the regions represented by these vertices have a common border.</li>
+<li>Two regions that touch at only one point are not considered adjacent.</li>
+</ul>
+<p><strong>Coloring</strong>: A <strong>coloring of a simple graph</strong> is the assignment of a color to each vertex of the graph so that no two adjacent vertices are assigned the same color.</p>
+<p><strong>Chromatic number/色数</strong>: The <strong>Chromatic number</strong> of a graph is the <strong>least number of colors needed</strong> for a coloring of this graph, denoted by <span class="arithmatex">\(x(G)\)</span>.</p>
+<p><strong>The Four Color Theorem</strong>: Every planar graph is <span class="arithmatex">\(4\)</span>-colorable.</p>
+<h2 id="109-netflow">10.9 Netflow<a class="headerlink" href="#109-netflow" title="Permanent link">&para;</a></h2>
+<p><strong>Flowgraph</strong>: Directed graph with distinguished vertices s/source and t/sink.</p>
+<p><strong>Capacities</strong> on the edges: <span class="arithmatex">\(:c(e) \geqslant 0\)</span>.</p>
+<p><strong>Target</strong>: Maximize the flow from <span class="arithmatex">\(s\)</span> to <span class="arithmatex">\(t\)</span> with the constraint that the flow on each edge does not exceed its capacity.</p>
+<p><strong>Cut</strong>: Partition of <span class="arithmatex">\(V\)</span> into disjoint sets <span class="arithmatex">\(S\)</span>, <span class="arithmatex">\(T\)</span> with <span class="arithmatex">\(s\)</span> in <span class="arithmatex">\(S\)</span> and <span class="arithmatex">\(t\)</span> in <span class="arithmatex">\(T\)</span>.</p>
+<p><span class="arithmatex">\(Cap(S, T)\)</span>: Sum of the capacities of edges from <span class="arithmatex">\(S\)</span> to <span class="arithmatex">\(T\)</span>.</p>
+<p><span class="arithmatex">\(Flow(S, T)\)</span>: Net flow out of <span class="arithmatex">\(S\)</span>, i.e. the sum of flows out of <span class="arithmatex">\(S\)</span> minus sum of flows into <span class="arithmatex">\(S\)</span>.</p>
+<p><strong>Residual Graph</strong>: For flow graph <span class="arithmatex">\(G\)</span>, the residual graph <span class="arithmatex">\(G_f\)</span> is defined as follows:</p>
+<ul>
+<li><span class="arithmatex">\(G\)</span>: Edge <span class="arithmatex">\(e\)</span> from <span class="arithmatex">\(u\)</span> to <span class="arithmatex">\(v\)</span> with capacity <span class="arithmatex">\(c\)</span> and flow <span class="arithmatex">\(f\)</span>.</li>
+<li><span class="arithmatex">\(G_R\)</span>: Edge <span class="arithmatex">\(e\)</span> from <span class="arithmatex">\(v\)</span> to <span class="arithmatex">\(u\)</span> with capacity <span class="arithmatex">\(f\)</span>.</li>
+<li><span class="arithmatex">\(G_R\)</span>: Edge <span class="arithmatex">\(e\)</span> from <span class="arithmatex">\(u\)</span> to <span class="arithmatex">\(v\)</span> with capacity <span class="arithmatex">\(c-f\)</span>.</li>
+</ul>
+<p><strong>Argumenting Path</strong>: A path from <span class="arithmatex">\(s\)</span> to <span class="arithmatex">\(t\)</span> whose flow can be increased. Iff for all edges <span class="arithmatex">\(f(u, v) &lt; c(u, v)\)</span> and <span class="arithmatex">\(f(v, u) &gt; 0\)</span>.</p>
+<p><strong>Ford-Fulkerson Algorithm</strong>: Build argument path until there is no forward path from source to sink.</p>
+<p><strong>Augmenting path theorem</strong>: Flow <span class="arithmatex">\(f\)</span> is a max flow iff there are no augmenting paths.</p>
+<p><strong>Max-flow Min-cut Theorem</strong>: The value of the max flow equals the capacity of the min cut.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 V1CeVersa
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/V1CeVersaa" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "content.action.edit", "toc.follow", "navigation.tracking", "navigation.tabs", "navigation.prune", "navigation.indexes", "navigation.top", "search.share", "search.highlight", "search.suggest"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://gcore.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+      
+        <script src="../../../Javascripts/mathjax.js"></script>
+      
+        <script src="../../../Javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
+      
+        <script src="../../../Javascripts/tablesort.js"></script>
+      
+    
+  </body>
+</html>

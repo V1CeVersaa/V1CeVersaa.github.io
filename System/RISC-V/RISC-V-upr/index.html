@@ -1,0 +1,2935 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://note.v1ceversaa.cc/System/RISC-V/RISC-V-upr/">
+      
+      
+        <link rel="prev" href="../RISC-V/">
+      
+      
+        <link rel="next" href="../RISC-V-pr/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.28">
+    
+    
+      
+        <title>Unprivileged ISA - V1CeVersa's Notebook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=LXGW+WenKai+Screen:300,300i,400,400i,700,700i%7C['Monaspace+Argon+Light',+'JetBrains+Mono',+'LXGW+WenKai+Screen']:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"LXGW WenKai Screen";--md-code-font:"['Monaspace Argon Light', 'JetBrains Mono', 'LXGW WenKai Screen']"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="../../../css/custom.css">
+    
+      <link rel="stylesheet" href="../../../css/card.css">
+    
+      <link rel="stylesheet" href="../../../css/tasklist.css">
+    
+      <link rel="stylesheet" href="../../../css/flink.css">
+    
+      <link rel="stylesheet" href="../../../css/more_changelog.css">
+    
+      <link rel="stylesheet" href="../../../css/neoteroi-mkdocs.css">
+    
+      <link rel="stylesheet" href="../../../css/fold_toc.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="brown" data-md-color-accent="brown">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#risc-v-unprivileged-isa" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="V1CeVersa&#39;s Notebook" class="md-header__button md-logo" aria-label="V1CeVersa's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 4v6l-2-2-2 2V4H9v16h10V4h-2M3 7V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3m2-2v2h2V5H5m0 14h2v-2H5v2m0-6h2v-2H5v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            V1CeVersa's Notebook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Unprivileged ISA
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="brown" data-md-color-accent="brown"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Computer%20Science/" class="md-tabs__link">
+          
+  
+    
+  
+  Computer Science
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+    
+  
+  System
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Math/" class="md-tabs__link">
+          
+  
+    
+  
+  Math
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Reading/" class="md-tabs__link">
+          
+  
+    
+  
+  Reading
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Varia/Learning%20Plan/" class="md-tabs__link">
+          
+  
+    
+  
+  Varia
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="V1CeVersa&#39;s Notebook" class="md-nav__button md-logo" aria-label="V1CeVersa's Notebook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 4v6l-2-2-2 2V4H9v16h10V4h-2M3 7V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3m2-2v2h2V5H5m0 14h2v-2H5v2m0-6h2v-2H5v2Z"/></svg>
+
+    </a>
+    V1CeVersa's Notebook
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Computer%20Science/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Computer Science
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    System
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            System
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../CSAPP/Chapter1/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    General Introduction
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../DDCA/Chapter2/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Digital Logic
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../CSAPP/Chapter2/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Presenting and Manipulating Information
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Machine-Level Representation of Programs
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            Machine-Level Representation of Programs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CSAPP/Chapter3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CSAPP-Machine-Level Representation of Programs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../COAD/Chapter3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    COAD-Instructions Language of the Computer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CSAPP/Chapter5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CSAPP-Optimizing Program Performance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_4" id="__nav_3_5_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    RISC-V Assembly
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_5_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            RISC-V Assembly
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RISC-V/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RISC-V
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Unprivileged ISA
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Unprivileged ISA
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-basic" class="md-nav__link">
+    <span class="md-ellipsis">
+      1 Basic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 Basic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#registers-convents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Registers Convents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instruction-and-its-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Instruction and its Formats
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#immediate-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Immediate Values
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#symbol-names-and-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Symbol Names and Labels
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#location-counter-and-assembling-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      Location Counter and Assembling Process
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assembly-directives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assembly Directives
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-rv32i-base-integer-instruction-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      2 RV32I Base Integer Instruction Set
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 RV32I Base Integer Instruction Set">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logic-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logic Instructions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shift-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shift Instructions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arithmetic-instructions-with-m-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arithmetic Instructions with M Extension
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-transfer-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Transfer Instructions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-transfer-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Control Transfer Instructions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-calls-and-breaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Calls and Breaks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-set-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conditional set Instructions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detecting-overflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Detecting Overflow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arithmetic-with-multi-word-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arithmetic with Multi-Word Variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dealing-with-large-immediate-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dealing with Large Immediate Values
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pseudo-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pseudo-Instructions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-from-code-to-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      4 From Code to Program
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 From Code to Program">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#labels-and-symbols" class="md-nav__link">
+    <span class="md-ellipsis">
+      Labels and Symbols
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-routine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Routine
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#program-entry-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Program Entry Point
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#program-sections" class="md-nav__link">
+    <span class="md-ellipsis">
+      Program Sections
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RISC-V-pr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Privileged ISA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../x86%20Assembly/x86/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    x86 Assembly
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../CSAPP/Chapter4/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Processor Architecture
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../CSAPP/Chapter6/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Memory Hierarchy
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../HDL/Verilog/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Hardware Description Language
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../CSAPP/Chapter7/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CSAPP
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../Lab%20Record/ZJU%20System%20I/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Lab Record
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../CSAPP/CSAPP/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Booklist
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Math/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Math
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Reading/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Reading
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Varia/Learning%20Plan/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Varia
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-basic" class="md-nav__link">
+    <span class="md-ellipsis">
+      1 Basic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 Basic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#registers-convents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Registers Convents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instruction-and-its-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Instruction and its Formats
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#immediate-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Immediate Values
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#symbol-names-and-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Symbol Names and Labels
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#location-counter-and-assembling-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      Location Counter and Assembling Process
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assembly-directives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assembly Directives
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-rv32i-base-integer-instruction-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      2 RV32I Base Integer Instruction Set
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 RV32I Base Integer Instruction Set">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logic-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logic Instructions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shift-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shift Instructions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arithmetic-instructions-with-m-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arithmetic Instructions with M Extension
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-transfer-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Transfer Instructions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-transfer-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Control Transfer Instructions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-calls-and-breaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Calls and Breaks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-set-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conditional set Instructions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detecting-overflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Detecting Overflow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arithmetic-with-multi-word-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arithmetic with Multi-Word Variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dealing-with-large-immediate-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dealing with Large Immediate Values
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pseudo-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pseudo-Instructions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-from-code-to-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      4 From Code to Program
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 From Code to Program">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#labels-and-symbols" class="md-nav__link">
+    <span class="md-ellipsis">
+      Labels and Symbols
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-routine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Routine
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#program-entry-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Program Entry Point
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#program-sections" class="md-nav__link">
+    <span class="md-ellipsis">
+      Program Sections
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="risc-v-unprivileged-isa">RISC-V Unprivileged ISA<a class="headerlink" href="#risc-v-unprivileged-isa" title="Permanent link">&para;</a></h1>
+<div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8V2m6.78 1a.69.69 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38-2.5-2.5Z"/></svg></span> 约 4862 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3l89.3 89.4-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg></span> 129 行代码 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3L12.5 13Z"/></svg></span> 预计阅读时间 18 分钟</p>
+</div>
+<h2 id="1-basic">1 Basic<a class="headerlink" href="#1-basic" title="Permanent link">&para;</a></h2>
+<h3 id="registers-convents">Registers Convents<a class="headerlink" href="#registers-convents" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">寄存器</th>
+<th style="text-align: center;">ABI 名称</th>
+<th style="text-align: left;">用途描述</th>
+<th style="text-align: center;">caller-saved</th>
+<th style="text-align: center;">callee-saved</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>x0</code></td>
+<td style="text-align: center;"><code>zero</code></td>
+<td style="text-align: left;">硬件 0</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>x1</code></td>
+<td style="text-align: center;"><code>ra</code></td>
+<td style="text-align: left;">返回地址（return address）</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>x2</code></td>
+<td style="text-align: center;"><code>sp</code></td>
+<td style="text-align: left;">栈指针（stack pointer）</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>x3</code></td>
+<td style="text-align: center;"><code>gp</code></td>
+<td style="text-align: left;">全局指针（global pointer）</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>x4</code></td>
+<td style="text-align: center;"><code>tp</code></td>
+<td style="text-align: left;">线程指针（thread pointer）</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>x5</code></td>
+<td style="text-align: center;"><code>t0</code></td>
+<td style="text-align: left;">临时变量/备用链接寄存器（alternate link reg）</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>x6-7</code></td>
+<td style="text-align: center;"><code>t1-t2</code></td>
+<td style="text-align: left;">临时变量</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>x8</code></td>
+<td style="text-align: center;"><code>s0/fp</code></td>
+<td style="text-align: left;">需要保存的寄存器/帧指针（frame pointer）</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>x9</code></td>
+<td style="text-align: center;"><code>s1</code></td>
+<td style="text-align: left;">需要保存的寄存器</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>x10-11</code></td>
+<td style="text-align: center;"><code>a0-a1</code></td>
+<td style="text-align: left;">函数参数/返回值</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>x12-17</code></td>
+<td style="text-align: center;"><code>a2-a7</code></td>
+<td style="text-align: left;">函数参数</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>x18-27</code></td>
+<td style="text-align: center;"><code>s2-s11</code></td>
+<td style="text-align: left;">需要保存的寄存器</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>x28-31</code></td>
+<td style="text-align: center;"><code>t3-t6</code></td>
+<td style="text-align: left;">临时变量</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>pc</code></td>
+<td style="text-align: center;"><code>pc</code></td>
+<td style="text-align: left;">程序计数器（program counter）</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Caller-Saved</strong>：调用者保存寄存器，也被称为<strong>可变寄存器/Volatile Registers</strong>，被调用者可以自由地改变这些寄存器的值，如果调用者需要这些寄存器的值，就必须在执行程序调用之前保存这些值。<code>t0</code>-<code>t6</code>（临时寄存器）、<code>a0</code>-<code>a7</code>（返回地址与函数参数）与 <code>ra</code>（返回地址）都是调用者保存寄存器。</p>
+<p><strong>Callee-Saved</strong>：被调用者保存寄存器，这些寄存器的值在过程调用之前和之后必须保持不变，被调用者如果要使用这些寄存器，就必须在返回之前保存这些值。这就意味着要<strong>保存原来的值</strong>，正常使用寄存器，<strong>恢复原来的值</strong>。<code>s0</code>-<code>s11</code>（被保存的寄存器）和 <code>sp</code>（栈指针）都是被调用者保存寄存器。</p>
+<p>全局指针 <code>gp</code> 和线程指针 <code>tp</code> 很特殊，先不考虑。</p>
+<h3 id="instruction-and-its-formats">Instruction and its Formats<a class="headerlink" href="#instruction-and-its-formats" title="Permanent link">&para;</a></h3>
+<p>RV32I 有 4 种基础的指令格式（R/I/S/U），再根据立即数解码的不同又分出两种（B/J），总共六种指令格式</p>
+<ul>
+<li>
+<p>R 型指令</p>
+<p><table class="riscv-table">
+<tr>
+    <td class="riscv-table-numnodel">31</td>
+    <td class="riscv-table-numnode" colspan="5"></td>
+    <td class="riscv-table-numnoder">25</td>
+    <td class="riscv-table-numnodel">24</td>
+    <td class="riscv-table-numnode" colspan="3"></td>
+    <td class="riscv-table-numnoder">20</td>
+    <td class="riscv-table-numnodel">19</td>
+    <td class="riscv-table-numnode" colspan="3"></td>
+    <td class="riscv-table-numnoder">15</td>
+    <td class="riscv-table-numnodel">14</td>
+    <td class="riscv-table-numnode" colspan="1"></td>
+    <td class="riscv-table-numnoder">12</td>
+    <td class="riscv-table-numnodel">11</td>
+    <td class="riscv-table-numnode" colspan="3"></td>
+    <td class="riscv-table-numnoder">7</td>
+    <td class="riscv-table-numnodel">6</td>
+    <td class="riscv-table-numnode" colspan="5"></td>
+    <td class="riscv-table-numnoder">0</td>
+</tr>
+<tr>
+    <td colspan="7" class="riscv-table-node">funct7</td>
+    <td colspan="5" class="riscv-table-node">rs2</td>
+    <td colspan="5" class="riscv-table-node">rs1</td>
+    <td colspan="3" class="riscv-table-node">funct3</td>
+    <td colspan="5" class="riscv-table-node">rd</td>
+    <td colspan="7" class="riscv-table-node">opcode</td>
+</tr>
+</table></p>
+<p>使用寄存器进行数字逻辑运算的指令格式，运算由 <code>opcode funct3 funct7</code> 决定，<code>rd = rs1 op rs2</code>（<code>shift</code> 类例外，它们用 <code>rs2</code> 位置表示移位数的立即数）。</p>
+</li>
+<li>
+<p>I 型指令</p>
+<p><table class="riscv-table">
+<tr>
+    <td class="riscv-table-numnodel">31</td>
+    <td class="riscv-table-numnode" colspan="10"></td>
+    <td class="riscv-table-numnoder">20</td>
+    <td class="riscv-table-numnodel">19</td>
+    <td class="riscv-table-numnode" colspan="3"></td>
+    <td class="riscv-table-numnoder">15</td>
+    <td class="riscv-table-numnodel">14</td>
+    <td class="riscv-table-numnode" colspan="1"></td>
+    <td class="riscv-table-numnoder">12</td>
+    <td class="riscv-table-numnodel">11</td>
+    <td class="riscv-table-numnode" colspan="3"></td>
+    <td class="riscv-table-numnoder">7</td>
+    <td class="riscv-table-numnodel">6</td>
+    <td class="riscv-table-numnode" colspan="5"></td>
+    <td class="riscv-table-numnoder">0</td>
+</tr>
+<tr>
+    <td colspan="12" class="riscv-table-node">imm[11:0]</td>
+    <td colspan="5" class="riscv-table-node">rs1</td>
+    <td colspan="3" class="riscv-table-node">funct3</td>
+    <td colspan="5" class="riscv-table-node">rd</td>
+    <td colspan="7" class="riscv-table-node">opcode</td>
+</tr>
+</table></p>
+<p>使用寄存器和立即数进行数字逻辑运算，以及 <code>load</code> 类指令等的指令格式，运算类型等由 <code>opcode funct3</code> 决定，如果是 ALU 运算，则 <code>rd = rs1 op imm</code>。</p>
+<p>立即数是 <code>{{20{inst[31]}}, inst[31:20]}</code>，也就是对 <code>imm[11:0]</code> 进行符号位扩展到 32 位。</p>
+</li>
+<li>
+<p>S 型指令</p>
+<p><table class="riscv-table">
+<tr>
+    <td class="riscv-table-numnodel">31</td>
+    <td class="riscv-table-numnode" colspan="5"></td>
+    <td class="riscv-table-numnoder">25</td>
+    <td class="riscv-table-numnodel">24</td>
+    <td class="riscv-table-numnode" colspan="3"></td>
+    <td class="riscv-table-numnoder">20</td>
+    <td class="riscv-table-numnodel">19</td>
+    <td class="riscv-table-numnode" colspan="3"></td>
+    <td class="riscv-table-numnoder">15</td>
+    <td class="riscv-table-numnodel">14</td>
+    <td class="riscv-table-numnode" colspan="1"></td>
+    <td class="riscv-table-numnoder">12</td>
+    <td class="riscv-table-numnodel">11</td>
+    <td class="riscv-table-numnode" colspan="3"></td>
+    <td class="riscv-table-numnoder">7</td>
+    <td class="riscv-table-numnodel">6</td>
+    <td class="riscv-table-numnode" colspan="5"></td>
+    <td class="riscv-table-numnoder">0</td>
+</tr>
+<tr>
+    <td colspan="7" class="riscv-table-node">imm[11:5]</td>
+    <td colspan="5" class="riscv-table-node">rs2</td>
+    <td colspan="5" class="riscv-table-node">rs1</td>
+    <td colspan="3" class="riscv-table-node">funct3</td>
+    <td colspan="5" class="riscv-table-node">imm[4:0]</td>
+    <td colspan="7" class="riscv-table-node">opcode</td>
+</tr>
+</table></p>
+<p><code>store</code> 类指令，<code>store</code> 的大小由 <code>funct3</code> 决定，以变址模式进行寻址，即 <code>rs1 = [rs2+imm]</code>。</p>
+<p>立即数是 <code>{{20{inst[31]}}, inst[31:25], inst[11:7]}</code>。</p>
+</li>
+<li>
+<p>B 型指令</p>
+<p><table class="riscv-table">
+<tr>
+    <td class="riscv-table-numnodel">31</td>
+    <td class="riscv-table-numnode" colspan="5"></td>
+    <td class="riscv-table-numnoder">25</td>
+    <td class="riscv-table-numnodel">24</td>
+    <td class="riscv-table-numnode" colspan="3"></td>
+    <td class="riscv-table-numnoder">20</td>
+    <td class="riscv-table-numnodel">19</td>
+    <td class="riscv-table-numnode" colspan="3"></td>
+    <td class="riscv-table-numnoder">15</td>
+    <td class="riscv-table-numnodel">14</td>
+    <td class="riscv-table-numnode" colspan="1"></td>
+    <td class="riscv-table-numnoder">12</td>
+    <td class="riscv-table-numnodel">11</td>
+    <td class="riscv-table-numnode" colspan="3"></td>
+    <td class="riscv-table-numnoder">7</td>
+    <td class="riscv-table-numnodel">6</td>
+    <td class="riscv-table-numnode" colspan="5"></td>
+    <td class="riscv-table-numnoder">0</td>
+</tr>
+<tr>
+    <td colspan="7" class="riscv-table-node">imm[12,10:5]</td>
+    <td colspan="5" class="riscv-table-node">rs2</td>
+    <td colspan="5" class="riscv-table-node">rs1</td>
+    <td colspan="3" class="riscv-table-node">funct3</td>
+    <td colspan="5" class="riscv-table-node">imm[4:1,11]</td>
+    <td colspan="7" class="riscv-table-node">opcode</td>
+</tr>
+</table></p>
+<p>由 S 型指令分来，与之区别是立即数读取顺序不同，是所有分支类指令。是否分支由 <code>funct3 rs1 rs2</code> 决定。</p>
+<p>立即数是 <code>{{19{inst[31]}}, inst[31], inst[7], inst[30:25], inst[11:8], 1'b0}</code>。</p>
+</li>
+<li>
+<p>U 型指令</p>
+<p><table class="riscv-table">
+<tr>
+    <td class="riscv-table-numnodel">31</td>
+    <td class="riscv-table-numnode" colspan="18"></td>
+    <td class="riscv-table-numnoder">12</td>
+    <td class="riscv-table-numnodel">11</td>
+    <td class="riscv-table-numnode" colspan="3"></td>
+    <td class="riscv-table-numnoder">7</td>
+    <td class="riscv-table-numnodel">6</td>
+    <td class="riscv-table-numnode" colspan="5"></td>
+    <td class="riscv-table-numnoder">0</td>
+</tr>
+<tr>
+    <td colspan="20" class="riscv-table-node">imm[31:12]</td>
+    <td colspan="5" class="riscv-table-node">rd</td>
+    <td colspan="7" class="riscv-table-node">opcode</td>
+</tr>
+</table></p>
+<p><code>LUI</code> 和 <code>AUIPC</code>，立即数都是在高 20 位，而且没有源操作数。</p>
+<p>立即数是 <code>{inst[31:12], 12'b0}</code>。</p>
+</li>
+<li>
+<p>J 型指令</p>
+<p><table class="riscv-table">
+<tr>
+    <td class="riscv-table-numnodel">31</td>
+    <td class="riscv-table-numnode" colspan="18"></td>
+    <td class="riscv-table-numnoder">12</td>
+    <td class="riscv-table-numnodel">11</td>
+    <td class="riscv-table-numnode" colspan="3"></td>
+    <td class="riscv-table-numnoder">7</td>
+    <td class="riscv-table-numnodel">6</td>
+    <td class="riscv-table-numnode" colspan="5"></td>
+    <td class="riscv-table-numnoder">0</td>
+</tr>
+<tr>
+    <td colspan="20" class="riscv-table-node">imm[20,10:1,11,19:12]</td>
+    <td colspan="5" class="riscv-table-node">rd</td>
+    <td colspan="7" class="riscv-table-node">opcode</td>
+</tr>
+</table></p>
+<p>由 U 型指令分来，区别也是立即数读取不同，仅有 <code>JAL</code> 一个指令。</p>
+<p>立即数是 <code>{{11{inst[31]}}, inst[31], inst[19:12], inst[20], inst[30:21], 1'b0}</code>。</p>
+</li>
+</ul>
+<h3 id="immediate-values">Immediate Values<a class="headerlink" href="#immediate-values" title="Permanent link">&para;</a></h3>
+<p>与正常无异，十六进制数前加 <code>0x</code>，二进制数前加 <code>0b</code>，十进制数直接写或者在前面加 <code>0</code>。用单引号括起来的字母数字字符/Alphanumeric Characters 会根据 ASCII 表转化为相应的数值，比如 <code>'a'</code> 会转化为 <code>97</code>。</p>
+<div class="language-asm highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">li</span><span class="w"> </span><span class="no">a0</span><span class="p">,</span><span class="w"> </span><span class="mi">0x42</span><span class="w">     </span><span class="c1"># load value sixty-six into a0</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nf">li</span><span class="w"> </span><span class="no">a1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="no">b1010</span><span class="w">   </span><span class="c1"># load value ten into a1</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nf">li</span><span class="w"> </span><span class="no">a2</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="w">       </span><span class="c1"># load value forty-two into a2</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="nf">li</span><span class="w"> </span><span class="no">a3</span><span class="p">,</span><span class="w"> </span><span class="p">-</span><span class="err">&#39;</span><span class="no">a</span><span class="err">&#39;</span><span class="w">     </span><span class="c1"># load value negative ninety-seven into a3</span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="symbol-names-and-labels">Symbol Names and Labels<a class="headerlink" href="#symbol-names-and-labels" title="Permanent link">&para;</a></h3>
+<p>符号是和数值联系在一起的名字，标签会自动地转化为符号，我们也可以使用 <code>.set</code> 指令显式地声明一个符号。符号名可以包含数字、字母与下划线，但是不能以数字开头。符号名是大小写敏感的。在下面的程序中，我们就定义了一个符号 <code>max_temp</code>，并且将其值设置为 <code>100</code>。</p>
+<div class="language-asm highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="na">.set</span><span class="w"> </span><span class="no">max_temp</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="w">      </span><span class="c1"># set the max_temp limit</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="nl">check_temp:</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span><span class="nf">li</span><span class="w"> </span><span class="no">t0</span><span class="p">,</span><span class="w"> </span><span class="no">max_temp</span><span class="w">     </span><span class="c1"># load the max_temp value into t0</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="nf">ble</span><span class="w"> </span><span class="no">a0</span><span class="p">,</span><span class="w"> </span><span class="no">t0</span><span class="p">,</span><span class="w"> </span><span class="no">ok_temp</span><span class="w"> </span><span class="c1"># branch to ok_temp if a0 &lt;= t0</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">    </span><span class="nf">jal</span><span class="w"> </span><span class="no">alarm</span><span class="w">           </span><span class="c1"># else, call the alarm routine</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="nl">ok_temp:</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span><span class="nf">ret</span><span class="w">                 </span><span class="c1"># return from the routine</span>
+</span></code></pre></div></td></tr></table></div>
+<p>标签是表示程序位置的一个记号，可以被汇编指令（Instructions and Directives）引用并且在汇编与链接过程之中翻译为地址。GNU 汇编器一般会接受两种类型的标签：符号标签/Symbolic Labels 和数字标签/Numeric Labels。符号标签以符号存储在符号表中，一般用来表示全局变量与某个过程，使用标识符加上冒号 <code>name:</code> 来定义，标识符的命名与符号的命名一样。</p>
+<p>数字标签通过单独一位数字加上冒号来定义，一般用于局部的引用，并且也不会存储在可执行文件的符号表之中。数字标签可以在同一个汇编程序之中重复定义，但是符号标签不能。</p>
+<p>对数字标签的引用需要加上后缀 <code>b</code> 或 <code>f</code>来表明是引用前边定义的标签 <code>b</code> 还是后边定义的标签 <code>f</code>。下面是对标签的一个例子：</p>
+<div class="language-asm highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># set age to 20</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nl">age:</span><span class="w"> </span><span class="na">.word</span><span class="w"> </span><span class="mi">20</span><span class="w">        </span><span class="c1"># define a global variable age</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="nl">set_age:</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="nf">la</span><span class="w"> </span><span class="no">t0</span><span class="p">,</span><span class="w"> </span><span class="no">age</span><span class="w">       </span><span class="c1"># load the address of age into t0</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">    </span><span class="nf">lw</span><span class="w"> </span><span class="no">a0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">(</span><span class="no">t0</span><span class="p">)</span><span class="w">     </span><span class="c1"># load the value of age into a0</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">    </span><span class="nf">ret</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="c1"># pow function -- compute a^b</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="c1"># Inputs: a in a0, b in a1</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="c1"># Outputs: a^b in a0</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="nl">pow:</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">    </span><span class="nf">mv</span><span class="w"> </span><span class="no">a2</span><span class="p">,</span><span class="w"> </span><span class="no">a0</span><span class="w">        </span><span class="c1"># copy a0 to a2</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">    </span><span class="nf">li</span><span class="w"> </span><span class="no">a0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w">         </span><span class="c1"># set a0 to 1</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="err">1:</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">    </span><span class="nf">beqz</span><span class="w"> </span><span class="no">a1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="no">f</span><span class="w">      </span><span class="c1"># if a1 == 0, goto 1f/done</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">    </span><span class="nf">mul</span><span class="w"> </span><span class="no">a0</span><span class="p">,</span><span class="w"> </span><span class="no">a0</span><span class="p">,</span><span class="w"> </span><span class="no">a2</span><span class="w">   </span><span class="c1"># a0 *= a2</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">    </span><span class="nf">addi</span><span class="w"> </span><span class="no">a1</span><span class="p">,</span><span class="w"> </span><span class="no">a1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="w">  </span><span class="c1"># a1--</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="w">    </span><span class="nf">j</span><span class="w"> </span><span class="mi">1</span><span class="no">b</span><span class="w">             </span><span class="c1"># goto 1b/repeat</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="err">1:</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">    </span><span class="nf">ret</span><span class="w">              </span><span class="c1"># done and return</span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="location-counter-and-assembling-process">Location Counter and Assembling Process<a class="headerlink" href="#location-counter-and-assembling-process" title="Permanent link">&para;</a></h3>
+<h3 id="assembly-directives">Assembly Directives<a class="headerlink" href="#assembly-directives" title="Permanent link">&para;</a></h3>
+<p>汇编指令（Directives）用来控制汇编器，比如 <code>.section .data</code> 就是用来告诉汇编器接下来的指令将放到 <code>.data</code> 节之中；<code>.word 10</code> 则告诉汇编器分配一个 32 位的值并且将其放到当前节之中。</p>
+<p>一般的汇编指令被编码成一个字符串，包含着指令名与指令参数。在 GNU 汇编器上，汇编名以一个点 <code>.</code> 作为前缀，比如 <code>.section</code>，<code>.word</code>，<code>.globl</code> 等等。</p>
+<p>下面是一些最常用的汇编指令：</p>
+<ul>
+<li>向程序中添加值的指令：<ul>
+<li><code>.dword arg_expr [, arg_expr]*</code>： 添加一个或多个以逗号分隔的 64 位值到程序中；</li>
+<li><code>.word arg_expr [, arg_expr]*</code>： 添加一个或多个以逗号分隔的 32 位值到程序中；</li>
+<li><code>.half arg_expr [, arg_expr]*</code>： 添加一个或多个以逗号分隔的 16 位值到程序中；</li>
+<li><code>.byte arg_expr [, arg_expr]*</code>： 添加一个或多个以逗号分隔的 8 位值到程序中；</li>
+<li><code>.string string</code>： 添加一个以 <code>NULL</code> 结尾的字符串到程序中；</li>
+<li><code>.ascii string</code>： 添加不以 <code>NULL</code> 结尾一个字符串到程序中。</li>
+<li><code>.asciz string</code>：这是 <code>.string</code> 的别名；</li>
+</ul>
+</li>
+<li>切换程序节</li>
+<li>向 <code>.bss</code> 节添加值</li>
+<li>向符号表添加符号</li>
+<li>定义一个全局符号</li>
+<li>对齐指令</li>
+</ul>
+<h2 id="2-rv32i-base-integer-instruction-set">2 RV32I Base Integer Instruction Set<a class="headerlink" href="#2-rv32i-base-integer-instruction-set" title="Permanent link">&para;</a></h2>
+<h3 id="logic-instructions">Logic Instructions<a class="headerlink" href="#logic-instructions" title="Permanent link">&para;</a></h3>
+<ul>
+<li>逻辑指令：<code>and</code>，<code>or</code>，<code>xor</code>，<code>andi</code>，<code>ori</code>，<code>xori</code>，均执行按位运算；</li>
+<li>指令格式：<code class="language-asm highlight"><span class="nf">lop</span><span class="w"> </span><span class="no">dest</span><span class="p">,</span><span class="w"> </span><span class="no">src1</span><span class="p">,</span><span class="w"> </span><span class="no">src2</span></code>，<code class="language-asm highlight"><span class="nf">lopi</span><span class="w"> </span><span class="no">dest</span><span class="p">,</span><span class="w"> </span><span class="no">src1</span><span class="p">,</span><span class="w"> </span><span class="no">imm</span></code>；</li>
+<li>指令类型：</li>
+</ul>
+<div class="language-asm highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span>
+<span class="normal"><a href="#__codelineno-3-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nf">and</span><span class="w">   </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="w">   </span><span class="c1"># rd = rs1 &amp; rs2</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nf">or</span><span class="w">    </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="w">   </span><span class="c1"># rd = rs1 | rs2</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nf">xor</span><span class="w">   </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="w">   </span><span class="c1"># rd = rs1 ^ rs2</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="nf">andi</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">imm</span><span class="w">   </span><span class="c1"># rd = rs1 &amp; imm</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="nf">ori</span><span class="w">   </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">imm</span><span class="w">   </span><span class="c1"># rd = rs1 | imm</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="nf">xori</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">imm</span><span class="w">   </span><span class="c1"># rd = rs1 ^ imm</span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="shift-instructions">Shift Instructions<a class="headerlink" href="#shift-instructions" title="Permanent link">&para;</a></h3>
+<ul>
+<li>移位指令：<code>sll</code>，<code>srl</code>，<code>sra</code>，<code>slli</code>，<code>srli</code>，<code>srai</code>，算数移位和逻辑移位根据 <code>a</code> 和 <code>l</code> 区分；</li>
+<li>指令格式：<code class="language-asm highlight"><span class="nf">sop</span><span class="w"> </span><span class="no">dest</span><span class="p">,</span><span class="w"> </span><span class="no">src1</span><span class="p">,</span><span class="w"> </span><span class="no">src2</span></code>，<code class="language-asm highlight"><span class="nf">sopi</span><span class="w"> </span><span class="no">dest</span><span class="p">,</span><span class="w"> </span><span class="no">src1</span><span class="p">,</span><span class="w"> </span><span class="no">imm</span></code>；</li>
+<li>指令类型：</li>
+<li>Tip：注意一般使用小端序存储，即低位在低地址，高位在高地址。</li>
+</ul>
+<div class="language-asm highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nf">sll</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="w">   </span><span class="c1"># rd = rs1 &lt;&lt; rs2</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="nf">srl</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="w">   </span><span class="c1"># rd = rs1 &gt;&gt; rs2 (logical)</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="nf">sra</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="w">   </span><span class="c1"># rd = rs1 &gt;&gt; rs2 (arithmetic)</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="nf">slli</span><span class="w"> </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">imm</span><span class="w">   </span><span class="c1"># rd = rs1 &lt;&lt; imm</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="nf">srli</span><span class="w"> </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">imm</span><span class="w">   </span><span class="c1"># rd = rs1 &gt;&gt; imm (logical)</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="nf">srai</span><span class="w"> </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">imm</span><span class="w">   </span><span class="c1"># rd = rs1 &gt;&gt; imm (arithmetic)</span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="arithmetic-instructions-with-m-extension">Arithmetic Instructions with M Extension<a class="headerlink" href="#arithmetic-instructions-with-m-extension" title="Permanent link">&para;</a></h3>
+<div class="language-asm highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span>
+<span class="normal"><a href="#__codelineno-5-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nf">add</span><span class="w">    </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="w">   </span><span class="c1"># rd = rs1 + rs2</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="nf">sub</span><span class="w">    </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="w">   </span><span class="c1"># rd = rs1 - rs2</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="nf">addi</span><span class="w">   </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">imm</span><span class="w">   </span><span class="c1"># rd = rs1 + imm</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="nf">mul</span><span class="w">    </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="w">   </span><span class="c1"># rd = rs1 * rs2</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="nf">riv</span><span class="p">{</span><span class="no">u</span><span class="p">}</span><span class="w"> </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="w">   </span><span class="c1"># rd = rs1 / rs2</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="nf">rem</span><span class="p">{</span><span class="no">u</span><span class="p">}</span><span class="w"> </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="w">   </span><span class="c1"># rd = rs1 % rs2 </span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="data-transfer-instructions">Data Transfer Instructions<a class="headerlink" href="#data-transfer-instructions" title="Permanent link">&para;</a></h3>
+<ul>
+<li>语法：<code class="language-asm highlight"><span class="nf">memop</span><span class="w"> </span><span class="no">reg</span><span class="p">,</span><span class="w"> </span><span class="no">off</span><span class="p">(</span><span class="no">addr</span><span class="p">)</span></code></li>
+<li><code>memop</code> 为指令名，<code>reg</code> 为指令的目标/源寄存器，<code>off</code> 为偏移量，<code>addr</code> 为基址寄存器/Base Address。</li>
+<li>通过 <code>off(addr)</code> 可以计算地址为 <code>addr + off</code> 的内存位置，按字节寻址。</li>
+</ul>
+<div class="language-asm highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nf">lw</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">off</span><span class="p">(</span><span class="no">rs1</span><span class="p">)</span><span class="w">   </span><span class="c1"># rd = M[rs1 + off] (signed word)</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="nf">lh</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">off</span><span class="p">(</span><span class="no">rs1</span><span class="p">)</span><span class="w">   </span><span class="c1"># rd = M[rs1 + off] (signed half)</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="nf">lhu</span><span class="w"> </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">off</span><span class="p">(</span><span class="no">rs1</span><span class="p">)</span><span class="w">   </span><span class="c1"># rd = M[rs1 + off] (unsigned half)</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="nf">lb</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">off</span><span class="p">(</span><span class="no">rs1</span><span class="p">)</span><span class="w">   </span><span class="c1"># rd = M[rs1 + off] (signed byte)</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="nf">lbu</span><span class="w"> </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">off</span><span class="p">(</span><span class="no">rs1</span><span class="p">)</span><span class="w">   </span><span class="c1"># rd = M[rs1 + off] (unsigned byte)</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="nf">lui</span><span class="w"> </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">imm</span><span class="w">        </span><span class="c1"># rd = imm &lt;&lt; 12</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="nf">sw</span><span class="w">  </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">off</span><span class="p">(</span><span class="no">rs2</span><span class="p">)</span><span class="w">  </span><span class="c1"># M[rs2 + off] = rs1</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="nf">sh</span><span class="w">  </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">off</span><span class="p">(</span><span class="no">rs2</span><span class="p">)</span><span class="w">  </span><span class="c1"># M[rs2 + off] = rs1 (16 least significant bits)</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="nf">sb</span><span class="w">  </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">off</span><span class="p">(</span><span class="no">rs2</span><span class="p">)</span><span class="w">  </span><span class="c1"># M[rs2 + off] = rs1 (8 least significant bits)</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="c1"># pseudo-instructions</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="nf">mv</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs</span><span class="w">         </span><span class="c1"># rd = rs</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="nf">li</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">imm</span><span class="w">        </span><span class="c1"># rd = imm</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="nf">la</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">symbol</span><span class="w">     </span><span class="c1"># rd = symbol</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="nf">l</span><span class="p">*</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">label</span><span class="w">      </span><span class="c1"># rd = M[label] (* = w, h, hu, b, bu)</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="nf">s</span><span class="p">*</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">label</span><span class="w">      </span><span class="c1"># M[label] = rd (* = w, h, b)</span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="control-transfer-instructions">Control Transfer Instructions<a class="headerlink" href="#control-transfer-instructions" title="Permanent link">&para;</a></h3>
+<p><code>branch</code> 类条件跳转指令：</p>
+<div class="language-asm highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span>
+<span class="normal"><a href="#__codelineno-7-8">8</a></span>
+<span class="normal"><a href="#__codelineno-7-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nf">beq</span><span class="w">   </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="p">,</span><span class="w"> </span><span class="no">offset</span><span class="w">  </span><span class="c1"># if rs1 == rs2, pc += offset</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="nf">bne</span><span class="w">   </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="p">,</span><span class="w"> </span><span class="no">offset</span><span class="w">  </span><span class="c1"># if rs1 != rs2, pc += offset</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="nf">blt</span><span class="w">   </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="p">,</span><span class="w"> </span><span class="no">offset</span><span class="w">  </span><span class="c1"># if rs1 &lt; rs2, pc += offset</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="nf">bltu</span><span class="w">  </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="p">,</span><span class="w"> </span><span class="no">offset</span><span class="w">  </span><span class="c1"># if rs1 &lt;(unsigned) rs2, pc += offset</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="nf">bge</span><span class="w">   </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="p">,</span><span class="w"> </span><span class="no">offset</span><span class="w">  </span><span class="c1"># if rs1 &gt;= rs2, pc += offset</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="nf">bgeu</span><span class="w">  </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="p">,</span><span class="w"> </span><span class="no">offset</span><span class="w">  </span><span class="c1"># if rs1 &gt;=(unsigned) rs2, pc += offset</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="c1"># pseudo-instructions</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="nf">beqz</span><span class="w">  </span><span class="no">rs</span><span class="p">,</span><span class="w"> </span><span class="no">offset</span><span class="w">        </span><span class="c1"># if rs == 0, pc += offset</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="nf">bnez</span><span class="w">  </span><span class="no">rs</span><span class="p">,</span><span class="w"> </span><span class="no">offset</span><span class="w">        </span><span class="c1"># if rs != 0, pc += offset</span>
+</span></code></pre></div></td></tr></table></div>
+<p><code>jump</code> 类无条件跳转指令：</p>
+<div class="language-asm highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span>
+<span class="normal"><a href="#__codelineno-8-7">7</a></span>
+<span class="normal"><a href="#__codelineno-8-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nf">jal</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">offset</span><span class="w">      </span><span class="c1"># rd = pc + 4; pc += offset</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="nf">jalr</span><span class="w"> </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">imm</span><span class="p">(</span><span class="no">rs1</span><span class="p">)</span><span class="w">    </span><span class="c1"># rd = pc + 4; pc = (sext(imm) + rs1) &amp; ~1</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="c1"># pseudo-instructions</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="nf">j</span><span class="w">    </span><span class="no">offset</span><span class="w">          </span><span class="c1"># pc += offset, x0 = pc + 4</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="nf">jr</span><span class="w">   </span><span class="no">rs</span><span class="w">              </span><span class="c1"># pc = rs, x0 = pc + 4</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="nf">jal</span><span class="w">  </span><span class="no">offset</span><span class="w">          </span><span class="c1"># pc += offset, x1 = pc + 4</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="nf">jalr</span><span class="w"> </span><span class="no">rs</span><span class="w">              </span><span class="c1"># pc = rs, x1 = pc + 4</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="nf">ret</span><span class="w">                  </span><span class="c1"># pc = x1, x0 = pc + 4</span>
+</span></code></pre></div></td></tr></table></div>
+<p>注意到，我们这时候我们在这里用的是 <code>offset</code> 而不是 <code>label</code>，这就必须要说一下<strong>直接目标地址的编码</strong>了。当我们想要跳转到某个地址的时候，第一个反应都是直接在指令之中塞进去这个地址，但是在 RV32I 之中，我们使用的是 32 位的地址，而 RV32I 的指令都是 32 位编码的，所以将一个 32 位的地址塞到一个 32 位的指令中是不可能的，而对于一个经典的 <code>beq</code> 指令而言，除去 7 位的 <code>opcode</code> 与 3 位的 <code>funct3</code>，还有 5 位的 <code>rs1</code> 与 <code>rs2</code> 之外，我们只剩下 12 位留给 <code>label</code>/<code>offset</code> 了。</p>
+<p>为了克服这个限制，直接目标地址其实会编码成相对于<strong>在这条指令执行时相对于程序计数器的偏移量</strong>，本质上是一个立即数，这样我们就可以用一个 12 位的偏移量来表示跳转目标的地址了，这也阻止了指令跳转到太过于远的地方，只能跳转到 ±4KiB 范围之内。</p>
+<p>注意到我们这里用到了<strong>直接目标地址/Direct Target Address</strong> 这个词，这种情况下，目标地址会直接编码到指令之中。相对地就有<strong>间接目标地址/Indirect Target Address</strong>，这种情况下，目标地址会存储在一个寄存器或者内存之中，指令会跳转到这个地址之中，典型例子就是 <code class="language-asm highlight"><span class="nf">jr</span><span class="w"> </span><span class="no">rs1</span></code>。</p>
+<p><code>jal</code> 指令其实是 Jump and Link 的缩写，表示跳转并链接，连接的是返回地址，它会将下一条指令的地址存到 <code>rd</code> 寄存器之中，然后跳转到 <code>offset</code> 之后的地址。想象一下函数调用的情景，我们跳转到函数的地址之后，根据现有寄存器的内容进行操作，然后再返回，也就是跳回来，这就需要我们提前就将返回的地址 <code>pc + 4</code> 存到一个规定好了的寄存器之中，下面是一个例子：</p>
+<div class="language-asm highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span>
+<span class="normal"><a href="#__codelineno-9-6">6</a></span>
+<span class="normal"><a href="#__codelineno-9-7">7</a></span>
+<span class="normal"><a href="#__codelineno-9-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nf">jal</span><span class="w"> </span><span class="no">ra</span><span class="p">,</span><span class="w"> </span><span class="no">FOO</span><span class="w">       </span><span class="c1"># invoke the FOO routine</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="nf">sub</span><span class="w"> </span><span class="no">a0</span><span class="p">,</span><span class="w"> </span><span class="no">a1</span><span class="p">,</span><span class="w"> </span><span class="no">a2</span><span class="w">    </span><span class="c1"># do something</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="nf">jal</span><span class="w"> </span><span class="no">ra</span><span class="p">,</span><span class="w"> </span><span class="no">FOO</span><span class="w">       </span><span class="c1"># invoke the FOO routine</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="nf">mul</span><span class="w"> </span><span class="no">a0</span><span class="p">,</span><span class="w"> </span><span class="no">a1</span><span class="p">,</span><span class="w"> </span><span class="no">a2</span><span class="w">    </span><span class="c1"># do something</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5"></a>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="nl">FOO:</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">a0</span><span class="p">,</span><span class="w"> </span><span class="no">a0</span><span class="p">,</span><span class="w"> </span><span class="no">a1</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="w">    </span><span class="nf">jr</span><span class="w"> </span><span class="no">ra</span><span class="w">         </span><span class="c1"># return to the caller</span>
+</span></code></pre></div></td></tr></table></div>
+<p>这里的 <code>jr ra</code> 就是返回到函数调用前下一个命令的地址——它的任务就是返回，自然也没有 link 的职责，RISC-V 只提供了 <code>jalr</code> 指令，所以我们看到 <code>jr</code> 其实是将存储链接地址的寄存器换成了硬件零寄存器 <code>x0</code>/<code>zero</code>，也就是 <code class="language-asm highlight"><span class="nf">jalr</span><span class="w"> </span><span class="no">zero</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">(</span><span class="no">ra</span><span class="p">)</span></code>。</p>
+<p>当我们不显式指定存储返回地址的寄存器时，比如 <code class="language-asm highlight"><span class="nf">jal</span><span class="w"> </span><span class="no">offset</span></code>，我们就将返回地址存储在 <code>x1</code>/<code>ra</code> 之中，<code>ret</code> 指令就是读取 <code>x1</code> 之中的地址并跳转回去的。</p>
+<h3 id="system-calls-and-breaks">System Calls and Breaks<a class="headerlink" href="#system-calls-and-breaks" title="Permanent link">&para;</a></h3>
+<h3 id="conditional-set-instructions">Conditional set Instructions<a class="headerlink" href="#conditional-set-instructions" title="Permanent link">&para;</a></h3>
+<div class="language-asm highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span>
+<span class="normal"><a href="#__codelineno-10-6">6</a></span>
+<span class="normal"><a href="#__codelineno-10-7">7</a></span>
+<span class="normal"><a href="#__codelineno-10-8">8</a></span>
+<span class="normal"><a href="#__codelineno-10-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nf">slt</span><span class="w">   </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="w">   </span><span class="c1"># rd = (rs1 &lt; rs2) ? 1 : 0</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="nf">slti</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">imm</span><span class="w">   </span><span class="c1"># rd = (rs1 &lt; sext(imm)) ? 1 : 0</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="nf">sltu</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">rs2</span><span class="w">   </span><span class="c1"># rd = ((unsigned)rs1 &lt;(unsigned) rs2) ? 1 : 0</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="nf">sltui</span><span class="w"> </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs1</span><span class="p">,</span><span class="w"> </span><span class="no">imm</span><span class="w">   </span><span class="c1"># rd = ((unsigned)rs1 &lt;(unsigned)sext(imm)) ? 1 : 0</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="c1"># pseudo-instructions</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="nf">seqz</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs</span><span class="w">         </span><span class="c1"># rd = (rs == 0) ? 1 : 0</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="nf">snez</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs</span><span class="w">         </span><span class="c1"># rd = (rs != 0) ? 1 : 0</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="nf">sltz</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs</span><span class="w">         </span><span class="c1"># rd = (rs &lt; 0)  ? 1 : 0</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="nf">sgtz</span><span class="w">  </span><span class="no">rd</span><span class="p">,</span><span class="w"> </span><span class="no">rs</span><span class="w">         </span><span class="c1"># rd = (rs &gt; 0)  ? 1 : 0</span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="detecting-overflow">Detecting Overflow<a class="headerlink" href="#detecting-overflow" title="Permanent link">&para;</a></h3>
+<h3 id="arithmetic-with-multi-word-variables">Arithmetic with Multi-Word Variables<a class="headerlink" href="#arithmetic-with-multi-word-variables" title="Permanent link">&para;</a></h3>
+<h3 id="dealing-with-large-immediate-values">Dealing with Large Immediate Values<a class="headerlink" href="#dealing-with-large-immediate-values" title="Permanent link">&para;</a></h3>
+<h3 id="pseudo-instructions">Pseudo-Instructions<a class="headerlink" href="#pseudo-instructions" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">CS61C</p>
+<p>But sometimes, for the programmer’s benefit, it’s useful to have additional instructions that aren't really implemented by the hardware but translated into real instructions.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">伪指令</th>
+<th style="text-align: left;">实际指令</th>
+<th style="text-align: left;">意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>lla rd, offset</code></td>
+<td style="text-align: left;"><code>auipc rd, offset[31:12]</code><br/><code>addi rd, rd, offset[11:0]</code></td>
+<td style="text-align: left;">加载局部地址</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>la rd, symbol</code></td>
+<td style="text-align: left;">PIC: <code>auipc rd, GOT[symbol][31:12]</code><br/> <code>l{w|d} rd, GOT[symbol][11:0](rd)</code><br/> Non-PIC: <code>lla rd, symbol</code></td>
+<td style="text-align: left;">加载全局地址</td>
+</tr>
+<tr>
+<td style="text-align: left;">l{b|h|w} rd, symbol</td>
+<td style="text-align: left;">auipc rd, delta[31:12] + delta[11]<br/>l{b|h|w} rd, delta[11:0](rd)</td>
+<td style="text-align: left;">加载全局变量</td>
+</tr>
+<tr>
+<td style="text-align: left;">s{b|h|w} rd, symbol, rt</td>
+<td style="text-align: left;">auipc rt, delta[31:12] + delta[11]<br/>s{b|h|w} rd, delta[11:0](rt)</td>
+<td style="text-align: left;">保存全局变量</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>nop</code></td>
+<td style="text-align: left;"><code>addi x0, x0, 0</code></td>
+<td style="text-align: left;">不进行任何操作</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>li rd, imm</code></td>
+<td style="text-align: left;"><code>addi rd, imm</code> if <span class="arithmatex">\(imm \in [0, 4096]\)</span> <br/> <code>lui rd, (imm &gt;&gt; 12)</code><br/> <code>addi rd, rd, (imm &amp; 0xFFF)</code></td>
+<td style="text-align: left;">将立即数加载到 <code>rd</code> 中</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mov rd, rs</code></td>
+<td style="text-align: left;"><code>addi rd, rs, 0</code></td>
+<td style="text-align: left;">从 <code>rs</code> 拷贝到 <code>rd</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>not rd, rs</code></td>
+<td style="text-align: left;">xori rd, rs, -1</td>
+<td style="text-align: left;">rd = ~rs 按位取反</td>
+</tr>
+<tr>
+<td style="text-align: left;">neg rd, rs</td>
+<td style="text-align: left;">sub rd, x0, rs</td>
+<td style="text-align: left;">rd = -rs</td>
+</tr>
+<tr>
+<td style="text-align: left;">seqz rd, rs</td>
+<td style="text-align: left;">sltiu rd, rs, 1</td>
+<td style="text-align: left;">set rd if rs == 0</td>
+</tr>
+<tr>
+<td style="text-align: left;">snez rd, rs</td>
+<td style="text-align: left;">sltu rd, x0, rs</td>
+<td style="text-align: left;">set rd if rs != 0</td>
+</tr>
+<tr>
+<td style="text-align: left;">sltz rd, rs</td>
+<td style="text-align: left;">slt rd, rs, x0</td>
+<td style="text-align: left;">set rd if rs &lt; 0</td>
+</tr>
+<tr>
+<td style="text-align: left;">sgtz rd, rs</td>
+<td style="text-align: left;">slt rd, x0, rs</td>
+<td style="text-align: left;">set rd if rs &gt; 0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>beqz rs, offset</code></td>
+<td style="text-align: left;"><code>beq rs, x0, offset</code></td>
+<td style="text-align: left;">branch if rs == 0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>bnez rs, offset</code></td>
+<td style="text-align: left;"><code>bne rs, x0, offset</code></td>
+<td style="text-align: left;">branch if rs != 0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>blez rs, offset</code></td>
+<td style="text-align: left;"><code>bge x0, rs, offset</code></td>
+<td style="text-align: left;">branch if rs &lt;= 0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>bgez rs, offset</code></td>
+<td style="text-align: left;"><code>bge rs, x0, offset</code></td>
+<td style="text-align: left;">branch if rs &gt;= 0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>bltz rs, offset</code></td>
+<td style="text-align: left;"><code>blt rs, x0, offset</code></td>
+<td style="text-align: left;">branch if rs &lt; 0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>bgtz rs, offset</code></td>
+<td style="text-align: left;"><code>blt x0, rs, offset</code></td>
+<td style="text-align: left;">branch if rs &gt; 0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>bgt rs, rt, offset</code></td>
+<td style="text-align: left;"><code>blt rt, rs, offset</code></td>
+<td style="text-align: left;">branch if rs &gt; rt</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ble rs, rt, offset</code></td>
+<td style="text-align: left;"><code>bge rt, rs, offset</code></td>
+<td style="text-align: left;">branch if rs &lt;= rt</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>bgtu rs, rt, offset</code></td>
+<td style="text-align: left;"><code>bltu rt, rs, offset</code></td>
+<td style="text-align: left;">branch if &gt; unsigned</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>bleu rs, rt, offset</code></td>
+<td style="text-align: left;"><code>bgeu rt, rs, offset</code></td>
+<td style="text-align: left;">branch if &lt;= unsigned</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>j offset</code></td>
+<td style="text-align: left;"><code>jal x0, offset</code></td>
+<td style="text-align: left;">无条件跳转，不存返回地址</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>jal offset</code></td>
+<td style="text-align: left;"><code>jal x1, offset</code></td>
+<td style="text-align: left;">无条件跳转，返回地址存到 <code>ra</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>jr rs</code></td>
+<td style="text-align: left;"><code>jalr x0, 0(rs)</code></td>
+<td style="text-align: left;">无条件跳转到 <code>rs</code> 位置，忽略返回地址</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>jalr rs</code></td>
+<td style="text-align: left;"><code>jalr x1, 0(rs)</code></td>
+<td style="text-align: left;">无条件跳转到 <code>rs</code> 位置，存返回地址</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ret</code></td>
+<td style="text-align: left;"><code>jalr x0, 0(ra)</code></td>
+<td style="text-align: left;">通过返回地址 <code>x1</code> 返回</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>call offset</code></td>
+<td style="text-align: left;"><code>auipc ra, offset[31 : 12]</code><br/><code>jalr ra, offset[11:0](ra)</code></td>
+<td style="text-align: left;">远调用</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>tail offset</code></td>
+<td style="text-align: left;"><code>auipc t1, offset[31 : 12]</code><br/><code>jalr zero, offset[11:0](t1)</code></td>
+<td style="text-align: left;">忽略返回地址远调用</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-from-code-to-program">4 From Code to Program<a class="headerlink" href="#4-from-code-to-program" title="Permanent link">&para;</a></h2>
+<h3 id="labels-and-symbols">Labels and Symbols<a class="headerlink" href="#labels-and-symbols" title="Permanent link">&para;</a></h3>
+<p><strong>标签/Label</strong> 其实是表示程序某个位置的符号，一般通过 <code>name:</code> 来定义，并且可以插入一个汇编程序之中来表征一个位置，这样就可以被别的汇编指令引用。<strong>符号/Symbols</strong> 是与数值相联系的名字，<strong>符号表/Symbol Table</strong> 是一个将符号与其值联系起来的映射表。汇编器将标签自动地转化成符号，并且将其与其地址联系起来，还将所有的符号放到符号表之中。使用 <code>riscv64-unknown-elf-nm</code> 可以查看某个目标文件的符号表。</p>
+<p>符号/Symbol 可以分为全局符号/Global Symbols 和局部符号/Local Symbols。全局符号可以使用连接器在其他的目标文件中解析未定义引用，局部符号只在当前文件之中可见，也就是不可以用来解析其他文件之中的未定义引用。</p>
+<blockquote>
+<p>Symbols are classified as local or global symbols. Local symbols are only visible on the same file, i.e. the linker does not use them to resolve undefined references on other files. Global symbols, on the other hand, are used by the linker to resolve undefined reference on other files.</p>
+</blockquote>
+<p>默认来讲，汇编器会将标签/Label 作为局部符号，但是可以通过 <code>.globl</code> 指令来声明全局符号。程序的入口和出口都需要定义全局符号，比如：</p>
+<div class="language-asm highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span>
+<span class="normal"><a href="#__codelineno-11-4">4</a></span>
+<span class="normal"><a href="#__codelineno-11-5">5</a></span>
+<span class="normal"><a href="#__codelineno-11-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="c1"># contents of the exit.s file</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="na">.globl</span><span class="w"> </span><span class="no">exit</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="nl">exit:</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="w">    </span><span class="nf">li</span><span class="w"> </span><span class="no">a7</span><span class="p">,</span><span class="w"> </span><span class="mi">93</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="w">    </span><span class="nf">li</span><span class="w"> </span><span class="no">a0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="w">    </span><span class="nf">ecall</span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="basic-routine">Basic Routine<a class="headerlink" href="#basic-routine" title="Permanent link">&para;</a></h3>
+<p>对于一个典型的 C 程序，程序的源代码经过编译器与连接器等工具处理、打包成一个包含了数据等信息与指令的<strong>可执行文件</strong>，载入进内存之后，操作系统再执行它。精确地讲，一个 <code>.c</code> 程序经过编译器得到一个 <code>.s</code> 的汇编程序，然后通过汇编器得到一个机器语言模块<strong>目标文件</strong> <code>.o</code>，与别的库文件如 <code>lib.o</code> 一起通过连接器得到一个<strong>可执行文件</strong>。</p>
+<p>编译过程可以分解为下面的步骤：词法分析/Lexical Analysis，语法分析/Syntax Analysis，语义分析/Semantic Analysis，中间代码生成/Intermediate Representation Code Generation，中间代码优化/Intermediate Representation Code Optimization，目标代码生成/Object Code Generation，目标代码优化/Object Code Optimization 这几步。</p>
+<p>中间代码生成这一步允许我们将整个编译过程模块化，对于很多不同的语言，比如 C，C++，Rust，我们可以生成同一种中间语言 IRC，然后再将 IRC 转化为不同的机器码。不仅如此，IRC 的存在还显著降低编译优化的难度。</p>
+<p>汇编器不仅仅只做将汇编代码转换成机器码的工作，还会将不在指令集架构之中的<strong>伪指令</strong>转换成真实的指令，进而生成 <strong>ELF/Extensible Linking Format</strong> 格式的目标文件。ELF 文件是可执行文件，目标文件，共享库与核心转储文件/Core Dump 的标准格式。目标文件主要有三种：可重定位文件/Relocatable File，可执行文件/Executable File 与共享目标文件/Shared Object File。</p>
+<p>可重定位文件存储着二进制代码与数据，适合与别的目标文件链接并生成一个可执行文件或者共享目标文件。可执行文件包含了二进制代码与数据，告诉操作系统如何加载程序，初始化程序的内存与状态并且进行执行，在执行可执行文件的时候，shell 调用操作系统中一个称为加载器/loader 的函数，将可执行文件中的代码与数据复制到内存之中，然后将控制转移到这个程序的开头。共享目标文件主要面对链接，连接器处理共享目标文件与其他的可重定位文件或者共享目标文件来生成另一个目标文件，动态连接器将功效目标文件与可执行文件结合，创建进程映像。</p>
+<p>从上到下，ELF 文件由 ELF 头，程序头表，数据（节或者段）与节头表组成。ELF 头包含了文件的基本信息，节头表是一个节头数组，每一个节头记录了对应的的节的信息，比如节的名字、大小、在文件的偏移与读写权限等，连接器与装载器都是通过节头表来定位和访问节的属性，我们使用 <code>readelf</code> 工具来查看节头表。程序头表描述了系统如何创建一个程序的进程映像，每一个表项都定义了一个段/Segment，并且引用了节。</p>
+<p>可以清晰的得出，可重定位文件必须要有节头表，但是程序头表并不必须，可执行文件必须要有程序头表，但是节头表并不必须。汇编器生成的就是</p>
+<h3 id="program-entry-point">Program Entry Point<a class="headerlink" href="#program-entry-point" title="Permanent link">&para;</a></h3>
+<p>每一个可执行文件都有一个包含了程序的信息的文件头，其中的一个字段就存储了程序的入口地址/Entry Point Address。一旦操作系统将整个程序加载进主存，就将程序计数器的值设置成程序的入口地址，这样程序就开始执行了。</p>
+<p>连接器负责设置可执行文件的入口地址字段。它首先会寻找一个全局符号 <code>start</code>（某些连接器会寻找 <code>_start</code>），如果找到了，就将程序的入口字段设置为 <code>start</code> 的地址。如果没有找到，就将入口地址设置为一个默认的值，一般是整个程序的第一个指令的地址。比如：</p>
+<div class="language-asm highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span>
+<span class="normal"><a href="#__codelineno-12-4">4</a></span>
+<span class="normal"><a href="#__codelineno-12-5">5</a></span>
+<span class="normal"><a href="#__codelineno-12-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="c1"># contents of the main.s file</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="na">.global</span><span class="w"> </span><span class="no">_start</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="nl">_start:</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="w">    </span><span class="nf">li</span><span class="w"> </span><span class="no">a0</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="w">    </span><span class="nf">li</span><span class="w"> </span><span class="no">a7</span><span class="p">,</span><span class="w"> </span><span class="mi">93</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6"></a><span class="w">    </span><span class="nf">jal</span><span class="w"> </span><span class="no">exit</span>
+</span></code></pre></div></td></tr></table></div>
+<p>使用下面指令进行编译：</p>
+<div class="language-Bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1"></a>$<span class="w"> </span>riscv64-unknown-elf-as<span class="w"> </span>-march<span class="o">=</span>rv32im<span class="w"> </span>main.s<span class="w"> </span>-o<span class="w"> </span>main.o
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2"></a>$<span class="w"> </span>riscv64-unknown-elf-as<span class="w"> </span>-march<span class="o">=</span>rv32im<span class="w"> </span>exit.s<span class="w"> </span>-o<span class="w"> </span>exit.o
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3"></a>$<span class="w"> </span>riscv64-unknown-elf-ld<span class="w"> </span>-m<span class="w"> </span>elf32lriscv<span class="w"> </span>exit.o<span class="w"> </span>main.o<span class="w"> </span>-o<span class="w"> </span>main.x
+</span></code></pre></div></td></tr></table></div>
+<p>在链接的时候，我们将 <code>exit.o</code> 放在了 <code>main.o</code> 的前面，这样 <code>exit.o</code> 的内容就会放在 <code>main.o</code> 的前面，使用 <code>riscv64-unknown-elf-objdump</code> 就能发现这一点，但是程序仍然以 <code>main.o</code> 的 <code>_start</code> 作为入口。使用 <code>riscv64-unknown-elf-readelf</code> 可以查看程序的入口地址，这就可以验证程序的入口地址是 <code>_start</code>。</p>
+<h3 id="program-sections">Program Sections<a class="headerlink" href="#program-sections" title="Permanent link">&para;</a></h3>
+<p>无论是可执行文件、目标文件还是汇编程序，他们都是按照不同的节组织的，每个节都包含了数据或者指令，并且都映射到内存中一段连续的区域。Linux 系统的可执行文件中，一般会出现下面四个节/节：</p>
+<ul>
+<li><code>.text</code>：包含了程序的指令；</li>
+<li><code>.data</code>：包含了程序中<strong>初始化过</strong>的全局变量，这些全局变量的值需要在程序开始执行之前就初始化掉；</li>
+<li><code>.bss</code>：包含了程序中<strong>未初始化</strong>的全局变量；</li>
+<li><code>.rodata</code>：包含了程序中的只读数据/常量，比如字符串常量，这些数值在程序执行过程中不能修改。</li>
+</ul>
+<div class="result">
+<p><img align="right" alt="img.png" src="../../images/img-RISC-V/img.png" width="45%" /></p>
+<blockquote>
+<p>When linking multiple object files, the linker groups information from sections with the same name and places them together into a single section on the executable file. For example, when linking multiple object files, the contents of the <code>.text</code> sections from all object files are grouped together and placed sequentially on the executable file on a single section that is also called <code>.text</code>. The following figure shows the layout of an <code>RV32I</code> executable file that was generated by the <code>riscv64-unknown-elf-ld</code> tool, and is encoded using the Executable and Linking Format. This file contains three sections: the <code>.data</code>, the <code>.rodata</code>, and the <code>.text</code> sections. The contents of section <code>.text</code> are mapped to addresses <code>8000</code> to <code>8007</code>, while the contents of section <code>.data</code> are mapped to addresses <code>800d</code> to <code>8011</code>.</p>
+</blockquote>
+</div>
+<p>当链接不同的文件的时候，连接器会将相同名字的节合并到可执行文件的一个节之中。比如，当链接多个目标文件的时候，所有的 <code>.text</code> 节都会被顺序地合并到一个叫 <code>.text</code> 的节之中。默认情况下，GNU 汇编器会将所有的信息都放到 <code>.text</code> 节之中。如果想要将信息放到其他节，可以使用 <code>.section secname</code> 指令，这个指令会告诉汇编器将接下来的信息放到叫 <code>secname</code> 的节之中。</p>
+<div class="language-asm highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-14-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-14-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-14-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-14-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-14-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-14-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-14-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-14-10">10</a></span>
+<span class="normal"><a href="#__codelineno-14-11">11</a></span>
+<span class="normal"><a href="#__codelineno-14-12">12</a></span>
+<span class="normal"><a href="#__codelineno-14-13">13</a></span>
+<span class="normal"><a href="#__codelineno-14-14">14</a></span>
+<span class="normal"><a href="#__codelineno-14-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="w">    </span><span class="na">.section</span><span class="w"> </span><span class="no">.data</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="nl">x:</span><span class="w">  </span><span class="na">.word</span><span class="w"> </span><span class="mi">10</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="w">    </span><span class="na">.section</span><span class="w"> </span><span class="no">.text</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="nl">update_x:</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="w">    </span><span class="nf">la</span><span class="w"> </span><span class="no">t1</span><span class="p">,</span><span class="w"> </span><span class="no">x</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6"></a><span class="w">    </span><span class="nf">sw</span><span class="w"> </span><span class="no">a0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">(</span><span class="no">t1</span><span class="p">)</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7"></a><span class="w">    </span><span class="nf">ret</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8"></a>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9"></a><span class="w">    </span><span class="na">.section</span><span class="w"> </span><span class="no">.data</span>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10"></a><span class="nl">y:</span><span class="w">  </span><span class="na">.word</span><span class="w"> </span><span class="mi">12</span>
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11"></a><span class="w">    </span><span class="na">.section</span><span class="w"> </span><span class="no">.text</span>
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12"></a><span class="nl">update_y:</span>
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13"></a><span class="w">    </span><span class="nf">la</span><span class="w"> </span><span class="no">t1</span><span class="p">,</span><span class="w"> </span><span class="no">y</span>
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14"></a><span class="w">    </span><span class="nf">sw</span><span class="w"> </span><span class="no">a0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">(</span><span class="no">t1</span><span class="p">)</span>
+</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15"></a><span class="w">    </span><span class="nf">ret</span>
+</span></code></pre></div></td></tr></table></div>
+<p>这里的第二行包含了一个标签 <code>x:</code> 和一个 <code>.word</code> 指令，它们一起使用可以声明一个全局变量 <code>x</code>，并且初始化为 <code>10</code>。这个全局变量会被放到 <code>.data</code> 节之中。接下来的指令将下面的内容存回 <code>.text</code> 节之中。连接器通过不同节的分块与重定位，避免了将指令与数据混在一起的冲突。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 V1CeVersa
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/V1CeVersaa" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "content.action.edit", "toc.follow", "navigation.tracking", "navigation.tabs", "navigation.prune", "navigation.indexes", "navigation.top", "search.share", "search.highlight", "search.suggest"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://gcore.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+      
+        <script src="../../../Javascripts/mathjax.js"></script>
+      
+        <script src="../../../Javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
+      
+        <script src="../../../Javascripts/tablesort.js"></script>
+      
+    
+  </body>
+</html>
