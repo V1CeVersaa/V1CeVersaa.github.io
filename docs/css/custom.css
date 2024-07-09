@@ -4,9 +4,9 @@
   }
   
   :root {
-    --md-text-font: "LXGW WenKai Screen", "Monaspace Argon Light"; 
+    --md-text-font: "Monaspace Argon Light", "LXGW WenKai Screen"; 
     --md-code-font: 'Monaspace Argon Light', "JetBrains Mono", 'LXGW WenKai Screen';
-    --md-code-font-size: .1em;
+    --md-code-font-size: .075em;
   }
   p code,
   li code {
@@ -40,7 +40,7 @@
   }
   
   .md-typeset {
-    font-size: .80rem;
+    font-size: .75rem;
   }
   
   .md-typeset h3 {
