@@ -28,8 +28,7 @@ jobs:
         run: yamllint ./mkdocs.yml
         continue-on-error: true
       - name: Install required packages
-        run: pip install mkdocs-material mkdocs-macros-plugin pymdown-extensions \
-             pip install mkdocs-material-extensions mkdocs-statistics-plugin neoteroi-mkdocs
+        run: pip install mkdocs-material mkdocs-macros-plugin pymdown-extensions mkdocs-material-extensions mkdocs-statistics-plugin neoteroi-mkdocs
     #     run: pip install -r requirements.txt
       - name: Build site (_site directory name is used for Jekyll compatiblity)
         run: mkdocs build --config-file ./mkdocs.yml --strict --site-dir ./_site
