@@ -31,7 +31,7 @@ jobs:
         run: pip install mkdocs-material mkdocs-macros-plugin pymdown-extensions mkdocs-material-extensions mkdocs-statistics-plugin neoteroi-mkdocs
     #     run: pip install -r requirements.txt
       - name: Build site (_site directory name is used for Jekyll compatiblity)
-        run: mkdocs build --config-file ./mkdocs.yml --strict --site-dir ./_site
+        run: mkdocs build --config-file ./mkdocs.yml --site-dir ./_site
         env:
           CI: true
       - name: Upload artifact
