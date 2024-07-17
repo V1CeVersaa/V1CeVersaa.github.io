@@ -145,8 +145,8 @@ nav:
       - Rust:
         - Computer Science/Programming Language/Rust/Rust.md
         - Basic Syntax: Computer Science/Programming Language/Rust/Basic Syntax.md
-      - Haskell:
-        - Computer Science/Programming Language/Haskell/Haskell.md
+      - Ocaml:
+        - Computer Science/Programming Language/Ocaml/Ocaml.md
     - Algorithm: 
       - Computer Science/Algorithm/Algorithms and Data Structure.md
       - Algorithm Analysis: Computer Science/Algorithm/01 Algorithm Analysis.md
