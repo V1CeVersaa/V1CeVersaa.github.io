@@ -138,9 +138,15 @@ nav:
       - C++:
         - Computer Science/Programming Language/C++/C++.md
         - Basic Syntax: Computer Science/Programming Language/C++/Basic Syntax.md
+        - Object Oriented Programming: Computer Science/Programming Language/C++/OOP.md
         - Standard Library: Computer Science/Programming Language/C++/Standard Library.md
       - Python:
         - Computer Science/Programming Language/Python/Python.md
+        - Variable and Types: Computer Science/Programming Language/Python/VAT.md
+        - Input and Output: Computer Science/Programming Language/Python/IO.md
+        - Object Oriented Programming: Computer Science/Programming Language/Python/OOP.md
+        - Library: Computer Science/Programming Language/Python/Library.md
+        - Pwntools: Computer Science/Programming Language/Python/Pwntools.md
       - Java: Computer Science/Programming Language/Java.md
       - Rust:
         - Computer Science/Programming Language/Rust/Rust.md
@@ -155,6 +161,12 @@ nav:
       - Graph: Computer Science/Algorithm/04 Graph.md
       - Sorting: Computer Science/Algorithm/05 Sorting.md
       - Hash: Computer Science/Algorithm/06 Hash.md
+    - Blockchain:
+      - Computer Science/Blockchain/Blockchain.md
+      - Ethereum: 
+        - Computer Science/Blockchain/Ethereum.md
+        - Solidity: Computer Science/Blockchain/Solidity.md
+        - ERC Standard: Computer Science/Blockchain/ERC.md
     - Web:
       - Computer Science/Web/index.md
       - CSS: Computer Science/Web/CSS.md
@@ -163,6 +175,8 @@ nav:
         - Javascript: Computer Science/Web/Javascript/Javascript.md
         - Vue: Computer Science/Web/Javascript/Vue.md
       - YAML: Computer Science/Web/YAML.md
+    - CTF:
+      - DNS Protocol: Computer Science/CTF/DNS.md
 
   - System:
     - System/index.md
@@ -243,6 +257,7 @@ nav:
     - The Western Heritage:
       - Reading/The Western Heritage/The Western Heritage.md
       - Chapter 0: Reading/The Western Heritage/Chapter00.md
+      - Chapter 1: Reading/The Western Heritage/Chapter01.md
     - Taking Sides:
       - Reading/Taking Sides/index.md
       - Sustainability: Reading/Taking Sides/Sustainability.md

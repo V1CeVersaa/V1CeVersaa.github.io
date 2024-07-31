@@ -3,15 +3,23 @@
     src: url("MonaspaceArgon-Light.woff");
   }
   
+  @font-face {
+    font-family: "Monaspace Argon";
+    src: url("MonaspaceArgon-Regular.woff");
+  }
+
   :root {
-    --md-text-font: "Monaspace Argon Light", "LXGW WenKai Screen"; 
-    --md-code-font: 'Monaspace Argon Light', "JetBrains Mono", 'LXGW WenKai Screen';
+    --md-text-font: "LXGW WenKai Screen"; 
+    --md-code-font: 'Monaspace Argon', 'LXGW WenKai Screen';
     --md-code-font-size: .075em;
   }
+
+  /* "JetBrains mono", "Monaspace Argon Light",  */
   p code,
   li code {
-    font-family: 'Monaspace Argon Light', 'LXGW WenKai Screen';
+    font-family: 'Monaspace Argon Light', "Monaspace Argon", 'LXGW WenKai Screen';
     src: url(https://v1ceversaa.github.io/docs/css/MonaspaceArgon-Light.woff) format("woff");
+    src: url(https://v1ceversaa.github.io/docs/css/MonaspaceArgon-Regular.woff) format("woff");
   }
   .md-typeset code,
   .md-typeset kbd,
