@@ -113,7 +113,7 @@
     - 作用：检查 `spender` 是否有权限操作 `tokenId`，如果没有就抛出异常。
     - 细节：首先调用 `_isAuthorized` 检查权限，如果没有权限就抛出异常，异常分为两种情况：
         - `owner` 为 0，代币不存在，抛出 `ERC721NonexistentToken` 异常；
-        - `owner` 为 0，代币存在，但是 `spender` 没有权限， 抛出 `ERC721InsufficientApproval` 异常。
+        - `owner` 为 0，代币存在，但是 `spender` 没有权限，抛出 `ERC721InsufficientApproval` 异常，在做 [SchoolBus Safe NFT](https://www.zjusec.com/challenges/169) 一题的过程中遇见最多的就是这个异常。
     - 实现：
     ```solidity
     function _checkAuthorized(address owner, address spender, uint256 tokenId) internal view virtual {
