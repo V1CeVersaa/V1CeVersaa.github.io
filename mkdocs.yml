@@ -220,9 +220,9 @@ nav:
       - Concurrent Programming: System/CSAPP/Chapter12.md
       - Supplement: System/CSAPP/Supplement.md
     - Lab Record:
-      - ZJU System I: System/Lab Record/ZJU System I.md
-      - ZJU System II: System/Lab Record/ZJU System II.md
-      - ZJU System III: System/Lab Record/ZJU System III.md
+      # - ZJU System I: System/Lab Record/ZJU System I.md
+      # - ZJU System II: System/Lab Record/ZJU System II.md
+      # - ZJU System III: System/Lab Record/ZJU System III.md
       - NJU ICS PA: System/Lab Record/NJU ICS PA.md
       - CMU 15-213: System/Lab Record/CMU-15-213.md
       - UCB CS61C: System/Lab Record/UCB CS61C.md
