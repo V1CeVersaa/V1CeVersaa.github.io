@@ -145,12 +145,15 @@ nav:
         - Variable and Types: Computer Science/Programming Language/Python/VAT.md
         - Input and Output: Computer Science/Programming Language/Python/IO.md
         - Object Oriented Programming: Computer Science/Programming Language/Python/OOP.md
-        - Library: Computer Science/Programming Language/Python/Library.md
+        - Standard Library: Computer Science/Programming Language/Python/Library.md
         - Pwntools: Computer Science/Programming Language/Python/Pwntools.md
       - Java: Computer Science/Programming Language/Java.md
       - Rust:
         - Computer Science/Programming Language/Rust/Rust.md
         - Basic Syntax: Computer Science/Programming Language/Rust/Basic Syntax.md
+      - Go:
+        - Computer Science/Programming Language/Go/Go.md
+        - Basic Syntax: Computer Science/Programming Language/Go/Basic Syntax.md
       - Ocaml:
         - Computer Science/Programming Language/Ocaml/Ocaml.md
     - Algorithm: 
@@ -177,6 +180,9 @@ nav:
       - YAML: Computer Science/Web/YAML.md
     - CTF:
       - DNS Protocol: Computer Science/CTF/DNS.md
+      - Cryptography: 
+        - Computer Science/CTF/Crypto/Cryptography.md
+        - ECC: Computer Science/CTF/Crypto/ECC.md
 
   - System:
     - System/index.md
@@ -196,6 +202,7 @@ nav:
       - CSAPP-Machine-Level Representation of Programs: System/CSAPP/Chapter3.md
       - COAD-Instructions Language of the Computer: System/COAD/Chapter3.md
       - CSAPP-Optimizing Program Performance: System/CSAPP/Chapter5.md
+      - DDCA-Architecture: System/DDCA/Chapter6.md
       - RISC-V Assembly: 
         - System/RISC-V/RISC-V.md
         - Unprivileged ISA: System/RISC-V/RISC-V-upr.md
@@ -205,24 +212,23 @@ nav:
     - Processor Architecture:
       - CSAPP-Processor Architecture: System/CSAPP/Chapter4.md
       - COAD-The Processor: System/COAD/Chapter4.md
+      - DDCA-Microarchitecture: System/DDCA/Chapter7.md
     - Memory Hierarchy:
       - CSAPP-The Memory Hierarchy: System/CSAPP/Chapter6.md
       - COAD-Large and Fast Exploiting Memory Hierarchy: System/COAD/Chapter5.md
+      - DDCA-Memory Systems: System/DDCA/Chapter8.md
     - Hardware Description Language:
       - Verilog: System/HDL/Verilog.md
       - Chisel: System/HDL/Chisel.md
-    - CSAPP:
-      - Linking: System/CSAPP/Chapter7.md
-      - Exceptional Control Flow: System/CSAPP/Chapter8.md
-      - Virtual Memory: System/CSAPP/Chapter9.md
-      - System-Level I/O: System/CSAPP/Chapter10.md
-      - Network Programming: System/CSAPP/Chapter11.md
-      - Concurrent Programming: System/CSAPP/Chapter12.md
-      - Supplement: System/CSAPP/Supplement.md
+    - Running Programs on a System:
+      - CSAPP-Linking: System/CSAPP/Chapter7.md
+      - CSAPP-Exceptional Control Flow: System/CSAPP/Chapter8.md
+      - CSAPP-Virtual Memory: System/CSAPP/Chapter9.md
+    - Interacting and Communicating with a System:
+      - CSAPP-System-Level IO: System/CSAPP/Chapter10.md
+      - CSAPP-Network Programming: System/CSAPP/Chapter11.md
+      - CSAPP-Concurrent Programming: System/CSAPP/Chapter12.md
     - Lab Record:
-      # - ZJU System I: System/Lab Record/ZJU System I.md
-      # - ZJU System II: System/Lab Record/ZJU System II.md
-      # - ZJU System III: System/Lab Record/ZJU System III.md
       - NJU ICS PA: System/Lab Record/NJU ICS PA.md
       - CMU 15-213: System/Lab Record/CMU-15-213.md
       - UCB CS61C: System/Lab Record/UCB CS61C.md
@@ -258,9 +264,9 @@ nav:
       - Reading/The Western Heritage/The Western Heritage.md
       - Chapter 0: Reading/The Western Heritage/Chapter00.md
       - Chapter 1: Reading/The Western Heritage/Chapter01.md
-    - Taking Sides:
-      - Reading/Taking Sides/index.md
-      - Sustainability: Reading/Taking Sides/Sustainability.md
+    # - Taking Sides:
+    #   - Reading/Taking Sides/index.md
+    #   - Sustainability: Reading/Taking Sides/Sustainability.md
   - Varia: 
     - Learning Plan: Varia/Learning Plan.md
     - Booklist: Varia/Booklist.md

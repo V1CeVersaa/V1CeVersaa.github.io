@@ -1,6 +1,9 @@
 # RISC-V
 
 !!! info
+    参考：
+
+    - [xg 的 RISC-V 笔记](https://note.tonycrane.cc/cs/pl/riscv/)
 
 ## RISC-V Principles
 

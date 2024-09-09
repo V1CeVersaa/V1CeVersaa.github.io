@@ -9,4 +9,3 @@
 - [ ] [COAD：计算机组成与设计](COAD/COAD.md)
 - [ ] [System: Verilog](./HDL/Verilog.md)<**IN-PROGRESS**>
 - [ ] [System: RISC-V](./RISC-V/RISC-V.md)<**IN-PROGRESS**>
-- [x] [System: Lab Record](./Lab%20Record/ZJU%20System%20I.md) 
