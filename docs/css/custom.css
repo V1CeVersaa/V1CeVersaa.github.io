@@ -9,16 +9,17 @@
 }
 
 :root {
-    --md-text-font: 'LXGW WenKai Screen', 'Monaco';
-    --md-code-font: 'Monaco', 'Monaspace Argon', 'LXGW WenKai Screen';
+    --md-text-font: 'LXGW WenKai Screen', 'Cascadia', 'Monaco';
+    --md-code-font: 'Monaco', 'Cascadia', 'Monaspace Argon',
+        'LXGW WenKai Screen';
     --md-code-font-size: 0.075em;
 }
 
 /* "JetBrains mono", "Monaspace Argon Light",  */
 p code,
 li code {
-    font-family: 'Monaco', 'Monaspace Argon Light', 'Monaspace Argon',
-        'LXGW WenKai Screen';
+    font-family: 'Monaco', 'Cascadia', 'Monaspace Argon Light',
+        'Monaspace Argon', 'LXGW WenKai Screen';
     src: url(https://v1ceversaa.github.io/docs/css/MonaspaceArgon-Light.woff)
         format('woff');
     src: url(https://v1ceversaa.github.io/docs/css/MonaspaceArgon-Regular.woff)
