@@ -16,9 +16,6 @@
 
 ## Table of Contents
 
-- [ ] [Algorithm Analysis](./01%20Algorithm%20Analysis.md)
-- [ ] [Linear List](./02%20Linear%20List.md)
-- [x] [Trees](./03%20Trees.md)
-- [ ] [Graph](./04%20Graph.md)
-- [x] [Sorting](./05%20Sorting.md)
-- [x] [Hash](./06%20Hash.md)
+- [ ] [FDS Collection I](./FDS%20I.md)
+- [ ] [FDS Collection II](./FDS%20II.md)
+- [ ] [Balanced Tree and Amortized Analysis](./Lec%201.md)

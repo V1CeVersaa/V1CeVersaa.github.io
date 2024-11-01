@@ -1,8 +1,8 @@
-# 01 Variable and Types
+# Variables and Types
 
-## 内置类型
+## 1 内置类型
 
-### 序列类型
+### 1.2 序列类型
 
 #### 通用序列操作
 

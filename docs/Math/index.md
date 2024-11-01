@@ -5,7 +5,7 @@
 
 ## Table of Contents
 
-- [ ] [Analysis](./Analysis.md)
-- [x] [Discrete Mathematics](./Discrete%20Mathematics/Discrete%20Mathematics.md)
-- [ ] [Abstract Algebra](./Abstract%20Algebra/index.md)
-
+- [ ] [Abstract Algebra](Abstract%20Algebra/index.md)
+- [ ] [Topics on Analysis](Real%20Analysis/index.md)
+- [ ] [Walk Through Probability](Probability/index.md)
+- [ ] [Foundations of Optimization](Optimization/1%20Introduction.md)

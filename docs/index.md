@@ -15,12 +15,13 @@ Hi！欢迎来到我的笔记本，我会在这里更新我的**课程笔记**
 
 - [ ] 计算机系统: [CSAPP](./System/CSAPP/CSAPP.md)
 - [ ] 板子好玩喵: [Verilog](./System/HDL/Verilog.md)
-- [ ] 看起来更像CS人: [GNU Make](./Computer%20Science/Programming%20Basis/GNU%20Make.md)
+- [ ] 看起来更像CS人: [GNU Make & CMake](./Computer%20Science/Programming%20Basis/GNU%20Make.md)
+- [ ] 进行一个化的优：[Foundations of Convex Optimization](./Math/Optimization/1%20Introduction.md)
 - [ ] CPU给我干烧了: [Algorithms and Data Structure](./Computer%20Science/Algorithm/Algorithms%20and%20Data%20Structure.md)
-- [ ] 猜猜我为啥学它: [Typst Learning Record](./Varia/Typst.md)
 
 ## 学不完了
 
+- [ ] 猜猜我为啥学它: [Typst Learning Record](./Varia/Typst.md)
 - [ ] 某种古老又强大的命令语言：[Shell](./Computer%20Science/Programming%20Basis/Shell.md)
 
 ## 学完了！

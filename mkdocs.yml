@@ -2,273 +2,302 @@ site_name: V1CeVersa's Notebook
 site_url: https://note.v1ceversaa.cc
 copyright: Copyright &copy; 2024 V1CeVersa
 
-theme: 
-  name: material
-  language: 'zh'
-  icon:
-    logo: material/notebook-outline
-  # favicon: material/notebook-outline
-  # custom_dir: overrides
-  features:
-    # - header.autohide
-    - content.code.annotate
-    - content.action.edit
-    - toc.follow
-    - navigation.tracking
-    - navigation.tabs
-    - navigation.prune
-    - navigation.indexes
-    - navigation.top
-    # - navigation.tabs.sticky
-    - search.share
-    - search.highlight # 搜索出的文章关键词加入高亮
-    - search.suggest # 搜索输入一些字母时推荐补全整个单词
-  font:
-    text: LXGW WenKai Screen
-    code: [Monaspace Argon Light, JetBrains Mono, LXGW WenKai Screen]
-  palette:
-    # - scheme: default 
-    - media: "(prefers-color-scheme: light)" 
-      scheme: default  
-      primary: brown  
-      accent: brown  
-      toggle:
-        icon: material/weather-sunny 
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"  
-      scheme: slate  
-      toggle:
-        icon: material/weather-night  #图标，月亮
-        name: Switch to light mode
-
-
-markdown_extensions:
-  - toc:
-      permalink: true
-      toc_depth: 4
-  - meta
-  - def_list
-  - attr_list
-  - md_in_html
-  - sane_lists
-  - admonition
-  - pymdownx.keys
-  - pymdownx.mark
-  - pymdownx.tilde
-  - pymdownx.critic
-  - pymdownx.details
-  - pymdownx.snippets
-  - pymdownx.magiclink
-  - pymdownx.superfences
-  - pymdownx.inlinehilite
-  - pymdownx.smartsymbols  #智能符号
-  - neoteroi.spantable
-  - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
-  - pymdownx.tabbed:
-      alternate_style: true 
-  - pymdownx.tasklist:
-      custom_checkbox: true
-  - pymdownx.highlight:
-      anchor_linenums: true
-      linenums: true
-      line_spans: __span
-      pygments_lang_class: true
-  - pymdownx.arithmatex:
-      generic: true
-
-
-extra_css:
-  - https://gcore.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css
-  - https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css
-  - https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css
-  - css/custom.css
-  - css/card.css
-  - css/tasklist.css
-  - css/flink.css
-  - css/more_changelog.css
-  - css/neoteroi-mkdocs.css
-  - css/fold_toc.css
-
-extra_javascript:
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-  - https://gcore.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js
-  - Javascripts/mathjax.js
-  - Javascripts/katex.js
-  # Table Sort
-  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
-  - Javascripts/tablesort.js
-
 extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/V1CeVersaa
+    social:
+        - icon: fontawesome/brands/github
+          link: https://github.com/V1CeVersaa
 
 plugins:
-  - search
-  - statistics
+    - search
+    - statistics
 
-  # - changelog
-  # - search
-  # - git-revision-date-localized:
-  #     type: datetime
-  #     timezone: Asia/Shanghai
-  #     locale: zh
-  #     enable_creation_date: true
+    # - changelog
+    # - search
+    # - git-revision-date-localized:
+    #     type: datetime
+    #     timezone: Asia/Shanghai
+    #     locale: zh
+    #     enable_creation_date: true
 
 nav:
-  - Home: index.md
-  - Computer Science: 
-    - Computer Science/index.md
-    - Programing Basis: 
-      - Computer Science/Programming Basis/index.md
-      - Shell: Computer Science/Programming Basis/Shell.md
-      - Git: Computer Science/Programming Basis/Git.md
-      - GNU Make: Computer Science/Programming Basis/GNU Make.md
-      - Linux: Computer Science/Programming Basis/Linux.md
-      - Tmux Cheatsheet: Computer Science/Programming Basis/tmux.md
-      - Regular Expression: Computer Science/Programming Basis/Regular Expression.md
-      - MIT Missing Semester: Computer Science/Programming Basis/MIT Missing Semester.md
-    - Programing language:
-      - Computer Science/Programming Language/index.md
-      - C: Computer Science/Programming Language/C.md
-      - C++:
-        - Computer Science/Programming Language/C++/C++.md
-        - Basic Syntax: Computer Science/Programming Language/C++/Basic Syntax.md
-        - Object Oriented Programming: Computer Science/Programming Language/C++/OOP.md
-        - Standard Library: Computer Science/Programming Language/C++/Standard Library.md
-      - Python:
-        - Computer Science/Programming Language/Python/Python.md
-        - Variable and Types: Computer Science/Programming Language/Python/VAT.md
-        - Input and Output: Computer Science/Programming Language/Python/IO.md
-        - Object Oriented Programming: Computer Science/Programming Language/Python/OOP.md
-        - Standard Library: Computer Science/Programming Language/Python/Library.md
-        - Pwntools: Computer Science/Programming Language/Python/Pwntools.md
-      - Java: Computer Science/Programming Language/Java.md
-      - Rust:
-        - Computer Science/Programming Language/Rust/Rust.md
-        - Basic Syntax: Computer Science/Programming Language/Rust/Basic Syntax.md
-      - Go:
-        - Computer Science/Programming Language/Go/Go.md
-        - Basic Syntax: Computer Science/Programming Language/Go/Basic Syntax.md
-      - Ocaml:
-        - Computer Science/Programming Language/Ocaml/Ocaml.md
-    - Algorithm: 
-      - Computer Science/Algorithm/Algorithms and Data Structure.md
-      - Algorithm Analysis: Computer Science/Algorithm/01 Algorithm Analysis.md
-      - Linear List: Computer Science/Algorithm/02 Linear List.md
-      - Trees: Computer Science/Algorithm/03 Trees.md
-      - Graph: Computer Science/Algorithm/04 Graph.md
-      - Sorting: Computer Science/Algorithm/05 Sorting.md
-      - Hash: Computer Science/Algorithm/06 Hash.md
-    - Blockchain:
-      - Computer Science/Blockchain/Blockchain.md
-      - Ethereum: 
-        - Computer Science/Blockchain/Ethereum.md
-        - Solidity: Computer Science/Blockchain/Solidity.md
-        - ERC Standard: Computer Science/Blockchain/ERC.md
-    - Web:
-      - Computer Science/Web/index.md
-      - CSS: Computer Science/Web/CSS.md
-      - HTML: Computer Science/Web/HTML.md
-      - JavaScript: 
-        - Javascript: Computer Science/Web/Javascript/Javascript.md
-        - Vue: Computer Science/Web/Javascript/Vue.md
-      - YAML: Computer Science/Web/YAML.md
-    - CTF:
-      - DNS Protocol: Computer Science/CTF/DNS.md
-      - Cryptography: 
-        - Computer Science/CTF/Crypto/Cryptography.md
-        - ECC: Computer Science/CTF/Crypto/ECC.md
+    - Home: index.md
+    - Computer Science:
+          - Computer Science/index.md
+          - Programing Basis:
+                - Computer Science/Programming Basis/index.md
+                - Shell: Computer Science/Programming Basis/Shell.md
+                - Git: Computer Science/Programming Basis/Git.md
+                - Linux: Computer Science/Programming Basis/Linux.md
+                - Tmux Cheatsheet: Computer Science/Programming Basis/tmux.md
+                - GNU Make & CMake: Computer Science/Programming Basis/GNU Make.md
+                - Regular Expression: Computer Science/Programming Basis/Regular Expression.md
+          - Programing language:
+                - Computer Science/Programming Language/index.md
+                - C: Computer Science/Programming Language/C.md
+                - C++:
+                      - Computer Science/Programming Language/C++/C++.md
+                      - Basic Syntax: Computer Science/Programming Language/C++/Basic Syntax.md
+                      - Object Oriented Programming: Computer Science/Programming Language/C++/OOP.md
+                      - Standard Library: Computer Science/Programming Language/C++/Standard Library.md
+                - Python:
+                      - Computer Science/Programming Language/Python/index.md
+                      - Variable and Types: Computer Science/Programming Language/Python/VAT.md
+                      - Input and Output: Computer Science/Programming Language/Python/IO.md
+                      - Object Oriented Programming: Computer Science/Programming Language/Python/OOP.md
+                      - Standard Library: Computer Science/Programming Language/Python/Lib-std.md
+                      - Pwntools: Computer Science/Programming Language/Python/Lib-Pwntools.md
+                      - Numpy: Computer Science/Programming Language/Python/Lib-Numpy.md
+                      - Torch: Computer Science/Programming Language/Python/Lib-Torch.md
+                      - Pandas: Computer Science/Programming Language/Python/Lib-Pandas.md
+                - Rust:
+                      - Computer Science/Programming Language/Rust/Rust.md
+                      - Basic Syntax: Computer Science/Programming Language/Rust/Basic Syntax.md
+                - Go:
+                      - Computer Science/Programming Language/Go/Go.md
+                      - Basic Syntax: Computer Science/Programming Language/Go/Basic Syntax.md
+                - Ocaml:
+                      - Computer Science/Programming Language/Ocaml/Ocaml.md
+          - Algorithm:
+                - Computer Science/Algorithm/Algorithms and Data Structure.md
+                - FDS Collection I: Computer Science/Algorithm/FDS I.md
+                - FDS Collection II: Computer Science/Algorithm/FDS II.md
+                - Balanced Tree: Computer Science/Algorithm/Lec 1.md
+          - Blockchain:
+                - Computer Science/Blockchain/Blockchain.md
+                - Ethereum:
+                      - Computer Science/Blockchain/Ethereum.md
+                      - Solidity: Computer Science/Blockchain/Solidity.md
+                      - ERC Standard: Computer Science/Blockchain/ERC.md
+          - Web:
+                - Computer Science/Web/index.md
+                - CSS: Computer Science/Web/CSS.md
+                - HTML: Computer Science/Web/HTML.md
+                - JavaScript:
+                      - Javascript: Computer Science/Web/Javascript/Javascript.md
+                      - Vue: Computer Science/Web/Javascript/Vue.md
+                - YAML: Computer Science/Web/YAML.md
+          - CTF:
+                - DNS Protocol: Computer Science/CTF/DNS.md
+                - Cryptography:
+                      - Computer Science/CTF/Crypto/Cryptography.md
+                      - ECC: Computer Science/CTF/Crypto/ECC.md
+    - System:
+          - System/index.md
+          - General Introduction:
+                - CSAPP-A Tour of Computer Systems: System/CSAPP/Chapter1.md
+                - COAD-Computer Abstractions and Technology: System/COAD/Chapter1.md
+                - The Datacenter as a Computer: System/TDAAC/TDAAC.md
+          - Digital Logic:
+                - DDCA-Combinational Logic: System/DDCA/Chapter2.md
+                - DDCA-Sequential Logic: System/DDCA/Chapter3.md
+                - DDCA-Hardware Description Language: System/DDCA/Chapter4.md
+                - DDCA-Digital Building Blocks: System/DDCA/Chapter5.md
+          - Presenting and Manipulating Information:
+                - CSAPP-Presenting and Manipulating Information: System/CSAPP/Chapter2.md
+                - COAD-Arithmetic for Computers: System/COAD/Chapter2.md
+          - Machine-Level Representation of Programs:
+                - CSAPP-Machine-Level Representation of Programs: System/CSAPP/Chapter3.md
+                - COAD-Instructions Language of the Computer: System/COAD/Chapter3.md
+                - CSAPP-Optimizing Program Performance: System/CSAPP/Chapter5.md
+                - DDCA-Architecture: System/DDCA/Chapter6.md
+                - RISC-V Assembly:
+                      - System/RISC-V/RISC-V.md
+                      - Unprivileged ISA: System/RISC-V/RISC-V-upr.md
+                      - Privileged ISA: System/RISC-V/RISC-V-pr.md
+                - x86 Assembly:
+                      - System/x86 Assembly/x86.md
+          - Processor Architecture:
+                - CSAPP-Processor Architecture: System/CSAPP/Chapter4.md
+                - COAD-The Processor: System/COAD/Chapter4.md
+                - DDCA-Microarchitecture: System/DDCA/Chapter7.md
+                - ZJU SYS II-Processor: System/ZJUSys/SysII-Processor.md
+          - Memory Hierarchy:
+                - CSAPP-The Memory Hierarchy: System/CSAPP/Chapter6.md
+                - COAD-Large and Fast Exploiting Memory Hierarchy: System/COAD/Chapter5.md
+                - DDCA-Memory Systems: System/DDCA/Chapter8.md
+          - Hardware Description Language:
+                - Verilog: System/HDL/Verilog.md
+                - Chisel: System/HDL/Chisel.md
+          - Running Programs on a System:
+                - CSAPP-Linking: System/CSAPP/Chapter7.md
+                - CSAPP-Exceptional Control Flow: System/CSAPP/Chapter8.md
+                - CSAPP-Virtual Memory: System/CSAPP/Chapter9.md
+          - Interacting and Communicating with a System:
+                - CSAPP-System-Level IO: System/CSAPP/Chapter10.md
+                - CSAPP-Network Programming: System/CSAPP/Chapter11.md
+                - CSAPP-Concurrent Programming: System/CSAPP/Chapter12.md
+          # - Courses and Papers:
+          #       - ZJU System II: System/Lab Record/ZJU System II note.md
+          # - Lab Record:
+          # - ZJU System I: System/Lab Record/ZJU System I.md
+          # - ZJU System II: System/Lab Record/ZJU System II.md
+          # - ZJU System III: System/Lab Record/ZJU System III.md
+          # - NJU ICS PA: System/Lab Record/NJU ICS PA.md
+          # - CMU 15-213: System/Lab Record/CMU-15-213.md
+          # - UCB CS61C: System/Lab Record/UCB CS61C.md
+          - Booklist:
+                - CSAPP: System/CSAPP/CSAPP.md
+                - COAD: System/COAD/COAD.md
+                - DDCA: System/DDCA/DDCA.md
+    - AI:
+          - AI/index.md
+          - Intro to Machine Learning:
+                - AI/CS229/index.md
+                - Linear Regression: AI/CS229/Linear Regression.md
+          - Deep Learning for Computer Vision:
+                - AI/EECS498/topic1.md
+                - Image Classification: AI/EECS498/topic2.md
+    - Math:
+          - Basic Courses: Math/index.md
+          - Abstract Algebra:
+                - Math/Abstract Algebra/index.md
+          - Topics on Analysis:
+                - Math/Real Analysis/index.md
+                - Mathematical Analysis: Math/Real Analysis/Mathematical Analysis.md
+                - Measure: Math/Real Analysis/Measure.md
+                - Integration: Math/Real Analysis/Integration.md
+          #   - Optimization:
+          #         - Course Introduction: Math/Optimization/1 Introduction.md
+          #         - Basis for Optimizaion: Math/Optimization/2 Smooth.md
+          #         - Descent Method: Math/Optimization/3 Descent.md
+          #         - Acceleration Method: Math/Optimization/4 Acceleration.md
+          #         - Convex Method: Math/Optimization/5 Convex.md
+          #         - Constraint Set: Math/Optimization/6 Constrained.md
+          #         - Structure Optimization: Math/Optimization/7 Structure.md
+          #         - Stochastic Optimization: Math/Optimization/8 Stochastic.md
+          - Basic Probability:
+                - Math/Probability Basis/index.md
+                - Chapter 1-2: Math/Probability Basis/Chapter 1-2.md
+                - Chapter 3: Math/Probability Basis/Chapter 3.md
+                - Chapter 4: Math/Probability Basis/Chapter 4.md
+          - Advanced Probability:
+                - Math/Probability/index.md
+                - Laws of Large Numbers: Math/Probability/Chapter 1.md
+          - Discrete Mathematics:
+                - Math/Discrete Mathematics/Discrete Mathematics.md
+                - Propositional Logic: Math/Discrete Mathematics/01 Propositional Logic.md
+                - Basic Structures: Math/Discrete Mathematics/02 Basic Structures.md
+                - Algorithms: Math/Discrete Mathematics/03 Algorithms.md
+                - Number Theory: Math/Discrete Mathematics/04 Number Theory.md
+                - Induction and Recursion: Math/Discrete Mathematics/05 Induction and Recursion.md
+                - Counting: Math/Discrete Mathematics/06 Counting.md
+                - Advanced Counting Techniques: Math/Discrete Mathematics/08 Advanced Counting Techniques.md
+                - Relations: Math/Discrete Mathematics/09 Relations.md
+                - Graph Theory: Math/Discrete Mathematics/10 Graph Theory.md
+                - Trees: Math/Discrete Mathematics/11 Trees.md
 
-  - System:
-    - System/index.md
-    - General Introduction:
-      - CSAPP-A Tour of Computer Systems: System/CSAPP/Chapter1.md
-      - COAD-Computer Abstractions and Technology: System/COAD/Chapter1.md
-      - The Datacenter as a Computer: System/TDAAC/TDAAC.md
-    - Digital Logic:
-      - DDCA-Combinational Logic: System/DDCA/Chapter2.md
-      - DDCA-Sequential Logic: System/DDCA/Chapter3.md
-      - DDCA-Hardware Description Language: System/DDCA/Chapter4.md
-      - DDCA-Digital Building Blocks: System/DDCA/Chapter5.md
-    - Presenting and Manipulating Information:
-      - CSAPP-Presenting and Manipulating Information: System/CSAPP/Chapter2.md
-      - COAD-Arithmetic for Computers: System/COAD/Chapter2.md
-    - Machine-Level Representation of Programs:
-      - CSAPP-Machine-Level Representation of Programs: System/CSAPP/Chapter3.md
-      - COAD-Instructions Language of the Computer: System/COAD/Chapter3.md
-      - CSAPP-Optimizing Program Performance: System/CSAPP/Chapter5.md
-      - DDCA-Architecture: System/DDCA/Chapter6.md
-      - RISC-V Assembly: 
-        - System/RISC-V/RISC-V.md
-        - Unprivileged ISA: System/RISC-V/RISC-V-upr.md
-        - Privileged ISA: System/RISC-V/RISC-V-pr.md
-      - x86 Assembly:
-        - System/x86 Assembly/x86.md
-    - Processor Architecture:
-      - CSAPP-Processor Architecture: System/CSAPP/Chapter4.md
-      - COAD-The Processor: System/COAD/Chapter4.md
-      - DDCA-Microarchitecture: System/DDCA/Chapter7.md
-    - Memory Hierarchy:
-      - CSAPP-The Memory Hierarchy: System/CSAPP/Chapter6.md
-      - COAD-Large and Fast Exploiting Memory Hierarchy: System/COAD/Chapter5.md
-      - DDCA-Memory Systems: System/DDCA/Chapter8.md
-    - Hardware Description Language:
-      - Verilog: System/HDL/Verilog.md
-      - Chisel: System/HDL/Chisel.md
-    - Running Programs on a System:
-      - CSAPP-Linking: System/CSAPP/Chapter7.md
-      - CSAPP-Exceptional Control Flow: System/CSAPP/Chapter8.md
-      - CSAPP-Virtual Memory: System/CSAPP/Chapter9.md
-    - Interacting and Communicating with a System:
-      - CSAPP-System-Level IO: System/CSAPP/Chapter10.md
-      - CSAPP-Network Programming: System/CSAPP/Chapter11.md
-      - CSAPP-Concurrent Programming: System/CSAPP/Chapter12.md
-    - Lab Record:
-      - NJU ICS PA: System/Lab Record/NJU ICS PA.md
-      - CMU 15-213: System/Lab Record/CMU-15-213.md
-      - UCB CS61C: System/Lab Record/UCB CS61C.md
-    - Booklist:
-      - CSAPP: System/CSAPP/CSAPP.md
-      - COAD: System/COAD/COAD.md
-      - DDCA: System/DDCA/DDCA.md
+    - Reading:
+          - Reading/index.md
+          # - History:
+          # - Reading/The Western Heritage.md
+          - The Western Heritage:
+                - Reading/The Western Heritage/The Western Heritage.md
+                - Chapter 0: Reading/The Western Heritage/Chapter00.md
+                - Chapter 1: Reading/The Western Heritage/Chapter01.md
+          - Taking Sides:
+                - Reading/Taking Sides/index.md
+                - Sustainability: Reading/Taking Sides/Sustainability.md
+    - Varia:
+          - Learning Plan: Varia/Learning Plan.md
+          - Booklist: Varia/Booklist.md
+          - Typst Learning Report: Varia/Typst.md
+          - Environment Configuration: Varia/Envs.md
 
-  - Math:
-    - Basic Courses: Math/index.md
-    - Analysis: Math/Analysis.md
-    - Abstract Algebra:
-      - Math/Abstract Algebra/index.md
-    - Discrete Mathematics: 
-      - Math/Discrete Mathematics/Discrete Mathematics.md
-      - Propositional Logic: Math/Discrete Mathematics/01 Propositional Logic.md
-      - Basic Structures: Math/Discrete Mathematics/02 Basic Structures.md
-      - Algorithms: Math/Discrete Mathematics/03 Algorithms.md
-      - Number Theory: Math/Discrete Mathematics/04 Number Theory.md
-      - Induction and Recursion: Math/Discrete Mathematics/05 Induction and Recursion.md
-      - Counting: Math/Discrete Mathematics/06 Counting.md
-      - Advanced Counting Techniques: Math/Discrete Mathematics/08 Advanced Counting Techniques.md
-      - Relations: Math/Discrete Mathematics/09 Relations.md
-      - Graph Theory: Math/Discrete Mathematics/10 Graph Theory.md
-      - Trees: Math/Discrete Mathematics/11 Trees.md
-    # - Topology: Math/General Topology.md
+theme:
+    name: material
+    language: 'zh'
+    icon:
+        logo: material/notebook-outline
+    # favicon: material/notebook-outline
+    # custom_dir: overrides
+    features:
+        # - header.autohide
+        - content.code.annotate
+        - content.action.edit
+        - toc.follow
+        - navigation.tracking
+        - navigation.tabs
+        - navigation.prune
+        - navigation.indexes
+        - navigation.top
+        # - navigation.tabs.sticky
+        - search.share
+        - search.highlight # 搜索出的文章关键词加入高亮
+        - search.suggest # 搜索输入一些字母时推荐补全整个单词
+    font:
+        text: LXGW WenKai Screen
+        code: [Monaspace Argon Light, JetBrains Mono, LXGW WenKai Screen]
+    palette:
+        # - scheme: default
+        - media: '(prefers-color-scheme: light)'
+          scheme: default
+          primary: brown
+          accent: brown
+          toggle:
+              icon: material/weather-sunny
+              name: Switch to dark mode
+        - media: '(prefers-color-scheme: dark)'
+          scheme: slate
+          toggle:
+              icon: material/weather-night #图标，月亮
+              name: Switch to light mode
 
-  - Reading: 
-    - Reading/index.md
-    # - History: 
-      # - Reading/The Western Heritage.md
-    - The Western Heritage:
-      - Reading/The Western Heritage/The Western Heritage.md
-      - Chapter 0: Reading/The Western Heritage/Chapter00.md
-      - Chapter 1: Reading/The Western Heritage/Chapter01.md
-    # - Taking Sides:
-    #   - Reading/Taking Sides/index.md
-    #   - Sustainability: Reading/Taking Sides/Sustainability.md
-  - Varia: 
-    - Learning Plan: Varia/Learning Plan.md
-    - Booklist: Varia/Booklist.md
-    - Typst Learning Report: Varia/Typst.md
-    - Environment Configuration: Varia/Envs.md
+markdown_extensions:
+    - toc:
+          permalink: true
+          toc_depth: 4
+    - meta
+    - def_list
+    - attr_list
+    - md_in_html
+    - sane_lists
+    - admonition
+    - pymdownx.keys
+    - pymdownx.mark
+    - pymdownx.tilde
+    - pymdownx.critic
+    - pymdownx.details
+    - pymdownx.snippets
+    - pymdownx.magiclink
+    - pymdownx.superfences
+    - pymdownx.inlinehilite
+    - pymdownx.smartsymbols #智能符号
+    - neoteroi.spantable
+    - pymdownx.emoji:
+          emoji_index: !!python/name:materialx.emoji.twemoji
+          emoji_generator: !!python/name:materialx.emoji.to_svg
+    - pymdownx.tabbed:
+          alternate_style: true
+    - pymdownx.tasklist:
+          custom_checkbox: true
+    - pymdownx.highlight:
+          anchor_linenums: true
+          linenums: true
+          line_spans: __span
+          pygments_lang_class: true
+    - pymdownx.arithmatex:
+          generic: true
+
+extra_css:
+    - https://gcore.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css
+    - https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css
+    - https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css
+    - css/custom.css
+    - css/card.css
+    - css/tasklist.css
+    - css/flink.css
+    - css/more_changelog.css
+    - css/neoteroi-mkdocs.css
+    - css/fold_toc.css
+
+extra_javascript:
+    - https://polyfill.io/v3/polyfill.min.js?features=es6
+    - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
+    - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+    - https://gcore.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js
+    - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js
+    # - css/Javascripts/mathjax.js
+    # - css/Javascripts/katex.js
+    # Table Sort
+    - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+    - css/Javascripts/tablesort.js

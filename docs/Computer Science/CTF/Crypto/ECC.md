@@ -7,7 +7,7 @@
 
     - [Stanford 大神的笔记](https://crypto.stanford.edu/pbc/notes/elliptic/)，简洁明了，仍未过时；
     - [梅老板的 ECC 笔记](https://note.shad0wash.cc/crypto/ECC)，讲解细致；
-    - [GitHub 上经典攻击的实现](https://github.com/jvdsn/crypto-attacks/blob)，每个轮子都可以直接用，实现非常漂亮，磕了；
+    - [GitHub 上经典攻击的实现](https://github.com/jvdsn/crypto-attacks/)，每个轮子都可以直接用，实现非常漂亮，磕了；
     - CryptoHack 的各路大神的 Writeup。
 
 ## 1 Elliptic Curves

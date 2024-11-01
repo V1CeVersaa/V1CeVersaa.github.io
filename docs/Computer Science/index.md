@@ -13,7 +13,7 @@
 ### Programming Basis
 
 - [ ] [Programming Basis: Shell](./Programming%20Basis/Shell.md) <**SUSPENDING**>
-- [ ] [Programming Basis: GNU Make](./Programming%20Basis/GNU%20Make.md) <**SUSPENDING**>
+- [ ] [Programming Basis: GNU Make & CMake](./Programming%20Basis/GNU%20Make.md) <**SUSPENDING**>
 - [ ] [Programming Basis: Linux](./Programming%20Basis/Linux.md)
 - [ ] [Programming Basis: Regular Expression](./Programming%20Basis/Regular%20Expression.md)
 
@@ -21,8 +21,8 @@
 
 - [ ] [Programming Language: C](./Programming%20Language/C.md)
 - [ ] [Programming Language: C++](Programming%20Language/C++/C++.md)
-- [ ] [Programming Language: Python](./Programming%20Language/Python/Python.md)
-- [ ] [Programming Language: Java](./Programming%20Language/Java.md) <**SUSPENDING**>
+- [ ] [Programming Language: Python](./Programming%20Language/Python/index.md)
+- [ ] [Programming Language: OCaml](./Programming%20Language/Ocaml/OCaml.md) <**Not Started**>
 
 ### Web
 
@@ -30,3 +30,9 @@
 - [ ] [Web: HTML](./Web/HTML.md)
 - [ ] [Web: JavaScript](./Web/Javascript.md)
 - [x] [Web: YAML](./Web/YAML.md) 
+
+### Blockchain
+
+### CTF
+
+

@@ -1,5 +1,3 @@
-# Python Saves The World
-
 ## Basic Note
 
 ### 变量的命名
@@ -53,13 +51,13 @@ print(str[0:4:2])			#Output:Hl
 
 在Python中，我们可以使用**方法**进行对数据的操作，某些方法会改变数据内容 (比如`reverse()`)，某些则不会 (比如下面这些)。对于字符串，利用`lower()`、`upper()`、`title()`、`strip()`、`lstrip()`和`rstrip()`，我们可以去除字符串两侧的空格，并且调整字符的大小写。比如：
 
-``````python
+```python
 name = "hEllo "
 print(name.title())			#Output:Hello 
 print(name.upper())			#Output:HELLO 
 print(name.lower(),end="")	#Output:hello  (后边没有换行)
 print(name.rstrip(),end="@")#Output:hEllo@ 
-``````
+```
 
 在Python中，**空白**泛指所有非打印字符，比如空格、列表和换行符。`print()`在打印结束之后会自动换行，但是如果在`print()`函数之后参加`end=""`参数，我们就可以实现不换行效果，事实上Python里`end`参数的默认值为`"\n"`，表明在打印的字符串的末尾自动添加换行符，来设定特定符号，比如上面代码的最后一行将字符串的末尾自动添加了一个`@`。
 
@@ -338,16 +336,6 @@ Pure functions: only return values.
 Non-pure functions: have side effects. 
 
 `print()` is a non-pure function because it displays its output depending on the argument passed in , and returning `None`. 
-
-
-
-### Debug
-
-#### Using `print()` statements
-
-
-
-
 
 
 

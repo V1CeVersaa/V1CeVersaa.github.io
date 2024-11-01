@@ -26,7 +26,7 @@ DRAM 都被连接到内存控制器/Memory Controller 上，内存控制器一�
 
 - 寻道时间/Seek Time：移动传送臂定位到目标磁道的时间被称为寻道时间 $T_{seek}$，现代驱动器的寻道时间是通过几千次对随机扇区的寻道求平均时间来测量的，一般在 3ms 到 9ms 之间，最高可达 20ms。
 - 旋转时间/Rotational Latency：在定位到目标磁道后，读写头需要等待目标扇区的第一个位旋转道读写头下，这个时间就是旋转时间，最大旋转延迟为 $T_{\text{max}\ \text{rotation}} = \dfrac{1}{\text{RPM}}\times\dfrac{60\text{s}}{1\text{min}}$。
-- 传送时间/Transfer Time：当目标扇区的第一个位位于读写头下的时候，驱动器就可以开始读写扇区的内容了，扇区的平均传送时间可以粗略估计如下：$T_{\text{avg}\ \text{transfer]} = \dfrac{1}{\text{RPM}}\times\dfrac{1}{\text{average sectors per track}}\times\dfrac{60\text{s}}{1\text{min}}$。
+- 传送时间/Transfer Time：当目标扇区的第一个位位于读写头下的时候，驱动器就可以开始读写扇区的内容了，扇区的平均传送时间可以粗略估计如下：$T_{\text{avg}\ \text{transfer}} = \dfrac{1}{\text{RPM}}\times\dfrac{1}{\text{average sectors per track}}\times\dfrac{60\text{s}}{1\text{min}}$。
 
 现代磁盘与操作系统会将磁盘映射到相对简单的**逻辑块**序列，磁盘封装着一个小的硬件设备——**磁盘控制器**，用来维护逻辑块编号与物理磁盘扇区之间的映射关系。当需要读取某个磁盘扇区的数据到主存的时候，操作系统会发射一个命令到磁盘控制器，控制器进行一个快速的查找，将逻辑块号翻译成（盘面，磁道，扇区）的三元组，然后就可以读数据了。
 

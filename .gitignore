@@ -5,5 +5,7 @@ ProblemSet.md
 *.sh
 .DS_Store
 site
+.prettierrc.yml
+.editorconfig
 
 # BSC++.md

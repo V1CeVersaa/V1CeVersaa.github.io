@@ -1,5 +1,8 @@
 # Object Oriented Programming
 
+!!! Abstract 
+    OOP 的核心思想是数据抽象、继承和动态绑定。通过数据抽象，我们可以将类的接口与实现分离；使用继承，我们可以定义相似的类型并且对其相似关系进行建模；使用动态绑定，可以在一定程度上忽略相似类型之间的差别，而以统一的方式使用它们的对象。
+
 ## 1 Class Declaration
 
 ### 类类型和类声明
@@ -22,25 +25,40 @@ C++ 使用**访问说明符/Access Specifiers** 加强类的封装性：
 
 1. **「一个类就是一个作用域」**：这解释了为什么当我们在类的外部定义成员函数的时候必须同时提供类名和函数名，参数列表和函数体都是在类的作用域之内的，可以直接访问类的成员，但是函数名和返回类型不在类的作用域之内，所以必须指明是哪个类的成员。
 2. **「名字查找」**：名字查找/Name Lookup 是指寻找与所用名字最匹配的声明的过程。一般情况的名字查找的过程是这样的：首先在名字定义的块中寻找声明语句，只考虑在名字的使用之前出现的声明；如果没找到，就继续查找外层作用域；还没找到声明就进行报错。解析类内部成员函数的名字的方式稍有不同：编译器首先编译成员的声明，知道类全部可见之后才会编译类函数体。
+3. **「类型名的特殊处理」**：一般来说，内层作用域可以重新定义外层作用域中的名字，即使这个名字已经在内层作用域中使用过，但是在类中，如果成员使用了内层定义域中的某个名字，而**该名字代表类类型**，那么**类不能在之后重新定义该名字**。这样一来，下面的代码就是错的：
+
+    ```cpp
+    typedef double Money;
+    class Account {
+    public:
+        Money balance() { return bal; }
+    private:
+        typedef double Money;
+        Money bal;
+    };
+    ```
+
+    尽管在类内定义的 `Money` 和外层定义域中的定义是一样的，但是这样的代码仍然是错误的。另外，编译器并不会为这样的错误负责，有些编译器会顺利通过这样的代码，忽略错误的事实。
+4. **「」**
 
 
-## Class Members
+## 2 Class Members
 
-### .1 类型成员
+### 2.1 类型成员
 
 除了定义数据成员之外，类还可以定义某种类型在类中的别名，类型成员也存在着访问限制，可以被 `public`、`private`、`protected` 修饰。需要注意的是**用于定义类型的成员必须先定义再使用**，这就和普通的成员有很大的区别，原因是编译器在解析类时，必须知道每个符号的确切类型。因此，编译器要求类型定义要出现在该类型被使用之前。因此，类型成员一般出现在类开始的地方。
 
 ```cpp
 class Screen {
-public:
+   public:
     using pos = std::string::size_type;
     // this is equivalent to typedef std::string::size_type pos;
-private:
+   private:
     // data members
 };
 ```
 
-### .2 数据成员
+### 2.2 数据成员
 
 **「类内初始值/In-class Initializer」**：类内初始值用来初始化数据成员，没有初始值的成员将被默认初始化。类内初始值必须使用 `=` 或者 `{}` 来初始化，不能使用 `()`。
 
@@ -48,7 +66,7 @@ private:
 
 
 
-### .3 函数成员
+### 2.3 函数成员
 
 ??? Info "Part of Code Implementation of `Sales_data`"
 
@@ -57,12 +75,14 @@ private:
         friend Sales_data add(const Sales_data&, const Sales_data&);
         friend std::istream &read(std::istream&, Sales_data&);
         friend std::ostream &print(std::ostream&, const Sales_data&);
-    public:
+
+       public:
         Sales_data() = default;
         Sales_data(const std::string &s, unsigned n, double p) : bookNo(s), units_sold(n), revenue(p*n) { }
         Sales_data(const std::string &s) : bookNo(s) { }
         Sales_data(std::istream &is);
-    private:
+
+       private:
         std::string bookNo;
         unsigned units_sold = 0;
         double revenue = 0.0;
@@ -85,7 +105,8 @@ private:
         friend class Window_mgr;
         // friend void Window_mgr::clear(ScreenIndex);          // 成员函数作为友元
         friend std::ostream &storeOn(std::ostream&, Screen&);   // 重载的友元函数
-    public:
+       
+          public:
         typedef std::string::size_type pos;
         Screen() = default;
         Screen(pos ht, pos wd, char c) : height(ht), width(wd), contents(ht * wd, c) { }
@@ -96,7 +117,8 @@ private:
         Screen &set(pos, pos, char);
         Screen &display(std::ostream &os) { do_display(os); return *this; }
         const Screen &display(std::ostream &os) const { do_display(os); return *this; }
-    private:
+       
+       private:
         pos cursor = 0;
         pos height = 0, width = 0;
         std::string contents;
@@ -136,9 +158,9 @@ private:
     即使**可变数据成员/Mutable Data Member** 是 `const` 对象的成员，它也不是 `const` 的，因此一个 `const` 成员函数可以改变一个可变数据成员的值，下面是一个简单的计数器，`const` 函数 `increment_count()` 可以增加 `access_ctr` 的值。 
     ```cpp
     class Account {
-    public:
+       public:
         void increment_count() const { ++access_ctr; };
-    private:
+       private:
         mutable size_t access_ctr = 0;
     };
     ``` 
@@ -146,7 +168,7 @@ private:
 5. **「类数据成员初始值」**：若另一个类的成员之一是某种类类型的对象，我们希望这个对象可以有一个默认的初始值，最好的方法就是将默认值声明称类内初始值：  
     ```cpp
     class Window_mgr {
-    private:
+       private:
         std::vector<Screen> screens{Screen(24, 80, ' ')};
     };
     ```
@@ -154,13 +176,13 @@ private:
 6. **「返回 `*this` 的成员函数」**：返回语句通过返回 `this` 的解引用来将对象本身作为左值返回，若定义返回类型为引用类型，返回的就是这个对象的引用，可以连续调用成员函数并且修改对象的值。但是若返回的不是引用类型，返回的就是这个对象的一个副本，倒是可以连续调用，但是修改的是副本的值，不会影响原对象。值得注意的是，若该函数是一个返回引用的常量成员函数，那么返回的就是一个常量引用，没法修改。
 7. **「基于 `const` 的重载」**：由于我们只可以在一个常量对象上调用常量成员函数，虽然可以在非常量对象上调用常量版本和非常量版本的成员函数，但是此时调用非常量版本的是一个更好的匹配。我们可以通过区分成员函数是否是 `const` 的，对函数进行重载，编译器会在调用的时候自行选择最佳匹配的函数。上面的 `display` 函数就是一个例子，`const` 和非 `const` 版本的 `display` 函数返回的都是 `*this`，但是一个是常量引用，一个是非常量引用。
 
-### .4 构造函数
+### 2.4 构造函数
 
 ??? Info "Part of Code Implementation of `Sales_data`"
 
     ```cpp
     class Sales_data {  
-    public:
+       public:
         Sales_data() = default;                             // 默认构造函数
         Sales_data(const std::string &s) : bookNo(s) { }    // 其他构造函数
         Sales_data(const std::string &s, unsigned n, double p) : bookNo(s), units_sold(n), revenue(p*n) { }
@@ -180,22 +202,73 @@ private:
  - 如果存在类内初始值，用它来初始化成员；
  - 否则，执行默认初始化。
 
-但是编译器有时候不能为某些类合成默认构造函数，比如类的某个成员没有默认构造函数；编译器合成的默认构造函数也有可能执行错误的操作；或者如果类已经有了非默认构造函数，编译器就不会合成默认构造函数。总之还是需要自己定义默认构造函数，下面是对于上面的例子的一些解释：
+但是编译器有时候不能为某些类合成默认构造函数，比如类的某个成员没有默认构造函数；编译器合成的默认构造函数也有可能执行错误的操作；或者如果类已经有了非默认构造函数，编译器就不会合成默认构造函数。总之还是需要自己定义默认构造函数。
 
-- `Sales_data() = default;`：首先这是一个默认构造函数，`= default` 是告诉编译器按照默认的行为生成默认构造函数。当 `default` 出现在类内的时候，生成的默认构造函数是内连的，否则定义在类的外部，这样的构造函数是非内联的。
-- `Sales_data(const std::string &s) : bookNo(s) { }`：这是一个构造函数，接受一个 `const std::string &` 类型的参数，在参数后出现了冒号 `:`，冒号后边的是**构造函数初始值列表/Constructor Initialize List**，负责为新创建的对象的一个或多个数据成员赋初值。当某个数据成员被构造函数初始值列表忽略时，将执行默认初始化。
-- `Sales_data::Sales_data(std::istream &is) { read(is, *this); }`：在类的外部定义构造函数。构造函数没有返回类型，所以定义从函数名字开始，首先指明构造函数是哪个类的成员，所以需要在函数名字前加上类名和作用域运算符 `::`，这个构造函数的初始值列表是空的，但是由于执行了构造函数体，所以对象的成员仍然可以被初始化。
+下面是一些琐碎的东西与解释：
 
-### .5 友元
+1. **「`= default`」**：考察构造函数 `Sales_data() = default;`，首先这是一个默认构造函数，`= default` 是告诉编译器按照默认的行为生成默认构造函数。当 `default` 出现在类内的时候，生成的默认构造函数是内连的，否则定义在类的外部，这样的构造函数是非内联的。
+2. **「构造函数初始值列表」**：考察构造函数 `Sales_data(const std::string &s) : bookNo(s) { }`，它接受一个 `const std::string &` 类型的参数，在参数后出现了冒号 `:`，冒号后边的是**构造函数初始值列表/Constructor Initialize List**，负责为新创建的对象的一个或多个数据成员赋初值。当某个数据成员被构造函数初始值列表忽略时，将执行默认初始化。**构造函数初始值列表很多时候必不可少**，尤其是**当我们初始化 `const` 或者引用类型的数据成员的时候**，这种情况下初始化这些成员的唯一机会就是在构造函数初始值列表内初始化。比如下面的例子就是说明了这一点，总而言之，**如果成员是 `const`、引用或者属于某种为提供默认构造函数的类类型，就需要我们使用构造函数初始值列表为这些成员提供初值**。
+
+    ??? Info "Example"
+
+        ```cpp
+        class ConstRef {
+           public:
+            ConstRef(int ii);
+           private:
+            int i;
+            const int ci;
+            int &ri;
+        };
+
+        ConstRef::ConstRef(int ii) : i(ii), ri(ii)，ci(ii) { } // 正确：显式初始化引用和常量成员
+        ConstRef::ConstRef(int ii) {
+            i = ii;
+            ci = ii;        // 错误：不能给引用赋值
+            ri = i;         // 错误：ri 未初始化
+        } 
+        ```
+
+3. **「成员初始化的顺序」**：首先，在构造函数初始值中每个成员都只能出现一次，给同一个成员赋两个初始值是没有意义的；其次，**构造函数初始值列表只用于说明初始化成员的值，并不限定初始化的具体执行顺序**，而成员的舒适化顺序**和其在类定义中出现的顺序一致**：第一个成员先被初始化，然后第二个，以此类推。所以在刚才的例子中，即使我们在构造函数初始值列表中将 `ri` 放在了 `ci` 前面，但是仍然是 `ci` 先初始化了。
+4. **「类外部的构造函数」**：`Sales_data::Sales_data(std::istream &is) { read(is, *this); }`，我们在类的外部定义构造函数。构造函数没有返回类型，所以定义从函数名字开始，首先指明构造函数是哪个类的成员，所以需要在函数名字前加上类名和作用域运算符 `::`，这个构造函数的初始值列表是空的，但是由于执行了构造函数体，所以对象的成员仍然可以被初始化。
+5. **「委托构造函数」**：**委托构造函数/Delegating Constructor** 使用它所属类的其他构造函数执行它自己的初始化过程。换句话说，委托构造函数将自己的一些或者全部职责委托给了其他构造函数。委托构造函数的成员初始值列表只有唯一的一个入口，就是类名本身。下面的类的构造函数中，出了一个构造函数之外都委托了自己的工作，接受 `istream&` 参数的构造函数先是委托给了默认构造函数，而默认构造函数则是委托给了接受三个参数的构造函数。当一个构造函数委托给另一个构造函数的时候，受委托的构造函数的初始值列表和函数体被依次执行，然后才会将控制权交还给委托者的函数体。
+
+    ??? Info "Example"
+
+        ```cpp
+        class Sales_data {
+           public:
+            Sales_data(std::string s, unsigned cnt, double price) : 
+                bookNo(s), units_sold(cnt), revenue(cnt * price) { }
+            Sales_data() : Sales_data("", 0, 0) { }
+            Sales_data(std::string s) : Sales_data(s, 0, 0) { }
+            Sales_data(std::istream &is) : Sales_data() { read(is, *this); }
+        }
+        ```
+
+6. **「默认构造函数的作用」**：回忆使用默认初始化和值初始化的情况，类必须包含一个默认构造函数，以便在被值初始化和默认初始化的时候使用，大多数情况非常容易判断，比如当不实用一个初始值来定义一个局部静态变量的时候就会使用值初始化。同时，尽管类似 `Sales_data obj();` 这个式子的最初含义是定义一个默认初始化后的对象，但是定义的 `obj` 其实是一个函数，去掉括号才是定义一个默认初始化的对象。
+7. **「隐式类类型转换」**：
+8. **「聚合类」**：
+9.  **「字面值常量类」**：
+
+### 2.5 析构函数
+
+**「」**：
+### 静态成员
+
+有的时候类需要它的成员直接和类本身相关，而不是和类的各个对象保持相关。并且如果这个成员发生改变，所有该类的实例都可以使用新值。使用 `static` 关键字可以将成员声明为
+**「」**：
+
+### 友元
 
 ??? Info "Part of Code Implementation of `Window_mgr`"
 
     ```cpp
     class Window_mgr {
-    public:
+       public:
         using ScreenIndex = std::vector<Screen>::size_type;
         void clear(ScreenIndex);
-    private:
+       private:
         std::vector<Screen> screens{Screen(24, 80, ' ')};
     };
 
@@ -211,7 +284,7 @@ private:
 
 ```cpp
 class X{
-    friend void f() { /* ... */ }       // 定义并“声明”友元函数
+    friend void f() { }                 // 定义并“声明”友元函数
     X() { f(); }                        // Error: 友元函数没声明
     void g();
     void h();
@@ -232,12 +305,12 @@ void X::h() { f(); }                    // It works: 调用友元函数
 
 **友元并不具有传递性**，倘若 `Window_mgr` 也有自己的友元（比如是 `A`），那么 `A` 并不能访问 `Screen` 类的私有成员，因为 `A` 并不是 `Screen` 类的友元。
 
+## 3 Inheritance
 
+## 4 动态绑定
 
+## 5 Templates and Generic Programming
 
-## Copy, Assignment and Destruct
-
-## Access Control and Encapsulation
 
 
 
