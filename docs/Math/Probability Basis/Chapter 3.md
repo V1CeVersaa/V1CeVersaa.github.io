@@ -1,4 +1,4 @@
-# Chapter 3
+# Chapter 3 随机变量与分布函数
 
 ## Knowledge
 
@@ -39,7 +39,7 @@
 - **「分布函数的性质」**：分布函数 $F(x)$ 具有下列性质：
 
     1. 单调性：若 $a < b$，则 $F(a) \leq F(b)$；
-    2. $\lim\limits_{x \to -\infty} F(x) = 0$, $\lim\limits_{x \to +\infty} F(x) = 1$； \tag{3.1.6}
+    2. $\lim\limits_{x \to -\infty} F(x) = 0$, $\lim\limits_{x \to +\infty} F(x) = 1$；
     3. 左连续性：$F(x - 0) = F(x)$。
 
     ???- Info "Proof"
@@ -173,9 +173,7 @@
     \boldsymbol{\xi}(\omega) = (\xi_1(\omega), \xi_2(\omega), \cdots, \xi_n(\omega))
     $$
 
-    构成一个 $n$ **维随机向量**，亦称 **$n$ 维随机变量**。显然，一维随机向量即为随机变量，$n$ 维随机向量 $\boldsymbol{\xi}$ 取值于 $n$ 维欧氏空间 $\mathbb{R}^n$。
-
-    对于任意的 $n$ 个实数 $x_1, x_2, \cdots, x_n$
+    构成一个 $n$ **维随机向量**，亦称 **$n$ 维随机变量**。显然，一维随机向量即为随机变量，$n$ 维随机向量 $\boldsymbol{\xi}$ 取值于 $n$ 维欧氏空间 $\mathbb{R}^n$。值得注意的是，随机向量并没有要求其分量都是连续型或者离散型的，可以混合使用。另外，对于任意的 $n$ 个实数 $x_1, x_2, \cdots, x_n$
 
     $$
     \{\xi_1(\omega) < x_1, \xi_2(\omega) < x_2, \cdots, \xi_n(\omega) < x_n\} = \bigcap_{i=1}^{n} \{\xi_i(\omega) < x_i\} \in \mathcal{F}
@@ -192,12 +190,129 @@
     为随机向量 $\boldsymbol{\xi}(\omega) = (\xi_1(\omega), \xi_2(\omega), \cdots, \xi_n(\omega))$ 的联合分布函数。
 
 - **「联合分布函数的性质」**：完全可以类似于一元的情形：
-    1. 还没写
-- **「」**：
-- **「」**：
+    1. **单调性**：联合分布函数 $F(x_1, x_2, \cdots, x_n)$ 关于每个变量都是单调不减的；
+    2. $F(-\infty, x_2, \cdots, x_n) = 0$，$F(+\infty, +\infty, \cdots, +\infty) = 1$；
+    3. **左连续性**：关于每个变量左连续，也就是 $F(x_1 - 0, x_2, \cdots, x_n) = F(x_1, x_2, \cdots, x_n)$；
+    4. 对任意 $a_1 < b_1$，$a_2 < b_2$，都有 $F(b_1, b_2) - F(a_1, b_2) - F(b_1, a_2) + F(a_1, a_2) \geq 0$。
+
+    其中第四条是必须的，这是为了保证 $P\{a_1 \leq \xi_1 < b_1, a_2 \leq \xi_2 < b_2\} \geq 0$。并且第四条可以推出单调性，单调性并不能保证第四条。同时，满足后三条性质的二元函数也一定是某个二维随机变量的分布函数。这些结论对于 $n$ 元的情况也成立。
+
+- **「连续型随机变量的情况」**：没啥特殊的，非负的**（多元分布）密度函数** $p(x_1, x_2, \cdots, x_n)$ 的分布函数为 $\displaystyle F(x_1, x_2, \cdots, x_n) = \int_{-\infty}^{x_1} \cdots \int_{-\infty}^{x_n} p(y_1, y_2, \cdots, y_n) \, \mathrm{d}y_1 \cdots \mathrm{d}y_n$。
+- **「多元正态分布」**：
+- **「边际分布」**：以二维随机向量 $\boldsymbol{\xi} = (\xi, \eta)$ 为例，若其为离散型分布，$\xi$ 取值 $x_1, x_2, \cdots$；$\eta$ 取值 $y_1, y_2, \cdots$，记 $P\{\xi = x_i, \eta = y_j\} = p(x_i, y_j)$，则对于固定的 $i$ 关于 $j$ 求和，就可以得到 $\xi$ 的概率分布 $p_1(x_i) = \sum\limits_{j} p(x_i, y_j) = P\{\xi = x_i\}$，同理可以求得 $p_2(y_j) = \sum\limits_{i} p(x_i, y_j) = P\{\eta = y_j\}$。这两个分布函数分别称为 $p(x_i, y_j)$ 的**边际分布**。对于连续型随机变量，若其分布函数为 $F(x, y)$，密度函数为 $p(x, y)$，可以得出 
+
+    $$\begin{aligned}
+    F_1(x) = P\{\xi < x\} = P\{\xi < x, \eta < +\infty\} = F(x, +\infty) = \int_{-\infty}^{x} \int_{-\infty}^{+\infty} p(u, y) \, \mathrm{d}v \, \mathrm{d}y \\ 
+    F_2(y) = P\{\eta < y\} = P\{\xi < +\infty, \eta < y\} = F(+\infty, y) = \int_{-\infty}^{+\infty} \int_{-\infty}^{y} p(u, y) \, \mathrm{d}v \, \mathrm{d}y
+    \end{aligned}$$
+
+    并且其密度函数几乎显然：$p_1(x) = \displaystyle\int_{-\infty}^{+\infty} p(x, y) \, \mathrm{d}y$，$p_2(y) = \displaystyle\int_{-\infty}^{+\infty} p(x, y) \, \mathrm{d}x$。称为 $p(x, y)$ 的**边际密度函数**。
+
+- **「二元正态分布」**：函数
+
+    $$
+    p(x, y) = \frac{1}{2 \pi \sigma_1 \sigma_2 \sqrt{1 - \rho^2}} \exp \left\{ -\frac{1}{2(1 - \rho^2)} \left[ \frac{(x - \mu_1)^2}{\sigma_1^2} - 2\rho \frac{(x - \mu_1)(y - \mu_2)}{\sigma_1 \sigma_2} + \frac{(y - \mu_2)^2}{\sigma_2^2} \right] \right\}
+    $$
+
+    这里 $\mu_1, \mu_2, \sigma_1, \sigma_2, \rho$ 为常数，$\sigma_1 > 0, \sigma_2 > 0, |\rho| < 1$，称为**二元正态（分布）密度函数**。简记为 $N(\mu_1, \mu_2, \sigma_1^2, \sigma_2^2, \rho)$。其有两个完全对称的典型分解：
+
+    $$\begin{aligned}
+    p(x, y) = \frac{1}{\sqrt{2 \pi} \sigma_1} e^{-\frac{(x - \mu_1)^2}{2 \sigma_1^2}} \times \frac{1}{\sqrt{2 \pi} \sigma_2 \sqrt{1 - \rho^2}} e^{-\frac{\left[y - \left(\mu_2 + \frac{\sigma_2}{\sigma_1} \rho (x - \mu_1)\right)\right]^2}{2 \sigma_2^2 (1 - \rho^2)}} \\
+    p(x, y) = \frac{1}{\sqrt{2 \pi} \sigma_2} e^{-\frac{(y - \mu_2)^2}{2 \sigma_2^2}} \times \frac{1}{\sqrt{2 \pi} \sigma_1 \sqrt{1 - \rho^2}} e^{-\frac{\left[x - \left(\mu_1 + \frac{\sigma_1}{\sigma_2} \rho (y - \mu_2)\right)\right]^2}{2 \sigma_1^2 (1 - \rho^2)}}
+    \end{aligned}$$ 
+
+    第一个式子右边第一部分分为 $N(\mu_1, \sigma_1^2)$ 的密度函数，第二部分为 $N \left( \mu_2 + \frac{\sigma_2}{\sigma_1} \rho (x - \mu_1), \sigma_2^2(1 - \rho^2) \right)$ 的密度函数；第二个式子右边第一部分分为 $N(\mu_2, \sigma_2^2)$ 的密度函数，第二部分为 $N \left( \mu_1 + \frac{\sigma_1}{\sigma_2} \rho (y - \mu_2), \sigma_1^2(1 - \rho^2) \right)$ 的密度函数。并且通过计算边际分布密度得到
+
+    $$
+    p_1(x) = \int_{-\infty}^{+\infty} p(x, y) \, dy = \frac{1}{\sqrt{2 \pi} \sigma_1} e^{-\frac{(x - \mu_1)^2}{2 \sigma_1^2}}
+    $$
+
+    也就是说，二元正态分布的边际分布是正态分布。
+    
+- **「条件分布」**：离散型随机变量的**条件分布**很好理解，若已知 $\xi = x_i$，则事件 $\{\eta = y_j\}$ 的概率为 $P\{\eta = y_j \mid \xi = x_i\} = \dfrac{P\{\xi = x_i, \eta = y_j\}}{P\{\xi = x_i\}} = \dfrac{p(x_i, y_j)}{p_1(x_i)}$。对于一般的随机向量 $(\xi, \eta)$，虽然有 $P\{\xi = x\} = 0$，但是我们可以通过极限来定义：
+
+    $$\begin{aligned}
+        P\{\eta = y \mid \xi = x\} &= \lim_{\Delta x \to 0} P\{\eta < y \mid x \leq \xi < x + \Delta x\} \\
+        &= \lim_{\Delta x \to 0} \frac{P\{x \leq \xi < x + \Delta x, \eta < y\}}{P\{x \leq \xi < x + \Delta x\}} \\
+        &= \lim_{\Delta x \to 0} \frac{F(x + \Delta x, y) - F(x, y)}{F(x + \Delta x, +\infty) - F(x, +\infty)}
+    \end{aligned}$$
+
+    特别的，对于密度函数连续的情况，有
+
+    $$\begin{aligned}
+        P\{\eta < y \mid \xi = x\} &= \lim_{\Delta x \to 0} \frac{\displaystyle\int_{x}^{x + \Delta x} \int_{-\infty}^{y} p(u, v) \, \mathrm{d}v \, \mathrm{d}u}{\displaystyle\int_{x}^{x + \Delta x} \int_{-\infty}^{+\infty} p(u, v) \, \mathrm{d}v \, \mathrm{d}u} \\
+        &= \lim_{\Delta x \to 0} \frac{\displaystyle\int_{-\infty}^{y} p(x, v) \, \mathrm{d}v}{p_1(x)} = \displaystyle\int_{-\infty}^{y} \frac{p(x, v)}{p_1(x)} \, \mathrm{d}v
+    \end{aligned}$$
+
+    因此我们可以得到在给定 $\xi = x$ 的情况下，$\eta$ 的条件分布密度函数为 $p(y \mid x) = \dfrac{p(x, y)}{p_1(x)}$。
+
+- **「随机变量的独立性」**：设 $\xi_1, \xi_2, \cdots, \xi_n$ 是定义在同一概率空间上的随机变量，若对于任意的 $x_1. x_2, \cdots, x_n$ 有
+
+    $$
+    P\{\xi_1 < x_1, \xi_2 < x_2, \cdots, \xi_n < x_n\} = P\{\xi_1 < x_1\} P\{\xi_2 < x_2\} \cdots P\{\xi_n < x_n\}
+    $$
+
+    则称 $\xi_1, \xi_2, \cdots, \xi_n$ 为相互独立的。若我们知道其分布函数分别为 $F_1(x_1), F_2(x_2), \cdots, F_n(x_n)$，与联合分布函数 $F(x_1, x_2, \cdots, x_n)$，则独立性的定义可以转化为
+
+    $$
+    F(x_1, x_2, \cdots, x_n) = F_1(x_1) F_2(x_2) \cdots F_n(x_n)
+    $$
+
+    同时，随机变量 $\xi_1, \xi_2, \cdots, \xi_n$ 独立的充要条件是对于任意的一维 Borel 集合 $B_1, B_2, \cdots, B_n$，有
+
+    $$
+    P\{\xi_1 \in B_1, \xi_2 \in B_2, \cdots, \xi_n \in B_n\} = P\{\xi_1 \in B_1\} P\{\xi_2 \in B_2\} \cdots P\{\xi_n \in B_n\}
+    $$
 
  
+### 3. 随机变量的函数及其分布
 
+- **「」**：
+- **「」**：
+- **「」**：
+- **「随机向量的变换」**：若 $(\xi_1, \cdots, \xi_n)$ 的密度函数为 $p(x_1, \cdots, x_n)$，求 $\eta_1 = g_1(\xi_1, \cdots, \xi_n), \cdots, \eta_m = g_m(\xi_1, \cdots, \xi_n)$ 的分布。这时有
+
+    $$\begin{aligned}
+    G(y_1, \cdots, y_m) &= P\{\eta_1 < y_1, \cdots, \eta_m < y_m\} \\ 
+    &= \int_{\substack{g_1(x_1, \cdots, x_n) < y_1 \\ \cdots \\ g_m(x_1, \cdots, x_n) < y_m}} p(x_1, \cdots, x_n) \mathrm{d}\,x_1 \cdots \mathrm{d}\,x_n
+    \end{aligned}$$
+
+    考虑一个重要的特殊情形：当 $(\xi_1, \cdots, \xi_n)$ 与 $(\eta_1, \cdots, \eta_m)$ 有一一对应变换关系时，当然这时 $n = m$ 必须成立。如果对 $y_i = g_i(x_1, \cdots, x_n)$ 都存在唯一的**反函数** $x_i = x_i(y_1, \cdots, y_n) = x_i$，并且设 $(\eta_1, \cdots, \eta_n)$ 的密度函数为 $q(y_1, \cdots, y_n)$，则有
+
+    $$
+    G(y_1, \cdots, y_n) = \int_{\substack{u_1 < y_1 \\ \cdots \\ u_n < y_n}} q(u_1, \cdots, u_n) \mathrm{d}\,u_1 \cdots \mathrm{d}\,u_n
+    $$
+
+    所以这时就有（要求 $(y_1, \cdots, y_n)$ 落在 $(g_1, \cdots, g_n)$ 的值域内）
+
+    $$
+    q(y_1, \cdots, y_n) = p(x_1(y_1, \cdots, y_n), \cdots, x_n(y_1, \cdots, y_n)) \left| J \right|
+    $$
+
+    其中 $J$ 为**雅可比行列式**，即
+    
+    $$J = \begin{vmatrix}
+    \dfrac{\partial x_1}{\partial y_1} & \cdots & \dfrac{\partial x_1}{\partial y_n} \\
+    \vdots & \ddots & \vdots \\
+    \dfrac{\partial x_n}{\partial y_1} & \cdots & \dfrac{\partial x_n}{\partial y_n}
+    \end{vmatrix}$$
+
+
+
+- **「随机变量的函数的独立性」**：若 $\xi_1, \cdots, \xi_n$ 是相互独立的随机变量，则 $f_1(\xi_1), \cdots, f_n(\xi_n)$ 也是相互独立的，这里 $f_i (i = 1, \cdots, n)$ 是任意的一元博雷尔函数。值得注意的是，这个结果可以被推广到随机向量的情形。
+
+    ???- Info "Proof"
+
+        对任意的一维博雷尔点集 $A_1, \cdots, A_n$ 有
+
+        $$\begin{aligned}
+            P\{f_1(\xi_1) \in A_1, \cdots, f_n(\xi_n) \in A_n\} &= P\{\xi_1 \in f_1^{-1}(A_1), \cdots, \xi_n \in f_n^{-1}(A_n)\} \\
+            &= P\{\xi_1 \in f_1^{-1}(A_1)\} \cdots P\{\xi_n \in f_n^{-1}(A_n)\} \\
+            &= P\{f_1(\xi_1) \in A_1\} \cdots P\{f_n(\xi_n) \in A_n\}
+        \end{aligned}$$   
+
+- **「$\chi^2$分布」**：
+- **「Rayleigh 分布」**：
 - **「」**：
 
 

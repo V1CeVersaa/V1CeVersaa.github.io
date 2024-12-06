@@ -9,8 +9,8 @@
 }
 
 :root {
-    --md-text-font: 'LXGW WenKai Screen', 'Cascadia', 'Monaco';
-    --md-code-font: 'Monaco', 'Cascadia', 'Monaspace Argon',
+    --md-text-font: 'LXGW WenKai Screen', 'Cascadia Code', 'Monaco';
+    --md-code-font: 'Monaco', 'Cascadia Code', 'Monaspace Argon',
         'LXGW WenKai Screen';
     --md-code-font-size: 0.075em;
 }
@@ -18,7 +18,7 @@
 /* "JetBrains mono", "Monaspace Argon Light",  */
 p code,
 li code {
-    font-family: 'Monaco', 'Cascadia', 'Monaspace Argon Light',
+    font-family: 'Monaco', 'Cascadia Code', 'Monaspace Argon Light',
         'Monaspace Argon', 'LXGW WenKai Screen';
     src: url(https://v1ceversaa.github.io/docs/css/MonaspaceArgon-Light.woff)
         format('woff');
@@ -33,10 +33,6 @@ li code {
     font-variant-ligatures: normal;
 }
 
-/* p, li {
-    font-family: "Times New Roman", "Songti SC";
-    font-weight: 600;
-  } */
 .md-nav__link {
     zoom: 105%;
 }
@@ -302,4 +298,10 @@ a:active .heimu {
 .riscv-table-numnoder {
     font-size: 0.4rem;
     text-align: right;
+}
+
+.center-picture {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

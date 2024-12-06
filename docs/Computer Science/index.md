@@ -19,10 +19,10 @@
 
 ### Programming Language
 
-- [ ] [Programming Language: C](./Programming%20Language/C.md)
+- [ ] [Programming Language: C](./Programming%20Language/C/index.md)
 - [ ] [Programming Language: C++](Programming%20Language/C++/C++.md)
 - [ ] [Programming Language: Python](./Programming%20Language/Python/index.md)
-- [ ] [Programming Language: OCaml](./Programming%20Language/Ocaml/OCaml.md) <**Not Started**>
+- [ ] [Programming Language: OCaml](./Programming%20Language/Ocaml/index.md) <**Not Started**>
 
 ### Web
 

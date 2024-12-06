@@ -3,8 +3,10 @@
 !!! Info 
     参考：
 
-    - [openzeppelin 的 ERC 实现]()
+    - [openzeppelin 的 ERC 实现](https://github.com/OpenZeppelin/openzeppelin-contracts)
     - [xg 有关 ERC 的笔记](https://note.tonycrane.cc/ctf/blockchain/eth/erc/)
+
+写在前面：很多时候我们需要编译器与虚拟机版本较低时的合约代码，而恰好 openzeppelin 在 GitHub 上有非常多的 fork，我们就可以翻阅 fork，找到需要版本的合约代码，但是这种题一般少多多了，甚至很多题目都需要更新（甚至刚刚发布）的版本的虚拟机。
 
 ## ERC-20
 

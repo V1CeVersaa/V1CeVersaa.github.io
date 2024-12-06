@@ -11,14 +11,6 @@ plugins:
     - search
     - statistics
 
-    # - changelog
-    # - search
-    # - git-revision-date-localized:
-    #     type: datetime
-    #     timezone: Asia/Shanghai
-    #     locale: zh
-    #     enable_creation_date: true
-
 nav:
     - Home: index.md
     - Computer Science:
@@ -31,11 +23,16 @@ nav:
                 - Tmux Cheatsheet: Computer Science/Programming Basis/tmux.md
                 - GNU Make & CMake: Computer Science/Programming Basis/GNU Make.md
                 - Regular Expression: Computer Science/Programming Basis/Regular Expression.md
-          - Programing language:
+          - Programing Language:
                 - Computer Science/Programming Language/index.md
-                - C: Computer Science/Programming Language/C.md
+                - C:
+                      - Computer Science/Programming Language/C/index.md
+                      - Basic Syntax: Computer Science/Programming Language/C/topic1.md
+                      - Array, Pointer and String: Computer Science/Programming Language/C/topic2.md
+                      - Memory Management: Computer Science/Programming Language/C/topic3.md
+                      - Standard Library: Computer Science/Programming Language/C/topic4.md
                 - C++:
-                      - Computer Science/Programming Language/C++/C++.md
+                      - Computer Science/Programming Language/C++/index.md
                       - Basic Syntax: Computer Science/Programming Language/C++/Basic Syntax.md
                       - Object Oriented Programming: Computer Science/Programming Language/C++/OOP.md
                       - Standard Library: Computer Science/Programming Language/C++/Standard Library.md
@@ -50,24 +47,29 @@ nav:
                       - Torch: Computer Science/Programming Language/Python/Lib-Torch.md
                       - Pandas: Computer Science/Programming Language/Python/Lib-Pandas.md
                 - Rust:
-                      - Computer Science/Programming Language/Rust/Rust.md
+                      - Computer Science/Programming Language/Rust/index.md
                       - Basic Syntax: Computer Science/Programming Language/Rust/Basic Syntax.md
                 - Go:
-                      - Computer Science/Programming Language/Go/Go.md
+                      - Computer Science/Programming Language/Go/index.md
                       - Basic Syntax: Computer Science/Programming Language/Go/Basic Syntax.md
                 - Ocaml:
-                      - Computer Science/Programming Language/Ocaml/Ocaml.md
-          - Algorithm:
-                - Computer Science/Algorithm/Algorithms and Data Structure.md
+                      - Computer Science/Programming Language/Ocaml/index.md
+          - Algorithms & DS:
+                - Computer Science/Algorithm/index.md
                 - FDS Collection I: Computer Science/Algorithm/FDS I.md
                 - FDS Collection II: Computer Science/Algorithm/FDS II.md
-                - Balanced Tree: Computer Science/Algorithm/Lec 1.md
+                - Advanced Trees: Computer Science/Algorithm/Lec 1.md
+                - Advanced Heaps: Computer Science/Algorithm/Lec 2.md
+                - Algorithms: Computer Science/Algorithm/Lec 3.md
+          - Quantum Computing:
+                - Computer Science/Quantum Computing/index.md
+                - Quantum Machine Learning: Computer Science/Quantum Computing/QML.md
           - Blockchain:
-                - Computer Science/Blockchain/Blockchain.md
+                - Blockchain Basis: Computer Science/Blockchain/Blockchain.md
                 - Ethereum:
-                      - Computer Science/Blockchain/Ethereum.md
-                      - Solidity: Computer Science/Blockchain/Solidity.md
-                      - ERC Standard: Computer Science/Blockchain/ERC.md
+                      - Computer Science/Blockchain/Ethereum/index.md
+                      - Solidity: Computer Science/Blockchain/Ethereum/Solidity.md
+                      - ERC Standard: Computer Science/Blockchain/Ethereum/ERC.md
           - Web:
                 - Computer Science/Web/index.md
                 - CSS: Computer Science/Web/CSS.md
@@ -107,25 +109,37 @@ nav:
                 - x86 Assembly:
                       - System/x86 Assembly/x86.md
           - Processor Architecture:
-                - CSAPP-Processor Architecture: System/CSAPP/Chapter4.md
+                - ZJU SYS II-Processor: System/ZJU SYS/SysII-Processor.md
                 - COAD-The Processor: System/COAD/Chapter4.md
                 - DDCA-Microarchitecture: System/DDCA/Chapter7.md
-                - ZJU SYS II-Processor: System/ZJUSys/SysII-Processor.md
+                - CSAPP-Processor Architecture: System/CSAPP/Chapter4.md
           - Memory Hierarchy:
                 - CSAPP-The Memory Hierarchy: System/CSAPP/Chapter6.md
                 - COAD-Large and Fast Exploiting Memory Hierarchy: System/COAD/Chapter5.md
                 - DDCA-Memory Systems: System/DDCA/Chapter8.md
-          - Hardware Description Language:
-                - Verilog: System/HDL/Verilog.md
-                - Chisel: System/HDL/Chisel.md
           - Running Programs on a System:
                 - CSAPP-Linking: System/CSAPP/Chapter7.md
                 - CSAPP-Exceptional Control Flow: System/CSAPP/Chapter8.md
                 - CSAPP-Virtual Memory: System/CSAPP/Chapter9.md
+          - Process Management & Synchronization:
+                - OSC-Process & Thread: System/OSC/topic1.md
+                - OSC-Scheduling: System/OSC/topic2.md
+                - OSTEP-CPU Virtualization: System/OSTEP/topic1.md
+                - OSC-Synchronization: System/OSC/topic3.md
+                - OSC-Deadlock: System/OSC/topic4.md
+                - OSTEP-Concurrency: System/OSTEP/topic3.md
           - Interacting and Communicating with a System:
                 - CSAPP-System-Level IO: System/CSAPP/Chapter10.md
                 - CSAPP-Network Programming: System/CSAPP/Chapter11.md
                 - CSAPP-Concurrent Programming: System/CSAPP/Chapter12.md
+          - Memory, Storage and File System:
+                - OSC-Memory Management: System/OSC/topic5.md
+                - OSC-Stroage Management: System/OSC/topic6.md
+                - OSC-File System: System/OSC/topic7.md
+          - Hardware Description Language:
+                - Verilog: System/HDL/Verilog.md
+                - Chisel: System/HDL/Chisel.md
+
           # - Courses and Papers:
           #       - ZJU System II: System/Lab Record/ZJU System II note.md
           # - Lab Record:
@@ -139,6 +153,8 @@ nav:
                 - CSAPP: System/CSAPP/CSAPP.md
                 - COAD: System/COAD/COAD.md
                 - DDCA: System/DDCA/DDCA.md
+                - OSC: System/OSC/OSC.md
+                - OSTEP: System/OSTEP/OSTEP.md
     - AI:
           - AI/index.md
           - Intro to Machine Learning:
@@ -156,15 +172,15 @@ nav:
                 - Mathematical Analysis: Math/Real Analysis/Mathematical Analysis.md
                 - Measure: Math/Real Analysis/Measure.md
                 - Integration: Math/Real Analysis/Integration.md
-          #   - Optimization:
-          #         - Course Introduction: Math/Optimization/1 Introduction.md
-          #         - Basis for Optimizaion: Math/Optimization/2 Smooth.md
-          #         - Descent Method: Math/Optimization/3 Descent.md
-          #         - Acceleration Method: Math/Optimization/4 Acceleration.md
-          #         - Convex Method: Math/Optimization/5 Convex.md
-          #         - Constraint Set: Math/Optimization/6 Constrained.md
-          #         - Structure Optimization: Math/Optimization/7 Structure.md
-          #         - Stochastic Optimization: Math/Optimization/8 Stochastic.md
+          - Optimization:
+                - Course Introduction: Math/Optimization/1 Introduction.md
+                - Basis for Optimizaion: Math/Optimization/2 Smooth.md
+                - Descent Method: Math/Optimization/3 Descent.md
+                - Acceleration Method: Math/Optimization/4 Acceleration.md
+                - Convex Method: Math/Optimization/5 Convex.md
+                - Constraint Set: Math/Optimization/6 Constrained.md
+                - Structure Optimization: Math/Optimization/7 Structure.md
+                - Stochastic Optimization: Math/Optimization/8 Stochastic.md
           - Basic Probability:
                 - Math/Probability Basis/index.md
                 - Chapter 1-2: Math/Probability Basis/Chapter 1-2.md
@@ -208,10 +224,7 @@ theme:
     language: 'zh'
     icon:
         logo: material/notebook-outline
-    # favicon: material/notebook-outline
-    # custom_dir: overrides
     features:
-        # - header.autohide
         - content.code.annotate
         - content.action.edit
         - toc.follow
@@ -220,15 +233,11 @@ theme:
         - navigation.prune
         - navigation.indexes
         - navigation.top
-        # - navigation.tabs.sticky
         - search.share
-        - search.highlight # 搜索出的文章关键词加入高亮
-        - search.suggest # 搜索输入一些字母时推荐补全整个单词
-    font:
-        text: LXGW WenKai Screen
-        code: [Monaspace Argon Light, JetBrains Mono, LXGW WenKai Screen]
+        - search.highlight
+        - search.suggest
+    font: false
     palette:
-        # - scheme: default
         - media: '(prefers-color-scheme: light)'
           scheme: default
           primary: brown
@@ -261,7 +270,7 @@ markdown_extensions:
     - pymdownx.magiclink
     - pymdownx.superfences
     - pymdownx.inlinehilite
-    - pymdownx.smartsymbols #智能符号
+    - pymdownx.smartsymbols
     - neoteroi.spantable
     - pymdownx.emoji:
           emoji_index: !!python/name:materialx.emoji.twemoji
@@ -296,8 +305,5 @@ extra_javascript:
     - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
     - https://gcore.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js
     - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js
-    # - css/Javascripts/mathjax.js
-    # - css/Javascripts/katex.js
-    # Table Sort
     - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
     - css/Javascripts/tablesort.js

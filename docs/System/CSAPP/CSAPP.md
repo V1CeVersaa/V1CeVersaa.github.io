@@ -14,7 +14,7 @@
 - [ ] [Chapter 1: A Tour of Computer Systems](./Chapter1.md)
 - [ ] [Chapter 2: Representing and Manipulating Information](./Chapter2.md)
 - [ ] [Chapter 3: Machine-Level Representation of Programs](./Chapter3.md)
-- [ ] [Chapter 4: Processor Architecture](./Chapter4.md)
+- [x] [Chapter 4: Processor Architecture](./Chapter4.md)
 - [ ] [Chapter 5: Optimizing Program Performance](./Chapter5.md)
 - [ ] [Chapter 6: The Memory Hierarchy](./Chapter6.md)
 - [ ] [Chapter 7: Linking](./Chapter7.md)
