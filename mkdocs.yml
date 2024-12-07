@@ -201,23 +201,22 @@ nav:
                 - Relations: Math/Discrete Mathematics/09 Relations.md
                 - Graph Theory: Math/Discrete Mathematics/10 Graph Theory.md
                 - Trees: Math/Discrete Mathematics/11 Trees.md
-
-    - Reading:
-          - Reading/index.md
-          # - History:
-          # - Reading/The Western Heritage.md
-          - The Western Heritage:
-                - Reading/The Western Heritage/The Western Heritage.md
-                - Chapter 0: Reading/The Western Heritage/Chapter00.md
-                - Chapter 1: Reading/The Western Heritage/Chapter01.md
-          - Taking Sides:
-                - Reading/Taking Sides/index.md
-                - Sustainability: Reading/Taking Sides/Sustainability.md
     - Varia:
           - Learning Plan: Varia/Learning Plan.md
           - Booklist: Varia/Booklist.md
           - Typst Learning Report: Varia/Typst.md
           - Environment Configuration: Varia/Envs.md
+    # - Reading:
+    #       - Reading/index.md
+    #       # - History:
+    #       # - Reading/The Western Heritage.md
+    #       - The Western Heritage:
+    #             - Reading/The Western Heritage/The Western Heritage.md
+    #             - Chapter 0: Reading/The Western Heritage/Chapter00.md
+    #             - Chapter 1: Reading/The Western Heritage/Chapter01.md
+    #       - Taking Sides:
+    #             - Reading/Taking Sides/index.md
+    #             - Sustainability: Reading/Taking Sides/Sustainability.md
 
 theme:
     name: material

@@ -7,6 +7,15 @@
 <script> alert('Hello, World!'); </script>
 ```
 
+???- Info "一些妙妙小东西"
+    学在浙大课件下载，打开开发者工具，复制代码到控制台运行则可：
+
+    ```Javascript
+    var src = document.getElementById('pdf-viewer').getAttribute('ng-src')
+    var url = unescape(src).replace(/.+(http.+)(&upload_id.+)/, '$1')
+    window.location.href = url
+    ```
+
 ## 数据类型
 
 使用 `let` 或者 `var` 来创建一个变量，但是现代一般使用 `let`，比如 `let message` 就创建了一个名为 `message` 的变量，`message = "hello"` 就将 `message` 赋值成为 `hello`，变量名可以包含字母、数字、下划线和美元符号，甚至可以有非英文字母，但是不能以数字开头，同时推荐使用驼峰命名法。
@@ -39,12 +48,3 @@ console.log(admin);
 
 ## 5. 对象
 
-
-???- Info "一些妙妙小东西"
-    学在浙大课件下载：
-
-    ```Javascript
-    var src = document.getElementById('pdf-viewer').getAttribute('ng-src')
-    var url = unescape(src).replace(/.+(http.+)(&upload_id.+)/, '$1')
-    window.location.href = url
-    ```

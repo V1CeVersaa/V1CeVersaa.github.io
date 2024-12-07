@@ -1,7 +1,9 @@
 # ZJU Computer Systems II: Processor
 
 !!! Abstract 
-    在本篇笔记中，图片大多来自于 [浙江大学计算机系统 II](https://zju-turing.github.io/TuringCourses/major_basic/computer_system2/) 的课程课件，也有参考 [xg 的笔记]()，在此表示对老师和学长的诚挚感谢。
+    在本篇笔记中，图片大多来自于 [浙江大学计算机系统 II](https://zju-turing.github.io/TuringCourses/major_basic/computer_system2/) 的课程课件，也有参考 [xg 的笔记](https://note.tonycrane.cc/cs/system/cs2/topic1)，在此表示对老师和学长的诚挚感谢。
+
+    这部分内容和课内试验内容高度相关，而 CSAPP 这部分写的疲软无力，而类似计算机组成与设计：硬件软件接口和数字设计与计算机体系结构这类书籍又与课内内容有所出入，真不如直接看课件和实验内容。幸好浙江大学计算机系统贯通课程提供了很好的课程与试验内容，令我受益匪浅。
 
 > Pipelining is an implementation technique whereby multiple instructions are overlapped in execution; it takes advantage of parallelism that exists among the actions needed to execute an instruction.
 

@@ -133,8 +133,7 @@ puts(words):
 
     ```c
     char words[10];
-    while(fgets(words,10,stdin) != NULL && words[0]!='\n')
-    {
+    while(fgets(words,10,stdin) != NULL && words[0]!='\n') {
         fputs(words,stdout);
     }
     
@@ -171,14 +170,12 @@ puts(words):
     利用字符串函数，我们可以对函数进行修改，让它更加简洁。
 
     ```c
-    char *s_gets(char *st, int n)
-    {
+    char *s_gets(char *st, int n) {
         char *ret_val;
         char *find;
         
         ret_val = fgets(st, n, stdin);
-        if(ret_val)
-        {
+        if(ret_val) {
             find = strchr(st, '\n');
             if(find)
                 *find = '\0';
@@ -225,15 +222,11 @@ puts(words):
    重要的是我们可以利用`strlen()`函数来得到字符串的一些性质参数，进而更容易实现对字符串的操作，比如我们可以利用下面自行设计的函数来实现字符串的截断：
 
    ```c
-   char *vit(char str[],unsigned int point)
-   {
+   char *vit(char str[],unsigned int point) {
         unsigned int length = strlen(str);
-        if(point > length - 1)
-        {
+        if(point > length - 1) {
             return str;
-        }
-        else
-        {
+        } else {
             str[point]='\\0';
             return str;
         }	
@@ -242,48 +235,48 @@ puts(words):
 
 2. **`strcat()`函数**
 
-   `strcat()`函数接受两个字符串作为参数，用于将两个字符串拼接在一起，更确切地说是将第二个字符串的拷贝附加在第一个字符串的末尾，并且将拼接后的字符串作为第一个字符串，第二个字符串不变。`strcat()`函数返回第一个参数。
+    `strcat()`函数接受两个字符串作为参数，用于将两个字符串拼接在一起，更确切地说是将第二个字符串的拷贝附加在第一个字符串的末尾，并且将拼接后的字符串作为第一个字符串，第二个字符串不变。`strcat()`函数返回第一个参数。
 
-   `strcat()`函数和`gets()`函数一样，如果使用不当，也会导致缓冲区溢出。但是`gets()`函数被废弃的原因在于无法控制用户向程序里边输入什么，但是程序员是可以控制程序干什么的。因此，在经历输入的检查之后，我们认为至少程序是比较安全的，而使用`strcat()`函数不当导致缓冲区溢出的情况，被认为是程序员粗心导致的，而C语言相信程序员，程序员也有责任确保`strcat()`函数的使用安全。
+    `strcat()`函数和`gets()`函数一样，如果使用不当，也会导致缓冲区溢出。但是`gets()`函数被废弃的原因在于无法控制用户向程序里边输入什么，但是程序员是可以控制程序干什么的。因此，在经历输入的检查之后，我们认为至少程序是比较安全的，而使用`strcat()`函数不当导致缓冲区溢出的情况，被认为是程序员粗心导致的，而C语言相信程序员，程序员也有责任确保`strcat()`函数的使用安全。
 
 3. **`strncat()`函数**
 
-   为了避免`strcat()`函数的不安全的可能，我们类似`fputs()`函数那样，添加第二个参数，确定最大添加字符数，这就是`strncat()`函数的逻辑。
+    为了避免`strcat()`函数的不安全的可能，我们类似`fputs()`函数那样，添加第二个参数，确定最大添加字符数，这就是`strncat()`函数的逻辑。
 
-   `strncat()`函数接受三个参数，两个字符串指针和最大添加字符量，在加到最大字符量或者遇到空字符的时候停止。
+    `strncat()`函数接受三个参数，两个字符串指针和最大添加字符量，在加到最大字符量或者遇到空字符的时候停止。
 
-   配合`strlen()`函数，`strncat()`函数可以很好用。
+    配合`strlen()`函数，`strncat()`函数可以很好用。
 
 4. **`strcmp()`函数和`strncmp()`函数**
 
-   首先，我们比较两个字符串的时候，比较的是字符串的内容，而不是字符串的地址，所以我们不能做判断指针是否相等的操作，而利用循环挨个判断还蛮复杂，这就是`strcmp()`函数诞生的逻辑。
+    首先，我们比较两个字符串的时候，比较的是字符串的内容，而不是字符串的地址，所以我们不能做判断指针是否相等的操作，而利用循环挨个判断还蛮复杂，这就是`strcmp()`函数诞生的逻辑。
 
-   `strcmp()`函数接受两个字符串指针参数，如果字符串内容完全相等（包括大小写），`strcmp()`函数就会返回0，否则返回非零值。
+    `strcmp()`函数接受两个字符串指针参数，如果字符串内容完全相等（包括大小写），`strcmp()`函数就会返回0，否则返回非零值。
 
-   在字符串内容不一样的时候，如果第一个字符串的字符在**ASCII**码在第二个字符串的之前，`strcmp()`返回负数，反之返回正数；在某些编译器中，会作更加复杂的操作，也就是返回两字符的**ASCII**码的差。
+    在字符串内容不一样的时候，如果第一个字符串的字符在**ASCII**码在第二个字符串的之前，`strcmp()`返回负数，反之返回正数；在某些编译器中，会作更加复杂的操作，也就是返回两字符的**ASCII**码的差。
 
-   `strcmp()`函数会一直比较字符是否相同，直到出现不同或者字符串结束，这样的比较方式显得就非常笨重，而`strncmp()`函数提供了一种更为灵活的选择：`strncmp()`函数接受的第三个整数参数指定了比较到第几个字符（这里从1开始计数 ;-) ）比如`strncmp(str1,"strings",7)`就指定只查找`strings`这七个字符。
+    `strcmp()`函数会一直比较字符是否相同，直到出现不同或者字符串结束，这样的比较方式显得就非常笨重，而`strncmp()`函数提供了一种更为灵活的选择：`strncmp()`函数接受的第三个整数参数指定了比较到第几个字符（这里从1开始计数 ;-) ）比如`strncmp(str1,"strings",7)`就指定只查找`strings`这七个字符。
 
 5. **`strcpy()`函数和`strncpy()`函数**
-    `strcpy()`函数
+        `strcpy()`函数
 6. **`sprint()`函数**
 7. **`memcpy()`函数**
 8. **Others.**
 
-   - **`strchr()`函数**
+      - **`strchr()`函数**
 
-   - **`strrchr()`函数**
+      - **`strrchr()`函数**
 
-   - **`strstr()`函数**
+      - **`strstr()`函数**
 
-   - **`atoi()`函数**
+      - **`atoi()`函数**
 
-   - **Character Classification**
+      - **Character Classification**
 
-     **`isalpha()`函数**
+        **`isalpha()`函数**
 
-     和`isalpha()`函数属于一类的函数还有
+        和`isalpha()`函数属于一类的函数还有
 
-     **`tolower()`和`toupper()`函数**
+        **`tolower()`和`toupper()`函数**
 
-     ***cppreference*** 上对这两个函数归类为 ***Character Manipulation*** 解释是：*converts a character to lowercase/uppercase.*
+        ***cppreference*** 上对这两个函数归类为 ***Character Manipulation*** 解释是：*converts a character to lowercase/uppercase.*

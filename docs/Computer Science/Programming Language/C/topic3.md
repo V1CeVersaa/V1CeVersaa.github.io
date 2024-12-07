@@ -24,18 +24,17 @@
 
 - 如果在函数的外边定义了一个变量，比如以下程序：
 
-  ```c
-  #include<stdio.h>
-  int glb_val =1;
-  int main(void)
-  {
-      printf("%d",glb_val);
-  }
-  ```
+    ```c
+    #include<stdio.h>
+    int glb_val =1;
+    int main(void){
+        printf("%d",glb_val);
+    }
+    ```
 
-  这里的变量`glb_val`就具有文件作用域，更确切地说，具有外部链接的文件作用域，我们也叫它为全局变量。
+    这里的变量`glb_val`就具有文件作用域，更确切地说，具有外部链接的文件作用域，我们也叫它为全局变量。
 
-  **Tip:**这里的`glb_val`它的作用域是从定义处到文件结束。
+    **Tip:**这里的`glb_val`它的作用域是从定义处到文件结束。
 
 #### 6.1.4 翻译单元
 
@@ -129,8 +128,7 @@ ptd = (double *) malloc(30*sizeof(double));
 ```c
 int numrow = 6,numcolumn = 5;
 int **array2 = (int **)malloc(sizeof(int*)*numrow);
-for(int i = 0; i<m; i++)
-{
+for(int i = 0; i<m; i++){
 	array2[i] = (int *)malloc(sizeof(int)*numcolumn);
 }
 //或者

@@ -106,7 +106,7 @@ class Screen {
         // friend void Window_mgr::clear(ScreenIndex);          // 成员函数作为友元
         friend std::ostream &storeOn(std::ostream&, Screen&);   // 重载的友元函数
        
-          public:
+       public:
         typedef std::string::size_type pos;
         Screen() = default;
         Screen(pos ht, pos wd, char c) : height(ht), width(wd), contents(ht * wd, c) { }
