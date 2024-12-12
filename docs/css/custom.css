@@ -9,13 +9,12 @@
 }
 
 :root {
-    --md-text-font: 'LXGW WenKai Screen', 'Cascadia Code', 'Monaco';
-    --md-code-font: 'Monaco', 'Cascadia Code', 'Monaspace Argon',
+    --md-text-font: 'LXGW WenKai Screen', 'Cascadia', 'Monaco';
+    --md-code-font: 'Monaco', 'Cascadia', 'Monaspace Argon',
         'LXGW WenKai Screen';
     --md-code-font-size: 0.075em;
 }
 
-/* "JetBrains mono", "Monaspace Argon Light",  */
 p code,
 li code {
     font-family: 'Monaco', 'Cascadia Code', 'Monaspace Argon Light',

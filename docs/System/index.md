@@ -5,10 +5,10 @@
 
 ## Table of Contents
 
-- [ ] [CSAPP：深入理解计算机系统](CSAPP/CSAPP.md)
-- [ ] [COAD：计算机组成与设计](COAD/COAD.md)
-- [ ] [DDCA：数字设计与计算机体系结构](DDCA/DDCA.md)
-- [ ] [OSC：操作系统概念](OSC/OSC.md)
-- [ ] [OSTEP：操作系统导论](OSTEP/OSTEP.md) <咕咕咕>
-- [ ] [System: Verilog](./HDL/Verilog.md)
-- [ ] [System: RISC-V](./RISC-V/RISC-V.md)
+- [ ] [CSAPP：深入理解计算机系统](CSAPP/CSAPP.md) < 咕咕咕 >
+- [ ] [COAD：计算机组成与设计](COAD/COAD.md) < 随缘更 >
+- [ ] [DDCA：数字设计与计算机体系结构](DDCA/DDCA.md) < 咕咕咕 >
+- [ ] [OSC：操作系统概念](OSC/OSC.md) < Learning >
+- [ ] [OSTEP：操作系统导论](OSTEP/OSTEP.md) < 随缘更 >
+- [ ] [HDL: Verilog](./HDL/Verilog.md)
+- [ ] [ISA: RISC-V](./RISC-V/RISC-V.md)
