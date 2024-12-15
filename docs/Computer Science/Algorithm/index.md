@@ -20,4 +20,5 @@
 - [ ] [FDS Collection II](./FDS%20II.md)
 - [ ] [Balanced Tree and Amortized Analysis](./Lec%201.md)
 - [ ] [Advanced Heaps](./Lec%202.md)
-- [ ] [Algorithm Analysis](./Lec%203.md)
+- [ ] [Algorithm Analysis I](./Lec%203.md)
+- [ ] [Algorithm Analysis II](./Lec%204.md)
