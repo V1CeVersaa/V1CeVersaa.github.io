@@ -1,5 +1,9 @@
 # Part 4 Number Theory and Cryptography
 
+!!! Info 
+
+    不想写数论的内容了，这部分讲的又浅又快，没啥意义。
+
 ## 4.1 Divisibility and Modular Arithmetic
 
 **Division**: An integer $a$ divides $b$ if and only if there exists an integer $c$ such that $b = ac$. We write $a|b$.
