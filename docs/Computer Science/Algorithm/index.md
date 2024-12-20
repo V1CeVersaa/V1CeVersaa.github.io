@@ -13,6 +13,7 @@
 
     - [梅老板的 FDS 笔记](https://note.shad0wash.cc/cs/fds/linkedlist/);
     - [xg 的 FDS 笔记](https://note.tonycrane.cc/cs/algorithm/ds/)
+    - 吴一航学长的 ADS 讲义
 
 ## Table of Contents
 

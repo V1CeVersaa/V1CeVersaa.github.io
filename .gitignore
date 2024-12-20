@@ -6,6 +6,7 @@ ProblemSet.md
 .DS_Store
 site
 .prettierrc.yml
+.prettierignore
 .editorconfig
 
 # BSC++.md

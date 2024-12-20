@@ -17,18 +17,18 @@
 User-Level ISA defines the normal instructions needed for computation:
 
 - A mandatory **base integer ISA** RV32I/RV32E/RV64I
-  - **I** for basic Integer instructions, including ALU(only with addition and subtraction), Branches and Jumps, Loads and Stores.
+    - **I** for basic Integer instructions, including ALU(only with addition and subtraction), Branches and Jumps, Loads and Stores.
 - Standard Extensions:
-  - **M** for Integer Multiplication and Division.
-  - **A** for Atomic Instructions.
-  - **F** for Single-Precision Floating-Point.
-  - **D** for Double-Precision Floating-Point.
-  - **C** for Compressed Instructions (16-bit).
-  - **V** for Vector Operations.
-  - **Q** for Quad-Precision Floating-Point.
-  - **Zicsr** for Control and Status Registers.
-  - **Zifencei** for FENCE.I Instruction.
-  - **G/IMAFDZicsr_Zifencei** for General Purpose, i.e. integer base and four standard extensions.
+    - **M** for Integer Multiplication and Division.
+    - **A** for Atomic Instructions.
+    - **F** for Single-Precision Floating-Point.
+    - **D** for Double-Precision Floating-Point.
+    - **C** for Compressed Instructions (16-bit).
+    - **V** for Vector Operations.
+    - **Q** for Quad-Precision Floating-Point.
+    - **Zicsr** for Control and Status Registers.
+    - **Zifencei** for FENCE.I Instruction.
+    - **G/IMAFDZicsr_Zifencei** for General Purpose, i.e. integer base and four standard extensions.
 
 ## Components
 

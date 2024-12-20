@@ -8,22 +8,22 @@ counter: True
 
 ### Registers Convents
 
-|   寄存器    |  ABI 名称  | 用途描述                             | caller-saved | callee-saved |
-|:--------:|:--------:|:---------------------------------|:------------:|:------------:|
-|   `x0`   |  `zero`  | 硬件 0                             |              |              |
-|   `x1`   |   `ra`   | 返回地址（return address）             |     yes      |              |
-|   `x2`   |   `sp`   | 栈指针（stack pointer）               |              |     yes      |
-|   `x3`   |   `gp`   | 全局指针（global pointer）             |              |              |
-|   `x4`   |   `tp`   | 线程指针（thread pointer）             |              |              |
+|  寄存器  | ABI 名称 | 用途描述                                      | caller-saved | callee-saved |
+| :------: | :------: | :-------------------------------------------- | :----------: | :----------: |
+|   `x0`   |  `zero`  | 硬件 0                                        |              |              |
+|   `x1`   |   `ra`   | 返回地址（return address）                    |     yes      |              |
+|   `x2`   |   `sp`   | 栈指针（stack pointer）                       |              |     yes      |
+|   `x3`   |   `gp`   | 全局指针（global pointer）                    |              |              |
+|   `x4`   |   `tp`   | 线程指针（thread pointer）                    |              |              |
 |   `x5`   |   `t0`   | 临时变量/备用链接寄存器（alternate link reg） |     yes      |              |
-|  `x6-7`  | `t1-t2`  | 临时变量                             |      yes        |             |
+|  `x6-7`  | `t1-t2`  | 临时变量                                      |     yes      |              |
 |   `x8`   | `s0/fp`  | 需要保存的寄存器/帧指针（frame pointer）      |              |     yes      |
-|   `x9`   |   `s1`   | 需要保存的寄存器                         |              |     yes      |
-| `x10-11` | `a0-a1`  | 函数参数/返回值                         |     yes      |              |
-| `x12-17` | `a2-a7`  | 函数参数                             |     yes      |              |
-| `x18-27` | `s2-s11` | 需要保存的寄存器                         |              |     yes      |
-| `x28-31` | `t3-t6`  | 临时变量                             |     yes      |              |
-|   `pc`   |   `pc`   | 程序计数器（program counter）           |              |              |
+|   `x9`   |   `s1`   | 需要保存的寄存器                              |              |     yes      |
+| `x10-11` | `a0-a1`  | 函数参数/返回值                               |     yes      |              |
+| `x12-17` | `a2-a7`  | 函数参数                                      |     yes      |              |
+| `x18-27` | `s2-s11` | 需要保存的寄存器                              |              |     yes      |
+| `x28-31` | `t3-t6`  | 临时变量                                      |     yes      |              |
+|   `pc`   |   `pc`   | 程序计数器（program counter）                 |              |              |
 
 **Caller-Saved**：调用者保存寄存器，也被称为**可变寄存器/Volatile Registers**，被调用者可以自由地改变这些寄存器的值，如果调用者需要这些寄存器的值，就必须在执行程序调用之前保存这些值。`t0`-`t6`（临时寄存器）、`a0`-`a7`（返回地址与函数参数）与 `ra`（返回地址）都是调用者保存寄存器。
 
@@ -459,38 +459,38 @@ sgtz  rd, rs         # rd = (rs > 0)  ? 1 : 0
 !!! note "CS61C"
     But sometimes, for the programmer’s benefit, it’s useful to have additional instructions that aren't really implemented by the hardware but translated into real instructions.
 
-| 伪指令                         | 实际指令                                                                                                | 意义                             |
-|:----------------------------|:----------------------------------------------------------------------------------------------------|:-------------------------------|
-| `lla rd, offset`         | `auipc rd, offset[31:12]`<br/>`addi rd, rd, offset[11:0]`                                       | 加载局部地址 |
-| `la rd, symbol`          | PIC: `auipc rd, GOT[symbol][31:12]`<br/> `l{w|d} rd, GOT[symbol][11:0](rd)`<br/> Non-PIC: `lla rd, symbol` | 加载全局地址 |
-| l\{b\|h\|w\} rd, symbol     | auipc rd, delta[31:12] + delta[11]<br/>l\{b\|h\|w\} rd, delta\[11:0](rd)                            | 加载全局变量                         |
-| s\{b\|h\|w\} rd, symbol, rt | auipc rt, delta[31:12] + delta[11]<br/>s\{b\|h\|w\} rd, delta\[11:0](rt)                            | 保存全局变量                         |
-| `nop`                       | `addi x0, x0, 0`                                                                                    | 不进行任何操作                        |
-| `li rd, imm`                | `addi rd, imm` if $imm \in [0, 4096]$ <br/> `lui rd, (imm >> 12)`<br/> `addi rd, rd, (imm & 0xFFF)` | 将立即数加载到 `rd` 中                 |
-| `mov rd, rs`                | `addi rd, rs, 0 `                                                                                   | 从 `rs` 拷贝到 `rd`                |
-| `not rd, rs`                | xori rd, rs, -1                                                                                     | rd = ~rs 按位取反                  |
-| neg rd, rs                  | sub rd, x0, rs                                                                                      | rd = -rs                       |
-| seqz rd, rs                 | sltiu rd, rs, 1                                                                                     | set rd if rs == 0              |
-| snez rd, rs                 | sltu rd, x0, rs                                                                                     | set rd if rs != 0              |
-| sltz rd, rs                 | slt rd, rs, x0                                                                                      | set rd if rs < 0               |
-| sgtz rd, rs                 | slt rd, x0, rs                                                                                      | set rd if rs > 0               |
-| `beqz rs, offset`           | `beq rs, x0, offset`                                                                                | branch if rs == 0              |
-| `bnez rs, offset`           | `bne rs, x0, offset`                                                                                  | branch if rs != 0              |
-| `blez rs, offset`           | `bge x0, rs, offset`                                                                                  | branch if rs <= 0              |
-| `bgez rs, offset`           | `bge rs, x0, offset`                                                                                  | branch if rs >= 0              |
-| `bltz rs, offset`           | `blt rs, x0, offset`                                                                                  | branch if rs < 0               |
-| `bgtz rs, offset`           | `blt x0, rs, offset`                                                                                  | branch if rs > 0               |
-| `bgt rs, rt, offset`        | `blt rt, rs, offset`                                                                                  | branch if rs > rt              |
-| `ble rs, rt, offset`        | `bge rt, rs, offset`                                                                                 | branch if rs <= rt             |
-| `bgtu rs, rt, offset`       | `bltu rt, rs, offset`                                                                                 | branch if > unsigned           |
-| `bleu rs, rt, offset`       | `bgeu rt, rs, offset`                                                                                 | branch if <= unsigned          |
-| `j offset`                  | `jal x0, offset`                                                                                      | 无条件跳转，不存返回地址                   |
-| `jal offset`                | `jal x1, offset`                                                                                      | 无条件跳转，返回地址存到 `ra`                |
-| `jr rs`                     | `jalr x0, 0(rs)`                                                                                      | 无条件跳转到 `rs` 位置，忽略返回地址            |
-| `jalr rs`                   | `jalr x1, 0(rs)`                                                                                      | 无条件跳转到 `rs` 位置，存返回地址             |
-| `ret`                       | `jalr x0, 0(ra)`                                                                                      | 通过返回地址 `x1` 返回                   |
-| `call offset`               | `auipc ra, offset[31 : 12]`<br/>`jalr ra, offset[11:0](ra)`                                         | 远调用                            |
-| `tail offset`               | `auipc t1, offset[31 : 12]`<br/>`jalr zero, offset[11:0](t1)`                                       | 忽略返回地址远调用                      |
+| 伪指令                      | 实际指令                                                                                            | 意义                                                         |
+| :-------------------------- | :-------------------------------------------------------------------------------------------------- | :----------------------------------------------------------- |
+| `lla rd, offset`            | `auipc rd, offset[31:12]`<br/>`addi rd, rd, offset[11:0]`                                           | 加载局部地址                                                 |
+| `la rd, symbol`             | PIC: `auipc rd, GOT[symbol][31:12]`<br/> `l{w                                                       | d} rd, GOT[symbol][11:0](rd)`<br/> Non-PIC: `lla rd, symbol` | 加载全局地址 |
+| l\{b\|h\|w\} rd, symbol     | auipc rd, delta[31:12] + delta[11]<br/>l\{b\|h\|w\} rd, delta\[11:0](rd)                            | 加载全局变量                                                 |
+| s\{b\|h\|w\} rd, symbol, rt | auipc rt, delta[31:12] + delta[11]<br/>s\{b\|h\|w\} rd, delta\[11:0](rt)                            | 保存全局变量                                                 |
+| `nop`                       | `addi x0, x0, 0`                                                                                    | 不进行任何操作                                               |
+| `li rd, imm`                | `addi rd, imm` if $imm \in [0, 4096]$ <br/> `lui rd, (imm >> 12)`<br/> `addi rd, rd, (imm & 0xFFF)` | 将立即数加载到 `rd` 中                                       |
+| `mov rd, rs`                | `addi rd, rs, 0 `                                                                                   | 从 `rs` 拷贝到 `rd`                                          |
+| `not rd, rs`                | xori rd, rs, -1                                                                                     | rd = ~rs 按位取反                                            |
+| neg rd, rs                  | sub rd, x0, rs                                                                                      | rd = -rs                                                     |
+| seqz rd, rs                 | sltiu rd, rs, 1                                                                                     | set rd if rs == 0                                            |
+| snez rd, rs                 | sltu rd, x0, rs                                                                                     | set rd if rs != 0                                            |
+| sltz rd, rs                 | slt rd, rs, x0                                                                                      | set rd if rs < 0                                             |
+| sgtz rd, rs                 | slt rd, x0, rs                                                                                      | set rd if rs > 0                                             |
+| `beqz rs, offset`           | `beq rs, x0, offset`                                                                                | branch if rs == 0                                            |
+| `bnez rs, offset`           | `bne rs, x0, offset`                                                                                | branch if rs != 0                                            |
+| `blez rs, offset`           | `bge x0, rs, offset`                                                                                | branch if rs <= 0                                            |
+| `bgez rs, offset`           | `bge rs, x0, offset`                                                                                | branch if rs >= 0                                            |
+| `bltz rs, offset`           | `blt rs, x0, offset`                                                                                | branch if rs < 0                                             |
+| `bgtz rs, offset`           | `blt x0, rs, offset`                                                                                | branch if rs > 0                                             |
+| `bgt rs, rt, offset`        | `blt rt, rs, offset`                                                                                | branch if rs > rt                                            |
+| `ble rs, rt, offset`        | `bge rt, rs, offset`                                                                                | branch if rs <= rt                                           |
+| `bgtu rs, rt, offset`       | `bltu rt, rs, offset`                                                                               | branch if > unsigned                                         |
+| `bleu rs, rt, offset`       | `bgeu rt, rs, offset`                                                                               | branch if <= unsigned                                        |
+| `j offset`                  | `jal x0, offset`                                                                                    | 无条件跳转，不存返回地址                                     |
+| `jal offset`                | `jal x1, offset`                                                                                    | 无条件跳转，返回地址存到 `ra`                                |
+| `jr rs`                     | `jalr x0, 0(rs)`                                                                                    | 无条件跳转到 `rs` 位置，忽略返回地址                         |
+| `jalr rs`                   | `jalr x1, 0(rs)`                                                                                    | 无条件跳转到 `rs` 位置，存返回地址                           |
+| `ret`                       | `jalr x0, 0(ra)`                                                                                    | 通过返回地址 `x1` 返回                                       |
+| `call offset`               | `auipc ra, offset[31 : 12]`<br/>`jalr ra, offset[11:0](ra)`                                         | 远调用                                                       |
+| `tail offset`               | `auipc t1, offset[31 : 12]`<br/>`jalr zero, offset[11:0](t1)`                                       | 忽略返回地址远调用                                           |
 
 
 
