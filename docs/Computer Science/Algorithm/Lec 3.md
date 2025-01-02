@@ -25,7 +25,18 @@ Naive 的对文档中出现的每个词汇都进行索引显然是不合适的�
 
 这里的召回率和准确率分别为：$\dfrac{R_R}{R_R + R_N}$ 和 $\dfrac{R_R}{R_R + I_R}$。
 
+!!! Note
+
+    - (F) A word which has high term frequency in the whole document set must be a stop word. 因为终止词取决词的含义，而不是词频。
+
+
 ## 二、Backtracking
+
+!!! Note
+
+    - (T) What makes the time complexity analysis of a backtracking algorithm very difficult is that the number of solutions that do satisfy the restriction is hard to estimate.
+        
+        回溯算法的时间复杂度分析困难的原因在于满足约束条件的解的数量很难估计。
 
 ```cpp
 #define __DEBUG__
@@ -235,6 +246,12 @@ $$
 大多数问题来讲，贪心选择性质和最优子结构性质是两个关键因素：贪心选择性质保证我们可以通过局部最优解来构造全局最优解，在选择的时候，可以直接作出当前问题看来最优的选择，而不必考虑子问题的解；最优子结构问题保证了将子问题的最优解和贪心选择结合到一起的确可以生成原问题的最优解。
 
 ### 4. Huffman 编码
+
+!!! Note
+
+    - (T) A binary tree that is not full cannot correspond to an optimal prefix code.
+    
+        A **full binary tree** is a tree in which every node has either zero children or two children. And in this definition, the problem is trivial.
 
 Huffman 编码试图找到一个字母表期望长度最小的前缀编码，回忆香农定义的信息熵：对于一个离散随机变量 $X$，其信息熵定义为 $H(X) = -\sum\limits_{x}p(x)\log_2p(x)$，其中 $p(x)$ 是 $X$ 取值为 $x$ 的概率。使用以 2 为底的对数是为了保证信息熵的单位是比特，在平均意义下，信息熵可以理解为对于一个随机变量 $X$，我们需要多少比特来表示它。举个例子：
 

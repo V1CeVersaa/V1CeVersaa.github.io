@@ -51,7 +51,7 @@ LeftistHeap merge_recursive(LeftistHeap h1, LeftistHeap h2) {
 
 迭代方式更加简洁：
 
-<img class="center-picture" src="../assets/heap-2.png" alt="drawing" width="600" />
+<img class="center-picture" src="../assets/Heap-2.png" alt="drawing" width="600" />
 
 
 单点插入可以看作是将一个结点作为一个左顷堆，然后与原堆合并的过程。DeleteMin 则是将根结点删除后，将其左右子树合并的过程。没啥可说的。

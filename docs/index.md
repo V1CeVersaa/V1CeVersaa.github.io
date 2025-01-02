@@ -16,7 +16,6 @@ Hi！欢迎来到我的笔记本，我会在这里更新我的**课程笔记**
 - [ ] 计算机系统: [Computer Systems](./System/index.md)
 - [ ] 看起来更像CS人: [GNU Make & CMake](./Computer%20Science/Programming%20Basis/GNU%20Make.md)
 - [ ] 拼搏百天，我要成为概率大神：[Math: Probability](./Math/Probability%20Basis/index.md)
-- [ ] CPU给我干烧了: [Algorithms and Data Structure](./Computer%20Science/Algorithm/index.md)
 - [ ] 打会 CTF：[CTF: Cryptography](./Computer%20Science/CTF/Crypto/Cryptography.md)
 <!-- - [ ] 进行一个化的优：[Foundations of Convex Optimization](./Math/Optimization/1%20Introduction.md) -->
 
@@ -25,9 +24,10 @@ Hi！欢迎来到我的笔记本，我会在这里更新我的**课程笔记**
 - [ ] 猜猜我为啥学它: [Typst Learning Record](./Varia/Typst.md)
 - [ ] 某种古老又强大的命令语言：[Shell](./Computer%20Science/Programming%20Basis/Shell.md)
 
-## 学完了！
+## 我不学了！
 
 - [x] 真是离离又散散啊: [Discrete Mathematics](./Math/Discrete%20Mathematics/Discrete%20Mathematics.md)
+- [x] CPU给我干烧了: [Algorithms and Data Structure](./Computer%20Science/Algorithm/index.md)
 
 <!-- # Who Am I？
 

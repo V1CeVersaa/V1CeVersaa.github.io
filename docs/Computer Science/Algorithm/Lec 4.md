@@ -369,11 +369,192 @@ $$
     
 ## 八、Local Search
 
+!!! Note
+
+    - 对于一个优化问题，如果已知某个邻居的局部最优解是全局最优，那么也并**不意味着从邻居出发便能一步得到全局最优**。
+    - 贪心算法不是局部搜索算法的一种特殊情况，因为贪心算法从无到有构造出来解，而局部搜索算法是从一个解出发，通过改变解的一部分来寻找更优解。
+    - 二分图上的顶点覆盖：对于二分图上任意的匹配和顶点覆盖，顶点覆盖的顶点数**不小于**匹配的边数，**最大匹配的边数**等于**最小顶点覆盖**的顶点数。
+
 ### 1. 顶点覆盖问题
+
+两种问法：
+
+- **判定版本**：给定一个无向图 $G = (V, E)$ 和一个整数 $k$，判断是否存在一个顶点集合 $V' \subseteq V$，使得 $|V'| \leq k$，且 $G$ 中的每条边至少有一个端点在 $V'$ 中；
+- **最优版本**：给定一个无向图 $G = (V, E)$，找到一个**最小的顶点集合** $S \subseteq V$，使得 $E$ 中的任意一条边 $(u, v)$，$u$ 和 $v$ 至少有一个属于 $S$。
+
+定义一些量：
+
+- 可行解集 $FS$：所有的顶点覆盖，显然是一个解；
+- 成本函数 $cost(S)$：$S$ 的大小；
+- 邻居关系 $S \sim S'$：每个顶点覆盖 $S$ 至多有 $|V|$ 个邻居。
+
+搜索步骤：从 $S = V$ 开始，删除或增加一个节点得到新的顶点覆盖 $S'$，检查 $S'$ 的成本是否更低。
+
+梯度下降算法：
+
+```C
+SolutionType Gradient_descent() {
+    Start from a feasible solution S in FS;     // randomly
+                                                // FS: the feasible solution set(for initialization)
+    MinCost = cost(S);
+    while (1) {
+        S_ = Search(N(S));     // find the best S_ in N(S)
+        CurrentCost = cost(S_);
+        if (CurrentCost < MinCost) {
+            MinCost = CurrentCost;
+            S = S_;
+        }
+        else break;
+    } 
+
+    return S;
+}
+```
+
+问题：容易陷入局部最优解，因此需要一些技巧来避免这种情况。
 
 ### 2. Metropolis 算法和模拟退火
 
+```C
+SolutionType Metropolis() {
+    Define constants k and T;
+    Start from a feasible solution S in FS;
+    MinCost = cost(S);
+    while (1) {
+        S_ = Randomly chosen from N(S); // Adding is allowed
+        CurrentCost = cost(S_);
+        if (CurrentCost < MinCost) {
+            MinCost = CurrentCost;
+            S = S_;
+        } else {
+            With a probability exp(-(CurrentCost - MinCost) / (k * T)), let S = S_;     // Metropolis criterion
+            otherwise break;
+        }
+    }
+
+    return S;
+}
+```
+
+Metropolis 算法的关键在于**温度**的设置，温度越高，接受概率越高，因此可以逃离局部最优解。
+
+设计算法的难点在于寻找合适的温度值，我们采用模拟退火这个术语，表示让系统从很高的温度开始，这时很高概率逃离局部最优解，然后慢慢降温，使我们有充足的时间在一系列不断减小的中间温度值 $T = \{T_1, T_2, \cdots\}$ 中找到平衡点（即最优解）。
+
 ### 3. Hopfield 网络
+
+我们期望讨论 Hopfield 神经网络的稳定构型，重要定义如下：
+
+1. Hopfield 神经网络可以抽象为一个无向图 $G = (V, E)$，其中 $V$ 是神经元的集合，$E$ 是神经元之间的连接关系，并且每条边 $e$ 都有一个权重 $w_e$，这可能是正数或负数；
+2. Hopfield 神经网络的一个**构型Configuration**是指对网络中每个神经元（即图的顶点）的状态的一个赋值，赋值可能为 1 或-1，我们记顶点 $u$ 的状态为 $s_u$；
+3. 如果对于边 $e = (u, v)$ 有 $w_e > 0$，则我们希望 $u$ 和 $v$ 具有相反的状态；如果 $w_e < 0$，则我们希望 $u$ 和 $v$ 具有相同的状态；综合而言，我们希望 $w_e s_u s_v < 0$；
+4. 如果 $w_e s_u s_v < 0$，我们称这条边是**好的/Good**，否则称为**坏的/Bad**；
+5. 称一个点是**满意的/Satisfied**，当且仅当 $u$ 作为顶点的边中，好边的权重绝对值之和大于等于坏边的权重绝对值之和，即 $\sum\limits_{v: e = (u, v) \in E} w_e s_u s_v \leq 0$，反之，如果 $u$ 不满足这一条件，我们称 $u$ 是**不满意的/Unsatisfied**；
+6. 我们称一个构型是**稳定的/Stable**，当且仅当所有的点都是满意的。
+
+简单的 `State_flipping` 算法：
+
+```C
+ConfigType State_flipping() {
+    Start from an arbitrary configuration S;
+    while (!IsStable(S)) {
+        u = GetUnsatisfied(S);
+        s_u = -s_u;
+    }
+
+    return S;
+}
+```
+
+**定理**：`State_flipping` 算法最多在翻转 $\sum\limits_{e\in E}\lvert w_e\rvert$ 次后停止。
+
+!!! Info "Proof"
+
+    取一个势能函数为 $\Phi(S) = \sum\limits_{e\in E \text{ and } e \text{ is good}}\lvert w_e\rvert$，显然对于任意的构型，$0\leq \Phi(S) \leq \sum\limits_{e\in E}\lvert w_e\rvert$。我们来观察一下当我们翻转一个不满意的点后势能函数的变化。设当前状态为 $S$，有一个不满意点 $u$，翻转 $u$ 的状态后得到 $S'$，那么我们有
+
+    $$
+    \Phi(S') - \Phi(S) = \sum\limits_{e=(u, v)\in E\text{, }e \text{ is bad}}\lvert w_e\rvert - \sum\limits_{e=(u, v)\in E\text{, }e \text{ is good}}\lvert w_e\rvert
+    $$
+
+    这是因为翻转后原先与 $u$ 相连的好边都变成了坏边，坏边都变成了好边，其余边没有变化。又因为 $u$ 是不满意的，因此与 $u$ 相连的坏边比好边权重绝对值之和大，所以上式大于 0，即 $\Phi(S') > \Phi(S)$。又因为势能函数只能取整数值，故 $\Phi(S') \geq \Phi(S) + 1$。这就意味着我们每次翻转一个不满意的点，势能函数就会增加至少 1。因为势能函数的取值范围是有限的（0 到所有边权重绝对值之和），所以我们的局部搜索算法一定会停止。
+
+**定理**：对于构型 $S$，如果其势能 $\Phi(S)$ 是局部最大值，那么这个构型是一个稳定构型。
+
+!!! Info "Proof"
+
+    反正法很容易证明。
+
+`state_flipping` 算法是一个伪多项式时间复杂度的算法，输入是每条边长度的二进制编码，所以时间复杂度是指数级别的。找到一个关于 $n$ 和 $\log W$ 的多项式时间复杂度的算法仍然是一个开放的问题。
 
 ### 4. 最大割问题
 
+**题目**：给定一个正边权的无向图 $G = (V, E)$，将顶点集合 $V$ 分成两个集合 $A$ 和 $B$，使得割边的权重和最大，即最大化 $w(A, B) = \sum\limits_{(u, v)\in E, u\in A, v\in B}w_{uv}$。
+
+这是一个经典的 $\mathsf{NP}$ 完全问题。但是可以和 Hopfield 神经网络上的问题建立联系：我们任意将这个图的点集分成两个集合 $A$ 和 $B$，将 $A$ 中的点赋状态 $-1$，$B$ 中的点赋状态 $1$，因为所有边的权重都是正数，所以最大化割边权重和对应于 Hopfield 神经网络将势能函数最大化的问题，因此我们可以使用 `State_flipping` 算法来找到局部最优解。对于近似比有下面的定理：
+
+**定理**：设 $(A, B)$ 是局部搜索算法得出的一个局部最优解，$(A^*, B^*)$ 是最优解，则
+
+$$
+\frac{w(A, B)}{w(A^*, B^*)} \geq \frac{1}{2}
+$$
+
+!!! Info "Proof"
+    
+    记图 $G$ 中所有边的权重之和为 $W = \sum\limits_{(u, v)\in E}w_{uv}$。因为 $(A, B)$ 是一个局部最优解，即把 $u$ 放到 $B$ 中会使得割边权重和降低，即
+
+    $$
+    \sum\limits_{v\in A}w_{uv} \leq \sum\limits_{v\in B}w_{uv}
+    $$
+    
+    这是因为把 $u$ 从 $A$ 换到 $B$ 后，割边总权重只是增加了不等式左边权重，减小了不等式右边权重。我们对所有的 $u\in A$ 都有这样的不等式，将这些不等式求和有
+
+    $$
+    \sum\limits_{u\in A}\sum\limits_{v\in A}w_{uv} \leq \sum\limits_{u\in A}\sum\limits_{v\in B}w_{uv}
+    $$
+
+    很显然，等式左边就是 $2$ 倍的 $A$ 中所有边的权重之和，因为每条边都被计算了两次，等式右边就是所有割边的权重之和，所以我们有
+
+    $$
+    2\sum\limits_{(u, v)\in A}w_{uv} = \sum\limits_{u\in A}\sum\limits_{v\in A}w_{uv} \leq \sum\limits_{u\in A}\sum\limits_{v\in B}w_{uv} = w(A, B)
+    $$
+
+    对称的，我们也有 $2\sum\limits_{(u, v)\in B}w_{uv} \leq w(A, B)$，并且由 $W = w(A, B) + \sum\limits_{(u, v)\in A}w_{uv} + \sum\limits_{(u, v)\in B}w_{uv}$，我们有
+
+    $$
+    W(A^*, B^*) \leq W = w(A, B) + \sum\limits_{(u, v)\in A}w_{uv} + \sum\limits_{(u, v)\in B}w_{uv} \leq 2w(A, B)
+    $$
+
+    这就完成了证明，值得注意的是，这就是博弈论中证明纳什均衡的无秩序代价的标准方法。
+
+如果我们放弃对严格近似比的追求，控制迭代次数：当我们处于解 $w(A, B)$ 时，我们要求下一个解的权重至少要增大 $\frac{\varepsilon}{n}w(A, B)$，其中 $n$ 是图 $G$ 的顶点数。对于这一算法，我们有如下结论：
+
+**定理**：设 $(A, B)$ 是上述算法给出的解，$(A^*, B^*)$ 是最优解，则
+
+$$
+\frac{w(A, B)}{w(A^*, B^*)} \geq \frac{1}{2 + \varepsilon}
+$$
+
+并且这一算法会在 $O(\dfrac{n}{\varepsilon}\log W)$ 次状态翻转后停止，其中 $W$ 是所有边的权重之和。
+
+!!! Info "Proof"
+
+    近似比的证明事实上非常简单，只需要对前一个近似比为 $2$ 的证明做一些修改即可。因为我们必须要一个 “比较大的改进” 才会继续搜索，所以当我们处于算法的结束状态时，我们的解 $(A, B)$ 应当满足，对于任意的 $u\in A$，我们有
+
+    $$
+    \sum\limits_{v\in A}w_{uv} \leq \sum\limits_{v\in B}w_{uv} + \frac{\varepsilon}{n}w(A, B)
+    $$
+
+    这是因为这时将 $u$ 从 $A$ 换到 $B$ 后，增加的割边权重和不会超过 $\frac{\varepsilon}{n}w(A, B)$。然后接下来所有的证明都基于此改进继续推进即可证明。
+
+    考察时间复杂度：每次迭代都会使得割边权重和增加至少 $\frac{\varepsilon}{n}w(A, B)$，这也就是增加 $1 + \frac{\varepsilon}{n}$ 倍，因为 $(1 + \frac{1}{x})^x \geq 2$，也就是当目标函数变为原来的二倍需要的状态翻转的次数至多为 $\dfrac{n}{\varepsilon}$ 次，所以我们的算法在 $O(\dfrac{n}{\varepsilon}\log W)$ 次状态翻转后停止。
+
+!!! Info "题目"
+
+    Consider the maximum cut problem. Let $V$ be the set of vertices, let $n=\lvert V\rvert$, and let $W$ be the total edge weight. We have already learned a $(2+\varepsilon)$-approximation local search algorithm that needs $O(\dfrac{n}{\varepsilon}\log W)$ flips. In the following, we are trying to further reduce the number of flips by starting the algorithm with a good initial solution. Note that each vertex $v$ naturally forms a cut $(\{v\}, V-\{v\})$. Let $(\{v^*\}, V-\{v^*\})$ be the one with the largest weight among all such cuts. If we start the $(2+\varepsilon)$-approximation local search algorithm with $(\{v^*\}, V-\{v^*\})$, how many flips do we need in the worst case? ($O(\dfrac{n}{\varepsilon}\log n)$)。
+
+    回忆一下我们采用搜索结果的条件：下一个解的权重至少增大 $\dfrac{2\varepsilon}{n}w(A, B)$，在最初的时候我们的 $W(A, B) = \sum\limits_{u\in V - \{v^*\}}w_{v^*u}$，且这时候 $W(A, B)$ 最小，我们根据这个进行放缩：
+
+    $$
+    \sum\limits_{u\in V}\sum\limits_{v\in V - \{v^*\}}w_{uv} = 2W \leq n\cdot \sum\limits_{u\in V - \{v^*\}}w_{v^*u} 
+    $$
+
+    所以我们从 $\sum\limits_{u\in V - \{v^*\}}w_{v^*u}$ 到最大值 $W$ 是需要翻转 $n/2$ 倍，查看上面的证明，我们翻了 $W$ 倍需要 $O(\dfrac{n}{\varepsilon}\log W)$ 次状态翻转，所以我们的答案是 $O(\dfrac{n}{\varepsilon}\log n)$。
