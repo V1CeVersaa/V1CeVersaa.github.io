@@ -71,7 +71,7 @@ LeftistHeap merge_recursive(LeftistHeap h1, LeftistHeap h2) {
 
 斜堆一般不考虑单点删除和 DecreaseKey 这两个操作。
 
-<img class="center-picture" src="../assets/heap-3.png" alt="drawing" width="600" />
+<img class="center-picture" src="../assets/Heap-3.png" alt="drawing" width="600" />
 
 !!! Note
     It is an open problem to determine **precisely** the **expected right path length** of both leftist and skew heaps.
@@ -93,7 +93,7 @@ LeftistHeap merge_recursive(LeftistHeap h1, LeftistHeap h2) {
 
 ## Binomial Heaps
 
-### 数据结构介绍和时间复杂度分析
+### 1. 数据结构介绍和时间复杂度分析
 
 **二项树**通过递归定义：一个只有一个结点的树为一个二项树，记为 $B_0$，其高度为 $0$，阶数也为 $0$；而 $k$ 阶 $B_k$ 为由两个 $B_{k-1}$ 的树根连接而成的树，连接方式是将一个树的树根链接到另外一个树的树根上。二项树 $B_k$ 的根结点有一棵 $B_{k-1}$ 子树，并且根结点的度数为 $k$，高度为 $k$。
 
@@ -124,7 +124,7 @@ $k$ 阶二项树有着一些简单的性质：
 
 DeleteMin 的时间复杂度也 $O(\log n)$，大概分四步，首先找到最小的根结点与对应的树 $B_k$，然后将 $B_k$ 从二项堆中删除，接着将 $B_k$ 的子树们和原来的二项堆合并。每一步都是 $O(\log n)$  或 $O(1)$ 的时间复杂度，所以整体的时间复杂度是 $O(\log n)$ 的。
 
-### 二项堆的代码实现
+### 2. 二项堆的代码实现
 
 首先，因为每个结点的孩子数量可能不只有两个，因此我们使用 LeftChild 和 NextSibling 的组合实现。
 
@@ -166,6 +166,10 @@ BinQueue Merge( BinQueue H1, BinQueue H2 ){
 6. `Case 101`：有进位且产生进位，将 $H_1$ 和进位树合并为 `Carry`，$H_1$ 的树清空；
 7. `Case 110`：有进位且产生进位，将 $H_2$ 和进位树合并为 `Carry`，$H_2$ 的树清空；
 8. `Case 111`：有进位且产生进位，将进位树移动到 $H_1$ 上，$H_1$ 和 $H_2$ 的树合并为进位树。
+
+删除操作看起来复杂得多：
+
+<img class="center-picture" src="../assets/Heap-4.png" alt="drawing" width="600" />
 
 ## Fibonacci Heap
 
