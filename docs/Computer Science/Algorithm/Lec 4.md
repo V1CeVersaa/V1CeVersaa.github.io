@@ -215,10 +215,158 @@ $\mathsf{P}$ 问题显然是可判定问题；一些非 $\mathsf{P}$ 的问题�
 
 ## 七、Approximation Algorithm
 
-### 1. 0-1 背包问题的 2-近似算法
+### 1. 基本概念
 
-### 2. 0-1 背包问题的 FPTAS 算法
+**绝对近似比**：
 
+**渐进近似比/Asymptotic Approximation Ratio**：如果对任意常数 $\alpha \geq 1$，对任意实例 $I$，存在一个常数 $k$，满足 $A(I) \leq \alpha \cdot \operatorname*{OPT}(I) + k$，称所有满足上式的 $\alpha$ 的下确界为 $A$ 的渐近近似比。
+
+如果我们只关心那些 $\operatorname*{OPT}(I)$ 较大的实例，我们就引入渐进近似比这个概念。可以看出 $\alpha$ 决定了当 $\operatorname*{OPT}(I)$ 充分大时 $A(I)$ 与 $\operatorname*{OPT}(I)$ 的比值。$k$ 除了可以是某些固定的常数，也可以是 $o(\operatorname*{OPT}(I))$，只需要在 $\operatorname*{OPT}(I)$ 充分大时 $k/\operatorname*{OPT}(I) \to 0$ 即可。当 $k = 0$ 时渐近近似比就成了绝对近似比。
+
+- $\mathsf{PTAS}$：多项式时间近似方案，存在算法 $A$ 使得对每一个固定的 $\varepsilon > 0$，对任意的实例 $I$，都有 $A(I) \leq (1 + \varepsilon) \cdot \mathsf{OPT}(I)$，且算法的运行时间以问题规模 $\lvert I\rvert$ 的多项式为上界。
+
+    理论上，$A$ 在多项式时间内可以无限近似，但是对于不同的 $\varepsilon$，$A$ 的运行时间可能会有所不同。一般可以将 $\mathsf{PTAS}$ 的复杂度记作 $O(n^{f(1/\varepsilon)})$。
+
+- $\mathsf{EPTAS}$：在 $\mathsf{PTAS}$ 的基础上要求算法的运行时间是 $O(\lvert I\rvert^c)$ 的，其中 $c$ 是一个和 $\varepsilon$ 无关的常数，可以将 $\mathsf{EPTAS}$ 的复杂度记作 $\lvert I\rvert^{O(1)}f(1/\varepsilon)$。
+- $\mathsf{FPTAS}$：还要求算法的运行时间关于 $\varepsilon$ 也是多项式的，可以将 $\mathsf{FPTAS}$ 的复杂度记作 $\lvert I\rvert^{O(1)}\left(1/\varepsilon\right)^{O(1)}$。
+
+### 2. 最小化工时调度问题
+
+### 3. 装箱问题
+
+**一维装箱问题**：给定若干个带有尺寸的物品，将所有物品装到给定容量的箱子中，每个箱子不能超过容量，求最少的箱子数。模型化如下：给定 $n$ 个尺寸在 $(0, 1]$ 之间的物品 $a_1, a_2, \cdots, a_n$，使用数目尽可能少的单位容量的箱子装下所有物品，每个箱子的物品尺寸和都不超过 1。这个问题是 $\mathsf{NP}$ 完全的，甚至给定若干个物品，判定两个箱子是否可以装下都是 $\mathsf{NP}$ 完全的。
+
+$\mathsf{NP}$ **完全性的证明**：首先我们要知道**划分问题/Partition Problem**，这是 Karp 的 21 个 $\mathsf{NP}$ 完全问题之一，表述为给定若干个正整数，判断是否可以将它们划分成两个和相等的集合。换言之，我们有 $S = \{c_i \mid i = 1, 2, \cdots, n\}$，判断是否存在一个 $S' \subseteq S$ 使得 $\sum\limits_{i\in S'}c_i = \sum\limits_{i\notin S'}c_i$。
+
+我们的目标是将一维装箱问题规约到划分问题：对任何一个划分问题实例，我们可以构造一个装箱问题，令物品的尺寸为 $c_i/C$，其中 $C$ 为所有物品的尺寸之和 $\sum\limits_{i=1}^nc_i$，同时我们呢假设这些 $a_i\in (0, 1]$，那么显然这些物品可以使用两个大小为 1 的箱子装下当且仅当两个箱子完全装满。这个规约是多项式时间的，因此一维装箱问题是 $\mathsf{NP}$ 完全的。
+
+下面证明，装箱问题的近似比下界：
+
+**定理**：除非 $\mathsf{P} = \mathsf{NP}$，否则不存在一个多项式时间的算法，使得一维装箱问题的近似比小于 $3/2$。
+
+!!! Info "Proof"
+
+    反证法：假设存在一个近似比小于 $3/2$ 的多项式时间近似算法 $A$，那么我们可以直接使用其来判断物品是否可以由两个箱子装下：
+
+    1. 如果确实可以由两个箱子装下，即 $\operatorname*{OPT}(I) = 2$，那么近似算法根据近似比要求返回的解必定是 $A(I) < 3$，但这一近似算法返回的值必定是整数，于是 $A(I) = 2$，于是近似算法直接就返回了正确答案；
+    2. 如果 $\operatorname*{OPT}(I) \geq 3$，那么 $A(I) \geq 3$，此时因为近似比低于 $3/2$，表明最优解不可能是 2，所以通过近似算法的解我们也能判断出物品是否可由两个箱子装下。
+
+    这样我们就回答了两个箱子的装箱问题，是通过多项式时间的归约（因为这里甚至不需要归约）到一个多项式时间的算法实现的。而它是一个 $\mathsf{NP}$ 完全问题，因此只可能有 $\mathsf{P} = \mathsf{NP}$。
+
+对于装箱问题，如果所有的物品信息在开始装箱前都已知，那么这是一个离线问题，我们设计的是离线算法，比如下面的 FFD 算法；如果初始时物品信息并不全部给出，需要我们即时安排，对未到来的物品信息一无所知，这就是在线问题，下面的 NF 和 Any Fit 都是在线算法。我们一般使用竞争比/Competitive Ratio 这个概念。竞争比通常来自于对问题信息所知有限。
+
+**Next Fit 算法**：
+
+**Any Fit 方案**：当物品到达时，除非目前打开的所有箱子都无法装下该物品时，才允许打开一个新箱子，包含下面几种：
+
+- **First Fit 算法**：选择**最早打开的箱子**优先填入；
+- **Best Fit 算法**：选择**剩余空间最小**的箱子优先填入；
+- **Worst Fit 算法**：选择**剩余空间最大**的箱子优先填入。
+
+值得注意的是，Any Fit 的三种算法都满足相邻两个箱子物品尺寸之和大于 1，因此其均不会比 NF 差，所以 NF 的下界分析也适用于 Worst Fit，所以 WF 和 NF 一样差。改进方式是将当前物品放入能装下它的剩余空间第二大的箱子中，若这样的箱子不存在，就放入能装下它的剩余空间最大的箱子中，如果还装不下，就再开一个箱子。这样修正过的算法叫做 Almost Worst Fit 算法。
+
+Almost Worst Fit 和 BF 与 FF 都被称为 Almost Any Fit 算法，因为满足下面的性质：设第 $k$ 个箱子是当前打开箱子中剩余空间最大且最晚打开的一个，亦即，第 $k$ 个打开的箱子剩余空间最大，和它有相同剩余空间的箱子打开得都比它早。那么除非当前物品无法装进前 $k − 1$ 个箱子里，否则它不会装进第 $k$ 个箱子里。满足此性质的算法称为 Almost Any Fit/AAF 算法。FF 和 BF 是 AAF 算法，而 NF 和 WF 不是。
+
+有下面渐进比事实：**NF 和 WF 的渐进比都是 2，而任意的 AAF 算法都有渐进比 1.7**。
+
+特别的，在 PPT 中特别提到：如果 $M$ 为最优装箱数目，那么 First Fit 得到的装箱数不会超过 $17M/10$，而存在一些序列使得 First Fit 使用 $17(M-1)/10$ 个箱子。这换过来表明了 FF 的竞争比为 $17/10$。FF 和 BF 的时间复杂度都是 $O(n\log N)$。
+
+由于在线算法不知道输入什么时候结束（其实不知道未来的所有信息），所以在线算法永远得不到最优解，并且在装箱问题中，所有在线算法得到的近似解的数目至少是最优解的 5/3 倍。
+
+下面讨论离线算法。**First Fit Decreasing 算法**：先按照物品尺寸降序排列，然后使用 FF 算法。**Best Fit Decreasing 算法**：先按照物品尺寸降序排列，然后使用 BF 算法。
+
+FFD 的绝对近似比为 $3/2$，渐进近似比表示为 $\operatorname*{FFD}(I) \leq \frac{11}{9}\operatorname*{OPT}(I) + \frac{6}{9}$。
+
+!!! Info "Proof"
+
+### 4. 0-1 背包问题
+
+分数背包问题非常简单：只需要按照单位价值排序，然后依次装入即可。但是这样的贪心算法不可以直接解决 0-1 背包问题。为了得到近似解仍然需要改进我们的算法：同时使用两个策略进行求解，分别为对单位重量价值进行贪心和对价值进行贪心，最后选择两个解中的最优解。这样的贪心算法实际上是一个 2-近似算法：
+
+!!! Info "Proof"
+    设分数背包问题的最优解为 $P_{frac}$，0-1 背包问题的最优解为 $P_{OPT}$，0-1 背包问题贪心解（即分数背包舍去选分数个的物品）为 $P_{greedy}$，所有装得下的物品中的最大价值为 $P_{max}$，那么我们有
+
+    $$
+    P_{max} \leq P_{greedy} \leq P_{OPT} \leq P_{frac}
+    $$
+
+    第一个不等式来自于我们的贪心解是取两种贪心策略的最优值，其中之一就是按照价值从大到小贪心选择的，因此贪心算法至少比这个价值大；第二个不等式来自于贪心策略是一个可行解，可行解一定小于等于最优解，同时我们的最优解一定小于分数背包问题的解。
+
+    所以我们的近似比有上界
+
+    $$
+    \frac{P_{OPT}}{P_{greedy}} \leq \frac{P_{frac}}{P_{greedy}} \leq \frac{P_{OPT} + P_{max}}{P_{greedy}} = 1 + \frac{P_{max}}{P_{greedy}} \leq 2
+    $$
+
+    第二个不等式来自于分数背包问题和贪心解的差别：分数背包问题在选择**完整**装下单位重量价值最大的物品之后，只能装下剩下的单位价值最大的物品的一部分了，而剩下的单位价值最大的物品的价值不可能比最大价值还大，因此我们有 $P_{greedy} + P_{max} \geq P_{frac}$。
+
+    还需要举一个例子证明 $2$ 是近似比：假设背包容量为 $4$，有三个物品，价值分别为 $2 − 2\varepsilon$, $2 − 2\varepsilon$, $4$，重量分别为 $2 − \varepsilon$, $2 − \varepsilon$, $4$，其中 $\varepsilon$ 是一个很小很小的正数。我们可以发现，贪心策略会选择第三个物品，而最优解是选择前两个物品，因此我们有近似比为 $2$，不可能进一步优化。
+
+如果已知最优解中价值最大的前 $k$ 个，那么可以设计出近似比为 $\frac{k+1}{k}$ ​的算法。
+
+背包问题还有一个更好的动态规划解：令 $W_{i, p}$ 为前 $i$ 个物品中总价值为 $p = \sum\limits_{k=1}^ip_k$ 时的最小重量，下面分类讨论：
+
+- 如果选择第 $i$ 个物品：$W_{i, p} = w_i + W_{i-1, p-p_i}$；
+- 如果不选择第 $i$ 个物品：$W_{i, p} = W_{i-1, p}$；
+- 如果不可能得到价值 $p$：$W_{i, p} = \infty$。
+
+状态转移方程如下：
+
+$$
+W_{i, p} = \begin{cases}
+\infty & i = 0 \\
+W_{i-1, p} & p_i > p \\
+\min\{W_{i-1, p}, w_i + W_{i-1, p-p_i}\} & \text{otherwise}
+\end{cases}
+$$
+
+其中，$i = 1, \cdots, n$，$p = 1, \cdots, np_{max}$，因此时间复杂度为 $O(n^2p_{max})$。值得注意的是，这样的动态规划解并不是一个多项式时间的解，因为输入是 $p_{max}$ 的二进制编码，这样看还是指数级别的。但如果知道 $p_{max}$ 的上界（甚至是关于 $n$ 的多项式上界），那么这个动态规划解就是一个多项式时间的解。
+
+然而，通过将全体价值缩小一个比例，我们可以得到 0-1 背包问题的一个 $\mathsf{FPTAS}$ 解。
+
+首先证明算法的正确性：设我们缩小的比例为 $b$，输入价值为 $v_1, \cdots, v_n$，缩小后的价值为 $v_1/b, \cdots, v_n/b$，将缩小后的价值向上取整：$\lceil v_1/b \rceil, \cdots, \lceil v_n/b \rceil$，这样我们就可以放进动态规划中运行了。显而易见，全体价值同时放缩一个比例 $b$，不会影响动态规划选择的最优物品集合，因此我们的动态规划算法选出的最优物品集合和当价值为 $\lceil v_1/b \rceil, \cdots, \lceil v_n/b \rceil$ 时的最优物品集合是一样的，只是后者的最优价值扩大了 $b$ 倍。我们记 $\lceil v_i/b \rceil$ 为 $v'_i$，那么显然 $v'_i$ 和原问题的 $v_i$ 差距应当不大，因此我们有理由相信 $v'_1, \cdots, v'_n$ 的最优解是 $v_1, \cdots, v_n$ 的最优解的一个近似。
+
+形式化算法如下：
+
+1. 给定我们想要达到的近似比率 $\varepsilon$（为了分析方便，我们假设 $1/\varepsilon$ 是整数，如果不是整数也可以向下找一个满足条件的数替代），令放缩比例 $b = \varepsilon v_{\max}/n$；
+2. 将所有价值放缩为 $\lceil v_i/b\rceil$，然后运行动态规划算法得到最优解 $v$；
+3. 然后将所有价值放大为 $v'_i = \lceil v_i/b\rceil b$，此时最优解为 $bv$，然后 $bv$ 就是我们的近似最优解了。
+
+下面证明这是一个 $\mathsf{FPTAS}$：
+
+!!! Info "Proof"
+
+    时间复杂度是显然的，我们缩小价值后的动态规划算法是 $O(n^2v_{\max}/b) = O(n^3/\varepsilon)$ 的，因此是符合 $\mathsf{FPTAS}$ 的。接下来我们需要证明这一算法的近似比是符合 $\mathsf{FPTAS}$ 的。
+
+
+### 5. K-聚类问题
+
+最简单的贪心可以任意差。
+
+??? Example 
+
+    Assume that you are a real world Chinese postman, which have learned an awesome course "Advanced Data Structures and Algorithm Analysis" (ADS). Given a 2-dimensional map indicating $N$ positions $p_i(x_i, y_i)$ of your post office and all the addresses you must visit, you'd like to find a shortest path starting and finishing both at your post office, and visit all the addresses at least once in the circuit. Fortunately, you have a magic item "Bamboo copter & Hopter" from "Doraemon", which makes sure that you can fly between two positions using the directed distance (or displacement).
+
+    However, reviewing the knowledge in the ADS course, it is an NPC problem! Wasting too much time in finding the shortest path is unwise, so you decide to design a 2−approximation algorithm as follows, to achieve an acceptable solution.
+
+    ```plaintext
+    Compute a minimum spanning tree T connecting all the addresses.
+    Regard the post office as the root of T.
+    Start at the post office.
+    Visit the addresses in order of a _____ of T.
+    Finish at the post office.
+    ```
+
+    There are several methods of traversal which can be filled in the blank of the above algorithm. Assume that P≠NP, how many methods of traversal listed below can fulfill the requirement?
+
+    - Level-Order Traversal
+    - Pre-Order Traversal
+    - Post-Order Traversal
+
+    **Solution**：2。最优解应该构成一个图，首先证明这个图的权重和大于最小生成树的权重和：如果这个图里边有一个环，那么减去环中的某个边，仍然可以保持连通性，所以这个图的权重大于从这个图中规约后形成的树的权重和，因此大于最小生成树的权重和。
+    
+    前序遍历和后序遍历使得最小生成树的每个边最多被访问两次，而层序遍历就不能保证被访问次数的上界了，所以只有前序遍历和后序遍历可以保证近似比为 2。
+    
 ## 八、Local Search
 
 ### 1. 顶点覆盖问题

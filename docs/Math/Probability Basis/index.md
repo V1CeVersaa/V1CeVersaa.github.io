@@ -6,6 +6,7 @@
 
 ## Table of Contents
 
-- [ ] [Chapter 1-2](./Chapter%201-2.md)
-- [ ] [Chapter 3](./Chapter%203.md)
-- [ ] [Chapter 4](./Chapter%204.md)
+- [ ] [Chapter 1-2：事件、概率与独立性](./Chapter%201-2.md)
+- [ ] [Chapter 3：随机变量与分布函数](./Chapter%203.md)
+- [ ] [Chapter 4：数字特征与特征函数](./Chapter%204.md)
+- [ ] [Chapter 5：大数定律与中心极限定理](./Chapter%205.md)

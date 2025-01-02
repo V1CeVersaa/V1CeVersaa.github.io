@@ -17,8 +17,8 @@
 
 p code,
 li code {
-    font-family: 'Monaco', 'Cascadia Code', 'Monaspace Argon Light',
-        'Monaspace Argon', 'LXGW WenKai Screen';
+    font-family: 'Monaco', 'Cascadia Code', 'Cascadia Mono',
+        'Monaspace Argon Light', 'Monaspace Argon', 'LXGW WenKai Screen';
     src: url(https://v1ceversaa.github.io/docs/css/MonaspaceArgon-Light.woff)
         format('woff');
     src: url(https://v1ceversaa.github.io/docs/css/MonaspaceArgon-Regular.woff)

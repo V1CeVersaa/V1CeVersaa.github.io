@@ -1,18 +1,24 @@
 # Advanced Heaps
 
+简而言之，除了下面几个特例，所有堆操作的时间复杂度都是 $O(\log n)$ 的：
+
+1. 普通的二叉堆的合并是 $O(n)$ 的；
+2. 二项堆的插入是 $O(1)$ 的；
+3. 斜堆不考虑单点删除 Delete 和 DecreaseKey 操作。
+
 ## Leftist Heaps
 
-定义每个结点的**零路径长/Null Path Length/**$\operatorname*{NPL}$ 为该结点到没有两个孩子的子结点的长度，并且定义 $\operatorname*{NPL}(\mathrm{null}) = -1$。注意到有下面事情：
+定义每个结点的**零路径长/Null Path Length/**$\operatorname*{NPL}$ 为该结点到没有**两个孩子的子结点**的长度，并且定义 $\operatorname*{NPL}(\mathrm{null}) = -1$，没有孩子或者只有一个孩子的节点的 $\operatorname*{PNL}$ 为 0。注意到有下面事情：
 
 $$
 \operatorname*{NPL}(p) = \min\left\{\operatorname*{NPL}(\text{left}(p)), \operatorname*{NPL}(\text{right}(p)\right\} + 1
 $$
 
-若一个堆满足左倾堆性质，那么对于任意结点 $p$，有其左孩子的 $\operatorname*{NPL}$ 不小于右孩子的 $\operatorname*{NPL}$。那么称这样的堆为一个左顷堆/Leftist Heap。
+若一个堆满足**左倾堆性质**，那么对于任意结点 $p$，有其左孩子的 $\operatorname*{NPL}$ 不小于右孩子的 $\operatorname*{NPL}$。那么称这样的堆为一个左顷堆/Leftist Heap。
 
-左顷堆有一个很浅显的性质：若一个左顷堆的右路径上有 $r$ 个结点，这里右路径指的是从根结点到最右下方的孩子的路径，那么这个堆至少会有 $2^r - 1$ 个结点。
+左顷堆有一个很浅显的性质：若一个左顷堆的**右路径**上有 $r$ 个结点，这里右路径指的是从根结点到最右下方的孩子的路径，那么这个堆至少会有 $2^r - 1$ 个结点。左倾堆右路径节点个数至多是 $\lfloor \log (n + 1) \rfloor$ 的
 
-左顷堆的核心是合并操作，递归式是通过下面操作完成的：先比较当前两个待合并子树的根结点的键值，选择较小（较大）的那个作为根结点，其左子树依然为左子树，右子树更新为「右子树和另一个待合并子树的合并结果」。在递归地更新完后，需要不断检查左子树和右子树是否满足 $\operatorname*{NPL}_{\text{left child}} \geq \operatorname*{NPL}_{\text{right child}}$​ 的性质，如果不满足，我们则需要交换左右子树来维持性质。
+左顷堆的核心是合并操作，递归式是通过下面操作完成的：先比较当前两个待合并子树的根结点的键值，选择较小（较大）的那个作为根结点，其左子树依然为左子树，右子树更新为「右子树和另一个待合并子树的合并结果」。在递归地更新完后，需要不**断检查左子树和右子树是否满足** $\operatorname*{NPL}_{\text{left child}} \geq \operatorname*{NPL}_{\text{right child}}$​ 的性质，如果不满足，我们则需要交换左右子树来维持性质。
 
 ```c
 LeftistHeap merge_recursive(LeftistHeap h1, LeftistHeap h2) {
@@ -43,6 +49,11 @@ LeftistHeap merge_recursive(LeftistHeap h1, LeftistHeap h2) {
 }
 ```
 
+迭代方式更加简洁：
+
+<img class="center-picture" src="../assets/heap-2.png" alt="drawing" width="600" />
+
+
 单点插入可以看作是将一个结点作为一个左顷堆，然后与原堆合并的过程。DeleteMin 则是将根结点删除后，将其左右子树合并的过程。没啥可说的。
 
 在递归的过程中，我们发现递归的深度不会超过两个堆的右路径的长度之和，因为每次递归都会使得两个堆的其中一个向着右路径上下一个右孩子推进，并且直到其中一个推到了叶子结点就不再加深递归。此递归向下的过程是 $O(\log n)$ 的。同时每一层的操作也是常数的，因为只需要完成接上指针、判断根结点、交换子树与更新 $\operatorname*{NPL}$ 的操作，所以整体的复杂度是 $O(\log n)$ 的。
@@ -51,7 +62,7 @@ LeftistHeap merge_recursive(LeftistHeap h1, LeftistHeap h2) {
 
 ## Skew Heaps
 
-### 数据结构介绍
+### 1. 数据结构介绍
 
 我们回忆 Splay 树和 AVL 树，它们都是通过旋转操作来维持平衡性质的，但是唯一区别就是 AVL 树需要自底向上维持平衡性质，但是 Splay 树就不需要，其无条件的旋转操作提醒我们，或许可以通过无条件地交换左右子树来完成合并操作。具体操作如下：
 
@@ -60,7 +71,12 @@ LeftistHeap merge_recursive(LeftistHeap h1, LeftistHeap h2) {
 
 斜堆一般不考虑单点删除和 DecreaseKey 这两个操作。
 
-### 摊还分析
+<img class="center-picture" src="../assets/heap-3.png" alt="drawing" width="600" />
+
+!!! Note
+    It is an open problem to determine **precisely** the **expected right path length** of both leftist and skew heaps.
+
+### 2. 摊还分析
 
 **Definition**：一个结点 $p$ 被称为**重的/Heavy**，如果果它的右子树结点个数至少是 $p$ 的所有后代的一半（后代包括该结点 $p$ 自身）。反之称为轻结点/Light。
 

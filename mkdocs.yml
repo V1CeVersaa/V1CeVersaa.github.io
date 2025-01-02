@@ -66,6 +66,7 @@ nav:
           - Quantum Computing:
                 - Computer Science/Quantum Computing/index.md
                 - Quantum Machine Learning: Computer Science/Quantum Computing/QML.md
+            # - Compilers:
           - Blockchain:
                 - Blockchain Basis: Computer Science/Blockchain/Blockchain.md
                 - Ethereum:
@@ -120,6 +121,7 @@ nav:
                 - COAD-Large and Fast Exploiting Memory Hierarchy: System/COAD/Chapter5.md
                 - DDCA-Memory Systems: System/DDCA/Chapter8.md
           - Running Programs on a System:
+                - OSC-OS Structure: System/OSC/topic0.md
                 - CSAPP-Linking: System/CSAPP/Chapter7.md
                 - CSAPP-Exceptional Control Flow: System/CSAPP/Chapter8.md
                 - CSAPP-Virtual Memory: System/CSAPP/Chapter9.md
@@ -188,6 +190,7 @@ nav:
                 - Chapter 1-2: Math/Probability Basis/Chapter 1-2.md
                 - Chapter 3: Math/Probability Basis/Chapter 3.md
                 - Chapter 4: Math/Probability Basis/Chapter 4.md
+                - Chapter 5: Math/Probability Basis/Chapter 5.md
           - Advanced Probability:
                 - Math/Probability/index.md
                 - Laws of Large Numbers: Math/Probability/Chapter 1.md
@@ -301,10 +304,17 @@ extra_css:
     - css/fold_toc.css
 
 extra_javascript:
-    # - https://polyfill.io/v3/polyfill.min.js?features=es6
-    - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
+    - css/Javascripts/katex.js
+    - css/Javascripts/katex.min.js
+    - css/Javascripts/toc.js
     - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-    - https://gcore.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js
+    - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
+    # - css/Javascripts/mathjax.js
+    # - css/Javascripts/tablesort.js
+    # - css/Javascripts/polyfill.min.js
+    # - https://unpkg.com/katex@0/dist/katex.min.js
+    # - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+    # - https://polyfill.io/v3/polyfill.min.js?features=es6
+    # - https://gcore.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js
     - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js
     - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
-    - css/Javascripts/tablesort.js
