@@ -22,5 +22,5 @@
 - [ ] [Balanced Tree and Amortized Analysis](./Lec%201.md) <不想写红黑树了>
 - [x] [Advanced Heaps](./Lec%202.md)
 - [ ] [Algorithm Analysis I](./Lec%203.md)
-- [ ] [Algorithm Analysis II](./Lec%204.md)
+- [x] [Algorithm Analysis II](./Lec%204.md)
 - [x] [Algorithm Analysis III](./Lec%205.md)

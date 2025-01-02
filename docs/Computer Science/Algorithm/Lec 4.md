@@ -88,6 +88,10 @@ $$
 
 **非确定性图灵机**：确定性图灵机和非确定性图灵机的唯一区别就在于偏函数。确定性图灵机的值域为 $Q \times (S \cup \{\square\}) \times \{L, R\}$，而非确定性图灵机的值域为其幂集 $\mathcal{P}(Q \times (S \cup \{\square\}) \times \{L, R\})$，也就是说，非确定性图灵机在每一步都有多种选择，而确定性图灵机只有一种选择。如果一条路径使得非确定性图灵机停机，那称非确定性图灵机会停机。在判定性问题中，**只要**有一条路径接受，整个图灵机就接受，只有所有路径都拒绝，整个图灵机才拒绝。换句话说，如果有一种路径可以让非确定型图灵机得到一个解，那么非确定性图灵机就一定会选择这个解。
 
+!!! Note "注意"
+
+    但是！非确定性图灵机**并不是下一步随机选择一个解**，更像是一个搜索算法。
+
 **定理**：任何一个非确定性图灵机都可以被一个确定性图灵机模拟，也就是**这两类图灵机可以计算的函数是一致的**。
 
 !!! Info "证明"
@@ -202,7 +206,7 @@ $\mathsf{P}$ 问题显然是可判定问题；一些非 $\mathsf{P}$ 的问题�
 
 ### 5. 经典例子
 
-一个经典的多项式时间规约的例子是将哈密顿圈问题规约到旅行商问题。哈密顿圈问题是给定一个图，判断其是否有哈密顿圈/经过所有节点的简单环，而旅行商问题是给定一个**加权完全**图和一个整数 $k$，判断其是否有长度不超过 $k$ 的哈密顿圈。这两个问题（HCP 和 TSP）都是经典的 $\mathsf{NP}$ 完全问题。
+一个经典的多项式时间规约的例子是将**哈密顿圈问题规约到旅行商问题**。哈密顿圈问题是给定一个图，判断其是否有哈密顿圈/经过所有节点的简单环，而旅行商问题是给定一个**加权完全**图和一个整数 $k$，判断其是否有长度不超过 $k$ 的哈密顿圈。这两个问题（HCP 和 TSP）都是经典的 $\mathsf{NP}$ 完全问题。
 
 两个问题的差别几乎是对称的，哈密顿圈问题给定的图不一定是完全图，并且没有加权，而旅行商问题给定的图是完全图并且有加权。我们将待判断 HCP 的图取出来，将现有的边权全部设为 1，然后将其补成完全图，后补充的边权重设为 2。所以如果原图有哈密顿圈，那么新图有长度不超过 $n$ 的哈密顿圈，直接将 $k$ 设为 $n$ 即可。这就完成了规约。
 
@@ -213,11 +217,59 @@ $\mathsf{P}$ 问题显然是可判定问题；一些非 $\mathsf{P}$ 的问题�
 
     **答案**：错误，比如最经典的 0-1 背包问题，其动态规划解法的时间复杂度为 $O(nC)$，其中 $n$ 为物品数量，$C$ 为背包容量，因此 0-1 背包问题是**伪多项式时间复杂度**的。回忆一下我们对时间复杂度的确切定义，我们考虑的是输入的**规模**而不是输入的**数值**，而我们输入的背包容量的规模实际上是其在内存中占用的位数 $N = \log_2 C$，因此 0-1 背包问题的时间复杂度实际上是 $O(n2^N)$，这是一个指数时间复杂度的问题。
 
+另一个是将团问题/Clique Problem 规约到顶点覆盖问题：
+
+- 团问题：给定无向图 $G=(V,E)$ 和整数 $K$，$G$ 是否存在一个（至少）包含 $K$ 个顶点的完全子图（团）；
+- 顶点覆盖问题：给定无向图 $G=(V,E)$ 和整数 $K$，$G$ 是否存在一个顶点子集 $V'\subseteq V$，使得 $\lvert V'\rvert \leq K$ 且 $G$ 中的每条边上至少有一个顶点被包含在 $V'$ 中（顶点覆盖）。
+
+我们这样描述问题：
+
+$$\begin{aligned}
+\text{CLIQUE} &= \{\langle G, K\rangle \colon\ G \text{ is a graph with a clique of size }K\} \\
+\text{VERTEX-COVER} &= \{\langle G, K\rangle \colon\ G \text{ has a vertex cover of size }K\}
+\end{aligned}$$
+
+我们证明两件事：
+
+1. 顶点覆盖问题是 $\mathsf{NP}$ 的，对于一个 Certificate $V'$，下面给出检查算法：
+    - 检查是否满足 $\lvert V'\rvert = K$；
+    - 检查是否 $\forall \text{edge } (u, v)$，使得 $u\in V'$ 或 $v\in V'$；
+    - 计算时间复杂度：$O(N^3)$（遍历所有边（$N^2$）$\times$ 每条边至少检验其中一点是否在 $V'$ 内（$N$））；
+2. 规约：证明 $G$ 有一个大小为 $K$ 的团的充要条件为 $\overline{G}$ 有一个大小为 $\lvert V\rvert - K$ 的顶点覆盖：
+    
+<!-- 
+
+    - $\text{CLIQUE} \le_P \text{VERTEX-COVER}$，即证$G$有一个大小为$K$的**团**的充要条件为$\overline{G}$有一个大小为$|V| - K$的**顶点覆盖**
+        - 充分性：
+            - 令$(u, v)$为$\overline{E}$上的任意一边，可以得到以下结论
+            - $u, v$中至少有一点不属于$V'$，且至少有一点属于$V - V'$
+            - 每条在$\overline{G}$内的边，它的一个顶点在$V - V'$内
+            - 因此大小为$|V| - K$的集合$V - V'$构成了$\overline{G}$的一个顶点覆盖
+        - 必要性：
+            - $\forall u, v \in V$，如果$(u, v) \notin E$，那么$u \in V'$或$v \in V'$，或两者皆满足
+            - $\forall u, v \in V$，如果$u \notin V'$且$v \notin V'$，则$(u, v) \in E$
+            - 所以$V - V'$是一个大小为$|V| - |V'| = K$的团 -->
+
 ## 七、Approximation Algorithm
+
+!!! Note "注意"
+
+    - 除非 $\mathsf{P} = \mathsf{NP}$，否则对于任意的 $k\geq 1$，旅行商问题不存在多项式时间的 $k$ 近似算法，将哈密顿回路问题规约到旅行商问题的 $k$ 近似问题就可以。
+    - 同时注意，这样的构造是不满足三角不等式的，如果满足三角不等式，就可以通过最小生成图和深度优先搜索得到哈密顿回路，这样就得到 $2$ 近似算法了。
+    - 对于 $k$-聚类问题，除非 $\mathsf{P} = \mathsf{NP}$，否则不存在多项式时间的近似比小于 $2$ 的近似算法。
 
 ### 1. 基本概念
 
-**绝对近似比**：
+**绝对近似比**：假设有某类问题 $\mathcal{I}$，其中一个实例记作 $I$，并且有一个复杂度为多项式的近似算法 $A$。定义：
+
+- $A(I)$ 为算法 $A$ 在实例 $I$ 上得到的解；
+- $\operatorname*{OPT}(I)$ 为实例 $I$ 的最优解。
+
+由于 $\mathcal{I}$ 不一定是最小化还是最大化问题，我们对称的定义绝对近似比：
+
+$$
+\rho = \sup_{I} \left\{\frac{\operatorname*{OPT}(I)}{A(I)}, \frac{A(I)}{\operatorname*{OPT}(I)}\right\}
+$$
 
 **渐进近似比/Asymptotic Approximation Ratio**：如果对任意常数 $\alpha \geq 1$，对任意实例 $I$，存在一个常数 $k$，满足 $A(I) \leq \alpha \cdot \operatorname*{OPT}(I) + k$，称所有满足上式的 $\alpha$ 的下确界为 $A$ 的渐近近似比。
 
@@ -229,6 +281,8 @@ $\mathsf{P}$ 问题显然是可判定问题；一些非 $\mathsf{P}$ 的问题�
 
 - $\mathsf{EPTAS}$：在 $\mathsf{PTAS}$ 的基础上要求算法的运行时间是 $O(\lvert I\rvert^c)$ 的，其中 $c$ 是一个和 $\varepsilon$ 无关的常数，可以将 $\mathsf{EPTAS}$ 的复杂度记作 $\lvert I\rvert^{O(1)}f(1/\varepsilon)$。
 - $\mathsf{FPTAS}$：还要求算法的运行时间关于 $\varepsilon$ 也是多项式的，可以将 $\mathsf{FPTAS}$ 的复杂度记作 $\lvert I\rvert^{O(1)}\left(1/\varepsilon\right)^{O(1)}$。
+
+> 很直观的想法，如果我们想要获得更好的近似比，那么我们显然需要更多的时间。PTAS 只要求长得像多项式，但是这个多项式可以和 $1/\varepsilon$ 有关，而 EPTAS 要求对规模 $n$ 是多项式的，后面乘上去的 $1/\varepsilon$ 的函数无所谓，而 FPTAS 要求对 $1/\varepsilon$ 也是多项式的，这就是完全多项式时间近似方案。
 
 ### 2. 最小化工时调度问题
 
@@ -341,9 +395,56 @@ $$
 
 ### 5. K-聚类问题
 
-最简单的贪心可以任意差。
+困难之处在于我们可以选择的点的数目是无限多的。
 
-??? Example 
+最简单的贪心：直接放在一个最合适的位置上，也就是让第一个点和所有的点的最大距离最小化，但是这个贪心可以任意差。
+
+2-近似的贪心，首先我们需要神谕 Oracle，先给定最优解 $r(C^*)$：
+
+```C
+Centers Greedy_2r(Sites S[], int n, int K, double r) {
+    Sites S`[] = S[];  // S` is the set of the remaining sites
+    Centers C[] = NULL;
+    while (S`[] != NULL) {
+        Select any s form S` and add it to C;
+        Delete all s` from S` that are at dist(s`, s) <= 2r;
+    } // end-while
+    if (|C| <= K) 
+        return C;
+    else
+        ERROR("No set of K centers with covering radius at most r");
+}
+```
+
+随机选取点集中的一个点为第一个中心，然后删除该点为中心，删除所有距离小于 $2r$ 的点，然后重复这个过程直到所有点都被删除。这个算法的近似比是 2。
+
+!!! Info "近似比的证明"
+
+    因为每次都是删除选取的中心 $2r(C^*)$ 为半径的圆内所有点，所以如果算法能在 $K$ 步之内停止，那么得到的解一定是小于等于最优解的 2 倍，因此我们只需要证明算法能在 $K$ 步之内停止即可。根据我们前面的讨论，如果最优解是 $r(C^*)$，那么在上面的算法中，每次随机选择一个剩余的点作为中心，$2r(C^*)$ **为半径的圆至少会带走一个真正的最优解中的点为中心**（考虑圆和圆的相切就可以），$r(C^*)$ 为半径的圆内所有点，因此 $K$ 步之后必然最优解覆盖的所有点都被我们的算法覆盖，因此必然停止。
+
+**定理**：假设该算法选择的中心点数超过 $K$，那么对于任意规模至多为 $K$ 的中心点集 $C^*$，覆盖半径为 $r(C^*) > r$。
+
+!!! Info "带点解释的证明"
+
+    其实就是反证法，这就是说如果我们在 $K$ 步内停止不了，这就是说最优解一定要大于 $r$。按照上面命题的证明就可以
+
+    这其实是为了二分，我们总是假定我们有神谕，然后如果神谕是错的，我们就可以得到一个下界，然后我们就可以二分了。
+
+这是一个换汤不换药的 2-近似算法，和上面的唯一区别就是我们要选择一个离中心点集中的点尽可能远的点。
+
+```C
+Centers Greedy_Kcenter(Sites S[], int n, int K) {
+    Centers C[] = NULL;
+    Select any s from S and add it to C;
+    while (|C| < K) {
+        Select s from S with maximum dist(s, C);
+        Add s to C;
+    }  // end-while
+    return C;
+}
+```
+
+??? Example "作业里的问题"
 
     Assume that you are a real world Chinese postman, which have learned an awesome course "Advanced Data Structures and Algorithm Analysis" (ADS). Given a 2-dimensional map indicating $N$ positions $p_i(x_i, y_i)$ of your post office and all the addresses you must visit, you'd like to find a shortest path starting and finishing both at your post office, and visit all the addresses at least once in the circuit. Fortunately, you have a magic item "Bamboo copter & Hopter" from "Doraemon", which makes sure that you can fly between two positions using the directed distance (or displacement).
 
