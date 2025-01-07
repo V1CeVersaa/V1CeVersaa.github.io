@@ -79,7 +79,7 @@ $$
 
 则称 $\xi_n$ 依概率收敛于 $\xi$，记为 $\xi_n \stackrel{P}{\longrightarrow} \xi$。
 
-**「极限唯一性」**：假设 $\xi_n \stackrel{P}{\longrightarrow} \eta$，$\xi_n \stackrel{d}{\longrightarrow} \zeta$，则 $P(\eta = \zeta) = 1$。
+**「极限唯一性」**：假设 $\xi_n \stackrel{P}{\longrightarrow} \eta$，$\xi_n \stackrel{P}{\longrightarrow} \zeta$，则 $P(\eta = \zeta) = 1$。
 
 !!! Info "Proof"
 

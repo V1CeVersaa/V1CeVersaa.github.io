@@ -1,6 +1,3 @@
-# Cirq Basics
+# Quantum Computing
 
-## Introduction
-
-### 1. Qubits
 

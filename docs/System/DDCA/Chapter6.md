@@ -11,6 +11,36 @@ counter: True
 
 ## 6.2 Assembly Language
 
+???- Info "ISA 的分类"
+
+    - Stack Architecture: 
+        - Implicit Operands - on the Top Of the Stack(TOS). 
+        - For operation `Add`, both operands are removed from the stack, then perform the operation with the operands, store the result to the stack.
+        - Easy to operate: Implement `C = A + B`: 
+        ```plaintext
+        Push A          # A for element stored in address A
+        Push B          
+        Add             # Pop all, load to ALU and push the result to the stack
+        Pop  C
+        ``` 
+    - Accumulator Architecture:
+        - One implicit operand: The accumulator.
+        - One explicit openand: Memory location.
+        - Instruction set: `add A`, `sub A`, `mult A`, `div A`, `store A`, `load A` ... 
+        - Implement `C = A + B`:
+        ```plaintext
+        Load  A
+        Add   B          # Implicitly specify the operand Accumulator Register
+        Store C
+        ```
+    - General Purpose Register Architecture (Register Memory Arch):
+        - Only explicit operands: Registers and Memory Locations.
+        - Operand access: 
+    - General Purpose Register Archtecture (Load-Store Arch) (RISC-V):
+        - Only load and store instructions can access memory.
+
+    GPR Classification:
+
 汇编语言是机器语言的人类可读表示，每条汇编语言指令都指出了**该执行哪个操作**和**操作需要那些操作数**。本章以 RISC-V 汇编 (RV32I) 为例，提纲挈领介绍简单的汇编语言。先引入一些简单的算术指令：
 
 - `add`：`#!asm add dest, src1, src2`，对应的 C 语言代码为 `#!C dest = src1 + src2`。
@@ -80,21 +110,21 @@ addi x2, x2, 0x987   # x2 = 0xFEEDA987
 
 `.data`、`.text`、`.bss` 以及 `.section`、`.rodata` 这些汇编指令分别告诉汇编器将后续的数据或代码放在全局数据段、文本段、BSS 段或只读数据段中。BSS 段位于全局数据段中，但是其初始化值为 0。只读数据段是常量数据，放置在文本段中（即程序存储器/Program Memory 中），下面是一些常见的汇编器指令。 
 
-| 汇编器指令              | 描述                                   |
-|:----------------------|:---------------------------------------|
-|`.text`                |    代码段                               |
-|`.data`                |    全局数据段                            |
-|`.bss`                 |    初始化为 0 的全局数据段                |
-|`.section .foo`        |    名为 `.foo` 的段                     |    
-|`.align N`             |    下一个数据/指令对齐在 $2^N$ 字节边界上   |
-|`.balign N`            |    下一个数据/指令对齐在 $N$ 字节边界上     |
-|`.globl sym`           |    标签 `sym` 是全局的                   |
-|`.string "str"`        |    将字符串 `"str"` 存储在内存中          |
-|`.word w1, w2,..., wN` |    在连续的内存字中存储 $N$ 个 32 位值     |
-|`.byte b1, b2,..., bN` |    在连续的内存字节中存储 $N$ 个 8 位值     |
-|`.space N`             |    保留 $N$ 字节以存储变量                |
-|`.equ name, constant`  |    用值 `constant` 定义符号 `name`       |  
-|`.end`                 |    汇编文件结束                          |
+| 汇编器指令             | 描述                                   |
+| :--------------------- | :------------------------------------- |
+| `.text`                | 代码段                                 |
+| `.data`                | 全局数据段                             |
+| `.bss`                 | 初始化为 0 的全局数据段                |
+| `.section .foo`        | 名为 `.foo` 的段                       |
+| `.align N`             | 下一个数据/指令对齐在 $2^N$ 字节边界上 |
+| `.balign N`            | 下一个数据/指令对齐在 $N$ 字节边界上   |
+| `.globl sym`           | 标签 `sym` 是全局的                    |
+| `.string "str"`        | 将字符串 `"str"` 存储在内存中          |
+| `.word w1, w2,..., wN` | 在连续的内存字中存储 $N$ 个 32 位值    |
+| `.byte b1, b2,..., bN` | 在连续的内存字节中存储 $N$ 个 8 位值   |
+| `.space N`             | 保留 $N$ 字节以存储变量                |
+| `.equ name, constant`  | 用值 `constant` 定义符号 `name`        |
+| `.end`                 | 汇编文件结束                           |
 
 ```asm title="Using Assembly Instructions"
     .globl main         # make the main label global

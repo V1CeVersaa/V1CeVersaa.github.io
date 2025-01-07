@@ -1,2 +1,0 @@
-# Cheetsheet for Linear Algebra
-

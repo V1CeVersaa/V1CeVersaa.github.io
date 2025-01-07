@@ -5,9 +5,6 @@
 
     这里是我在浙江大学图灵班期间的学习笔记。
 
-!!! Warning
-    这里有部分为了整齐而放弃了一部分考究的内容分类，请不要在意，谢谢！
-
 ## Table of Contents
 
 ### Programming Basis
@@ -26,12 +23,12 @@
 
 ### Data Structure & Algorithm Analysis
 
-- [ ] [FDS Collection I](./Algorithm/FDS%20I.md)
-- [ ] [FDS Collection II](./Algorithm/FDS%20II.md)
-- [ ] [Advanced Trees](./Algorithm/Lec%201.md)
-- [ ] [Advanced Heaps](./Algorithm/Lec%202.md)
-- [ ] [Algorithm Analysis I](./Algorithm/Lec%203.md)
-- [ ] [Algorithm Analysis II](./Algorithm/Lec%204.md)
+- [x] [FDS Collection I](./Algorithm/FDS%20I.md) <线性表不太全>
+- [x] [FDS Collection II](./Algorithm/FDS%20II.md) <图的部分还不是很全>
+- [x] [Advanced Trees](./Algorithm/Lec%201.md) <红黑树没写>
+- [x] [Advanced Heaps](./Algorithm/Lec%202.md) <某几个摊还分析没写>
+- [x] [Algorithm Analysis I](./Algorithm/Lec%203.md)
+- [x] [Algorithm Analysis II](./Algorithm/Lec%204.md)
 - [x] [Algorithm Analysis III](./Algorithm/Lec%205.md)
 
 ### Web

@@ -113,7 +113,7 @@ m_k &= E\xi^k = E[(\xi - E\xi) + E\xi]^k = \sum_{i=0}^k \binom{k}{i}E(\xi - E\xi
 
 1. 
 
-**「特征函数的运算形式」**：
+**「特征函数的运算性质」**：
 
 1. 令 $\xi$ 的特征函数为 $\varphi_{\xi}(t)$，则 $Ee^{it(a\xi+c)} = e^{itc}\varphi_{\xi}(at)$；
 2. 如果 $\xi$ 和 $\eta$ 相互独立，则 $\gamma = \xi+\eta$ 的特征函数为 $\varphi_{\gamma}(t) = \varphi_{\xi}(t) \cdot \varphi_{\eta}(t)$；
@@ -142,7 +142,7 @@ $$
 
     所以分布函数由其连续点上的值唯一确定
 
-如果 $\xi$ 的特征函数绝对可积，也就是 $\int_{-\infty}^{+\infty} \lvert \varphi(t) \rvert \, dt < \infty$ 存在，那么 $\xi$ 的分布函数可以确定为
+如果 $\xi$ 的特征函数绝对可积，也就是 $\displaystyle\int_{-\infty}^{+\infty} \lvert \varphi(t) \rvert \, dt < \infty$ 存在，那么 $\xi$ 的分布函数可以确定为
 
 $$
 p(x) = \dfrac{1}{2\pi} \int_{-\infty}^{+\infty} e^{-itx} \varphi(t) \, dt
@@ -181,7 +181,7 @@ $$
 
 袋中有 $N$ 张卡片，各记为数字 $Y_1, Y_2, \cdots, Y_N$，不放回地抽出 $n$ 张，求其和的数学期望和方差。
 
-**第二统计量相关**：若 $\xi_1, \xi_2$ 相互独立，均服从 $N(\mu, \sigma^2)$，试证：
+**第二统计量相关**：若 $\xi_1$，$\xi_2$ 相互独立，均服从 $N(\mu, \sigma^2)$，试证：
 
 $$
 E \max(\xi_1, \xi_2) = \mu + \dfrac{\sigma}{\sqrt{\pi}}

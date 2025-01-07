@@ -65,6 +65,7 @@ nav:
                 - Algorithms III: Computer Science/Algorithm/Lec 5.md
           - Quantum Computing:
                 - Computer Science/Quantum Computing/index.md
+                - Quantum Basis: Computer Science/Quantum Computing/basis.md
                 - Quantum Machine Learning: Computer Science/Quantum Computing/QML.md
             # - Compilers:
           - Blockchain:
@@ -97,6 +98,7 @@ nav:
                 - DDCA-Sequential Logic: System/DDCA/Chapter3.md
                 - DDCA-Hardware Description Language: System/DDCA/Chapter4.md
                 - DDCA-Digital Building Blocks: System/DDCA/Chapter5.md
+                - CSAPP-Supplement: System/CSAPP/Supplement.md
           - Presenting and Manipulating Information:
                 - CSAPP-Presenting and Manipulating Information: System/CSAPP/Chapter2.md
                 - COAD-Arithmetic for Computers: System/COAD/Chapter2.md
@@ -140,19 +142,10 @@ nav:
                 - OSC-Memory Management: System/OSC/topic5.md
                 - OSC-Stroage Management: System/OSC/topic6.md
                 - OSC-File System: System/OSC/topic7.md
+                - OSTEP-Memory Virtualization: System/OSTEP/topic2.md
           - Hardware Description Language:
                 - Verilog: System/HDL/Verilog.md
                 - Chisel: System/HDL/Chisel.md
-
-          # - Courses and Papers:
-          #       - ZJU System II: System/Lab Record/ZJU System II note.md
-          # - Lab Record:
-          # - ZJU System I: System/Lab Record/ZJU System I.md
-          # - ZJU System II: System/Lab Record/ZJU System II.md
-          # - ZJU System III: System/Lab Record/ZJU System III.md
-          # - NJU ICS PA: System/Lab Record/NJU ICS PA.md
-          # - CMU 15-213: System/Lab Record/CMU-15-213.md
-          # - UCB CS61C: System/Lab Record/UCB CS61C.md
           - Booklist:
                 - CSAPP: System/CSAPP/CSAPP.md
                 - COAD: System/COAD/COAD.md
@@ -161,12 +154,11 @@ nav:
                 - OSTEP: System/OSTEP/OSTEP.md
     - AI:
           - AI/index.md
-          - Intro to Machine Learning:
-                - AI/CS229/index.md
-                - Linear Regression: AI/CS229/Linear Regression.md
-          - Deep Learning for Computer Vision:
-                - AI/EECS498/topic1.md
-                - Image Classification: AI/EECS498/topic2.md
+          - 人工智能引论: AI/AID/AID.md
+          - NLP with Deep Learning:
+                - AI/CS224N/index.md
+          - CV with Deep Learning:
+                - AI/CS231N/index.md
     - Math:
           - Basic Courses: Math/index.md
           - Abstract Algebra:

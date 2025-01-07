@@ -99,7 +99,7 @@
     1. 「伯努利分布/两点分布」：
     2. 「二项分布」：背景是 $n$ 重伯努利试验中，考虑随机变量 $\mu$ 位事件 $A$ 发生 $k$ 次的次数，其分布律为：$\displaystyle P\{\mu = k\} = \binom{n}{k} p^k (1-p)^{n-k}$，简记为 $\mu \sim B(n, p)$。
     3. 「超几何分布」：
-    4. 「泊松分布」：若随机变量 $\xi$ 可以取任何的非负整数值，其满足 $\displaystyle P\{\xi = k\} = \frac{\lambda^k}{k!} e^{-\lambda}$，则称 $\xi$ 服从参数为 $\lambda$ 的泊松分布，简记为 $\xi \sim P(\lambda)$。
+    4. 「泊松分布」：若随机变量 $\xi$ 可以取任何的非负整数值，其满足 $\displaystyle P\{\xi = k\} = \frac{\lambda^k}{k!} e^{-\lambda}$，则称 $\xi$ 服从参数为 $\lambda$ 的泊松分布，简记为 $\xi \sim \mathcal{P}(\lambda)$。
     5. 「几何分布」：
     6. 「帕斯卡分布」：
     7. 「负二项分布」：
@@ -224,7 +224,7 @@
     第一个式子右边第一部分分为 $N(\mu_1, \sigma_1^2)$ 的密度函数，第二部分为 $N \left( \mu_2 + \frac{\sigma_2}{\sigma_1} \rho (x - \mu_1), \sigma_2^2(1 - \rho^2) \right)$ 的密度函数；第二个式子右边第一部分分为 $N(\mu_2, \sigma_2^2)$ 的密度函数，第二部分为 $N \left( \mu_1 + \frac{\sigma_1}{\sigma_2} \rho (y - \mu_2), \sigma_1^2(1 - \rho^2) \right)$ 的密度函数。并且通过计算边际分布密度得到
 
     $$
-    p_1(x) = \int_{-\infty}^{+\infty} p(x, y) \, dy = \frac{1}{\sqrt{2 \pi} \sigma_1} e^{-\frac{(x - \mu_1)^2}{2 \sigma_1^2}}
+    p_1(x) = \int_{-\infty}^{+\infty} p(x, y) \, dy = \frac{1}{\sqrt{2 \pi} \sigma_1} e^{-(x - \mu_1)^2/2 \sigma_1^2}
     $$
 
     也就是说，二元正态分布的边际分布是正态分布。
@@ -323,7 +323,12 @@
 2. 还没写
 3. 还没写
 4. 还没写
-5. 还没写还没写
+5. 对下面的二元正态分布，将其化为标准形式，指出 $\mu_1$，$\mu_2$，$\sigma_1^2$，$\sigma_2^2$，$\rho$ 的值；并且求关于 $x$ 的边际密度函数 $p_1(x)$ 与条件密度函数 $p(x \mid y)$。 
+
+    $$
+    p(x, y) = \frac{1}{2\pi} \exp \left\{ -\frac{1}{2} \left( 2x^2 + y^2 + 2xy - 22x - 14y + 65 \right) \right\}
+    $$
+
 6. （Mill's Inequality）证明：对于服从标准正态分布的随机变量 $\xi$，有
     $$
     \dfrac{1}{\sqrt{2\pi}} \cdot \left(\dfrac{1}{x} - \dfrac{1}{x^3}\right) e^{-x^2/2} < P(\xi > x) < \dfrac{1}{\sqrt{2\pi}} \cdot \dfrac{1}{x} e^{-x^2/2}

@@ -23,4 +23,4 @@
 - [ ] [Chapter 10: System-Level I/O](./Chapter10.md)
 - [ ] [Chapter 11: Network Programming](./Chapter11.md)
 - [ ] [Chapter 12: Concurrent Programming](./Chapter12.md)
-- [ ] [Supplement](./Supplement.md)
+- [ ] [Supplement: Digital Design](./Supplement.md)
