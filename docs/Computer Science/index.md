@@ -1,7 +1,7 @@
 # Computer Science
 
 !!! Abstract
-    有关计算机的都在这了！
+    有关计算机的基本都在这了！
 
     这里是我在浙江大学图灵班期间的学习笔记。
 
@@ -9,17 +9,17 @@
 
 ### Programming Basis
 
-- [ ] [Programming Basis: Shell](./Programming%20Basis/Shell.md) <**SUSPENDING**>
-- [ ] [Programming Basis: GNU Make & CMake](./Programming%20Basis/GNU%20Make.md) <**SUSPENDING**>
+- [ ] [Programming Basis: Shell](./Programming%20Basis/Shell.md)
+- [ ] [Programming Basis: GNU Make & CMake](./Programming%20Basis/GNU%20Make.md)
 - [ ] [Programming Basis: Linux](./Programming%20Basis/Linux.md)
 - [ ] [Programming Basis: Regular Expression](./Programming%20Basis/Regular%20Expression.md)
 
 ### Programming Language
 
 - [ ] [Programming Language: C](./Programming%20Language/C/index.md)
-- [ ] [Programming Language: C++](Programming%20Language/C++/C++.md)
+- [ ] [Programming Language: C++](Programming%20Language/C++/index.md)
 - [ ] [Programming Language: Python](./Programming%20Language/Python/index.md)
-- [ ] [Programming Language: OCaml](./Programming%20Language/Ocaml/index.md) <**Not Started**>
+- [ ] [Programming Language: Haskell](./Programming%20Language/Haskell/index.md)
 
 ### Data Structure & Algorithm Analysis
 
@@ -35,7 +35,7 @@
 
 - [ ] [Web: CSS](./Web/CSS.md)
 - [ ] [Web: HTML](./Web/HTML.md)
-- [ ] [Web: JavaScript](./Web/Javascript.md)
+- [ ] [Web: JavaScript](./Web/Javascript/Javascript.md)
 - [x] [Web: YAML](./Web/YAML.md) 
 
 ### Blockchain

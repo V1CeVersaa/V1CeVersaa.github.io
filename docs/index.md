@@ -14,14 +14,17 @@ Hi！欢迎来到我的笔记本，我会在这里更新我的**课程笔记**
 ## 最近在学什么？
 
 - [ ] 计算机系统: [Computer Systems](./System/index.md)
-- [ ] 看起来更像CS人: [GNU Make & CMake](./Computer%20Science/Programming%20Basis/GNU%20Make.md)
-- [ ] 打会 CTF：[CTF: Cryptography](./Computer%20Science/CTF/Crypto/Cryptography.md)
+- [ ] 机器学习基础: [Machine Learning Basis](./AI/ML%20Basis/index.md)
+- [ ] 机器学习理论导引: [Machine Learning Theory](./AI/ML%20Theory/index.md)
+- [ ] 面向对象程序设计：[Object-Oriented Programming](./Computer%20Science/Programming%20Language/C++/index.md)
 - [ ] 进行一个化的优：[Foundations of Convex Optimization](./Math/Optimization/1%20Introduction.md)
 
 ## 学不完了
 
 - [ ] 猜猜我为啥学它: [Typst Learning Record](./Varia/Typst.md)
 - [ ] 某种古老又强大的命令语言：[Shell](./Computer%20Science/Programming%20Basis/Shell.md)
+- [ ] 看起来更像CS人: [GNU Make & CMake](./Computer%20Science/Programming%20Basis/GNU%20Make.md)
+- [ ] 打会 CTF：[CTF: Cryptography](./Computer%20Science/CTF/Crypto/index.md)
 
 ## 我不学了！
 

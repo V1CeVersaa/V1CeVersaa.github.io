@@ -1,5 +1,7 @@
 site_name: V1CeVersa's Notebook
 site_url: https://note.v1ceversaa.cc
+repo_name: V1CeVersaa/notebook
+repo_url: https://github.com/V1CeVersaa/V1CeVersaa.github.io
 copyright: Copyright &copy; 2024 V1CeVersa
 
 extra:
@@ -52,8 +54,8 @@ nav:
                 - Go:
                       - Computer Science/Programming Language/Go/index.md
                       - Basic Syntax: Computer Science/Programming Language/Go/Basic Syntax.md
-                - Ocaml:
-                      - Computer Science/Programming Language/Ocaml/index.md
+                - Haskell:
+                      - Computer Science/Programming Language/Haskell/index.md
           - Algorithms & DS:
                 - Computer Science/Algorithm/index.md
                 - FDS Collection I: Computer Science/Algorithm/FDS I.md
@@ -67,7 +69,8 @@ nav:
                 - Computer Science/Quantum Computing/index.md
                 - Quantum Basis: Computer Science/Quantum Computing/basis.md
                 - Quantum Machine Learning: Computer Science/Quantum Computing/QML.md
-            # - Compilers:
+          - Compilation Principle:
+                - Computer Science/Compilers/index.md
           - Blockchain:
                 - Blockchain Basis: Computer Science/Blockchain/Blockchain.md
                 - Ethereum:
@@ -85,7 +88,7 @@ nav:
           - CTF:
                 - DNS Protocol: Computer Science/CTF/DNS.md
                 - Cryptography:
-                      - Computer Science/CTF/Crypto/Cryptography.md
+                      - Computer Science/CTF/Crypto/index.md
                       - ECC: Computer Science/CTF/Crypto/ECC.md
     - System:
           - System/index.md
@@ -139,9 +142,11 @@ nav:
                 - CSAPP-Network Programming: System/CSAPP/Chapter11.md
                 - CSAPP-Concurrent Programming: System/CSAPP/Chapter12.md
           - Memory, Storage and File System:
-                - OSC-Memory Management: System/OSC/topic5.md
-                - OSC-Stroage Management: System/OSC/topic6.md
-                - OSC-File System: System/OSC/topic7.md
+                - OSC-Main Memory: System/OSC/topic5.md
+                - OSC-Virtual Memory: System/OSC/topic6.md
+                - OSC-Mass-Storage Structure: System/OSC/topic7.md
+                - OSC-I/O Systems: System/OSC/topic8.md
+                - OSC-File System: System/OSC/topic9.md
                 - OSTEP-Memory Virtualization: System/OSTEP/topic2.md
           - Hardware Description Language:
                 - Verilog: System/HDL/Verilog.md
@@ -154,10 +159,38 @@ nav:
                 - OSTEP: System/OSTEP/OSTEP.md
     - AI:
           - AI/index.md
-          - 人工智能引论: AI/AID/AID.md
-          - NLP with Deep Learning:
+          - 人工智能引论: AI/AID/index.md
+          - 人工智能逻辑: AI/AIL/index.md
+          - 机器学习基础:
+                - AI/ML Basis/index.md
+                - 第1章：绪论: AI/ML Basis/1 Intro.md
+                - 第2章：模型评估: AI/ML Basis/2 Evaluation.md
+                - 第3章：线性模型: AI/ML Basis/3 Linear.md
+                - 第4章：决策树: AI/ML Basis/4 Decision.md
+                - 第5章：神经网络: AI/ML Basis/5 Neural.md
+                - 第6章：支持向量机: AI/ML Basis/6 SVM.md
+                - 第7章：贝叶斯分类器: AI/ML Basis/7 Bayes.md
+                - 第8章：集成学习: AI/ML Basis/8 Ensemble.md
+                - 第9章：聚类: AI/ML Basis/9 Clustering.md
+                - 第10章：降维与度量学习: AI/ML Basis/10 Dimensionality.md
+                # - 第11章：特征选择与稀疏学习: AI/ML Basis/11 Feature.md
+                # - 第12章：计算学习理论: AI/ML Basis/12 Computational.md
+                # - 第13章：半监督学习: AI/ML Basis/13 Semi-Supervised.md
+                # - 第14章：概率图模型: AI/ML Basis/14 Graphical.md
+                # - 第15章：规则学习: AI/ML Basis/15 Rule.md
+                # - 第16章：强化学习: AI/ML Basis/16 Reinforcement.md
+          - 机器学习理论导引:
+                - AI/ML Theory/index.md
+          - 机器学习算法的数学分析:
+                - AI/Math Analysis/index.md
+                - 1 Introduction: AI/Math Analysis/1 Intro.md
+                - 2 Probability Inequalities: AI/Math Analysis/2 Probability.md
+                - 3 Uniform Convergence: AI/Math Analysis/3 Convergence.md
+                - 4 Empirical Covering Number Analysis: AI/Math Analysis/4 Covering.md
+                - 5 Covering Number Estimates: AI/Math Analysis/5 Estimates.md
+          - Deep Learning for NLP:
                 - AI/CS224N/index.md
-          - CV with Deep Learning:
+          - Deep Learning for CV:
                 - AI/CS231N/index.md
     - Math:
           - Basic Courses: Math/index.md
@@ -296,17 +329,11 @@ extra_css:
     - css/fold_toc.css
 
 extra_javascript:
-    - css/Javascripts/katex.js
-    - css/Javascripts/katex.min.js
     - css/Javascripts/toc.js
-    - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
     - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
-    # - css/Javascripts/mathjax.js
-    # - css/Javascripts/tablesort.js
-    # - css/Javascripts/polyfill.min.js
-    # - https://unpkg.com/katex@0/dist/katex.min.js
-    # - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
-    # - https://polyfill.io/v3/polyfill.min.js?features=es6
-    # - https://gcore.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js
-    - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js
+    - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+    - https://gcore.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js
+    - Javascripts/mathjax.js
+    - Javascripts/katex.js
     - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+    - Javascripts/tablesort.js

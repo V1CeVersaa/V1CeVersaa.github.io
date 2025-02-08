@@ -33,7 +33,7 @@ $$
 - 预先选择序列：
     - $h_k = h > 0$ （固定步长）
     - $h_k = \dfrac{h}{\sqrt{k+1}}$ （带有学习率衰减）
-- $h_k = \arg\min\limits_{h\ge 0}f(x_k-h\nabla f(x_k))$ （精确线搜索）
+- $h_k = \operatorname*{\arg\min}\limits_{h\ge 0}f(x_k-h\nabla f(x_k))$ （精确线搜索）
 - Armijo-Goldstein 准则。
 
 Armijo-Goldstein 准则的含义为：寻找一个 $x_{k+1}=x_k-h\nabla f(x_k)$ ，使得：
@@ -490,7 +490,7 @@ $$
 那么，**共轭梯度法/Conjugate Gradient Method** 生成如下序列 $\{\boldsymbol{x}_k\}$：
 
 $$
-\boldsymbol{x}_k = \mathop{\arg\min}\{f(\boldsymbol{x})\;\vert\;\boldsymbol{x}\in\boldsymbol{x}_0+\mathcal{L}_k\},\; k\geqslant 1
+\boldsymbol{x}_k = \operatorname*{\arg\min}\{f(\boldsymbol{x})\;\vert\;\boldsymbol{x}\in\boldsymbol{x}_0+\mathcal{L}_k\},\; k\geqslant 1
 $$
 
 这个定义符合我们对共轭梯度法的期待，但是并不是很自然，也没有描述成下降算法的样子，并且下降方向也不是很明确。记每一步的下降方向为 $\boldsymbol{p}_k$，我们希望共轭梯度法的样子是：
