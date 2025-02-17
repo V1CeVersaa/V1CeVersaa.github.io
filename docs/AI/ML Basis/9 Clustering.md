@@ -81,189 +81,179 @@ $$\text{dist}_{\text{mk}}(\boldsymbol{x}_i, \boldsymbol{x}_j) = \left( \sum_{u=1
 
     $$\text{dist}_{\text{man}}(\boldsymbol{x}_i, \boldsymbol{x}_j) = \lVert \boldsymbol{x}_i - \boldsymbol{x}_j \rVert_1 = \sum_{u=1}^n |x_{iu} - x_{ju}|.$$
 
-我们通常是基于某种形式的距禇来定义**相似度度量**/Similarity Measure，距离越大，相似度越小。然而，用于相似度度量的距离未必需要满足距离度量的所有基本性质，尤其是三角不等式。例如在某些任务中我们可能会定义这样的相似度度量：人和猿相似，人和人马相似，但是人马和猿不相似。这样的不满足三角不等式的距离称为**非度量距离**/Non-metric Distance。
+我们通常是基于某种形式的距离来定义**相似度度量**/Similarity Measure，距离越大，相似度越小。然而，用于相似度度量的距离未必需要满足距离度量的所有基本性质，尤其是三角不等式。例如在某些任务中我们可能会定义这样的相似度度量：人和猿相似，人和人马相似，但是人马和猿不相似。这样的不满足三角不等式的距离称为**非度量距离**/Non-metric Distance。
 
 本节中的距离计算式都是事先定义好的，但在不少现实任务中我们可能难以确定合适的距离计算式，这可通过**距离度量学习**/Distance Metric Learning 来实现。
 
-<!--
-我们常将样本属性分为"连续属性"(continuous attribute)和"离散属性"(categorical attribute)。一般情况下，属性值都定义在某个有限区间上。然而，在讨论距离计算时，属性上是否定义了"序"关系更为重要。例如定义域为 $\{1,2,3\}$ 的离散属性与连续属性的性质更接近一些，能直接在属性值上计算距离："1"与"2"比较接近，与"3"比较远，这样的属性称为"有序属性"(ordinal attribute)；而定义域为 $\{\text{飞机},\text{火车},\text{轮船}\}$ 这样的离散属性则不能直接在属性值上计算距离，称为"无序属性"(non-ordinal attribute)。显然，闵可夫斯基距离可用于有序属性。
+我们将属性分为连续属性/Continuous Attribute 和离散属性/Categorical Attribute；有序属性/Ordinal Attribute 和无序属性/Non-ordinal Attribute。连续属性也称为数值属性/Numerical Attribute，离散属性也称为列名属性/Nominal Attribute。
 
-对有序属性可采用 VDM (Value Difference Metric) [Stanfill and Waltz, 1986]。令 $m_{u,a}$ 表示在属性 $u$ 上取值为 $a$ 的样本数，$m_{u,a,i}$ 表示在第 $i$ 个样本簇中在属性 $u$ 上取值为 $a$ 的样本数，$k$ 为样本簇数，则属性 $u$ 上两个离散值 $a$ 与 $b$ 之间的 VDM 距离为
+在讨论距离的计算时，属性是否定义了序关系更加重要一些，例如定义域为 $\{1,2,3\}$ 的离散属性与连续属性的性质更接近一些，能直接在属性值上计算距离。闵可夫斯基距离可以用于有序属性，对于无序属性，我们可以定义 VDM 距离/Value Difference Metric：
 
-$$\text{VDM}_p(a,b) = \sum_{i=1}^k\left|\frac{m_{u,a,i}}{m_{u,a}} - \frac{m_{u,b,i}}{m_{u,b}}\right|^p.$$ (9.21)
+$$\text{VDM}_p(a, b) = \sum_{i=1}^k \left| \frac{m_{u,a,i}}{m_{u,a}} - \frac{m_{u,b,i}}{m_{u,b}} \right|^p.$$
 
-于是，将闵可夫斯基距离和 VDM 结合即可处理混合属性。假定有 $n_c$ 个有序属性、$n-n_c$ 个无序属性，不失一般性，令有序属性排列在无序属性之前，则
+其中，$m_{u,a}$ 表示在属性 $u$ 上取值为 $a$ 的样本数，$m_{u,a,i}$ 表示在第 $i$ 个样本簇中在属性 $u$ 上取值为 $a$ 的样本数，$k$ 为样本簇数。将闵可夫斯基距离和 VDM 结合即可处理混合属性，首先假定有 $n_c$ 个有序属性和 $n-n_c$ 个无序属性，不失一般性，令有序属性排列在无序属性之前：
 
-$$\text{MinkovDM}_p(x_i,x_j) = $$\text{MinkovDM}_p(x_i,x_j) = \left(\sum_{u=1}^{n_c}|x_{iu}-x_{ju}|^p + \sum_{u=n_c+1}^n \text{VDM}_p(x_{iu},x_{ju})\right)^{\frac{1}{p}}.$$ (9.22)
+$$\text{MinkovDM}_p(\boldsymbol{x}_i, \boldsymbol{x}_j) = \left( \sum_{u=1}^{n_c} |x_{iu} - x_{ju}|^p + \sum_{u=n_c+1}^n \text{VDM}_p(x_{iu}, x_{ju}) \right)^{\frac{1}{p}}.$$
 
-当样本空间中不同属性的重要性不同时，可使用"加权距离"(weighted distance)。以加权闵可夫斯基距离为例：
+当样本空间中不同属性的重要性不同时，可使用**加权距离**/Weighted Distance：
 
-$$\text{dist}_{\text{wmk}}(x_i,x_j) = (w_1\cdot|x_{i1}-x_{j1}|^p + \ldots + w_n\cdot|x_{in}-x_{jn}|^p)^{\frac{1}{p}},$$ (9.23)
+$$\text{dist}_{\text{wmk}}(\boldsymbol{x}_i, \boldsymbol{x}_j) = \left( w_1 \cdot |x_{i1} - x_{j1}|^p + \ldots + w_n \cdot |x_{in} - x_{jn}|^p \right)^{\frac{1}{p}},$$
 
-其中权重 $w_i \geq 0(i=1,2,\ldots,n)$ 表征不同属性的重要性，通常 $\sum_{i=1}^n w_i = 1$。
--->
+其中，权重 $w_i \geq 0$ 表征不同属性的重要性，通常 $\sum_{i=1}^n w_i = 1$。
 
 ## 4. 原型聚类
 
 原型/Prototype 是指样本空间中的具有代表性的点，原型聚类也称为基于原型的聚类/Prototype-based Clustering。原型聚类算法假设聚类结构能通过一组原型刻画，先对原型进行初始化，然后对原型进行迭代更新求解。采用不同的原型表示、不同的求解方式，将产生不同的算法。
 
-## 4.1 k 均值算法
-
-
-
-<!-- 
 ### 4.1 k 均值算法
 
-给定样本集 $D = \{x_1,x_2,\ldots,x_m\}$，"k 均值"(k-means)算法针对聚类所得划分 $C = \{C_1,C_2,\ldots,C_k\}$ 最小化平方误差
+给定样本集 $D = \{\boldsymbol{x}_1, \boldsymbol{x}_2, \ldots, \boldsymbol{x}_m\}$，$k$ 均值算法针对聚类所得划分 $C = \{C_1, C_2, \ldots, C_k\}$ 最小化平方误差
 
-$$E = \sum_{i=1}^k\sum_{x\in C_i}||x-\mu_i||_2^2,$$ (9.24)
+$$E = \sum_{i=1}^k\sum_{\boldsymbol{x}\in C_i} \lVert \boldsymbol{x} - \boldsymbol{\mu}_i \rVert_2^2,$$
 
-其中 $\mu_i = \frac{1}{|C_i|}\sum_{x\in C_i}x$ 是簇 $C_i$ 的均值向量。直观来看，式(9.24)在一定程度上刻画了簇内样本围绕簇均值向量的紧密程度，$E$ 值越小则簇内样本相似度越高。
+其中 $\boldsymbol{\mu}_i = \frac{1}{|C_i|}\sum_{\boldsymbol{x}\in C_i} \boldsymbol{x}$ 是簇 $C_i$ 的均值向量。直观来看，平方误差刻画了样本围绕簇均值向量的紧密程度，$E$ 值越小则簇内样本相似度越高。
 
-最小化式(9.24)并不容易，找到最优解需要考虑样本集 $D$ 所有可能的划分，这是一个 NP 难问题[Aloise et al., 2009]。因此，k 均值算法采用了贪心策略，通过迭代优化来近似求解式(9.24)。算法流程如图 9.2 所示，其中第 1 行对原型进行初始化，在第 4-8 行与第 9-16 行的迭代过程中，算法交替进行两个步骤：首先，对当前原型划分结果保持不变，在第 18 行将当前簇划分结果返回。
+但是，最小化上式是一个 $\mathsf{NP}$ 难问题，因此 k 均值算法采用了贪心策略，通过迭代优化来近似求解。算法描述如下：
 
-下面以表 9.1 的西瓜数据集 4.0 为例来示示 k 均值算法的学习过程。为方便起见，我们将编号为 $i$ 的样本称为 $x_i$，这是一个包含"密度"与"含糖率"两个属性值的二维向量。
+<img class="center-picture" src="../assets/9-1.png" width="600" />
 
-假定聚类簇数 $k = 3$，算法开始时随机选取三个样本 $x_{15},x_{12},x_{27}$ 作为初始均值向量，即
-
-$$\mu_1 = (0.463;0.237),\quad \mu_2 = (0.343;0.099),\quad \mu_3 = (0.532;0.472).$$
-
-考察样本 $x_1 = (0.697;0.460)$，它与当前均值向量 $\mu_1,\mu_2,\mu_3$ 的距离分别为 0.369,0.556,0.166，因此 $x_1$ 将被划入簇 $C_3$；类似的，对数据集中的所有样本考察一遍后，可得当前簇划分
-
-$$C_1 = \{x_5,x_6,x_7,x_8,x_9,x_{10},x_{13},x_{14},x_{15},x_{17},x_{18},x_{19},x_{20},x_{23}\};$$
-
-$$C_2 = \{x_{11},x_{12},x_{16}\};$$
-
-$$C_3 = \{x_1,x_2,x_3,x_4,x_{21},x_{22},x_{24},x_{25},x_{26},x_{27},x_{28},x_{29},x_{30}\}.$$
-
-于是，可从 $C_1$、$C_2$、$C_3$ 分别求出新的均值向量
-
-$$\mu_1' = (0.473;0.214),\quad \mu_2' = (0.394;0.066),\quad \mu_3' = (0.623;0.388).$$
-
-更新当前均值向量后，不断重复上述过程，如图 9.3 所示，第五轮迭代产生的结果与第四轮迭代相同，于是算法停止，得到最终的簇划分。
+我们令需要求解的原型向量为均值向量，首先对均值向量进行初始化，然后在迭代过程中交替进行两个步骤：保持当前均值向量不变，计算每个样本与所有均值向量的距离，将其划入距离最近的簇；保持当前簇划分不变，更新每个簇的均值向量。重复上述过程直至收敛，即可得到最终的簇划分。对上述过程的重复可能设置对应阈值，例如最大迭代次数。
 
 ### 4.2 学习向量量化
 
-与 k 均值算法类似，"学习向量量化"(Learning Vector Quantization，简称 LVQ)也试图找到一组原型向量来刻画聚类结构，但与一般聚类算法不同的是，LVQ 假设数据样本带有类别标记，学习过程利用样本的这些监督信息来辅助聚类。
+与 k 均值算法类似，学习向量量化/Vector Quantization/LVQ 也试图找到一组原型向量来刻画聚类结构，但与一般聚类算法不同的是，LVQ 假设数据样本带有类别标记，学习过程利用样本的这些监督信息来辅助聚类。
 
-给定样本集 $D = \{(x_1,y_1),(x_2,y_2),\ldots,(x_m,y_m)\}$，每个样本 $x_j$ 是由 $n$ 个属性描述的特征向量 $(x_{j1};x_{j2};\ldots;x_{jn})$，$y_j \in \mathcal{Y}$ 是样本 $x_j$ 的类别标记。LVQ 的目标是学习得到一组 $n$ 维原型向量 $\{p_1,p_2,\ldots,p_q\}$，每个原型向量代表一个聚类簇，簇标记 $t \in \mathcal{Y}$。
+给定样本集 $D = \{(\boldsymbol{x}_1,y_1), (\boldsymbol{x}_2,y_2), \ldots, (\boldsymbol{x}_m,y_m)\}$，每个样本 $\boldsymbol{x}_j$ 是由 $n$ 个属性描述的特征向量 $(x_{j1}; x_{j2}; \ldots; x_{jn})$，$y_j \in \mathcal{Y}$ 是样本 $\boldsymbol{x}_j$ 的类别标记。LVQ 的目标是学习得到一组 $n$ 维原型向量 $\{ \boldsymbol{p}_1, \boldsymbol{p}_2, \ldots, \boldsymbol{p}_q \}$，每个原型向量代表一个聚类簇，簇标记 $t \in \mathcal{Y}$。
 
-LVQ 算法描述如图 9.4 所示。算法第 1 行先对原型向量进行初始化，例如对第 $q$ 个原型从类别标记为 $t_q$ 的样本中随机选取一个作为原型向量初值。算法第 2～12 行对原型向量进行迭代优化。在每一轮迭代中，算法随机选取一个有标记训练样本，找出与其距离最近的原型向量，并根据两者的类别标记是否一致来对原型向量进行相应的更新。在第 12 行中，若算法的停止条件已满足(例如已达到最大迭代轮数，或原型向量更新很小甚至不再更新)，则将当前原型向量作为最终结果返回。
+LVQ 的聚类生成过程受监督信息的辅助：随机选择样本，找出与其最近的原型向量，根据两者的类别标记是否一致来对原型向量进行相应的更新。具体算法描述如下：
 
-显然，LVQ 的关键是第 6-10 行，即如何更新原型向量。直观上看，对样本 $x_j$，若最近的原型向量 $p_r$ 与 $x_j$ 的类别标记相同，则令 $p_r$ 向 $x_j$ 的方向靠拢，如第 7 行所示，此时新的原型向量为
+<img class="center-picture" src="../assets/9-2.png" width="600" />
 
-$$p_r' = p_r + \eta\cdot(x_j-p_r),$$ (9.25)
+我们考虑原型向量的更新过程，对样本 $\boldsymbol{x}_j$，若最近的原型向量 $\boldsymbol{p}_r$ 与 $\boldsymbol{x}_j$ 的类别标记相同，则令 $\boldsymbol{p}_r$ 向 $\boldsymbol{x}_j$ 的方向靠拢：
 
-$p_r'$ 与 $x_j$ 之间的距离为
+$$\boldsymbol{p}_r^{\prime} = \boldsymbol{p}_r + \eta \cdot (\boldsymbol{x}_j - \boldsymbol{p}_r),$$
 
-$$||p_r'-x_j||_2 = ||p_r+\eta\cdot(x_j-p_r)-x_j||_2 = (1-\eta)\cdot||p_r-x_j||_2.$$ (9.26)
+新原型向量 $\boldsymbol{p}_r^{\prime}$ 与 $\boldsymbol{x}_j$ 之间的距离为 $(1-\eta) \cdot \lVert \boldsymbol{p}_r - \boldsymbol{x}_j \rVert_2$，其中 $\eta \in (0,1)$ 是学习率。若 $\boldsymbol{p}_r$ 与 $\boldsymbol{x}_j$ 的类别标记不同，则新原型向量与 $\boldsymbol{x}_j$ 之间的距离将增大为 $(1+\eta) \cdot \lVert \boldsymbol{p}_r - \boldsymbol{x}_j \rVert_2$，从而更远离 $\boldsymbol{x}_j$。
 
-令学习率 $\eta \in (0,1)$，则原型向量 $p_r$ 在更新为 $p_r'$ 之后将更接近 $x_j$。
+在学得一组原型向量 $\{\boldsymbol{p}_1,\boldsymbol{p}_2,\ldots,\boldsymbol{p}_q\}$ 后，即可实现对样本空间 $\mathcal{X}$ 的簇划分。对任意样本 $\boldsymbol{x}$，它将被划入与其距离最近的原型向量所代表的簇中；换言之，每个原型向量 $\boldsymbol{p}_i$ 定义了与其相关的一个区域 $R_i$，该区域中每个样本与 $\boldsymbol{p}_i$ 的距离不大于它与其他原型向量 $\boldsymbol{p}_{i^{\prime}}(i^{\prime}\neq i)$ 的距离：
 
-类似的，若 $p_r$ 与 $x_j$ 的类别标记不同，则新后的原型向量量与 $x_j$ 之间的距离将增大为 $(1+\eta)\cdot||p_r-x_j||_2$，从而更远离 $x_j$。
+$$R_i = \{\boldsymbol{x}\in\mathcal{X}\mid||\boldsymbol{x}-\boldsymbol{p}_i||_2\leq||\boldsymbol{x}-\boldsymbol{p}_{i^{\prime}}||_2,i^{\prime}\neq i\}.$$
 
-在学得一组原型向量 $\{p_1,p_2,\ldots,p_q\}$ 后，即可实现对样本空间 $\mathcal{X}$ 的簇划分。
+由此形成了对样本空间 $\mathcal{X}$ 的簇划分 $\{R_1,R_2,\ldots,R_q\}$，该划分通常称为 Voronoi 剖分/Voronoi Tessellation。
 
--->
-
-### 4.2 学习向量量化
+> 若将 $R_i$ 中的样本全用原型向量 $\boldsymbol{p}_i$ 表示，则可实现数据的有损压缩/Lossy Compression，这称为向量量化，LVQ 也由此得名。
 
 ### 4.3 高斯混合聚类
 
-<!-- 分。对任意样本 $x$，它将被划入与其距离最近的原型向量所代表的簇中；换言之，每个原型向量 $p_i$ 定义了与其相关的一个区域 $R_i$，该区域中每个样本与 $p_i$ 的距离不大于它与其他原型向量 $p_{i'}(i'\neq i)$ 的距离，即
+高斯混合聚类/Mixture-of-Gaussian Clustering 采用概率模型来表达聚类原型，同样依赖对样本分布的假设。
 
-$$R_i = \{x\in\mathcal{X}\mid||x-p_i||_2\leq||x-p_{i'}||_2,i'\neq i\}.$$ (9.27)
+回顾多元高斯分布：对 $n$ 维样本空间 $\mathcal{X}$ 中的随机向量 $\boldsymbol{x}$，若其服从高斯分布，则其概率密度函数为
 
-由此形成了对样本空间 $\mathcal{X}$ 的簇划分 $\{R_1,R_2,\ldots,R_q\}$，该划分通常称为"Voronoi剖分"(Voronoi tessellation)。
+$$p(\boldsymbol{x}) = \frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}}e^{-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu})^{\text{T}}\Sigma^{-1}(\boldsymbol{x}-\boldsymbol{\mu})},$$
 
-下面我们以表 9.1 的西瓜数据集 4.0 为例来演示 LVQ 的学习过程。令 9-21 号样本的类别标记为为 $c_2$，其他样本的类别标记为 $c_1$。假定 $q = 5$，即学习目标是找到 5 个原型向量 $p_1,p_2,p_3,p_4,p_5$，并假定其对应的类别标记分别为 $c_1,c_2,c_1,c_1,c_1$。
+其中 $\boldsymbol{\mu}$ 是 $n$ 维均值向量，$\Sigma$ 是 $n\times n$ 的协方差矩阵。高斯混合分布则定义为
 
-算法开始时，根据样本的类别标记和簇的预设类别标记对原型向量进行随机初始化，假定初始化为样本 $x_{25},x_{12},x_{18},x_{23},x_{29}$。在第一轮迭代中，假定随机选取的样本为 $x_1$，该样本与当前原型向量量 $p_1,p_2,p_3,p_4,p_5$ 的距离分别为 0.283,0.506,0.434,0.260,0.032。由于 $p_5$ 与 $x_1$ 距离最近且两者具有相同的类别标记 $c_1$，假定学习率 $\eta = 0.1$，则 LVQ 更新后 $p_5$ 得到的原型向量值量
+$$p_{\mathcal{M}}(\boldsymbol{x}) = \sum_{i=1}^k \alpha_i\cdot p(\boldsymbol{x}|\boldsymbol{\mu}_i,\boldsymbol{\Sigma}_i),$$
 
-$$p_5' = p_5 + \eta\cdot(x_1-p_5)$$
-$$= (0.725;0.445) + 0.1\cdot((0.697;0.460)-(0.725;0.445))$$
-$$= (0.722;0.442).$$
+该分布由 $k$ 个混合成分构成，每个混合成分对应一个高斯分布，其中 $\boldsymbol{\mu}_i$ 与 $\boldsymbol{\Sigma}_i$ 是第 $i$ 个高斯混合成分的参数，而 $\alpha_i > 0$ 为相应的混合系数/Mixture Coefficient，$\sum_{i=1}^k \alpha_i = 1$，保证了高斯混合分布是一个概率分布。
 
-将 $p_5$ 更新为 $p_5'$ 后，不断重复上述过程，不同轮数之后的聚类结果如图 9.5 所示。
+**假设样本的生成过程由高斯混合分布给出**：首先，根据 $\alpha_1,\alpha_2,\ldots,\alpha_k$ 定义的先验分布选择高斯混合成分，其中 $\alpha_i$ 为选择第 $i$ 个混合成分的概率；然后，根据被选择的混合成分的概率密度函数进行采样，从而生成相应的样本。
 
-### 4.3 高斯混合聚类
+因此高斯混合聚类所需的模型参数为 $\{ (\alpha_i,\boldsymbol{\mu}_i,\boldsymbol{\Sigma}_i) \}_{i=1}^k$，在得知这些参数之后，可以很容易地对样本空间进行簇划分。
 
-与 k 均值、LVQ 用原型向量来刻画聚类结构不同，高斯混合(Mixture-of-Gaussian)聚类采用概率模型来表达聚类原型。
+若训练集 $D = \{\boldsymbol{x}_1,\boldsymbol{x}_2,\ldots,\boldsymbol{x}_m\}$ 由上述过程生成，令随机变量 $z_j \in \{1,2,\ldots,k\}$ 表示生成样本 $\boldsymbol{x}_j$ 的高斯混合成分，其取值未知。显然，$z_j$ 的先验概率对应于 $\alpha_i\enspace (i=1,2,\ldots,k)$。根据贝叶斯定理，$z_j$ 的后验分布对应于
 
-我们先简单回顾一下(多元)高斯分布的定义。对 $n$ 维样本空间 $\mathcal{X}$ 中的随机向量 $x$，若其概率密度函数为
+$$p_{\mathcal{M}}(z_j=i|\boldsymbol{x}_j) = \frac{P(z_j=i)\cdot p_{\mathcal{M}}(\boldsymbol{x}_j|z_j=i)}{p_{\mathcal{M}}(\boldsymbol{x}_j)} = \frac{\alpha_i\cdot p(\boldsymbol{x}_j|\boldsymbol{\mu}_i,\boldsymbol{\Sigma}_i)}{\sum_{l=1}^k \alpha_l\cdot p(\boldsymbol{x}_j|\boldsymbol{\mu}_l,\boldsymbol{\Sigma}_l)}.$$ 
 
-$$p(x) = \frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}}e^{-\frac{1}{2}(x-\mu)^{\text{T}}\Sigma^{-1}(x-\mu)},$$ (9.28)
+这样，$p_{\mathcal{M}}(z_j=i|\boldsymbol{x}_j)$ 给出了样本 $\boldsymbol{x}_j$ 由第 $i$ 个高斯混合成分生成的后验概率，记为 $\gamma_{ji}\enspace (i=1,2,\ldots,k)$。我们因此可以划分样本空间 $\mathcal{X}$ 为 $k$ 个簇 $\mathcal{C} = \{C_1,C_2,\ldots,C_k\}$，每个样本 $\boldsymbol{x}_j$ 的簇标记 $\lambda_j$ 如下确定：
 
-其中 $\mu$ 是 $n$ 维均值向量，$\Sigma$ 是 $n\times n$ 的协方差矩阵，由式(9.28)可看出，高斯分布完全由均值向量 $\mu$ 和协方差矩阵 $\Sigma$ 这两个参数确定。为了明确显示这高斯分布与相应参数的依赖关系，将概率密度函数记为 $p(x|\mu,\Sigma)$。
+$$\lambda_j = \underset{i\in\{1,2,\ldots,k\}}{\arg\max} \gamma_{ji}.$$
 
-我们可以定义高斯混合分布
+因此，高斯混合聚类事实上是采用概率模型（高斯分布）对原型进行刻画，划分规则则由原型对应的后验概率确定。下面将处理学习模型参数的问题。我们使用 EM 算法进行求解。
 
-$$p_{\mathcal{M}}(x) = \sum_{i=1}^k \alpha_i\cdot p(x|\mu_i,\Sigma_i),$$ (9.29)
+首先，给定样本集 $D$，可采用极大似然估计，即最大化对数似然
 
-该分布由 $k$ 个混合成分构成，每个混合成分对应一个高斯分布，其中 $\mu_i$ 与 $\Sigma_i$ 是第 $i$ 个高斯混合成分的参数，而 $\alpha_i > 0$ 为相应的"混合系数"(mixture coefficient)，$\sum_{i=1}^k \alpha_i = 1$。
+$$LL(D) = \ln\left(\prod_{j=1}^m p_{\mathcal{M}}(\boldsymbol{x}_j)\right) = \sum_{j=1}^m\ln\left(\sum_{i=1}^k \alpha_i\cdot p(\boldsymbol{x}_j|\boldsymbol{\mu}_i,\boldsymbol{\Sigma}_i)\right).$$
 
-假设样本的生成过程由高斯混合分布给出：首先，根据 $\alpha_1,\alpha_2,\ldots,\alpha_k$ 定义的先验分布选择高斯混合成分，其中 $\alpha_i$ 为选择第 $i$ 个混合成分的概率；然后，根据被选择的混合成分的概率密度函数进行采样，从而生成相应的样本。
+对于三个参数，我们用两次求偏导，一次拉格朗日乘子法，得到参数的更新公式：
 
-若训练集 $D = \{x_1,x_2,\ldots,x_m\}$ 由上述过程生成，令随机变量 $z_j \in \{1,2,\ldots,k\}$ 表示生成样本 $x_j$ 的高斯混合成分，其取值未知。显然，$z_j$ 的先验概率对应于 $\alpha_i(i=1,2,\ldots,k)$。根据贝叶斯定理，$z_j$ 的后验分布对应于
+先考虑每个高斯成分的均值 $\mu_i$，对 $\mu_i$ 求偏导并令其为 0，有
 
-$$p_{\mathcal{M}}(z_j=i|x_j) = \frac{P(z_j=i)\cdot p_{\mathcal{M}}(x_j|z_j=i)}{p_{\mathcal{M}}(x_j)} = \frac{\alpha_i\cdot p(x_j|\mu_i,\Sigma_i)}{\sum_{l=1}^k \alpha_l\cdot p(x_j|\mu_l,\Sigma_l)}.$$ (9.30)
+$$\begin{aligned}
+\frac{\partial LL(D)}{\partial \mu_i} = 0 &\Rightarrow \sum_{j=1}^m \frac{\alpha_i\cdot p(\boldsymbol{x}_j|\boldsymbol{\mu}_i,\boldsymbol{\Sigma}_i)}{\sum_{l=1}^k \alpha_l\cdot p(\boldsymbol{x}_j|\boldsymbol{\mu}_l,\boldsymbol{\Sigma}_l)}(\boldsymbol{x}_j-\boldsymbol{\mu}_i) = 0, \\
+&\Rightarrow \mu_i = \frac{\sum_{j=1}^m \gamma_{ji}\boldsymbol{x}_j}{\sum_{j=1}^m \gamma_{ji}}.
+\end{aligned}$$
 
-换言之，$p_{\mathcal{M}}(z_j=i|x_j)$ 给出了样本 $x_j$ 由第 $i$ 个高斯混合成分生成的后验概率，为方便叙述，将其记为 $\gamma_{ji}(i=1,2,\ldots,k)$。
+类似处理高斯成分的协方差矩阵 $\Sigma_i$，有 
 
-当高斯混合分布(9.29)已知时，高斯混合聚类将把样本集 $D$ 划分为 $k$ 个簇 $C = \{C_1,C_2,\ldots,C_k\}$，每个样本 $x_j$ 的簇标记 $\lambda_j$ 如下确定：
-
-$$\lambda_j = \arg\max_{i\in\{1,2,\ldots,k\}} \gamma_{ji}.$$ (9.31)
-
-因此，从原型聚类的角度来看，高斯混合聚类是采用概率模型(高斯分布)对原型进行刻画，划分规则则由原型对应的后验概率确定。
-
-那么，对于式(9.29)，模型参数 $\{(\alpha_i,\mu_i,\Sigma_i)|1\leq i\leq k\}$ 如何求解呢？显然，给定样本集 $D$，可采用极大似然估计，即最大化对数似然
-
-$$LL(D) = \ln\left(\prod_{j=1}^m p_{\mathcal{M}}(x_j)\right) = \sum_{j=1}^m\ln\left(\sum_{i=1}^k \alpha_i\cdot p(x_j|\mu_i,\Sigma_i)\right),$$ (9.32)
-
-常采用 EM 算法进行迭代优化求解。下面我们做个简单的推导。
-
-若参数 $\{(\alpha_i,\mu_i,\Sigma_i)|1\leq i\leq k\}$ 能使式(9.32)最大化，则由 $\frac{\partial LL(D)}{\partial \mu_i} = 0$ 有
-
-$$\sum_{j=1}^m \frac{\alpha_i\cdot p(x_j|\mu_i,\Sigma_i)}{\sum_{l=1}^k \alpha_l\cdot p(x_j|\mu_l,\Sigma_l)}(x_j-\mu_i) = 0,$$ (9.33)
-
-由式(9.30)以及 $\gamma_{ji} = p_{\mathcal{M}}(z_j=i|x_j)$，有
-
-$$\mu_i = \frac{\sum_{j=1}^m \gamma_{ji}x_j}{\sum_{j=1}^m \gamma_{ji}},$$ (9.34)
-
-即各混合成分的均值可通过样本加权平均来估计，样本权重是每个样本属于该成分的后验概率。类似的，由 $\frac{\partial LL(D)}{\partial \Sigma_i} = 0$ 可得
-
-$$\Sigma_i = \frac{\sum_{j=1}^m \gamma_{ji}(x_j-\mu_i)(x_j-\mu_i)^{\text{T}}}{\sum_{j=1}^m \gamma_{ji}}.$$ (9.35)
+$$\begin{aligned}
+\frac{\partial LL(D)}{\partial \Sigma_i} = 0 \Rightarrow \Sigma_i &= \frac{\sum_{j=1}^m \gamma_{ji}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^{\text{T}}}{\sum_{j=1}^m \gamma_{ji}}.
+\end{aligned}$$
 
 对于混合系数 $\alpha_i$，除了要最大化 $LL(D)$，还需满足 $\alpha_i \geq 0$，$\sum_{i=1}^k \alpha_i = 1$。考虑 $LL(D)$ 的拉格朗日形式
 
-$$LL(D) + \lambda\left(\sum_{i=1}^k \alpha_i-1\right),$$ (9.36)
+$$L = LL(D) + \lambda\left(\sum_{i=1}^k \alpha_i-1\right),$$
 
-其中 $\lambda$ 为拉格朗日乘子。由式(9.36)对 $\alpha_i$ 的导数为 0，有
+其中 $\lambda$ 为拉格朗日乘子。由上式对 $\alpha_i$ 的导数为 0，有
 
-$$\sum_{j=1}^m \frac{p(x_j|\mu_i,\Sigma_i)}{\sum_{l=1}^k \alpha_l\cdot p(x_j|\mu_l,\Sigma_l)} + \lambda = 0,$$ (9.37)
+$$\begin{aligned}
+\frac{\partial L}{\partial \alpha_i} = 0 &\Rightarrow\sum_{j=1}^m \frac{p(\boldsymbol{x}_j|\boldsymbol{\mu}_i,\boldsymbol{\Sigma}_i)}{\sum_{l=1}^k \alpha_l\cdot p(\boldsymbol{x}_j|\boldsymbol{\mu}_l,\boldsymbol{\Sigma}_l)} + \lambda = 0, \\
+&\Rightarrow \alpha_i = \frac{1}{m}\sum_{j=1}^m \gamma_{ji}.
+\end{aligned}$$
 
-两边同乘以 $\alpha_i$ 对所有样本求和可知 $\lambda = -m$，有
+也就是每个高斯成分的混合系数由样本属于该成分的平均后验概率确定。这就可以得到 EM 算法了：
 
-$$\alpha_i = \frac{1}{m}\sum_{j=1}^m \gamma_{ji},$$ (9.38)
+在每步迭代中，先根据当前参数来计算每个样本属于各个高斯成分的后验概率 $\gamma_{ji}$（E步）；再根据后验概率和当前参数更新模型参数 $\{(\alpha_i,\boldsymbol{\mu}_i,\boldsymbol{\Sigma}_i)\}_{i=1}^k$（M步）。算法过程如下图所示：
 
-即每个高斯成分的混合系数由样本属于该成分的平均后验概率确定。
+<img class="center-picture" src="../assets/9-3.png" width="600" />
 
-由上述推导即可得到高斯混合模型的 EM 算法：在每步迭代中，先根据当前参数来计算每个样本属于各个高斯成分的后验概率(E步)，再根据式(9.34)、(9.35)和(9.38)更新模型参数 $\{(\alpha_i,\mu_i,\Sigma_i)|1\leq i\leq k\}$ (M步)。
-
-高斯混合聚类算法描述如图 9.6 所示。算法第 1 行对高斯混合分布的模型参数进行初始化。然后，在第 2-12 行基于 EM 算法对模型参数进行迭代更新。若 EM 算法的停止条件满足(例如已达到最大迭代轮数，或似然函数值 $LL(D)$ 增长很少甚至不再增长)，则在第 14-17 行根据高斯混合分布确定簇划分，在第 18 行返回最终结果。
-
-以表 9.1 的西瓜数据集 4.0 为例，令高斯混合成分的个数 $k = 3$。算法开始时，假定将高斯混合分布的模型参数初始化为：$\alpha_1 = \alpha_2 = \alpha_3 = \frac{1}{3}$；$\mu_1 = x_6$，$\mu_2 = x_{22}$，$\mu_3 = x_{27}$；$\Sigma_1 = \Sigma_2 = \Sigma_3 = \begin{pmatrix}0.1 & 0.0\\ 0.0 & 0.1\end{pmatrix}$。
-
-在第一轮迭代中，先计算样本由各混合成分生成的后验概率。以 $x_1$ 为例，由式(9.30)算出后验概率 $\gamma_{11} = 0.219$，$\gamma_{12} = 0.404$，$\gamma_{13} = 0.377$。所有样本的后验概率算完后，得到如下新的模型参数：
-
-$$\alpha_1' = 0.361,\quad \alpha_2' = 0.323,\quad \alpha_3' = 0.316$$
-
-$$\mu_1' = (0.491;0.251),\quad \mu_2' = (0.571;0.281),\quad \mu_3' = (0.534;0.295)$$
-
-$$\Sigma_1' = \begin{pmatrix}0.025 & 0.004\\ 0.004 & 0.010\end{pmatrix},\quad \Sigma_2' = \begin{pmatrix}0.023 & 0.004\\ 0.004 & 0.017\end{pmatrix},\quad \Sigma_3' = \begin{pmatrix}0.024 & 0.005\\ 0.005 & 0.016\end{pmatrix}$$
-
-模型参数更新后，不断重复上述过程，不同轮数之后的聚类结果如图 9.7 所示。 -->
+算法第一行先对高斯混合分布的模型进行初始化，之后 repeat 循环内基于 EM 算法对模型参数进行迭代更新。若 EM 算法的停止条件满足（例如已达到最大迭代轮数，或似然函数值 $LL(D)$ 增长很少甚至不再增长），接下来根据高斯混合分布计算出后验概率，根据后验概率确定簇标记并决定簇划分，最后返回最终结果。
 
 ## 5. 密度聚类
 
+密度聚类也称为基于密度的聚类/Density-based Clustering，此类算法假设聚类结构能通过样本分布的紧密程度确定。通常情形下，密度聚类算法从样本密度的角度来考察样本之间的可连接性，并基于可连接样本不断扩展聚类簇以获得最终的聚类结果。 
+
+DBSCAN/Density-Based Spatial Clustering of Applications with Noise 基于一组临域参数 $(\epsilon,\text{MinPts})$ 来刻画样本分布的紧密程度。给定数据集 $D = \{\boldsymbol{x}_1,\boldsymbol{x}_2,\ldots,\boldsymbol{x}_m\}$，定义以下概念：
+
+- $\epsilon$-邻域：对 $\boldsymbol{x}_i \in D$，其 $\epsilon$-邻域包含样本集 $D$ 中与 $\boldsymbol{x}_i$ 的距离不大于 $\epsilon$ 的样本，即 $N_{\epsilon}(\boldsymbol{x}_i) = \{\boldsymbol{x} \in D \mid \text{dist}(\boldsymbol{x}_i,\boldsymbol{x}) \leq \epsilon\}$；
+- 核心对象/Core Object：若 $\boldsymbol{x}_i$ 的 $\epsilon$-邻域至少包含 $\text{MinPts}$ 个样本，即 $|N_{\epsilon}(\boldsymbol{x}_i)| \geq \text{MinPts}$，则 $\boldsymbol{x}_i$ 是一个核心对象；
+- 密度直达/Directly Density-reachable：若 $\boldsymbol{x}_j$ 位于 $\boldsymbol{x}_i$ 的 $\epsilon$-邻域中，且 $\boldsymbol{x}_i$ 是核心对象，则称 $\boldsymbol{x}_j$ 由 $\boldsymbol{x}_i$ 密度直达；
+- 密度可达/Density-reachable：对 $\boldsymbol{x}_i$ 与 $\boldsymbol{x}_j$，若存在样本序列 $\boldsymbol{p}_1,\boldsymbol{p}_2,\ldots,\boldsymbol{p}_n$，其中 $\boldsymbol{p}_1 = \boldsymbol{x}_i$，$\boldsymbol{p}_n = \boldsymbol{x}_j$ 且 $\boldsymbol{p}_{q+1}$ 由 $\boldsymbol{p}_q$ 密度直达，则称 $\boldsymbol{x}_j$ 由 $\boldsymbol{x}_i$ 密度可达；
+- 密度相连/Density-connected：对 $\boldsymbol{x}_i$ 与 $\boldsymbol{x}_j$，若存在 $\boldsymbol{x}_k$ 使得 $\boldsymbol{x}_i$ 与 $\boldsymbol{x}_j$ 均由 $\boldsymbol{x}_k$ 密度可达，则称 $\boldsymbol{x}_i$ 与 $\boldsymbol{x}_j$ 密度相连。
+
+因为密度直达要求 $\boldsymbol{x}_i$ 是一个核心对象，但是 $\boldsymbol{x}_j$ 不一定是核心对象，所以**密度直达一般不满足对称性**，密度可达关系满足传递性但不满足对称性，密度相连关系满足对称性和传递性。
+
+<img class="center-picture" src="../assets/9-4-1.png" width="600" />
+
+基于这些概念，DBSCAN 将簇定义为：由密度可达关系导出的最大的密度相连样本集合。给定邻域参数 $(\epsilon,\text{MinPts})$，簇 $C \subseteq D$ 是满足以下性质的非空样本子集：
+
+- 连接性/Connectivity：$\boldsymbol{x}_i \in C$，$\boldsymbol{x}_j \in C$ $\Rightarrow$ $\boldsymbol{x}_i$ 与 $\boldsymbol{x}_j$ 密度相连（也就是簇内任意两个样本都密度相连）；
+- 最大性/Maximality：$\boldsymbol{x}_i \in C$，$\boldsymbol{x}_j$ 由 $\boldsymbol{x}_i$ 密度可达 $\Rightarrow \boldsymbol{x}_j \in C$。
+
+如何从数据集 $D$ 中找出满足以上性质的聚类簇呢？实际上，若 $\boldsymbol{x}$ 为核心对象，由 $\boldsymbol{x}$ 密度可达的所有样本组成的集合记为 $X = \{\boldsymbol{x}' \in D \mid \boldsymbol{x}' \text{ is density-connected by }\boldsymbol{x}\}$ 则很容易见得 $X$ 即为包含 $\boldsymbol{x}$ 的最大的密度相连样本集合。
+
+于是，DBSCAN 算法先任选数据集中的一个核心对象为种子，由此出发确定相应的聚类簇，算法流程如下图所示：
+
+<img class="center-picture" src="../assets/9-4-2.png" width="600" />
+
+算法首先确定所有核心对象，然后以任一核心对象为出发点，找出由其密度可达的样本生成聚类簇，直到所有核心对象均被访问过为止。
+
 ## 6. 层次聚类
+
+层次聚类/Hierarchical Clustering 试图在不同层次对数据集进行划分，从而形成树形的聚类结果。数据集的划分可以采用自底向上的聚合策略，也可以采用自顶向下的分拆策略。
+
+AGNES/AGglomerative NESting 是一种采用自底向上聚合策略的层次聚类算法。它先将数据集中的每个样本看作一个初始聚类簇，然后在算法运行的每一步中找出距离最近的两个聚类簇进行合并，这个过程不断重复，直至达到预设的聚类簇个数。
+
+算法的关键是如何计算聚类簇之间的距离，实际上，每个簇是一个样本集合，因此只需采用关于集合的某种距离即可。例如，给定聚类簇 $C_i$ 与 $C_j$，可通过下面的式子来计算距离：
+
+- 最小距离：$d_{\min}(C_i,C_j) = \min\limits_{\boldsymbol{x}\in C_i,\boldsymbol{z}\in C_j} \text{dist}(\boldsymbol{x},\boldsymbol{z})$；
+- 最大距离：$d_{\max}(C_i,C_j) = \max\limits_{\boldsymbol{x}\in C_i,\boldsymbol{z}\in C_j} \text{dist}(\boldsymbol{x},\boldsymbol{z})$；
+- 平均距离：$d_{\text{avg}}(C_i,C_j) = \dfrac{1}{|C_i||C_j|} \sum\limits_{\boldsymbol{x}\in C_i}\sum\limits_{\boldsymbol{z}\in C_j} \text{dist}(\boldsymbol{x},\boldsymbol{z})$。
+
+算法的具体流程如下图所示：
+
+<img class="center-picture" src="../assets/9-5.png" width="600" />
+
+具体来讲，算法首先将每一个样本看作一个初始聚类簇，并且初始化对应的距离矩阵；然后在每一步找到距离最近的两额聚类簇进行合并，并且更新距离矩阵，重新编号簇并且更新距离矩阵，直到达到预设的聚类簇数。
+
+显然，使用不同的距离，对赢得层次聚类算法的结果也不一样。当距离采用 $d_{\min}$、$d_{\max}$ 或 $d_{\text{avg}}$ 时，AGNES 算法被相应地称为单链接/Single-linkage、全链接/Complete-linkage 或均链接/Average-linkage 算法。
