@@ -22,9 +22,10 @@ nav:
                 - Shell: Computer Science/Programming Basis/Shell.md
                 - Git: Computer Science/Programming Basis/Git.md
                 - Linux: Computer Science/Programming Basis/Linux.md
-                - Tmux Cheatsheet: Computer Science/Programming Basis/tmux.md
+                - Docker: Computer Science/Programming Basis/Docker.md
                 - GNU Make & CMake: Computer Science/Programming Basis/GNU Make.md
                 - Regular Expression: Computer Science/Programming Basis/Regular Expression.md
+                - Tmux Cheatsheet: Computer Science/Programming Basis/tmux.md
           - Programing Language:
                 - Computer Science/Programming Language/index.md
                 - C:
@@ -38,6 +39,12 @@ nav:
                       - Basic Syntax: Computer Science/Programming Language/C++/Basic Syntax.md
                       - Object Oriented Programming: Computer Science/Programming Language/C++/OOP.md
                       - Standard Library: Computer Science/Programming Language/C++/Standard Library.md
+                      - CS106L:
+                            - Computer Science/Programming Language/C++/CS106L/index.md
+                            - 第8讲：模版类: Computer Science/Programming Language/C++/CS106L/8 TemplateClass.md
+                            - 第9讲：模版函数: Computer Science/Programming Language/C++/CS106L/9 TemplateFunc.md
+                            - 第10讲：函数与 Lambda 表达式: Computer Science/Programming Language/C++/CS106L/10 FuncLambda.md
+                            - 第11讲：运算符重载: Computer Science/Programming Language/C++/CS106L/11 OperOverload.md
                 - Python:
                       - Computer Science/Programming Language/Python/index.md
                       - Variable and Types: Computer Science/Programming Language/Python/VAT.md
@@ -46,7 +53,6 @@ nav:
                       - Standard Library: Computer Science/Programming Language/Python/Lib-std.md
                       - Pwntools: Computer Science/Programming Language/Python/Lib-Pwntools.md
                       - Numpy: Computer Science/Programming Language/Python/Lib-Numpy.md
-                      - Torch: Computer Science/Programming Language/Python/Lib-Torch.md
                       - Pandas: Computer Science/Programming Language/Python/Lib-Pandas.md
                 - Rust:
                       - Computer Science/Programming Language/Rust/index.md
@@ -69,7 +75,7 @@ nav:
                 - Computer Science/Quantum Computing/index.md
                 - Quantum Basis: Computer Science/Quantum Computing/basis.md
                 - Quantum Machine Learning: Computer Science/Quantum Computing/QML.md
-          - Compilation Principle:
+          - Principles of Compilers:
                 - Computer Science/Compilers/index.md
           - Blockchain:
                 - Blockchain Basis: Computer Science/Blockchain/Blockchain.md
@@ -196,6 +202,8 @@ nav:
                 - 3 Uniform Convergence: AI/Math Analysis/3 Convergence.md
                 - 4 Empirical Covering Number Analysis: AI/Math Analysis/4 Covering.md
                 - 5 Covering Number Estimates: AI/Math Analysis/5 Estimates.md
+          - 深度学习框架:
+                - AI/DL Framework/index.md
           - Deep Learning for NLP:
                 - AI/CS224N/index.md
           - Deep Learning for CV:
@@ -210,6 +218,7 @@ nav:
                 - Measure: Math/Real Analysis/Measure.md
                 - Integration: Math/Real Analysis/Integration.md
           - Optimization:
+                - Math/Optimization/index.md
                 - Course Introduction: Math/Optimization/1 Introduction.md
                 - Basis for Optimizaion: Math/Optimization/2 Smooth.md
                 - Descent Method: Math/Optimization/3 Descent.md
@@ -239,6 +248,8 @@ nav:
                 - Relations: Math/Discrete Mathematics/09 Relations.md
                 - Graph Theory: Math/Discrete Mathematics/10 Graph Theory.md
                 - Trees: Math/Discrete Mathematics/11 Trees.md
+    - Research:
+          - Research/index.md
     - Varia:
           - Learning Plan: Varia/Learning Plan.md
           - Typst Learning Report: Varia/Typst.md

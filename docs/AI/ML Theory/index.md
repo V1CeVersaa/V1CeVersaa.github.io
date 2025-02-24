@@ -8,13 +8,15 @@
 
     机器学习理论研究的是关于机器学习的理论基础，主要内容是分析学习任务的困难本质，为学习算法提供理论保证，并根据分析结果指导算法设计。
 
+    在目录上的都是学完了的，由于时间原因，很多章节的内容还不是很全，打勾了的都是比较完善的，后续随缘补充笔记吧。
+
 ## Table of Contents
 
 - [ ] [第一章：预备知识](./1%20Preliminaries.md)
 - [x] [第二章：可学性](./2%20Learnability.md)
-- [x] [第三章：复杂度](./3%20Complexity.md)
-- [x] [第四章：泛化界](./4%20Generalization.md)
-- [ ] [第五章：稳定性](./5%20Stability.md)
+- [ ] [第三章：复杂度](./3%20Complexity.md)
+- [ ] [第四章：泛化界](./4%20Generalization.md)
+- [x] [第五章：稳定性](./5%20Stability.md)
 - [ ] [第六章：一致性](./6%20Consistency.md)
-- [ ] [第七章：收敛率](./7%20Convergence.md)
-- [ ] [第八章：遗憾界](./8%20Regret.md)
+- [x] [第七章：收敛率](./7%20Convergence.md)
+- [x] [第八章：遗憾界](./8%20Regret.md)
