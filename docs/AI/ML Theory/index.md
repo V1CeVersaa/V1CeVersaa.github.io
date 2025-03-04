@@ -19,4 +19,4 @@
 - [x] [第五章：稳定性](./5%20Stability.md)
 - [ ] [第六章：一致性](./6%20Consistency.md)
 - [x] [第七章：收敛率](./7%20Convergence.md)
-- [x] [第八章：遗憾界](./8%20Regret.md)
+- [ ] [第八章：遗憾界](./8%20Regret.md)

@@ -39,12 +39,7 @@ nav:
                       - Basic Syntax: Computer Science/Programming Language/C++/Basic Syntax.md
                       - Object Oriented Programming: Computer Science/Programming Language/C++/OOP.md
                       - Standard Library: Computer Science/Programming Language/C++/Standard Library.md
-                      - CS106L:
-                            - Computer Science/Programming Language/C++/CS106L/index.md
-                            - 第8讲：模版类: Computer Science/Programming Language/C++/CS106L/8 TemplateClass.md
-                            - 第9讲：模版函数: Computer Science/Programming Language/C++/CS106L/9 TemplateFunc.md
-                            - 第10讲：函数与 Lambda 表达式: Computer Science/Programming Language/C++/CS106L/10 FuncLambda.md
-                            - 第11讲：运算符重载: Computer Science/Programming Language/C++/CS106L/11 OperOverload.md
+                      - CS106L: Computer Science/Programming Language/C++/CS106L.md
                 - Python:
                       - Computer Science/Programming Language/Python/index.md
                       - Variable and Types: Computer Science/Programming Language/Python/VAT.md
@@ -77,6 +72,7 @@ nav:
                 - Quantum Machine Learning: Computer Science/Quantum Computing/QML.md
           - Principles of Compilers:
                 - Computer Science/Compilers/index.md
+                - Topic 1：词法分析: Computer Science/Compilers/1 Lex.md
           - Blockchain:
                 - Blockchain Basis: Computer Science/Blockchain/Blockchain.md
                 - Ethereum:
@@ -127,10 +123,18 @@ nav:
                 - COAD-The Processor: System/COAD/Chapter4.md
                 - DDCA-Microarchitecture: System/DDCA/Chapter7.md
                 - CSAPP-Processor Architecture: System/CSAPP/Chapter4.md
+                - ZJU SYS III-Quantitative Analysis: System/ZJU SYS/SysIII-Quantitative.md
+                - ZJU SYS III-Instruction Level Parallelism: System/ZJU SYS/SysIII-ILP.md
           - Memory Hierarchy:
                 - CSAPP-The Memory Hierarchy: System/CSAPP/Chapter6.md
                 - COAD-Large and Fast Exploiting Memory Hierarchy: System/COAD/Chapter5.md
                 - DDCA-Memory Systems: System/DDCA/Chapter8.md
+                - OSC-Main Memory: System/OSC/topic5.md
+                - OSC-Virtual Memory: System/OSC/topic6.md
+                - OSC-Mass-Storage Structure: System/OSC/topic7.md
+                - OSC-I/O Systems: System/OSC/topic8.md
+                - OSC-File System: System/OSC/topic9.md
+                - OSTEP-Memory Virtualization: System/OSTEP/topic2.md
           - Running Programs on a System:
                 - OSC-OS Structure: System/OSC/topic0.md
                 - CSAPP-Linking: System/CSAPP/Chapter7.md
@@ -147,13 +151,6 @@ nav:
                 - CSAPP-System-Level IO: System/CSAPP/Chapter10.md
                 - CSAPP-Network Programming: System/CSAPP/Chapter11.md
                 - CSAPP-Concurrent Programming: System/CSAPP/Chapter12.md
-          - Memory, Storage and File System:
-                - OSC-Main Memory: System/OSC/topic5.md
-                - OSC-Virtual Memory: System/OSC/topic6.md
-                - OSC-Mass-Storage Structure: System/OSC/topic7.md
-                - OSC-I/O Systems: System/OSC/topic8.md
-                - OSC-File System: System/OSC/topic9.md
-                - OSTEP-Memory Virtualization: System/OSTEP/topic2.md
           - Hardware Description Language:
                 - Verilog: System/HDL/Verilog.md
                 - Chisel: System/HDL/Chisel.md
@@ -166,7 +163,13 @@ nav:
     - AI:
           - AI/index.md
           - 人工智能引论: AI/AID/index.md
-          - 人工智能逻辑: AI/AIL/index.md
+          - 人工智能逻辑:
+                - AI/AIL/index.md
+                - 第1章：绪论: AI/AIL/1 Introduction.md
+                - 第2章：经典演绎逻辑: AI/AIL/2 ClassicalDeductive.md
+                - 第3章：非单调逻辑: AI/AIL/3 Non-monotonic.md
+                - 第4章：基于论证的逻辑: AI/AIL/4 Argumentation-based.md
+                - 第5章：不确定推理: AI/AIL/5 Uncertainty.md
           - 机器学习基础:
                 - AI/ML Basis/index.md
                 - 第1章：绪论: AI/ML Basis/1 Intro.md
@@ -195,6 +198,10 @@ nav:
                 - 第6章：一致性: AI/ML Theory/6 Consistency.md
                 - 第7章：收敛率: AI/ML Theory/7 Convergence.md
                 - 第8章：遗憾界: AI/ML Theory/8 Regret.md
+          - 在线学习引论: 
+                - AI/Online Learning/index.md
+                - "Topic 1: Online Learning and OCO": AI/Online Learning/Lecture 1.md
+                - "Topic 2: Multi-Armed Bandits": AI/Online Learning/Lecture 2.md
           - 机器学习算法的数学分析:
                 - AI/Math Analysis/index.md
                 - 1 Introduction: AI/Math Analysis/1 Intro.md
@@ -202,8 +209,8 @@ nav:
                 - 3 Uniform Convergence: AI/Math Analysis/3 Convergence.md
                 - 4 Empirical Covering Number Analysis: AI/Math Analysis/4 Covering.md
                 - 5 Covering Number Estimates: AI/Math Analysis/5 Estimates.md
-          - 深度学习框架:
-                - AI/DL Framework/index.md
+          - 机器学习框架:
+                - AI/ML Framework/index.md
           - Deep Learning for NLP:
                 - AI/CS224N/index.md
           - Deep Learning for CV:
@@ -254,17 +261,6 @@ nav:
           - Learning Plan: Varia/Learning Plan.md
           - Typst Learning Report: Varia/Typst.md
           - Environment Configuration: Varia/Envs.md
-    # - Reading:
-    #       - Reading/index.md
-    #       # - History:
-    #       # - Reading/The Western Heritage.md
-    #       - The Western Heritage:
-    #             - Reading/The Western Heritage/The Western Heritage.md
-    #             - Chapter 0: Reading/The Western Heritage/Chapter00.md
-    #             - Chapter 1: Reading/The Western Heritage/Chapter01.md
-    #       - Taking Sides:
-    #             - Reading/Taking Sides/index.md
-    #             - Sustainability: Reading/Taking Sides/Sustainability.md
 
 theme:
     name: material
@@ -351,7 +347,7 @@ extra_javascript:
     - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
     - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
     - https://gcore.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js
-    - Javascripts/mathjax.js
-    - Javascripts/katex.js
     - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
-    - Javascripts/tablesort.js
+    # - Javascripts/mathjax.js
+    # - Javascripts/katex.js
+    # - Javascripts/tablesort.js

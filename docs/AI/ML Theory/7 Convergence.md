@@ -42,160 +42,149 @@ $$\boldsymbol{w}_{t+1} = \mathcal{M}(\boldsymbol{w}_t, \mathcal{O}(f, \boldsymbo
 
 ### 2.1 凸函数
 
-<!-- ### 2.1 凸函数
+对于一般的凸优化问题，可以采用梯度下降达到 $O(1/\sqrt{T})$ 的收敛率，我们这里考虑的是梯度投影法，基本流程如下：
 
-对于一般的凸优化问题，可以采用梯度下降达到 $O(1/\sqrt{T})$ 的收敛率 [Nesterov, 2018]，其基本流程如下：
+<img class="center-picture" src="../assets/7-1.png" width="600" />
 
-1: 任意初始化 $\boldsymbol{w}_1 \in \mathcal{W}$;  
-2: for $t = 1,\ldots,T$ do  
-3:    梯度下降: $\boldsymbol{w}'_{t+1} = \boldsymbol{w}_t - \eta_t \nabla f(\boldsymbol{w}_t)$;  
-4:    投影: $\boldsymbol{w}_{t+1} = \Pi_\mathcal{W}(\boldsymbol{w}'_{t+1})$;  
-5: end for  
-6: 返回 $\bar{\boldsymbol{w}}_T = \frac{1}{T}\sum_{t=1}^T \boldsymbol{w}_t$.
+在第 $t$ 轮迭代中，首先计算函数 $f(\cdot)$ 在 $\boldsymbol{w}_t$ 上的梯度 $\nabla f(\boldsymbol{w}_t)$，然后依据梯度下降 $\boldsymbol{w}'_{t+1} = \boldsymbol{w}_t - \eta_t \nabla f(\boldsymbol{w}_t)$ 更新当前解，其中 $\eta_t > 0$ 为步长。这里需要注意的是，在原始问题中存在 $\boldsymbol{w} \in \mathcal{W}$ 的约束。但是通过梯度下降获得的中间解 $\boldsymbol{w}'_{t+1}$ 不必属于集合 $\mathcal{W}$。因此还需要通过投影操作 $\boldsymbol{w}_{t+1} = \Pi_\mathcal{W}(\boldsymbol{w}'_{t+1})$ 保证下一轮的解属于 $\mathcal{W}$。投影操作的定义为：
 
-在第 $t$ 轮迭代中，首先计算函数 $f(\cdot)$ 在 $\boldsymbol{w}_t$ 上的梯度 $\nabla f(\boldsymbol{w}_t)$，然后依据梯度下降 $\boldsymbol{w}'_{t+1} = \boldsymbol{w}_t - \eta_t \nabla f(\boldsymbol{w}_t)$ 更新当前解，其中 $\eta_t > 0$ 为步长。这里需要注意的是，在原始问题 (7.1) 中存在 $\boldsymbol{w} \in \mathcal{W}$ 的约束。但是通过梯度下降获得的中间解 $\boldsymbol{w}'_{t+1}$ 不必属于集合 $\mathcal{W}$。因此还需要通过投影操作 $\boldsymbol{w}_{t+1} = \Pi_\mathcal{W}(\boldsymbol{w}'_{t+1})$ 保证下一轮的解属于 $\mathcal{W}$。投影操作的定义为：
-
-$$\Pi_\mathcal{W}(\boldsymbol{z}) = \arg\min_{\boldsymbol{x}\in\mathcal{W}} \|\boldsymbol{x}-\boldsymbol{z}\|,$$
+$$\Pi_\mathcal{W}(\boldsymbol{z}) = \underset{\boldsymbol{x}\in\mathcal{W}}{\arg\min} \|\boldsymbol{x}-\boldsymbol{z}\|,$$
 
 其目的是在集合 $\mathcal{W}$ 中寻找距离输入最近的点。最后，将算法 $T$ 轮迭代的平均值作为输出。
 
-下面给出采用固定步长梯度下降的理论保障。
+下面给出采用固定步长梯度下降的收敛率。
 
-**定理 7.1** (梯度下降收敛率) 若目标函数是 $l$-Lipschitz 连续函数，且可行域有界，则采用固定步长梯度下降的收敛率为 $O\left(\frac{1}{\sqrt{T}}\right)$。
+**定理 7.1**（梯度下降收敛率）：假设目标函数 $f(\cdot)$ 是凸的 $l$-Lipschitz 连续函数，且可行域 $\mathcal{W}$ 有界，则采用固定步长梯度下降的收敛率为 $O\left(1/\sqrt{T}\right)$。
 
-**证明** 假设可行域 $\mathcal{W}$ 直径为 $\Gamma$，并且目标函数满足 $l$-Lipschitz 连续，即对于任意 $\boldsymbol{u}, \boldsymbol{v} \in \mathcal{W}$，
+???- Info "证明"
 
-$$\|\boldsymbol{u}-\boldsymbol{v}\| \leq \Gamma, \|\nabla f(\boldsymbol{u})\| \leq l.$$
+    假设可行域 $\mathcal{W}$ 直径为 $\Gamma$，并且目标函数满足 $l$-Lipschitz 连续，即对于任意 $\boldsymbol{u}, \boldsymbol{v} \in \mathcal{W}$，
 
-为了简化分析，考虑固定的步长 $\eta_t = \eta$。
+    $$\|\boldsymbol{u}-\boldsymbol{v}\| \leq \Gamma, \quad \|\nabla f(\boldsymbol{u})\| \leq l.$$
 
-对于任意的 $\boldsymbol{w} \in \mathcal{W}$，
+    为了简化分析，考虑固定的步长 $\eta_t = \eta$。
 
-$$f(\boldsymbol{w}_t) - f(\boldsymbol{w}) \leq \langle\nabla f(\boldsymbol{w}_t), \boldsymbol{w}_t - \boldsymbol{w}\rangle = \frac{1}{\eta}\langle\boldsymbol{w}_t - \boldsymbol{w}'_{t+1}, \boldsymbol{w}_t - \boldsymbol{w}\rangle$$
+    对于任意的 $\boldsymbol{w} \in \mathcal{W}$，
 
-$$= \frac{1}{2\eta}(\|\boldsymbol{w}_t - \boldsymbol{w}\|^2 - \|\boldsymbol{w}'_{t+1} - \boldsymbol{w}\|^2 + \|\boldsymbol{w}_t - \boldsymbol{w}'_{t+1}\|^2)$$
+    $$\begin{aligned}
+        f(\boldsymbol{w}_t) - f(\boldsymbol{w}) &\leq \langle\nabla f(\boldsymbol{w}_t), \boldsymbol{w}_t - \boldsymbol{w}\rangle \\
+        &= \frac{1}{\eta}\langle\boldsymbol{w}_t - \boldsymbol{w}'_{t+1}, \boldsymbol{w}_t - \boldsymbol{w}\rangle \\
+        &= \frac{1}{2\eta}(\|\boldsymbol{w}_t - \boldsymbol{w}\|^2 - \|\boldsymbol{w}'_{t+1} - \boldsymbol{w}\|^2 + \|\boldsymbol{w}_t - \boldsymbol{w}'_{t+1}\|^2) \\
+        &= \frac{1}{2\eta}(\|\boldsymbol{w}_t - \boldsymbol{w}\|^2 - \|\boldsymbol{w}'_{t+1} - \boldsymbol{w}\|^2) + \frac{\eta}{2}\|\nabla f(\boldsymbol{w}_t)\|^2 \\
+        &\leq \frac{1}{2\eta}(\|\boldsymbol{w}_t - \boldsymbol{w}\|^2 - \|\boldsymbol{w}_{t+1} - \boldsymbol{w}\|^2) + \frac{\eta}{2}\|\nabla f(\boldsymbol{w}_t)\|^2,
+    \end{aligned}$$
 
-$$= \frac{1}{2\eta}(\|\boldsymbol{w}_t - \boldsymbol{w}\|^2 - \|\boldsymbol{w}'_{t+1} - \boldsymbol{w}\|^2) + \frac{\eta}{2}\|\nabla f(\boldsymbol{w}_t)\|^2$$
+    最后一个不等号利用了凸集合投影操作的非扩展性质：
 
-$$\leq \frac{1}{2\eta}(\|\boldsymbol{w}_t - \boldsymbol{w}\|^2 - \|\boldsymbol{w}_{t+1} - \boldsymbol{w}\|^2) + \frac{\eta}{2}\|\nabla f(\boldsymbol{w}_t)\|^2,$$
+    $$\|\Pi_\mathcal{W}(\boldsymbol{x}) - \Pi_\mathcal{W}(\boldsymbol{z})\| \leq \|\boldsymbol{x}-\boldsymbol{z}\|, \forall \boldsymbol{x},\boldsymbol{z}.$$
 
-最后一个不等号利用了凸集合投影操作的非扩展性质 [Nemirovski et al., 2009]:
+    注意到目标函数满足 $l$-Lipschitz连续，所以我们可以得到：
 
-$$\|\Pi_\mathcal{W}(\boldsymbol{x}) - \Pi_\mathcal{W}(\boldsymbol{z})\| \leq \|\boldsymbol{x}-\boldsymbol{z}\|, \forall \boldsymbol{x},\boldsymbol{z}.$$
+    $$f(\boldsymbol{w}_t) - f(\boldsymbol{w}) \leq \frac{1}{2\eta}(\|\boldsymbol{w}_t - \boldsymbol{w}\|^2 - \|\boldsymbol{w}_{t+1} - \boldsymbol{w}\|^2) + \frac{\eta}{2}l^2.$$
 
-注意到目标函数满足 $l$-Lipschitz连续，由 (7.6) 和 (7.7) 可得
+    对上式从 $t=1$ 到 $T$ 求和，有：
 
-$$f(\boldsymbol{w}_t) - f(\boldsymbol{w}) \leq \frac{1}{2\eta}(\|\boldsymbol{w}_t - \boldsymbol{w}\|^2 - \|\boldsymbol{w}_{t+1} - \boldsymbol{w}\|^2) + \frac{\eta l^2}{2}.$$
+    $$\begin{aligned}
+        \sum_{t=1}^T f(\boldsymbol{w}_t) - Tf(\boldsymbol{w}) &\leq \frac{1}{2\eta}(\|\boldsymbol{w}_1 - \boldsymbol{w}\|^2 - \|\boldsymbol{w}_{T+1} - \boldsymbol{w}\|^2) + \frac{\eta T}{2}l^2 \\
+        &\leq \frac{1}{2\eta}\|\boldsymbol{w}_1 - \boldsymbol{w}\|^2 + \frac{\eta T}{2}l^2 \\
+        &\leq \frac{1}{2\eta}\Gamma^2 + \frac{\eta T}{2}l^2.
+    \end{aligned}$$
 
-对 (7.9) 从 $t=1$ 到 $T$ 求和，有
+    根据 Jensen 不等式可以得到：
 
-$$\sum_{t=1}^T f(\boldsymbol{w}_t) - Tf(\boldsymbol{w}) \leq \frac{1}{2\eta}(\|\boldsymbol{w}_1 - \boldsymbol{w}\|^2 - \|\boldsymbol{w}_{T+1} - \boldsymbol{w}\|^2) + \frac{\eta T}{2}l^2$$
+    $$\begin{aligned}
+        f(\bar{\boldsymbol{w}}_T) - f(\boldsymbol{w}) &= f\left(\frac{1}{T}\sum_{t=1}^T \boldsymbol{w}_t\right) - f(\boldsymbol{w}) \\
+        &\leq \frac{1}{T}\sum_{t=1}^T f(\boldsymbol{w}_t) - f(\boldsymbol{w}) \\
+        &\leq \frac{\Gamma^2}{2\eta T} + \frac{\eta l^2}{2}.
+    \end{aligned}$$
 
-$$\leq \frac{1}{2\eta}\|\boldsymbol{w}_1 - \boldsymbol{w}\|^2 + \frac{\eta T}{2}l^2 \leq \frac{1}{2\eta}\Gamma^2 + \frac{\eta T}{2}l^2.$$
+    因此，
 
-最后，依据 Jensen 不等式 (1.11) 可得
+    $$f(\bar{\boldsymbol{w}}_T) - \min_{\boldsymbol{w}\in\mathcal{W}} f(\boldsymbol{w}) \leq \frac{\Gamma^2}{2\eta T} + \frac{\eta l^2}{2} = \frac{l\Gamma}{\sqrt{T}} = O\left(\frac{1}{\sqrt{T}}\right).$$
 
-$$f(\bar{\boldsymbol{w}}_T) - f(\boldsymbol{w}) = f\left(\frac{1}{T}\sum_{t=1}^T \boldsymbol{w}_t\right) - f(\boldsymbol{w})$$
+    这使用了均值不等式的性质，其中步长设置为 $\eta = \Gamma/(l\sqrt{T})$。
 
-$$\leq \frac{1}{T}\sum_{t=1}^T f(\boldsymbol{w}_t) - f(\boldsymbol{w}) \leq \frac{\Gamma^2}{2\eta T} + \frac{\eta l^2}{2}.$$
-
-因此，
-
-$$f(\bar{\boldsymbol{w}}_T) - \min_{\boldsymbol{w}\in\mathcal{W}} f(\boldsymbol{w}) \leq \frac{\Gamma^2}{2\eta T} + \frac{\eta l^2}{2} = \frac{l\Gamma}{\sqrt{T}} = O\left(\frac{1}{\sqrt{T}}\right),$$
-
-其中步长设置为 $\eta = \Gamma/(l\sqrt{T})$。
-
-定理得证。 $\square$
+    定理得证。
 
 ### 2.2 强凸函数
 
-本节考虑目标函数 $f : \mathcal{W} \mapsto \mathbb{R}$ 是 $\lambda$-强凸函数，即目标函数满足 (1.6)。对于 $\lambda$-强凸函数，有以下定理：
+本节考虑目标函数 $f : \mathcal{W} \mapsto \mathbb{R}$ 是 $\lambda$-强凸函数，即其满足 $f(\boldsymbol{z}) \geq f(\boldsymbol{x}) + \nabla f(\boldsymbol{x})^{\mathrm{T}}(\boldsymbol{z} - \boldsymbol{x}) + \frac{\lambda}{2}\lVert \boldsymbol{z} - \boldsymbol{x} \rVert^2$。对于 $\lambda$-强凸函数，有以下定理：
 
-**定理 7.2** ($\lambda$-强凸函数性质) 假设 $f$ 为 $\lambda$-强凸函数，$\boldsymbol{w}^*$ 为其最优解，对于任意 $\boldsymbol{w} \in \mathcal{W}$ 有
+**定理 7.2**（强凸函数性质）：假设 $f$ 为 $\lambda$-强凸函数，$\boldsymbol{w}^*$ 为其最优解，对于任意 $\boldsymbol{w} \in \mathcal{W}$ 有
 
 $$f(\boldsymbol{w}) - f(\boldsymbol{w}^*) \geq \frac{\lambda}{2}\|\boldsymbol{w} - \boldsymbol{w}^*\|^2.$$
 
 此外，若梯度有上界 $l$，则
 
-$$\|\boldsymbol{w} - \boldsymbol{w}^*\| \leq \frac{2l}{\lambda},$$
+$$\begin{aligned}
+    \|\boldsymbol{w} - \boldsymbol{w}^*\| &\leq \frac{2l}{\lambda}, \\
+    f(\boldsymbol{w}) - f(\boldsymbol{w}^*) &\leq \frac{2l^2}{\lambda}.
+\end{aligned}$$
 
-$$f(\boldsymbol{w}) - f(\boldsymbol{w}^*) \leq \frac{2l^2}{\lambda}.$$
+我们也要求其是一个 $\gamma$-Lipschitz 连续函数，即对于任意 $\boldsymbol{w}, \boldsymbol{v} \in \mathcal{W}$，有
 
-为了得到更快的收敛率，考虑强凸且光滑的函数，即要求目标函数在具备强凸性质的同时，还满足以下的光滑条件 [Boyd and Vandenberghe, 2004]:
+$$|\nabla f(\boldsymbol{w}) - \nabla f(\boldsymbol{v})| \leq \gamma\|\boldsymbol{w} - \boldsymbol{v}\|.$$
 
-$$f(\boldsymbol{w}') \leq f(\boldsymbol{w}) + \langle\nabla f(\boldsymbol{w}), \boldsymbol{w}' - \boldsymbol{w}\rangle + \frac{\gamma}{2}\|\boldsymbol{w}' - \boldsymbol{w}\|^2, \forall \boldsymbol{w}, \boldsymbol{w}' \in \mathcal{W}.$$
+根据我们在凸优化已经证明的内容，这等价于：
 
-这时称 $f : \mathcal{W} \mapsto \mathbb{R}$ 为 $\gamma$-光滑函数。上式表明，对光滑函数 $f(\cdot)$，可以在任意一个点 $\boldsymbol{w}$ 处构造一个二次函数作为其上界。
+$$f(\boldsymbol{w}^{\prime}) \leq f(\boldsymbol{w}) + \langle\nabla f(\boldsymbol{w}), \boldsymbol{w}^{\prime} - \boldsymbol{w}\rangle + \frac{\gamma}{2}\|\boldsymbol{w}^{\prime} - \boldsymbol{w}\|^2, \forall \boldsymbol{w}, \boldsymbol{w}^{\prime} \in \mathcal{W}.$$
 
 针对光滑且强凸函数的梯度下降算法的基本流程如下：
 
-1: 任意初始化 $\boldsymbol{w}_1 \in \mathcal{W}$;  
-2: for $t = 1,\ldots,T$ do  
-3:    梯度下降：  
-      $\boldsymbol{w}_{t+1} = \arg\min_{\boldsymbol{w}\in\mathcal{W}} \left(f(\boldsymbol{w}_t) + \langle\nabla f(\boldsymbol{w}_t), \boldsymbol{w} - \boldsymbol{w}_t\rangle + \frac{\gamma}{2}\|\boldsymbol{w} - \boldsymbol{w}_t\|^2\right)$;  
-4: end for  
-5: 返回 $\boldsymbol{w}_T$。
+<img class="center-picture" src="../assets/7-2.png" width="600" />
 
-和凸函数的梯度下降方法类似。在第 $t$ 轮迭代中，首先计算函数 $f(\cdot)$ 在 $\boldsymbol{w}_t$ 处的梯度，然后依据 (7.17) 更新当前解 $\boldsymbol{w}_{t+1}$。注意到 (7.17) 中约束最小化问题的闭式解为
+和一般的凸函数的梯度下降方法类似，每轮迭代的优化式子的闭式解为：
 
 $$\boldsymbol{w}_{t+1} = \Pi_\mathcal{W}\left(\boldsymbol{w}_t - \frac{1}{\gamma}\nabla f(\boldsymbol{w}_t)\right).$$
 
-因此，其本质仍是进行梯度下降更新后再投影到可行域。对于上述梯度下降算法，有如下定理 [Nesterov, 2013]:
+因此，其本质仍然是梯度投影法。对于上述梯度下降算法，有如下定理：
 
-**定理 7.3** (梯度下降收敛率) 若目标函数满足 $\lambda$-强凸且 $\gamma$-光滑，梯度下降取得了线性收敛率 $O\left(\frac{1}{\beta^T}\right)$，其中 $\beta > 1$。
+**定理 7.3**（梯度下降收敛率）：若目标函数满足 $\lambda$-强凸且 $\gamma$-Lipschitz 连续，梯度下降取得了线性收敛率 $O\left(1/\beta^T\right)$，其中 $\beta > 1$。
 
-**证明** 根据目标函数的性质以及更新公式，
+???- Info "证明"
 
-$$f(\boldsymbol{w}_{t+1}) \leq f(\boldsymbol{w}_t) + \langle\nabla f(\boldsymbol{w}_t), \boldsymbol{w}_{t+1} - \boldsymbol{w}_t\rangle + \frac{\gamma}{2}\|\boldsymbol{w}_{t+1} - \boldsymbol{w}_t\|^2$$
+    根据目标函数的性质以及更新公式，
 
-$$= \min_{\boldsymbol{w}\in\mathcal{W}}\left(f(\boldsymbol{w}_t) + \langle\nabla f(\boldsymbol{w}_t), \boldsymbol{w} - \boldsymbol{w}_t\rangle + \frac{\gamma}{2}\|\boldsymbol{w} - \boldsymbol{w}_t\|^2\right)$$
+    $$\begin{aligned}
+        f(\boldsymbol{w}_{t+1}) &\leq f(\boldsymbol{w}_t) + \langle\nabla f(\boldsymbol{w}_t), \boldsymbol{w}_{t+1} - \boldsymbol{w}_t\rangle + \frac{\gamma}{2}\|\boldsymbol{w}_{t+1} - \boldsymbol{w}_t\|^2 \\
+        &= \min_{\boldsymbol{w}\in\mathcal{W}}\left(f(\boldsymbol{w}_t) + \langle\nabla f(\boldsymbol{w}_t), \boldsymbol{w} - \boldsymbol{w}_t\rangle + \frac{\gamma}{2}\|\boldsymbol{w} - \boldsymbol{w}_t\|^2\right) \\
+        &\leq \min_{\boldsymbol{w}\in\mathcal{W}}\left(f(\boldsymbol{w}) - \frac{\lambda}{2}\|\boldsymbol{w} - \boldsymbol{w}_t\|^2 + \frac{\gamma}{2}\|\boldsymbol{w} - \boldsymbol{w}_t\|^2\right) \\
+        &\leq \min_{\boldsymbol{w}=\alpha\boldsymbol{w}^*+(1-\alpha)\boldsymbol{w}_t,\alpha\in[0,1]}\left(f(\boldsymbol{w}) + \frac{\gamma-\lambda}{2}\|\boldsymbol{w} - \boldsymbol{w}_t\|^2\right) \\
+        &= \min_{\alpha\in[0,1]}\left(f(\alpha\boldsymbol{w}^* + (1-\alpha)\boldsymbol{w}_t) + \frac{\gamma-\lambda}{2}\|\alpha\boldsymbol{w}^* + (1-\alpha)\boldsymbol{w}_t - \boldsymbol{w}_t\|^2\right) \\
+        &\leq \min_{\alpha\in[0,1]}\left(\alpha f(\boldsymbol{w}^*) + (1-\alpha)f(\boldsymbol{w}_t) + \frac{\gamma-\lambda}{2}\alpha^2\|\boldsymbol{w}^* - \boldsymbol{w}_t\|^2\right) \\
+        &= \min_{\alpha\in[0,1]}\left(f(\boldsymbol{w}_t) - \alpha(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*)) + \frac{\gamma-\lambda}{2}\|\alpha\boldsymbol{w}^* + (1-\alpha)\boldsymbol{w}_t - \boldsymbol{w}_t\|^2\right) \\
+        &\leq \min_{\alpha\in[0,1]}\left(f(\boldsymbol{w}_t) - \alpha(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*)) + \frac{\gamma-\lambda}{2}\frac{2}{\lambda}\alpha^2(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*))\right) \\
+        &= \min_{\alpha\in[0,1]}\left(f(\boldsymbol{w}_t) + \left(\frac{\gamma-\lambda}{\lambda}\alpha^2 - \alpha\right)(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*))\right).
+    \end{aligned}$$
 
-$$\leq \min_{\boldsymbol{w}\in\mathcal{W}}\left(f(\boldsymbol{w}) - \frac{\lambda}{2}\|\boldsymbol{w} - \boldsymbol{w}_t\|^2 + \frac{\gamma}{2}\|\boldsymbol{w} - \boldsymbol{w}_t\|^2\right)$$
+    这就到了对二次函数进行优化：
 
-$$\leq \min_{\boldsymbol{w}=\alpha\boldsymbol{w}^*+(1-\alpha)\boldsymbol{w}_t,\alpha\in[0,1]}\left(f(\boldsymbol{w}) + \frac{\gamma-\lambda}{2}\|\boldsymbol{w} - \boldsymbol{w}_t\|^2\right)$$
+    - 如果 $\lambda/(2(\gamma-\lambda)) \geq 1$，令 $\alpha = 1$，则有
 
-$$= \min_{\alpha\in[0,1]}\left(f(\alpha\boldsymbol{w}^* + (1-\alpha)\boldsymbol{w}_t) + \frac{\gamma-\lambda}{2}\|\alpha\boldsymbol{w}^* + (1-\alpha)\boldsymbol{w}_t - \boldsymbol{w}_t\|^2\right)$$
+        $$f(\boldsymbol{w}_{t+1}) - f(\boldsymbol{w}^*) \leq \frac{\gamma-\lambda}{\lambda}(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*)) \leq 1/2(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*)).$$
 
-$$\leq \min_{\alpha\in[0,1]}\left(\alpha f(\boldsymbol{w}^*) + (1-\alpha)f(\boldsymbol{w}_t) + \frac{\gamma-\lambda}{2}\alpha^2\|\boldsymbol{w}^* - \boldsymbol{w}_t\|^2\right)$$
+    - 如果 $\lambda/(2(\gamma-\lambda)) < 1$，令 $\alpha = \lambda/(2(\gamma-\lambda))$，则有
 
-$$= \min_{\alpha\in[0,1]}\left(f(\boldsymbol{w}_t) - \alpha(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*)) + \frac{\gamma-\lambda}{2}\alpha^2\|\boldsymbol{w}^* - \boldsymbol{w}_t\|^2\right)$$
+        $$f(\boldsymbol{w}_{t+1}) - f(\boldsymbol{w}^*) \leq (1 - \frac{\lambda}{4(\gamma - \lambda)})(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*)) = \frac{4\gamma-5\lambda}{4(\gamma-\lambda)}(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*)).$$
 
-$$\leq \min_{\alpha\in[0,1]}\left(f(\boldsymbol{w}_t) - \alpha(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*)) + \frac{\gamma-\lambda}{2}\frac{2}{\lambda}\alpha^2(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*))\right)$$
+    因此，令
 
-$$= \min_{\alpha\in[0,1]}\left(f(\boldsymbol{w}_t) + \left(\frac{\gamma-\lambda}{\lambda}\alpha^2 - \alpha\right)(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*))\right).$$
+    $$\beta = \begin{cases}
+        \frac{\lambda}{\gamma - \lambda}, & \frac{\lambda}{2(\gamma-\lambda)} \geq 1; \\
+        \frac{4(\gamma-\lambda)}{4\gamma-5\lambda}, & \frac{\lambda}{2(\gamma-\lambda)} < 1;
+    \end{cases}$$
 
-如果 $\frac{\lambda}{2(\gamma-\lambda)} \geq 1$，令 $\alpha = 1$，则有
+    那么下式总是成立
 
-$$f(\boldsymbol{w}_{t+1}) - f(\boldsymbol{w}^*) \leq \frac{\gamma-\lambda}{\lambda}(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*)) \leq \frac{1}{2}(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*)).$$
+    $$f(\boldsymbol{w}_{t+1}) - f(\boldsymbol{w}^*) \leq \frac{1}{\beta}(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*)).$$
 
-如果 $\frac{\lambda}{2(\gamma-\lambda)} < 1$，令 $\alpha = \frac{\lambda}{2(\gamma-\lambda)}$，则有
+    将上式扩展可得
 
-$$f(\boldsymbol{w}_{t+1}) - f(\boldsymbol{w}^*) \leq \left(1 - \frac{\lambda}{4(\gamma-\lambda)}\right)(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*))$$
+    $$f(\boldsymbol{w}_T) - f(\boldsymbol{w}^*) \leq \frac{1}{\beta^{T-1}}(f(\boldsymbol{w}_1) - f(\boldsymbol{w}^*)) = O\left(\frac{1}{\beta^T}\right).$$  
 
-$$= \frac{4\gamma-5\lambda}{4(\gamma-\lambda)}(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*)).$$
+    定理得证。
 
-结合 (7.20) 和 (7.21)，令
-
-$$\beta = \begin{cases}
-\frac{\lambda}{\gamma-\lambda}, & \frac{\lambda}{2(\gamma-\lambda)} \geq 1; \\
-\frac{4(\gamma-\lambda)}{4\gamma-5\lambda}, & \frac{\lambda}{2(\gamma-\lambda)} < 1;
-\end{cases}$$
-
-那么下式总是成立
-
-$$f(\boldsymbol{w}_{t+1}) - f(\boldsymbol{w}^*) \leq \frac{1}{\beta}(f(\boldsymbol{w}_t) - f(\boldsymbol{w}^*)).$$
-
-将上式扩展可得
-
-$$f(\boldsymbol{w}_T) - f(\boldsymbol{w}^*) \leq \frac{1}{\beta^{T-1}}(f(\boldsymbol{w}_1) - f(\boldsymbol{w}^*)) = O\left(\frac{1}{\beta^T}\right).$$
-
-定理得证。 $\square$
-
-上述推理过程假设目标函数是强凸且光滑，如果目标函数只满足强凸性质，可以采用 7.3.2 节中针对强凸函数的随机优化算法，仅需要将随机梯度改为真实梯度，本节不再赘述。
-
--->
-
-### 2.2 强凸函数
+如果目标函数只满足强凸性质，就可以采用后面针对强凸函数的随机优化算法，仅需要将随机梯度改为真实梯度。
 
 ## 3. 随机优化
 
@@ -324,8 +313,25 @@ $$= O\left(\frac{1}{\sqrt{T}}\right).$$
 
 ### 3.3 Epoch-GD 的大概率结论
 
+注意到，Epoch-GD 同样可以用于确定优化场景，此时，将随机梯度替换成真实梯度，收敛率保持不变。因此，对于目标函数是强凸的确定优化，可以直接应用 Epoch-GD 算法得到 $O(1/[\lambda T])$ 的收敛率。此外，还可以证明随机情况下 Epoch-GD 以大概率取得 $O(\log\log T / [\lambda T])$ 的收敛率。但是这部分证明过于复杂，下面只列举结论，有时间再补充证明。
+
+???- Info "证明"
+???- Info "证明"
+???- Info "证明"
+
+
+
 ## 4. 分析实例
 
 ### 4.1 支持向量机
 
+我们分析如何使用确定优化方法求解支持向量机，唯一区别就是我们使用的是次梯度，而不是一般意义的梯度。
+
+<img class="center-picture" src="../assets/7-5.png" width="600" />
+
+算法的第五行出现了错误，应该是 $\boldsymbol{w}_{t+1}^{\prime} = \dfrac{\Lambda}{\max(\lVert \boldsymbol{w}_{t+1}^{\prime}\rVert, \Lambda)} \boldsymbol{w}_{t+1}^{\prime}$。
+
 ### 4.2 对率回归
+
+
+<img class="center-picture" src="../assets/7-6.png" width="600" />
