@@ -1,6 +1,6 @@
-# Standard Library
+# C++ Standard Library
 
-## General Introduction to Containers
+## 1. 容器简述
 
 容器是一些特定类型对象的集合，顺序容器提供了控制元素存储与访问顺序的能力。在这里，我们将介绍对于所有容器都适用的操作，除此之外的仅仅针对于**顺序容器**、**关联容器**以及**无序容器**或一小部分特定容器的操作将在后续介绍。
 
@@ -87,9 +87,9 @@ names.assign(oldstyle.cbegin(), oldstyle.cend());   // 允许
 names = oldstyle;                                   // 不允许，因为容器类型不匹配
 ```
 
-## Sequetial Containers and Adapters
+## 2. 顺序容器
 
-### Introduction
+### 2.1 顺序容器简述
 
 除了 `array` 之外，所有的标准库内的顺序容器都提供灵活的内存管理，运行时可以动态添加或者删除元素来改变容器大小，下面是例子：
 
@@ -120,47 +120,40 @@ while (cin >> word)
 
 
 
-### Vector
+### 2.2 `#!cpp std::vector`
 
 需要使用 `#!C++ #include<vector>` 来使用 vector，vector 是一个可变大小的数组，支持快速随机访问，但是在尾部以外的部分插入或者删除元素的速度可能很慢。
 
 1. 创建与初始化
+    ```cpp
+    vector<ElementType> v1;                 // 空 vector，潜在元素是 ElementType 类型，执行默认初始化
+    vector<ElementType> v2(v1);             // 拷贝 v1 副本
+    vector<ElementType> v3 = v1;            // 拷贝 v1 副本
+    vector<ElementType> v4(n, value);       // n 个元素，每个元素的值为 value
+    vector<ElementType> v5(n);              // n 个元素
+    vector<ElementType> v6{a, b, c, d};     // 列表初始化
+    vector<ElementType> v7 = {a, b, c, d};  // 和 v6 等价
+    ```
 
-```cpp
-vector<ElementType> v1;                 // 空 vector，潜在元素是 ElementType 类型，执行默认初始化
-vector<ElementType> v2(v1);             // 拷贝 v1 副本
-vector<ElementType> v3 = v1;            // 拷贝 v1 副本
-vector<ElementType> v4(n, value);       // n 个元素，每个元素的值为 value
-vector<ElementType> v5(n);              // n 个元素
-vector<ElementType> v6{a, b, c, d};     // 列表初始化
-vector<ElementType> v7 = {a, b, c, d};  // 和 v6 等价
-```
+2. 访问与操作：除了最初提到的通用操作，vector 还有下面的操作：
+    - `vec.at(n)`：返回 vector 中第 `n` 个元素的引用，同时检查是否越界，如果越界，抛出 `std::out_of_range` 异常；
+    - `vec.front()`：返回 vector 的第一个元素的引用；
+    - `vec.back()`：返回 vector 的最后一个元素的引用；
+    - `vec.data()`：返回指向作为存储工作的底层数组的指针；
+    - `vec.push_back(ele)`：在 vector 尾部添加元素；
+    - `vec.pop_back()`：删除 vector 尾部元素；
+    - `vec.insert(pos, ele)`：在 `pos` 位置插入元素；
+    - `vec.erase(iter)`：删除迭代器 `iter` 指向的元素；
+    - `vec.erase(beg, end)`：删除 `[beg, end)` 区间的元素；
+    - `vec.find(first, end, v)`：在 `[first, end)` 区间内查找值为 `v` 的元素，返回指向该元素的迭代器，否则返回 `end`；
+    - `vec[n]`：下标运算符，返回 vector 中第 `n`` 个元素的引用；
+    - `==`, `!=`, `<`, `<=`：诸如此类按照字典序比较两个 vector，同时考虑元素数量；
 
-2. 访问与操作
-
-除了最初提到的通用操作，vector 还有下面的操作：
-
-- `vec.at(n)`：返回 vector 中第 n 个元素的引用，同时检查是否越界；
-- `vec.front()`：返回 vector 的第一个元素的引用；
-- `vec.back()`：返回 vector 的最后一个元素的引用；
-- `vec.data()`：返回指向作为存储工作的底层数组的指针；
-- `vec.push_back(ele)`：在 vector 尾部添加元素；
-- `vec.pop_back()`：删除 vector 尾部元素；
-- `vec.insert(pos, ele)`：在 pos 位置插入元素；
-- `vec.erase(iter)`：删除迭代器 iter 指向的元素；
-- `vec.erase(beg, end)`：删除 `[beg, end)` 区间的元素；
-- `vec.find(first, end, v)`：在 `[first, end)` 区间内查找值为 v 的元素，返回指向该元素的迭代器，否则返回 end；
-- `vec[n]`：下标运算符，返回 vector 中第 n 个元素的引用；
-- `==`, `!=`, `<`, `<=`：诸如此类按照字典序比较两个 vector，同时考虑元素数量；
-
-3. 迭代器运算
-
-vector 支持了更多的迭代器运算，一方面可以使得迭代器的每次移动都夸跨过多个元素，也支持迭代器进行关系运算，这些运算都被称为迭代器运算：
-
-- `iter +/- n`：返回迭代器 iter 向前/后移动 n 个元素的迭代器；
-- `iter +/-= n`：迭代器 iter 向前/后移动 n 个元素；
-- `iter1 - iter2`：返回两个迭代器之间的距离；
-- `>` `>=` `<` `<=`：若某个迭代器在另一个迭代器之前，则认为前者小于后者；
+3. 迭代器运算：`vector` 支持了更多的迭代器运算，一方面可以使得迭代器的每次移动都夸跨过多个元素，也支持迭代器进行关系运算，这些运算都被称为迭代器运算：
+    - `iter +/- n`：返回迭代器 `iter` 向前/后移动 `n` 个元素的迭代器；
+    - `iter +/-= n`：迭代器 `iter` 向前/后移动 `n` 个元素；
+    - `iter1 - iter2`：返回两个迭代器之间的距离；
+    - `>` `>=` `<` `<=`：若某个迭代器在另一个迭代器之前，则认为前者小于后者；
 
 ### String
 
@@ -183,3 +176,10 @@ vector 支持了更多的迭代器运算，一方面可以使得迭代器的每�
 
 ### Stack
 
+## 3. 关联容器
+
+### 3.1 关联容器简述
+
+### 3.2 `#!cpp std::map`
+
+### 3.3 `#!cpp std::set`

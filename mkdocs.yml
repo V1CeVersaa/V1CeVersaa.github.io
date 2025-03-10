@@ -17,15 +17,15 @@ nav:
     - Home: index.md
     - Computer Science:
           - Computer Science/index.md
-          - Programing Basis:
-                - Computer Science/Programming Basis/index.md
-                - Shell: Computer Science/Programming Basis/Shell.md
-                - Git: Computer Science/Programming Basis/Git.md
-                - Linux: Computer Science/Programming Basis/Linux.md
-                - Docker: Computer Science/Programming Basis/Docker.md
-                - GNU Make & CMake: Computer Science/Programming Basis/GNU Make.md
-                - Regular Expression: Computer Science/Programming Basis/Regular Expression.md
-                - Tmux Cheatsheet: Computer Science/Programming Basis/tmux.md
+          - Programing Utils:
+                - Computer Science/Programming Utils/index.md
+                - Shell: Computer Science/Programming Utils/Shell.md
+                - Git: Computer Science/Programming Utils/Git.md
+                - Linux: Computer Science/Programming Utils/Linux.md
+                - Docker: Computer Science/Programming Utils/Docker.md
+                - GNU Make & CMake: Computer Science/Programming Utils/GNU Make.md
+                - Regular Expression: Computer Science/Programming Utils/Regular Expression.md
+                - Tmux Cheatsheet: Computer Science/Programming Utils/tmux.md
           - Programing Language:
                 - Computer Science/Programming Language/index.md
                 - C:
@@ -39,7 +39,7 @@ nav:
                       - Basic Syntax: Computer Science/Programming Language/C++/Basic Syntax.md
                       - Object Oriented Programming: Computer Science/Programming Language/C++/OOP.md
                       - Standard Library: Computer Science/Programming Language/C++/Standard Library.md
-                      - CS106L: Computer Science/Programming Language/C++/CS106L.md
+                      - CS106L 笔记: Computer Science/Programming Language/C++/CS106L.md
                 - Python:
                       - Computer Science/Programming Language/Python/index.md
                       - Variable and Types: Computer Science/Programming Language/Python/VAT.md
@@ -55,8 +55,8 @@ nav:
                 - Go:
                       - Computer Science/Programming Language/Go/index.md
                       - Basic Syntax: Computer Science/Programming Language/Go/Basic Syntax.md
-                - Haskell:
-                      - Computer Science/Programming Language/Haskell/index.md
+                - OCaml:
+                      - Computer Science/Programming Language/OCaml/index.md
           - Algorithms & DS:
                 - Computer Science/Algorithm/index.md
                 - FDS Collection I: Computer Science/Algorithm/FDS I.md
@@ -170,7 +170,7 @@ nav:
                 - 第3章：非单调逻辑: AI/AIL/3 Non-monotonic.md
                 - 第4章：基于论证的逻辑: AI/AIL/4 Argumentation-based.md
                 - 第5章：不确定推理: AI/AIL/5 Uncertainty.md
-          - 机器学习基础:
+          - 机器学习基本知识:
                 - AI/ML Basis/index.md
                 - 第1章：绪论: AI/ML Basis/1 Intro.md
                 - 第2章：模型评估: AI/ML Basis/2 Evaluation.md
@@ -214,7 +214,8 @@ nav:
           - Deep Learning for NLP:
                 - AI/CS224N/index.md
           - Deep Learning for CV:
-                - AI/CS231N/index.md
+                - AI/Computer Vision/index.md
+                - Part 1: AI/Computer Vision/part 1.md
     - Math:
           - Basic Courses: Math/index.md
           - Abstract Algebra:

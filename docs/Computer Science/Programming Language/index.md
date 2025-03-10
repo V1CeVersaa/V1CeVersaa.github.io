@@ -12,4 +12,4 @@
 - [ ] [Programming Language: C++](./C++/index.md)
 - [ ] [Programming Language: Rust](./Rust/index.md)
 - [ ] [Programming Language: Python](./Python/index.md)
-- [ ] [Programming Language: Haskell](./Haskell/index.md)
+- [ ] [Programming Language: OCaml](./OCaml/index.md)

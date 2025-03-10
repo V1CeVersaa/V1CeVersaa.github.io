@@ -6,4 +6,5 @@
 
 ## Table of Contents
 
-- [ ] [CS106L 笔记](./CS106L/index.md)
+- [ ] [标准库简要笔记](./Standard%20Library.md)
+- [ ] [CS106L 笔记](./CS106L.md)

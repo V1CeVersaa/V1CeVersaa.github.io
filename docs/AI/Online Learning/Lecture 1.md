@@ -1,4 +1,4 @@
-# Topic 1: Online Learning and Online Convex Optimization   
+# Topic 1: Online Learning and Online Convex Optimization   ****
 
 
 

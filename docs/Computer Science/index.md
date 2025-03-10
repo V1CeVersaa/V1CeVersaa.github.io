@@ -7,19 +7,19 @@
 
 ## Table of Contents
 
-### Programming Basis
+### Programming Utils
 
-- [ ] [Programming Basis: Shell](./Programming%20Basis/Shell.md)
-- [ ] [Programming Basis: GNU Make & CMake](./Programming%20Basis/GNU%20Make.md)
-- [ ] [Programming Basis: Linux](./Programming%20Basis/Linux.md)
-- [ ] [Programming Basis: Regular Expression](./Programming%20Basis/Regular%20Expression.md)
+- [ ] [Programming Utils: Shell](./Programming%20Utils/Shell.md)
+- [ ] [Programming Utils: GNU Make & CMake](./Programming%20Utils/GNU%20Make.md)
+- [ ] [Programming Utils: Linux](./Programming%20Utils/Linux.md)
+- [ ] [Programming Utils: Regular Expression](./Programming%20Utils/Regular%20Expression.md)
 
 ### Programming Language
 
 - [ ] [Programming Language: C](./Programming%20Language/C/index.md)
 - [ ] [Programming Language: C++](Programming%20Language/C++/index.md)
 - [ ] [Programming Language: Python](./Programming%20Language/Python/index.md)
-- [ ] [Programming Language: Haskell](./Programming%20Language/Haskell/index.md)
+- [ ] [Programming Language: OCaml](./Programming%20Language/OCaml/index.md)
 
 ### Data Structure & Algorithm Analysis
 
