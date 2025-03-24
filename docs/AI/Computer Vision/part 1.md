@@ -1,5 +1,32 @@
 # Part 1: Lecture 1 to Lecture 6
 
+!!! Abstract "Table of Contents"
+
+    - [ ] [Lecture 1: Introduction](#lecture-1-introduction)
+    - [ ] [Lecture 2: Image Classification](#lecture-2-image-classification)
+    - [x] [Lecture 3: Linear Classifiers](#lecture-3-linear-classifiers)
+    - [x] [Lecture 4: Regularization & Optimization](#lecture-4-regularization-optimization)
+    - [x] [Lecture 5: Neural Networks](#lecture-5-neural-networks)
+    - [x] [Lecture 6: Backpropagation](#lecture-6-backpropagation)
+
+## Lecture 1: Introduction
+
+## Lecture 2: Image Classification
+
+## Lecture 3: Linear Classifiers
+
+损失函数告诉我们当前的分类器性能有多好。训练集的损失是每一个样本损失的平均值。
+
+$$
+L = \frac{1}{N} \sum_{i} L_i(f(x_i, W), y_i)
+$$
+
+- Softmax 损失：$L_i = -\log \left( \dfrac{\exp(f_{y_i})}{\sum_{j} \exp(f_j)} \right)$
+- Multiclass SVM 损失：给定样本 $(x_i, y_i)$，令 $s = f(x_i, W)$，则 $L_i = \sum_{j \neq y_i} \max(0, s_j - s_{y_i} + \Delta)$
+
+<img class="center-picture" src="../assets/3-3.png" width=550 />
+
+<img class="center-picture" src="../assets/3-4.png" width=550 />
 
 ## Lecture 4: Regularization & Optimization
 

@@ -11,3 +11,11 @@
 <!-- https://www.yuque.com/xianyuxuan/coding/iks452?view=doc_embed -->
 
 ## 4. Non-deterministic Finite Automata
+
+### 4.2 根据有限自动机写正则表达式
+
+### 4.3 将正则表达式转换为 NFA
+
+### 4.4 将 NFA 转换为 DFA
+
+### 4.5 DFA 最小化

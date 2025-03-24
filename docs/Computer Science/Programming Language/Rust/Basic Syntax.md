@@ -1,34 +1,58 @@
 # Basic Syntax
 
-## 1 变量
+## 一、变量
 
-### 1.1 命名惯例
+### 1 命名惯例
 
-| 条目                            | 惯例                               |
-|:------------------------------|:---------------------------------|
-| 模块 Modules                    | `snake_case`                     |
-| 类型 Types                      | `UpperCamelCase`                 |
-| 特征 Traits                     | `UpperCamelCase`                 |
-| 枚举 Enumerations               | `UpperCamelCase`                 |
-| 结构体 Structs                   | `UpperCamelCase`                 |
-| 函数 Functions                  | `snake_case`                     |
-| 方法 Methods                    | `snake_case`                     |
-| 通用构造器 General constructors    | `new` or `with_more_details`     |
-| 转换构造器 Conversion constructors | `from_some_other_type`           |
-| 宏 Macros                      | `snake_case!`                    |
-| 局部变量 Local variables          | `snake_case`                     |
-| 静态类型 Statics                  | `SCREAMING_SNAKE_CASE`           |
-| 常量 Constants                  | `SCREAMING_SNAKE_CASE`           |
-| 类型参数 Type parameters          | `UpperCamelCase`，通常使用一个大写字母: `T` |
-| 生命周期 Lifetimes                | 通常使用小写字母: `'a`，`'de`，`'src`      |
+| 条目                               | 惯例                                        |
+| :--------------------------------- | :------------------------------------------ |
+| 模块 Modules                       | `snake_case`                                |
+| 类型 Types                         | `UpperCamelCase`                            |
+| 特征 Traits                        | `UpperCamelCase`                            |
+| 枚举 Enumerations                  | `UpperCamelCase`                            |
+| 结构体 Structs                     | `UpperCamelCase`                            |
+| 函数 Functions                     | `snake_case`                                |
+| 方法 Methods                       | `snake_case`                                |
+| 通用构造器 General constructors    | `new` or `with_more_details`                |
+| 转换构造器 Conversion constructors | `from_some_other_type`                      |
+| 宏 Macros                          | `snake_case!`                               |
+| 局部变量 Local variables           | `snake_case`                                |
+| 静态类型 Statics                   | `SCREAMING_SNAKE_CASE`                      |
+| 常量 Constants                     | `SCREAMING_SNAKE_CASE`                      |
+| 类型参数 Type parameters           | `UpperCamelCase`，通常使用一个大写字母: `T` |
+| 生命周期 Lifetimes                 | 通常使用小写字母: `'a`，`'de`，`'src`       |
 
-### 1.2 变量绑定
+### 2 绑定与解构
 
-使用 `#!rust let` 关键字绑定一个变量，变量绑定默认是不可变的，如果需要可变绑定，使用 `#!rust let mut` 关键字如果后边不会改变的变量被声明为 mutable 的话，编译器会给出警告，如果在存在没有使用的变量的话也会给出警告，在变量名字之前加上单下划线就会忽略未使用的变量。
-
-### 1.3 变量解构
+使用 `#!rust let` 关键字将值绑定到一个变量上，变量绑定**默认是不可变的**，如果需要可变绑定，使用 `#!rust let mut` 关键字。
 
 使用 `#!rust let` 关键字还可以进行复杂变量的解构，这也就是从一个相对复杂的变量之中，匹配出这个变量的一部分内容。
+
+### 3 所有权与引用
+
+可变引用允许我们修改借用来的值，而不需要获取该值的所有权。首先要求我们声明变量为 `mut`，然后使用 `&mut` 关键字来创建一个可变引用。
+
+```rust
+fn main() {
+    let mut s = String::from("hello");
+
+    change(&mut s);
+}
+
+fn change(some_string: &mut String) {
+}
+```
+
+Rust 严格限制可变引用，借以有效避免数据竞争。如果以下三个条件同时满足，则会发生数据竞争：
+
+- 两个或更多的指针同时访问同一数据；
+- 至少有一个指针被用来写入数据；
+- 没有同步数据访问的机制。
+
+Rust 要求**在同一个作用域之中**，**一个数据只能有一个可变引用**，同时，**可变引用和不可变引用不能同时存在**，但是多个不可变引用同时存在是可以的。显然，Rust 通过避免第一条，通过限制可变引用的数量，以及同一时间只能有一个可变引用的规则，避免了数据竞争。
+
+<!-- 
+
 
 ### 1.4 所有权
 
@@ -280,4 +304,4 @@ fn add(x: i32, y: i32) -> i32 {
 - `todo!()` 用于标记尚未实现的代码段。如果执行该代码段，则会触发 panic；
 - `unreachable!()` 用于标记无法访问的代码段。如果执行该代码段，则会触发 panic；
 - `assert_eq!(left, right)` 用于断言两个值是否相等；
-
+ -->

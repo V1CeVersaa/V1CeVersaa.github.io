@@ -271,3 +271,4 @@ $$\ln\left(\frac{N}{N-1}\right) = \ln\left(1 + \frac{1}{N-1}\right) \geq \frac{1
 $$\widetilde{L}_T \leq \min_{i\neq N}\left(L_T(i) + 3\sqrt{T\ln\left(\frac{N}{i}\right)}\right) + \mathcal{O}(\sqrt{T\ln(\ln(N\ln N))}).$$
 
 这种使用Hedge组合算法的思想对许多其他问题都很有用。它通常是一种快速简便的方法，用于在理论上验证某些遗憾界是否可能。然而，由此产生的算法可能不那么优雅和实用。在下一讲中，我们将研究一种不同的算法，它不仅保证分位数界（实际上比这里证明的更好），而且还具有几个更有用的性质。
+ 

@@ -19,6 +19,7 @@
 - [ ] [Programming Language: C](./Programming%20Language/C/index.md)
 - [ ] [Programming Language: C++](Programming%20Language/C++/index.md)
 - [ ] [Programming Language: Python](./Programming%20Language/Python/index.md)
+- [ ] [Programming Language: Rust](./Programming%20Language/Rust/index.md)
 - [ ] [Programming Language: OCaml](./Programming%20Language/OCaml/index.md)
 
 ### Data Structure & Algorithm Analysis
@@ -31,6 +32,18 @@
 - [x] [Algorithm Analysis II](./Algorithm/Lec%204.md)
 - [x] [Algorithm Analysis III](./Algorithm/Lec%205.md)
 
+### Information Theory
+
+### Computation Theory
+
+### Priciples of Compilers
+
+- [ ] [Priciples of Compilers: Lexical Analysis](./Compilers/1%20Lex.md)
+
+### Computer Networks 
+
+!!! Info "有缘再见"
+
 ### Web
 
 - [ ] [Web: CSS](./Web/CSS.md)
@@ -41,5 +54,7 @@
 ### Blockchain
 
 ### CTF
+
+!!! Info "退役了，不再打下去了"
 
 
