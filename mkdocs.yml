@@ -72,7 +72,11 @@ nav:
                 - Quantum Machine Learning: Computer Science/Quantum Computing/QML.md
           - Principles of Compilers:
                 - Computer Science/Compilers/index.md
-                - Topic 1：词法分析: Computer Science/Compilers/1 Lex.md
+                - Topic 1：词法分析: Computer Science/Compilers/1 lex.md
+                - Topic 2：语法分析: Computer Science/Compilers/2 parse.md
+                - Topic 3：抽象语法: Computer Science/Compilers/3 ast.md
+                - Topic 4：语义分析: Computer Science/Compilers/4 semantic.md
+                - Topic 5：激活记录: Computer Science/Compilers/5 activation.md
           - Blockchain:
                 - Blockchain Basis: Computer Science/Blockchain/Blockchain.md
                 - Ethereum:
@@ -117,7 +121,7 @@ nav:
                 - ZJU SYS III-Instruction Level Parallelism: System/ZJU SYS/SysIII-ILP.md
           - Memory Hierarchy:
                 - CSAPP-The Memory Hierarchy: System/CSAPP/Chapter6.md
-                - ZJU SYS III-Memory Hierarchy: System/ZJU SYS/SysIII-Cache.md
+                - ZJU SYS III-Memory Hierarchy: System/ZJU SYS/SysIII-Memory.md
                 - OSC-Main Memory: System/OSC/topic5.md
                 - OSC-Virtual Memory: System/OSC/topic6.md
                 - OSC-Mass-Storage Structure: System/OSC/topic7.md
@@ -270,10 +274,11 @@ nav:
     - Varia:
           - Learning Plan: Varia/Learning Plan.md
           - Typst Learning Report: Varia/Typst.md
-          - Environment Configuration: Varia/Envs.md
+          - Environment & Tools: Varia/Envs.md
 
 theme:
     name: material
+    custom_dir: overrides
     language: 'zh'
     icon:
         logo: material/notebook-outline

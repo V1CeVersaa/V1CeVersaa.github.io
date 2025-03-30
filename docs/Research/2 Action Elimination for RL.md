@@ -8,6 +8,7 @@
     - Journal of Machine Learning Research Volume 7 (2006) 1079–1105
     - [Origin Paper Link](https://jmlr.csail.mit.edu/papers/volume7/evendar06a/evendar06a.pdf)
     - 文中图片均来自论文
+    - 主要看了关于 MAB 的算法，RL 的算法之后再说。
 
 ## 1 Introduction
 

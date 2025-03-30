@@ -14,5 +14,8 @@
 - [ ] [OSTEP：操作系统导论](OSTEP/OSTEP.md) < 随缘更 >
     - 对应计算机系统 II 和计算机系统 III 的操作系统部分知识，内容组织与重点和 OSC 不太一致
 - [x] [ZJU System II: Pipelined Processor](./ZJU%20SYS/SysII-Processor.md)
+- [ ] [ZJU System III: Quantitative Analysis](./ZJU%20SYS/SysIII-Quantitative.md)
+- [ ] [ZJU System III: Instruction Level Parallelism](./ZJU%20SYS/SysIII-ILP.md)
+- [ ] [ZJU System III: Memory Hierarchy](./ZJU%20SYS/SysIII-Memory.md)
 - [ ] [HDL: Verilog](./HDL/Verilog.md)
 - [ ] [ISA: RISC-V](./RISC-V/RISC-V.md)

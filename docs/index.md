@@ -17,6 +17,7 @@ Hi！欢迎来到我的笔记本，我会在这里更新我的**课程笔记**
 - [ ] 机器学习基础: [Machine Learning Basis](./AI/ML%20Basis/index.md)
 - [ ] 面向对象程序设计：[Object-Oriented Programming](./Computer%20Science/Programming%20Language/C++/index.md)
 - [ ] 在线学习引论：[Online Learning](./AI/Online%20Learning/index.md)
+- [ ] 编译原理：[Compiler](./Computer%20Science/Compilers/index.md)
 - [ ] 进行一个化的优：[Foundations of Convex Optimization](./Math/Optimization/1%20Introduction.md)
 
 ## 学不完了
@@ -32,7 +33,3 @@ Hi！欢迎来到我的笔记本，我会在这里更新我的**课程笔记**
 - [x] CPU给我干烧了: [Algorithms and Data Structure](./Computer%20Science/Algorithm/index.md)
 - [x] 拼搏百天，我要成为概率大神：[Math: Probability Basis](./Math/Probability%20Basis/index.md)
 - [x] 机器学习理论导引: [Intro to Machine Learning Theory](./AI/ML%20Theory/index.md)
-
-<!-- # Who Am I？
-
-我是浙江大学竺可桢学院图灵班的一名大一新生，主修专业为人工智能， -->

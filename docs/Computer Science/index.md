@@ -38,7 +38,11 @@
 
 ### Priciples of Compilers
 
-- [ ] [Priciples of Compilers: Lexical Analysis](./Compilers/1%20Lex.md)
+- [ ] [Priciples of Compilers: Lexical Analysis](./Compilers/1%20lex.md)
+- [ ] [Priciples of Compilers: Syntax Analysis](./Compilers/2%20parse.md)
+- [ ] [Priciples of Compilers: Abstract Syntax](./Compilers/3%20ast.md)
+- [ ] [Priciples of Compilers: Semantic Analysis](./Compilers/4%20semantic.md)
+- [ ] [Priciples of Compilers: Activation Records](./Compilers/5%20activation.md)
 
 ### Computer Networks 
 

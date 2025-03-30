@@ -51,8 +51,250 @@ Rust 严格限制可变引用，借以有效避免数据竞争。如果以下三
 
 Rust 要求**在同一个作用域之中**，**一个数据只能有一个可变引用**，同时，**可变引用和不可变引用不能同时存在**，但是多个不可变引用同时存在是可以的。显然，Rust 通过避免第一条，通过限制可变引用的数量，以及同一时间只能有一个可变引用的规则，避免了数据竞争。
 
-<!-- 
+## 二、基础类型系统
 
+### 1 基础类型
+
+1. 整数类型：
+2. 浮点类型：
+3. 布尔类型：
+4. 字符类型：
+
+### 2 复合类型
+
+**元组**：A finite heterogeneous sequence。有限长，可以包含各种类型，可以通过 index 访问。逗号分割，圆括号包裹，长度固定，在尺寸上不能增长也不能缩水，可以析构，直接使用 `.index` 访问：
+
+```rust
+let tup: (i32, f64, char) = (500, 6.4, 'x');
+
+let (x, y, z) = tup;
+println!("The value of tup.2 is: {}", tup.2);
+```
+
+`tup` 被绑定到整个元组上，因为元组被视为是一个单独的复合元素。空元组 `()` 被称为 unit，其值和类型都为 `()`。表达式如果不返回任何值，则隐式返回 `()`。
+
+**数组**：A fixed-size array。长度固定，里边类型相同，直接使用 `[type; length]` 声明，使用 `[index]` 访问，使用 `[ele1, ele2, ...]` 或者 `[exp; length]` 初始化，其中 `exp` 要么是实现了 `Copy` 特征的类型，要么是一个 `const` 类型；
+
+```rs
+let a: [i32; 5] = [1, 2, 3, 4, 5];
+let b = ["hello"; 5];
+```
+
+数组在栈中分配内存，长度固定，不能增长或缩水，如果需要动态大小的数组，可以使用 `Vec` 类型。违法的索引会引起 Runtime Error。
+
+**切片**：A dynamically-sized view into a contiguous sequence。对于定义为 `[T; n]` 的数组，其切片类型为 `[T]`，对应的内存大小在编译时期不确定，因此不能直接使用。对应的引用类型为 `&[T]`，切片引用事实上更为常见，因为其长度在编译时期确定，事实上被实现为胖指针，包含一个指向数据的指针，以及一个长度信息。
+
+### 3 结构体
+
+**结构体**：A type that is composed of other types。和元组类似，可以存储多个相关值，并且各个字段可以为不同类型，但是结构体的各个字段都是命名的。结构体使用 `struct` 关键字声明，使用花括号包裹，字段间使用逗号分割，字段名和类型间使用冒号分割。使用 `.name` 访问字段。
+
+创建实例的时候，指定结构体名称并且添加包含键值对的花括号，实例化的时候不要求顺序一致。结构体的实例必须整体标记为 `mut`，不能单独指定字段是可变的。
+
+```rs
+struct User {
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+}
+
+let mut user1 = User {
+    active: true,
+    username: String::from("someusername123"),
+    email: String::from("someone@example.com"),
+    sign_in_count: 1,
+};
+
+user1.email = String::from("anotheremail@example.com");
+```
+
+可以使用 `..another_instance` 来从其余实例中复制其余字段，但是其必须最后出现。
+
+```rs
+let user2 = User {
+    email: String::from("another@example.com"),
+    ..user1
+};
+```
+
+注意这样的更新语法使用的是赋值 `=`，因此会发生所有权转移，这样 `user1` 的 `username` 字段的所有权就转移给了 `user2`，而 `user1` 的 `email` 字段就无效了，我们因此也不能再整体使用 `user1` 了。
+
+元组结构体：
+
+单元结构体：
+
+方法：
+
+关联函数：所有在 `impl` 块中定义的函数被称为关联函数/Associated Functions，因为其与对应的类型相关。我们知道，所谓方法是以 `self` 作为第一个参数的函数，而关联函数则不以 `self` 作为第一个参数，因此常常被使用在构造器上。
+
+```rs
+impl Rectangle {
+    fn square(size: u32) -> Self {
+        Self {
+            width: size,
+            height: size,
+        }
+    }
+}
+```
+
+其中关键词 `Self` 表示类型本身，也就是 `Rectangle` 类型，我们也使用结构体名和 `::` 语法来调用对应的关联函数，比如 `#!rs let sq = Rectangle::square(3);`。
+
+### 4 枚举
+
+A type that can be any one of several variants. 如果我们想定义一个操作/类型的集合，并且每个元素都有自己的字段，那么枚举是一个很好的选择。
+
+```rs
+enum Figure {
+    Circle { radius: f64 },
+    Rectangle { width: f64, height: f64 },
+    Dot (f64, f64),
+}
+
+let c = Figure::Circle { radius: 2.0 };
+let r = Figure::Rectangle { width: 2.0, height: 3.0 };
+let d = Figure::Dot(1.0, 2.0);
+```
+
+
+
+### 5 Vector
+
+A contiguous growable array type, written as `Vec<T>`, short for ‘vector’。
+
+### 6 String
+
+A UTF-8 encoded, growable string.
+
+### 7 HashMap
+
+Rust 中的哈希映射集合类型，用于存储键值对映射关系，类型表示为 `#!rs HashMap<K, V>`，其中 `K` 是键的类型，`V` 是值的类型。
+
+```rs
+use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+
+scores.insert(String::from("Blue"), 10);
+scores.insert(String::from("Yellow"), 50);
+scores.insert(String::from("Blue"), 25);
+
+let team_name = String::from("Blue");
+let score = scores.get(&team_name).copied().unwrap_or(0);
+
+for (key, value) in &scores {
+    println!("{}: {}", key, value);
+}
+```
+
+- 需要使用 `#!rs use std::collections::HashMap;` 导入 HashMap 类型。
+- HashMap 和 Vec 类似，是同质的并且数据保存在堆上。
+- 通过 `.get()` 方法查询键值对，返回 `Option<&V>` 类型，如果键不存在，则返回 `None`，对于返回的 `Option<&V>` 类型，可以使用 `.copied()` 方法使之成为 `Option<V>` 类型，再使用 `.unwrap_or()` 方法返回默认值或者原本值。
+- 通过 `for` 循环遍历键值对，返回 `(&K, &V)` 类型。
+- 对于实现了 `Copy` 特征的类型，在插入的时候，其值会自动拷贝进 HashMap 中，对于拥有所有权的类型，其值会被移动到 HashMap 中。当引用类型被插入到 HashMap 中的时候，我们必须保证其引用的值在 HashMap 的有效期之内不会失效。
+- 如果键值对已经存在，那么插入的值会覆盖原有的值。
+
+```rs
+let mut scores = HashMap::new();
+
+scores.insert(String::from("Blue"), 10);
+scores.entry(String::from("Yellow")).or_insert(50);
+scores.entry(String::from("Blue")).or_insert(50);
+```
+
+`.entry()` 方法会返回一个 `Entry` 类型，其是一个枚举类型，包含 `Occupied` 和 `Vacant` 两种情况，分别表示键存在和键不存在。`.entry(key).or_insert(value)` 则是如果键存在，则不进行任何操作，如果键不存在，则插入对应的值，并且返回该值的可变引用。同理还有 `.entry(key).and_modify(f)` 方法，如果键存在，则执行 `f` 函数，如果键不存在，则返回 `Vacant` 类型。
+
+借用 `.entry().or_insert()` 方法返回的引用，可以修改键对应的值：
+
+```rs
+let mut scores = HashMap::new();
+
+let score = scores.entry(String::from("Blue")).or_insert(10);
+*score += 1;
+```
+
+## 三、函数，控制流与模式匹配
+
+### 1 函数
+
+### 2 控制流
+
+### 3 模式匹配
+
+`match` 允许我们将一个值和一系列的类型相匹配，类型可以是变量、字面量、通配符或者其余模式。
+
+`if let` 可以认为是 `match` 的一种语法糖，只匹配一个模式，其余模式完全忽略。运行模式也几乎一样：`if let` 接收一个模式和一个表达式，用等号分割，如果模式匹配，则进行绑定并且执行对应代码块，否则执行 `else` 分支（或者没有这个分支）。
+
+```rs
+let cfg_max = Some(3u8);
+let mut cnt = 0;
+
+match cfg_max {
+    Some(max) => println!("The maximum is configured to be {}", max),
+    _ => cnt += 1,
+}
+
+if let Some(max) = cfg_max {
+    println!("The maximum is configured to be {}", max);
+} else {
+    cnt += 1;
+}
+```
+
+`let else` 是另外一种比较新的语法。和 `if let` 不同的是，`let else` 如果模式匹配，那么直接进行绑定，没有对应的代码快，如果不匹配，那么直接进行返回。下面进行一个简单的比较：
+
+```rs
+let cfg_max = Some(3u8);
+
+let mut max = if let Some(__max) = cfg_max {
+    __max
+} else {
+    return None;
+}
+
+let Some(mut max) = cfg_max else {
+    return None;
+}
+```
+
+能写出第一种的都是神人了。`if let` 和 `let else` 都有语法简洁，缩进较少的特点，尤其 `let else` 在不匹配的时候直接终止流程，并且可以在更大作用域上绑定值，所以更加易用。
+
+## 四、特征与泛型
+
+## 五、模块系统与并发
+
+### 1 箱与包
+
+箱/Crate：Rust 编译器编译的最小单元，一个由模块组成的树状结构。箱可以包含模块，模块可能被定义在别的文件中，分为两种形式：
+
+- 二进制箱/Binary Crate：可以编译为可执行文件的程序。必须有一个 `main` 函数定义执行行为。
+- 库箱/Library Crate：不具有 `main` 函数，不编译为可执行文件，但是定义了可以在多个项目中共享的功能。
+
+箱根/Crate Root：是编译器开始编译的源文件，构成箱的根模块。
+
+包/Package：提供一组功能的一个或者多个箱。一个包包含了一个 `Cargo.toml` 文件，描述如何构建这个包。Cargo 其实就是一个包，其包含了构建代码的命令行工具（二进制箱）及其库箱。一个包可以包含任意多个二进制箱，但是至多有一个库箱。
+
+如果我们运行 `cargo new` 命令，会生成一个包，其内当然包含 `Cargo.toml` 文件，描述如何构建这个包。我们遵循如下规定：
+
+- `src/main.rs` 是与包同名的二进制箱的箱根；
+- `src/lib.rs` （如果存在）是与包同名的库箱的箱根。
+- 可以在 `src/bin` 目录下放置文件来创建多个二进制箱，每个文件都是一个独立的二进制箱。
+
+### 2 模块
+
+模块/Modules 是 Rust 中组织代码的单元，
+
+编译箱的基本规则大致如下：
+
+- 编译器首先检查箱根文件，通常是上文提到的 `src/main.rs` 或者 `src/lib.rs`；
+- 声明模块：在箱根文件中，可以声明新的模块 `mod module_name;`，编译器会在下面三个地方检查其定义：内连方式，也就是使用花括号代替分号；文件方式，会查找 `src/module_name.rs` 文件；目录方式，会查找 `src/module_name` 目录，该目录下必须有一个 `mod.rs` 文件。
+- 声明子模块：在非箱根文件中，比如在 `src/module_name.rs` 中，可以声明子模块 `mod submodule_name;`，编译器会按照上述规则递归检查其定义：内连方式同理；文件方式，会查找 `src/module_name/submodule_name.rs` 文件；目录方式，会查找 `src/module_name/submodule_name` 目录，该目录下必须有一个 `mod.rs` 文件。
+- 代码路径：比如 `crate::module_name::submodule_name::type` 表示在子模块中的 `type` 类型。
+- `use` 关键字：在作用域内，创建对应条目的快捷方式，比如 `use crate::module_name::submodule_name::type;` 表示我们引入了 `type` 类型，之后只需要写 `type` 即可。
+- `pub` 关键字：模块中的代码默认对其父模块私有，使用 `pub mod` 可以将其声明为公开的，如果要是使里面的某个条目公开，则需要在其对应的声明前面加上 `pub` 关键字。
+
+
+<!-- 
 
 ### 1.4 所有权
 

@@ -99,6 +99,7 @@ PyTorch 的核心概念分为三部分：Tensor、Autograd、nn.Module：
 
 <img class="center-picture" src="../assets/12-1.png" width=600 />
 
+对于计算图来说，定义的 Python 函数和定义的 Autograd 算子略有不同：定义算子需要首先定义一个 `Function` 的子类，然后重写 `forward` 和 `backward` 方法。
 
 ???- Info "Code: Autograd II"
 
@@ -121,6 +122,8 @@ PyTorch 的核心概念分为三部分：Tensor、Autograd、nn.Module：
     def sigmoid(x):
         return Sigmoid.apply(x)
     ```
+
+
 
 ???- Info "Code: nn.Module I"
 
