@@ -8,6 +8,8 @@ extra:
     social:
         - icon: fontawesome/brands/github
           link: https://github.com/V1CeVersaa
+    analytics:
+        provider: vercel
 
 plugins:
     - search
