@@ -1,5 +1,8 @@
 # Achieving Nearly-Optimal Regret and Sample Complexity in Dueling Bandits with Applications in Online Recommendations
 
+## 0 Most Important Things
+
+
 ## 3.2 RM is nearly-consistent with BAI in dueling bandits
 
 关键点在于：

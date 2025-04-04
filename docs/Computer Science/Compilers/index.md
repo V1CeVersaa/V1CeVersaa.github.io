@@ -10,9 +10,9 @@
 
 - [ ] [Topic 1：词法分析](./1%20lex.md)
 - [ ] [Topic 2：语法分析](./2%20parse.md)
-- [ ] [Topic 3: 抽象语法](./3%20ast.md)
-- [ ] [Topic 4: 语义分析](./4%20semantic.md)
-- [ ] [Topic 5: 激活记录](./5%20activation.md)
+- [ ] [Topic 3：抽象语法](./3%20ast.md)
+- [ ] [Topic 4：语义分析](./4%20semantic.md)
+- [ ] [Topic 5：激活记录](./5%20activation.md)
 
 ## Introduction
 

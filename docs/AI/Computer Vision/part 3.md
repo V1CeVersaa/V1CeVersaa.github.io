@@ -125,6 +125,7 @@ PyTorch 的核心概念分为三部分：Tensor、Autograd、nn.Module：
 
 
 
+
 ???- Info "Code: nn.Module I"
 
     ```py
@@ -156,6 +157,12 @@ PyTorch 的核心概念分为三部分：Tensor、Autograd、nn.Module：
         model.zero_grad()
     ```
 
+- `torch.nn.Sequential` 为顺序执行的容器，允许我们按照顺序堆叠多个网络层，自动处理层间链接；
+- 网络结构包含三层：输入层到隐藏层的线性变换，ReLU 激活函数，隐藏层到输出层的线性变换，分别使用 `torch.nn.Linear` 和 `torch.nn.ReLU` 实现；
+- 前向传播使用 `model(x)` 即可，它会自动按照顺序执行每一层；
+- 调用 `torch.nn.functional.mse_loss` 自动计算均方损失，`loss.backward()` 自动计算模型中所有参数的梯度（`requires_grad=True` 的张量）；
+- 使用 `with torch.no_grad()` 上下文管理器可以暂时禁用梯度计算，更新参数的时候禁用梯度计算，通过 `model.parameters()` 获取模型中所有参数；
+
 ???- Info "Code: nn.Module II"
 
     ```py
@@ -184,6 +191,9 @@ PyTorch 的核心概念分为三部分：Tensor、Autograd、nn.Module：
         optimizer.step()
         optimizer.zero_grad()
     ```
+
+- 使用 `torch.optim.Adam` 作为优化器，构造优化器的时候需要传入模型参数和学习率；
+- 使用 `optimizer.step()` 更新模型参数，使用 `optimizer.zero_grad()` 清零梯度；
 
 ???- Info "Code: nn.Module III"
 
@@ -219,6 +229,11 @@ PyTorch 的核心概念分为三部分：Tensor、Autograd、nn.Module：
         optimizer.step()
         optimizer.zero_grad()
     ```
+
+- PyTorch 允许通过继承 `torch.nn.Module` 来创建自定义神经网络模块，其中 `torch.nn.Module` 是所有神经网络模块的基类；
+- 自定义神经网络模块都应该实现 `forward` 方法（Should be overridden by all subclasses），`forward` 方法定义了前向传播的计算过程；
+- 自定义类的 `__init__` 方法**必须调用**父类的 `__init__` 方法，这样才能正确初始化模块系统。
+- 子模块通过属性赋值的方式自动注册，PyTorch 会追踪这些子模块的参数。
 
 ???- Info "Code: nn.Module IV"
 
@@ -260,9 +275,68 @@ PyTorch 的核心概念分为三部分：Tensor、Autograd、nn.Module：
         optimizer.zero_grad()
     ```
 
+- 更复杂一些的例子，但是原理没有变化，主要是表示我们可以在容器（比如 `torch.nn.Sequential`）中使用自定义的模块。
 
+???- Info "Code: DataLoader"
 
+???- Info "Code: Static Graphs with JIT"
 
+    ```py
+    import torch
+
+    def model(x, y, w1, w2a, w2b, prev_loss):
+        w2 = w2a if prev_loss < 5.0 else w2b
+        y_pred = x.mm(w1).clamp(min=0).mm(w2)
+        loss = (y_pred - y).pow(2).sum()
+        return loss
+
+    N, D_in, H, D_out = 64, 1000, 100, 10
+
+    x = torch.randn(N, D_in)
+    y = torch.randn(N, D_out)
+    w1 = torch.randn(D_in, H)
+    w2a = torch.randn(H, D_out)
+    w2b = torch.randn(H, D_out)
+
+    graph = torch.jit.script(model)
+
+    prev_loss = 5.0
+    learning_rate = 1e-6
+    for t in range(500):
+        loss = graph(x, y, w1, w2a, w2b, prev_loss)
+
+        loss.backward()
+        prev_loss = loss.item()
+    ```
+
+    ```py
+    import torch
+
+    @torch.jit.script
+    def model(x, y, w1, w2a, w2b, prev_loss):
+        w2 = w2a if prev_loss < 5.0 else w2b
+        y_pred = x.mm(w1).clamp(min=0).mm(w2)
+        loss = (y_pred - y).pow(2).sum()
+        return loss
+        
+    N, D_in, H, D_out = 64, 1000, 100, 10
+
+    x = torch.randn(N, D_in)
+    y = torch.randn(N, D_out)
+    w1 = torch.randn(D_in, H)
+    w2a = torch.randn(H, D_out)
+    w2b = torch.randn(H, D_out)
+
+    prev_loss = 5.0
+    learning_rate = 1e-6
+    for t in range(500):
+        loss = model(x, y, w1, w2a, w2b, prev_loss)
+
+        loss.backward()
+        prev_loss = loss.item()
+    ```
+
+TensorFlow 就不写了，现在除了初学者用一用 Keras 之外，前沿很少用了，等到之后可能接触到使用 TensorFlow 的代码的时候再速通。
 
 ## Lecture 13: Object Detection
 

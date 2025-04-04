@@ -171,7 +171,6 @@ nav:
                 - OSTEP: System/OSTEP/OSTEP.md
     - AI:
           - AI/index.md
-          - 人工智能引论: AI/AID/index.md
           - 人工智能逻辑:
                 - AI/AIL/index.md
                 - 第1章：绪论: AI/AIL/1 Introduction.md
@@ -207,7 +206,9 @@ nav:
                 - 第6章：一致性: AI/ML Theory/6 Consistency.md
                 - 第7章：收敛率: AI/ML Theory/7 Convergence.md
                 - 第8章：遗憾界: AI/ML Theory/8 Regret.md
-          - 在线学习引论: 
+          - Foundations of Machine Learning:
+                - AI/ML Foundations/index.md
+          - Intro to Online Learning: 
                 - AI/Online Learning/index.md
                 - "Topic 1: Online Learning and OCO": AI/Online Learning/Lecture 1.md
                 - "Topic 2: Multi-Armed Bandits": AI/Online Learning/Lecture 2.md

@@ -10,6 +10,8 @@
     - 文中图片均来自论文
     - 主要看了关于 MAB 的算法，RL 的算法之后再说。
 
+## 0 Most Important Things
+
 ## 1 Introduction
 
 迄今为止的大多数工作都考虑的是期望遗憾/Expected Regret，我们的工作被设置到 PAC 框架下，目标是在至少 $1 - \delta$ 的概率下，算法可以输出一个 $\epsilon$-optimal 的摇臂。我们对复杂度的主要判别准则不仅仅有准确度，还有纯探索的步数/算法需要的步数。

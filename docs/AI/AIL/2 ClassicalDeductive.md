@@ -3,7 +3,7 @@
 !!! Abstract "Table of Contents"
 
     - [ ] [1 命题逻辑](#1)
-    - [ ] [2 一阶逻辑](#2)
+    - [x] [2 一阶逻辑](#2)
 
 ## 1 命题逻辑
 
@@ -332,11 +332,96 @@ $$\begin{aligned}
 
 ### 2.4. 逻辑推论
 
-### 2.5 前束范式
+和命题逻辑对应，给定一组一节公式集合 $\Phi$ 作为前提，我们希望知道 $\Phi$ 是否在逻辑上蕴涵某个结论 $\phi$。
 
-### 2.6 消解原理
+**逻辑推论**：设 $\Phi$ 是一组一阶公式集合，$\phi$ 是一个一阶公式。逻辑推论 $\Phi \models \phi$ 成立，当且仅当对于任意非空论域 $D$ 下的赋值 $v$，如果 $\Phi^v = 1$ 则 $\phi^v = 1$。
 
-### 2.7 赫布兰德定理
+???- Info "例题"
 
-### 2.8 Prolog
+    <img class="center-picture" src="../assets/2-2.png" width=500 />
+
+**可满足性和有效性**：设 $\psi$ 是一个一阶公式。
+
+- $\psi$ 是有效的，即 $\models \psi$，当且仅当对于任何论域 $D$ 下任何赋值 $v$，$\psi^v = 1$。
+- $\psi$ 是可满足的，当且仅当存在某个论域 $D$ 下的赋值 $v$ 使得 $\psi^v = 1$。
+
+**定理**：常见的语义等价关系：
+
+- $\neg \forall x \phi \models \exists x \neg \phi$
+- $\neg \exists x \phi \models \forall x \neg \phi$
+- $\forall y \phi \models \forall x \phi_x^y$ (设 $x$ 不在 $\phi$ 中出现)
+- $\exists y \phi \models \exists x \phi_x^y$ (设 $x$ 不在 $\phi$ 中出现)
+- $\phi \land \forall x \psi \models \forall x(\phi \land \psi)$ (设 $x$ 不在 $\phi$ 中出现)
+- $\phi \land \exists x \psi \models \exists x(\phi \land \psi)$ (设 $x$ 不在 $\phi$ 中出现)
+- $\phi \lor \forall x \psi \models \forall x(\phi \lor \psi)$ (设 $x$ 不在 $\phi$ 中出现)
+- $\phi \lor \exists x \psi \models \exists x(\phi \lor \psi)$ (设 $x$ 不在 $\phi$ 中出现)
+
+### 2.5. 前束范式
+
+在将一阶逻辑的公式转化为范式的时候，我们先把其变成语义上等价的前束范式：
+
+**前束范式**：称一阶逻辑公式 $\phi$ 为前束范式，当且仅当它有如下的形式：
+
+$$Q_1x_1 \ldots Q_nx_n\phi^{\prime}$$
+
+其中的 $Q_1 \ldots Q_n$ 是 $\forall$ 或 $\exists$，并且 $\phi^{\prime}$ 不含量词。
+
+称 $Q_1x_1 \ldots Q_nx_n$ 为前束词，称 $\phi^{\prime}$ 为母式。
+
+**例子**：比如我们可以将 $[\neg \exists x_1F(x_1) \lor \forall x_2G(x_2)] \land [F(x_3) \rightarrow \forall x_4H(x_4)]$ 变换为 $\forall x_1 \forall x_2 \forall x_4\{[\neg F(x_1) \lor G(x_2)] \land [\neg F(x_3) \lor H(x_4)]\}$。
+
+### 2.6. 消解原理
+
+在一阶逻辑中，我们需要处理公式中的变元和量词，和命题逻辑类似，我们也需要将公式转化为等价的子句形式。对于包含自由变元的字句进行消解的时候，如果这些字句都是全称量化的，那么我们可以去掉量词，因此，我们先考虑不包含量词的前束范式：
+
+比如，$\{[P(x), \neg R(a, f(b, x))], [Q(x, y)]\}$ 表示的是 $\forall x \forall y \{[P(x) \lor \neg R(a, f(b, x))] \land Q(x, y)\}$。
+
+**一阶消解推演规则**：给定两个子句 $c_1 \cup \{L_1\}$ 和 $c_2 \cup \{\overline{L_2}\}$，如果其没有公共变元，并且存在一个代换 $\theta$，使得 $L_1 \theta = L_2 \theta$，那么可以推出子句 $(c_1 \cup c_2) \theta$。这时我们说 $\theta$ 是 $L_1$ 和 $L_2$ 的合一。
+
+运用这条规则，消解推演的定义和命题逻辑的相同，且 $\Phi \models_{\text{Res}} \bot$ 当且仅当 $\Phi \models_{\text{Res}} \bot$。
+
+???- Info "例题"
+
+    <img class="center-picture" src="../assets/2-3.png" width=500 />
+
+如果出现存在量化，也就是我们考虑对于包含存在量词的公式，我们之前没有办法将其转化为字句公式，那么我们可以引入斯科伦常元和斯科伦函数来解决这个问题。
+
+**斯科伦常元/斯科伦函词**：如果我们考虑 $\exists x \phi(x)$，那么 $\phi$ 是可满足的，当且仅当对于某一个具体的 $a$，$\phi(a)$ 是可满足的。在这里，$a$ 是未出现过的新常元，称为**斯科伦常元**。另外，对于 $\forall x \exists y \phi(x, y)$，我们可以用 $f(x)$ 来代替 $y$，这样，$\forall x \exists y \phi(x, y)$ 是可满足的，当且仅当 $\forall x \phi(x, f(x))$ 是可满足的。在这里，$f$ 是未出现过的新函词，称为**斯科伦函词**。
+
+**斯科伦化**：把 $\forall x_1 \forall x_2 \ldots \forall x_n \exists y \phi(x_1, x_2, \ldots, x_n, y)$ 变换为 $\forall x_1 \forall x_2 \ldots \forall x_n \phi(x_1, x_2, \ldots, x_n, f(x_1, x_2, \ldots, x_n))$。
+
+如果 $\phi$ 是原有公式，$\phi^{\prime}$ 是包含斯科伦化的子句，那么 $\phi$ 在逻辑上不等值于 $\phi^{\prime}$。不过，$\phi$ 是可满足的，当且仅当 $\phi^{\prime}$ 是可满足的。这也是消解所真正需要的。
+
+**定理**：这里 $a$ 是 $\phi$ 中未出现过的新常元，$f$ 是 $\phi$ 中未出现过的新 $n$ 元函词。
+
+1. $\exists x \phi$ 是可满足的，当且仅当 $\phi_a^{x}$ 是可满足的；
+2. $\forall x_1 \forall x_2 \ldots \forall x_n \exists y \phi$ 是可满足的，当且仅当 $\forall x_1 \forall x_2 \ldots \forall x_n \phi_{f(x_1, x_2, \ldots, x_n)}^{y}$ 是可满足的。
+
+???- Info "证明"
+
+    第一部分证明是简单的。对于第二部分，我们仅仅考虑 $n = 1$ 的情况，更一般的情况同理可证。
+
+    设 $v$ 是以某个非空集合 $D$ 为论域的赋值，使得 $\forall x \exists y \phi$ 为真。那么，对于任意 $a \in D$，$(\exists y \phi)^{v/a} = 1$。从而，对于每一 $a$，存在 $a^{\prime} \in D$，使得 $\phi^{v(x/a, y/a^{\prime})} = 1$。现作 $D$ 上的函数 $f$，使得对于每一 $a \in D$，$f(a)$ 为使 $\phi^{v(x/a, y/a^{\prime})} = 1$ 的 $a^{\prime}$ 中的一个。考虑论域 $D$ 下的赋值 $v^{\prime}$，使得 $f^{v^{\prime}} = f$，而对其他符号，$v^{\prime}$ 与 $v$ 相同。显然，对于任意 $a \in D$，$\phi^{v^{\prime}(x/a, y/f(a))} = 1$。于是，我们有 $(\phi_{f(x)}^{y})^{v^{\prime}/a} = 1$ 对于任意 $a \in D$ 均成立，即 $\forall x \phi_{f(x)}^{y}$ 可满足。
+
+    反之，如果有以 $D$ 为论域的赋值 $v$ 使得 $(\forall x \phi_{f(x)}^{y})^{v} = 1$，设 $f^v = f$ 为 $D$ 上的函数，那么，对于每一 $a \in D$，$(\phi_{f(x)}^{y})^{v(x/a)} = 1$ 或 $\phi^{v(x/a, y/f(a))} = 1$。换言之，对于每一 $a \in D$，$(\exists y \phi)^{v(x/a)} = 1$。从而，我们有 $(\forall x \exists y \phi)^{v} = 1$，即 $\forall x \exists y \phi$ 可满足。
+
+### 2.7. 赫布兰德定理
+
+**赫布兰德域**：给定一个子句集合 $S$，该集合的赫布兰德域（简称 H-域）是所有基项的集合：集合 $H$ 称为子句集 $S$ 的 H-域，如果 $H = \cup_{i=0}^{\infty}H_i$。其中，$H_i$ 递归地确定如下：
+
+- $H_0 = \begin{cases}
+\{a\}, & \text{当}S\text{中无任何常元出现时}，\\
+\{c \mid c\text{为}S\text{中出现的常元}\}, & \text{否则}.
+\end{cases}$
+- $H_{i+1} = H_i \cup \{f(t_1,\ldots,t_n) \mid t_1,\ldots,t_n \in H_i, f\text{为}S\text{中出现的函数}\}$.
+
+**赫布兰德基底**：给定一个子句集合 $S$，该集合的赫布兰德基底（简称 H-基底）是所有形如 $c\theta$ 的基原子公式的集合，其中 $c \in S$，$\theta$ 给 $c$ 中的变元指派 H-域中的元素。
+
+???- Info "例题"
+
+    <img class="center-picture" src="../assets/2-4.png" width=500 />
+
+**赫布兰德定理**：设 $S$ 是子句集。$S$ 是可满足的当且仅当它的 H-基底是可满足的。
+
+### 2.8. Prolog
 
