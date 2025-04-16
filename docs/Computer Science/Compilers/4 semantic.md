@@ -197,7 +197,98 @@ type b = {i: a}
 
 ### 2.3 Tiger 类型检查：Formalization
 
+类型语境/Typing Context：我们将符号表写成 $\Gamma$，$\Gamma = x_1: \tau_1, x_2: \tau_2, \cdots, x_n: \tau_n$。
+
+类型判断/Typing Judgement：$\Gamma \vdash e : \tau$ 表示表达式 $e$ 的类型是 $\tau$；
+
+类型规则/Typing Rules：每一个类型规则都形如 $\dfrac{\mathrm{premise1}, \mathrm{premise2}, \cdots}{\mathrm{conclusion}}$，表示如果前提成立，那么结论成立。
+
 ### 2.4 Tiger 类型检查：Type Checking
 
+对于 Tiger 来讲，类型检查需要维护两个主要的环境（本质上是符号表）：
 
+- 类型环境/Type Environment：把类型符号映射到其表示的具体类型对应的数据结构；
+- 值环境/Value Environment：存储变量名称到其类型的映射和函数名称到参数类型和返回值类型的映射。
 
+类型检查组合地实现下面几件事：
+
+- 将复杂的表达式分解为其他直接的子表达式；
+- 对每一个子表达式递归的进行类型检查，确定其类型；
+- 确保顶级表达式本身可以被类型检查，并且类型正确。
+
+在整个过程中，通过维护环境来记录/查找变量或者函数的类型。
+
+每一个类型规则都对应着类型检查器的一部分：
+
+<img class="center-picture" src="../assets/4-6.png" width=550 />
+
+类型检查本质上其实是对抽象语法树递归的遍历，处理每一个节点的时候，执行下面步骤：
+
+- 检查当前节点的类型；
+- 递归检查当前节点的子节点；
+- 根据当前节点检查得到的类型和子节点检查得到的类型，应用合适的类型规则；
+- 检查类型是否兼容，如果发现类型错误，则报告错误。
+
+尽管我们是自顶向下地遍历抽象语法树，类型信息从底向上进行传播。
+
+<img class="center-picture" src="../assets/4-7.png" width=550 />
+
+现实世界的类型系统复杂的多，举几个很坑爹的例子：
+
+- 互递归函数/Mutually Recursive Functions：Functions that call each other；
+
+    ```ocaml
+    (* Check if a non-negative integer is even *)
+    let rec is_even n = if n = 0 then true else is_odd (n - 1)
+
+    (* Check if a non-negative integer is odd *)
+    and is_odd n = if n = 0 then false else is_even (n - 1)
+    ```
+
+- 多态/Polymorphism：Generic types and functions；
+
+    ```ocaml
+    (* 定义一个交换元组元素的函数 *)
+    (* 'a 和 'b 是类型变量，代表任意类型 *)
+    let swap (x : 'a) (y : 'b) : ('b * 'a) = (y, x)
+
+    (* 使用不同类型的元组调用 swap *)
+    let () =
+        let pair_integer = (1, 2) in
+        let swapped_integer = swap (fst pair_integer) (snd pair_integer) in
+        Printf.printf "Swapped (%d, %d) -> (%d, %d)\n" (fst pair_integer) (snd pair_integer) (fst swapped_integer) (snd swapped_integer);
+
+        let pair_string_float = ("hello", 3.14) in
+        let swapped_string_float = swap (fst pair_string_float) (snd pair_string_float) in
+        Printf.printf "Swapped (%s, %.2f) -> (%.2f, %s)\n" (fst pair_string_float) (snd pair_string_float) (fst swapped_string_float) (snd swapped_string_float);
+    ```
+
+- 子类型/Subtyping：Type hierarchies and inheritance；
+
+    ```ocaml
+    (* 定义基类 animal *)
+    class animal (name : string) = object (self)
+        val name = name
+        method get_name = name
+        method make_sound = "..."
+    end
+
+    (* 定义子类 dog，继承自 animal *)
+    class dog (name : string) = object (self)
+        inherit animal name
+        method! make_sound = "Woof!"  (* 覆盖父类方法 *)
+        method wag_tail = true       (* 新增的方法 *)
+    end
+
+    (* 子类型多态使用示例 *)
+    let () =
+        let a = new animal "Generic" in
+        let d = new dog "Buddy" in
+        
+        (* 上行转换: dog 可以被视为 animal *)
+        let animals = [a; (d :> animal)] in
+        
+        List.iter (fun a -> 
+            Printf.printf "%s says %s\n" a#get_name a#make_sound
+        ) animals
+    ```
