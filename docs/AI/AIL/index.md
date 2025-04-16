@@ -7,8 +7,15 @@
 
 ## Table of Contents
 
-- [x] [第一部分：绪论](./1%20Introduction.md)
-- [ ] [第二部分：经典演绎逻辑](./2%20ClassicalDeductive.md)
-- [ ] [第三部分：非单调逻辑](./3%20Non-monotonic.md)
-- [ ] [第四部分：基于论证的逻辑](./4%20Argumentation-based.md)
-- [ ] [第五部分：不确定推理](./5%20Uncertainty.md)
+- [x] [第一节：绪论](./1%20Introduction.md)
+- [ ] [第二节：命题逻辑](./2%20Proposition.md)
+- [ ] [第三节：一阶逻辑](./3%20One%20Order.md)
+- [ ] [第四节：描述逻辑](./4%20Description.md)
+- [ ] [第五节：缺省逻辑](./5%20Default.md)
+- [ ] [第六节：回答集编程](./6%20Answer%20Set.md)
+- [ ] [第七节：经典抽象论辩理论](./7%20Classical%20Debate.md)
+- [ ] [第八节：结构化论辩理论](./8%20Structured%20Debate.md)
+- [ ] [第九节：概率理论与贝叶斯网络](./9%20Bayesian.md)
+- [ ] [第十节：归纳推理与归纳逻辑编程](./10%20Inductive.md)
+- [ ] [第十一节：概率论辩](./11%20Probabilistic%20Debate.md)
+

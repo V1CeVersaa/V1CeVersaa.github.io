@@ -8,8 +8,41 @@ extra:
     social:
         - icon: fontawesome/brands/github
           link: https://github.com/V1CeVersaa
-    analytics:
-        provider: vercel
+    # analytics:
+    #     provider: vercel
+
+theme:
+    name: material
+    # custom_dir: overrides
+    language: 'zh'
+    icon:
+        logo: material/notebook-outline
+    features:
+        - content.code.annotate
+        - content.action.edit
+        - toc.follow
+        - navigation.tracking
+        - navigation.tabs
+        - navigation.prune
+        - navigation.indexes
+        - navigation.top
+        - search.share
+        - search.highlight
+        - search.suggest
+    font: false
+    palette:
+        - media: '(prefers-color-scheme: light)'
+          scheme: default
+          primary: brown
+          accent: brown
+          toggle:
+              icon: material/weather-sunny
+              name: Switch to dark mode
+        - media: '(prefers-color-scheme: dark)'
+          scheme: slate
+          toggle:
+              icon: material/weather-night #图标，月亮
+              name: Switch to light mode
 
 plugins:
     - search
@@ -68,10 +101,6 @@ nav:
                 - Algorithms I: Computer Science/Algorithm/Lec 3.md
                 - Algorithms II: Computer Science/Algorithm/Lec 4.md
                 - Algorithms III: Computer Science/Algorithm/Lec 5.md
-          - Quantum Computing:
-                - Computer Science/Quantum Computing/index.md
-                - Quantum Basis: Computer Science/Quantum Computing/basis.md
-                - Quantum Machine Learning: Computer Science/Quantum Computing/QML.md
           - Principles of Compilers:
                 - Computer Science/Compilers/index.md
                 - Topic 1：词法分析: Computer Science/Compilers/1 lex.md
@@ -79,6 +108,10 @@ nav:
                 - Topic 3：抽象语法: Computer Science/Compilers/3 ast.md
                 - Topic 4：语义分析: Computer Science/Compilers/4 semantic.md
                 - Topic 5：激活记录: Computer Science/Compilers/5 activation.md
+          - Quantum Computing:
+                - Computer Science/Quantum Computing/index.md
+                - Quantum Basis: Computer Science/Quantum Computing/basis.md
+                - Quantum Machine Learning: Computer Science/Quantum Computing/QML.md
           - Blockchain:
                 - Blockchain Basis: Computer Science/Blockchain/Blockchain.md
                 - Ethereum:
@@ -173,11 +206,17 @@ nav:
           - AI/index.md
           - 人工智能逻辑:
                 - AI/AIL/index.md
-                - 第1章：绪论: AI/AIL/1 Introduction.md
-                - 第2章：经典演绎逻辑: AI/AIL/2 ClassicalDeductive.md
-                - 第3章：非单调逻辑: AI/AIL/3 Non-monotonic.md
-                - 第4章：基于论证的逻辑: AI/AIL/4 Argumentation-based.md
-                - 第5章：不确定推理: AI/AIL/5 Uncertainty.md
+                - 第1节：绪论: AI/AIL/1 Introduction.md
+                - 第2节：命题逻辑: AI/AIL/2 Proposition.md
+                - 第3节：一阶逻辑: AI/AIL/3 One Order.md
+                - 第4节：描述逻辑: AI/AIL/4 Description.md
+                - 第5节：缺省逻辑: AI/AIL/5 Default.md
+                - 第6节：回答集编程: AI/AIL/6 Answer Set.md
+                - 第7节：经典抽象论辩理论: AI/AIL/7 Classical Debate.md
+                - 第8节：结构化论辩理论: AI/AIL/8 Structured Debate.md
+                - 第9节：概率理论与贝叶斯网络: AI/AIL/9 Bayesian.md
+                - 第10节：归纳推理与归纳逻辑编程: AI/AIL/10 Inductive.md
+                - 第11节：概率论辩: AI/AIL/11 Probabilistic Debate.md
           - 机器学习基本知识:
                 - AI/ML Basis/index.md
                 - 第1章：绪论: AI/ML Basis/1 Intro.md
@@ -212,13 +251,17 @@ nav:
                 - AI/Online Learning/index.md
                 - "Topic 1: Online Learning and OCO": AI/Online Learning/Lecture 1.md
                 - "Topic 2: Multi-Armed Bandits": AI/Online Learning/Lecture 2.md
-          - 机器学习算法的数学分析:
+          - Mathematical Analysis of Machine Learning Algorithms:
                 - AI/Math Analysis/index.md
                 - 1 Introduction: AI/Math Analysis/1 Intro.md
                 - 2 Probability Inequalities: AI/Math Analysis/2 Probability.md
                 - 3 Uniform Convergence: AI/Math Analysis/3 Convergence.md
                 - 4 Empirical Covering Number Analysis: AI/Math Analysis/4 Covering.md
                 - 5 Covering Number Estimates: AI/Math Analysis/5 Estimates.md
+          - Foundations of Reinforcement Learning:
+                - AI/RL Theory/index.md
+          - Introduction to Casual Inference:
+                - AI/Causal Inference/index.md
           - 机器学习框架:
                 - AI/ML Framework/index.md
           - Deep Learning for NLP:
@@ -274,43 +317,12 @@ nav:
           - 1 Dueling Bandits Near Optimal: Research/1 Dueling Bandits Near Optimal.md
           - 2 Action Elimination for RL: Research/2 Action Elimination for RL.md
           - 3 Dueling Bandits with Weak Regret: Research/3 Dueling Bandits with Weak Regret.md
+          - 4 Beat the Mean Bandit: Research/4 Beat the Mean Bandit.md
+          - 5 Maximum Selection and Ranking: Research/5 Maximum Selection and Ranking under Noisy Comparisons.md
     - Varia:
           - Learning Plan: Varia/Learning Plan.md
           - Typst Learning Report: Varia/Typst.md
           - Environment & Tools: Varia/Envs.md
-
-theme:
-    name: material
-    custom_dir: overrides
-    language: 'zh'
-    icon:
-        logo: material/notebook-outline
-    features:
-        - content.code.annotate
-        - content.action.edit
-        - toc.follow
-        - navigation.tracking
-        - navigation.tabs
-        - navigation.prune
-        - navigation.indexes
-        - navigation.top
-        - search.share
-        - search.highlight
-        - search.suggest
-    font: false
-    palette:
-        - media: '(prefers-color-scheme: light)'
-          scheme: default
-          primary: brown
-          accent: brown
-          toggle:
-              icon: material/weather-sunny
-              name: Switch to dark mode
-        - media: '(prefers-color-scheme: dark)'
-          scheme: slate
-          toggle:
-              icon: material/weather-night #图标，月亮
-              name: Switch to light mode
 
 markdown_extensions:
     - toc:

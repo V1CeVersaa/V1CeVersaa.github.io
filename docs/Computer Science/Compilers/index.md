@@ -2,9 +2,9 @@
 
 !!! Abstract "「大二春夏」"
 
-    这是我在修读浙江大学《编译原理》课程时记录的课程笔记。授课老师为 [姚培森](https://rainoftime.github.io/) 教授
+    这是我在修读浙江大学《编译原理》课程时记录的课程笔记。授课老师为 [姚培森](https://rainoftime.github.io/) 教授。
 
-
+    上得很爽！但是备考很刺激。准备明年修姚老师的《编程语言原理》了。
 
 ## Table of Contents
 
