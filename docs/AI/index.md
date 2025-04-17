@@ -8,7 +8,9 @@
 - [ ] [Foundations of Machine Learning](./ML%20Foundations/index.md)
 - [ ] [Mathematical Analysis of Machine Learning Algorithms](./Math%20Analysis/index.md)
 - [ ] [Introduction to Online Learning](./Online%20Learning/index.md)
+- [ ] [Introduction to Reinforcement Learning](./RL%20Basics/index.md) <马上开坑>
 - [ ] [Foundations of Reinforcement Learning](./RL%20Theory/index.md) <马上开坑>
 - [ ] [Introduction to Causal Inference](./Causal%20Inference/index.md) <马上开坑>
 - [ ] [基于深度学习的计算机视觉](./Computer%20Vision/index.md)
 - [ ] [基于深度学习的自然语言处理](./CS224N/index.md)
+- [ ] [Deep Reinforcement Learning](./Deep%20Reinforcement%20Learning/index.md) <马上开坑>

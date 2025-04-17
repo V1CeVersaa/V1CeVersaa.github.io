@@ -1,6 +1,6 @@
 # Topic 4：语义分析
 
-语义分析部分会将变量的定义与它们的各个使用联系起来，检查每一个表达式是否有正确的类型，并将抽象语法转换成更简单的、适合于生成机器代码的表示。广义地说，语义分析部分通过各种程序表示分析程序，一般包括控制流图/Control Flow Graph、静态单赋值/Static Single Assignment、程序依赖图/Program Dependence Graph 等。典型的语义分析任务包括类型检查/Type Checking、死代码消除/Dead Code Elimination，代码生成/Code Generation 等。
+语义分析/Semantic Analysis 会将变量的定义与它们的各个使用联系起来，检查每一个表达式是否有正确的类型，并将抽象语法转换成更简单的、适合于生成机器代码的表示。广义地说，语义分析部分通过各种程序表示分析程序，一般包括控制流图/Control Flow Graph、静态单赋值/Static Single Assignment、程序依赖图/Program Dependence Graph 等。典型的语义分析任务包括类型检查/Type Checking、死代码消除/Dead Code Elimination，代码生成/Code Generation 等。
 
 我们在编译原理课上一般讲的都是狭义的语义分析，包括通过抽象语法树确定一些静态属性，比如作用域与名字的可见性，变量、函数和表达式的类型检查。也将 AST 转化成中间代码，这在下下章节中会详细介绍。
 
