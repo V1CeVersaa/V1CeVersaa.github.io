@@ -5,7 +5,7 @@
     - [ ] [Lecture 12: Deep Learning Software](#lecture-12-deep-learning-software)
     - [x] [Lecture 13: Object Detection](#lecture-13-object-detection)
     - [x] [Lecture 14: Object Detectors](#lecture-14-object-detectors)
-    - [ ] [Lecture 15: Image Segmentation](#lecture-15-image-segmentation)
+    - [x] [Lecture 15: Image Segmentation](#lecture-15-image-segmentation)
     - [ ] [Lecture 16: Recurrent Neural Networks](#lecture-16-recurrent-neural-networks)
     - [ ] [Lecture 17: Attention](#lecture-17-attention)
     - [ ] [Lecture 18: Vision Transformers](#lecture-18-vision-transformers)
@@ -433,13 +433,132 @@ R-CNN 的训练：打标签，对每一个区域提议分类为 Postive、Negati
 
 <img class="center-picture" src="../assets/14-0.png" width=600 />
 
-对于对 RoL 的裁剪和缩放，我们需要回忆感受野的概念，注意到对于输出的图片的每一个点，其都和输入图片的感受野的某一个点有着一定的对应关系，于是我们可以建立起输入坐标系统和输出坐标系统之间的对应关系，来将特征图中的 RoL 反过来对应输入图片的边界框：
+对于对 RoI 的裁剪和缩放，我们起码应该将特征图上不同大小的 RoI 缩放到相同的大小。先回忆感受野的概念，注意到对于输出的图片的每一个点，其都和输入图片的感受野的某一个点有着一定的对应关系，于是我们可以建立起输入坐标系统和输出坐标系统之间的对应关系，来将特征图中的 RoI 反过来对应输入图片的边界框：
 
 <img class="center-picture" src="../assets/14-1.png" width=600 />
 
-RoL Pool：      
+处理特征图的方法是 RoI Pool 和 RoI Align，两个方法是相辅相成的：
+
+- RoI Pool：首先，输入图像的 RoI 经过骨干 CNN 网络得到特征图，对应的特征图上的 RoL，值得注意的是，这个 RoI 的坐标很可能是浮点数，那么先将其量化为整数/Snap to Grid Cells。如果我们需要一个 $2 \times 2$ 的特征图，那么我们将其大致划分为四个大小相等的子区域，然后对每一个子区域进行最大池化/Max Pooling，得到四个值，然后将其拼接成一个 $2 \times 2$ 的特征图。
+- RoI Align：RoL Pool 的问题在于 Snap to Grid Cells 的量化操作会引起错位/Misalignment，并且不同大小的子区域很奇怪，这俩操作会引起提取的特征和与原始的 RoI 的精确位置之间产生偏差，失去精确的空间信息。RoL Align 的方法是直接计算输入图片的 RoI 在特征图上的精确坐标，分成固定数量的、大小完全相等的子区域；再在子区域内进行按照固定数量规则的采样，对采样点使用双线性插值/Bilinear Interpolation 得到特征值，对每一个子区域的特征值进行最大池化/Max Pooling，得到最终的特征值。
+
+<img class="center-picture" src="../assets/14-2.png" alt="RoI Pool" width=600 />
+
+<img class="center-picture" src="../assets/14-3.png" alt="RoI Align" width=600 />
+
+<img class="center-picture" src="../assets/14-4.png" alt="RoI Align" width=600 />
+
+Fast R-CNN 的方法非常美妙，训练时长减少到了 Slow R-CNN 的十分之一，测试时间甚至到了二十分之一的量级，但是还不够美妙：一个数据是 Fast R-CNN 的测试时间为 2.3 秒，但是除了 Region Proposal 的时间只有 0.32 秒，运行时间受到了 Region Proposal 的限制。问题很直接：Region Proposal 是跑在 CPU 上的，没有充分并行化。当然，将其实现为神经网络的一个组件，使用 GPU 加速，可以显著提升速度。
+
+我们这里研究在 NIPS'2015 发表的 Faster R-CNN，在网络中插入了 Region Proposal Network/RPN，直接将骨干 CNN 输出的特征图作为输入，预测出区域提议。这样，区域提议步骤就变得可学习得了，并且可以在 GPU 上高效运行了。
+
+首先，特征图上的每一个点都对应着输入图像的一个空间位置，这实际上对应着一个感受野的中心。对特征图上的每一个空间位置可以引入锚框/Anchor Box，这是一组具有不同尺寸的宽高比的边界框，其中心位置都对齐到原图上的一个点。RPN 的第一个任务是对每一个锚框进行二分类，判断其是否包含物体，这部分使用一个卷积层，在这里是 512 个输入通道，2 个输出通道，输出维度为 $2K \times 5 \times 6$，其中 $K$ 是每一个特征图的点上的锚框数量。
+
+<img class="center-picture" src="../assets/14-5.png" width=600 />
+
+在训练过程中，还将锚框和 Ground Truth 的 IoU 作为监督信号，来训练 RPN 的参数，只有正例才会计入边界框回归的损失函数。
+
+因此我们在训练的时候需要对下面四个损失进行训练：
+
+- **RPN classification**：区分锚框是物体还是背景；
+- **RPN regression**：学习将正样本锚框调整到更接近 Ground Truth 的边界框（可以看 Lecture 13 的边界框回归）；
+- **Object classification**：RPN 提出的区域提议进行具体的物体类别分类；
+- **Object regression**：进一步微调 RPN 提出的区域提议的边界框，使其更精确/predict transform from proposal box to object box。
+
+<img class="center-picture" src="../assets/14-6.png" width=600 />
+
+Faster R-CNN 是一个两阶段的检测器，第一阶段是运行骨干网络和 RPN，生成候选区域提议，第二部分是对这些提议区域，使用 RoI Pooling/RoI Align 提取特征，然后进行分类和回归。
+
+问题：现实场景中物体具有多种尺寸，因此需要要求让目标检测器具有尺度不变性。解决方法之一是图像金字塔/Image Pyramid。这是个经典的想法，方法是将图片缩放到不同的尺寸，然后分别进行目标检测，最后将结果融合起来。问题是过于昂贵，在不同尺度上并不共享任何计算。
+
+<img class="center-picture" src="../assets/14-7.png" width=600 />
+
+另一个方法是利用 CNN 固有的多尺度特征，现代 CNN 本身就包含多个阶段，每一个阶段输出不同分辨率的特征图，因此可以利用这一点，在不同层级的特征图上附加一个独立的检测器，不同层级的检测器负责检测不同尺度的物体。问题在于早期层级的特征图上缺乏高层语义信息，虽然其分辨率高，细节丰富，但是语义信息不足。
+
+<img class="center-picture" src="../assets/14-8.png" width=600 />
+
+解决方法是特征金字塔网络/Feature Pyramid Network/FPN，方法是 Add Top Down Connection/从上往下通过上采样/Upsample 在保持高分辨率的同时增加语义信息，再将其和当前层级的语义进行融合。这就很棒了，因为其具有高效的多尺度特征表示，使得所有层级都可以享受整个网络的语义信息。
+
+<img class="center-picture" src="../assets/14-9.png" width=600 />
+
+另一个问题就是：我们真的需要 Faster R-CNN 的第二阶段吗？单阶段检测器/Single-Stage Detectors 中的 RetinaNet 和 FCOS 就是很好的例子。
+
+RetinaNet 和两阶段检测器的先提议再分类/回归不同，单阶段检测器和 RPN 类似，但是与分类为是不是物体相反，RetinaNet 是直接在骨干网络输出的密集特征图上直接预测物体类别和边界框。假设我们有 $C$ 个类别，之前的还是不变，那么锚框的分类数就有 $2K \times (C + 1) \times 5 \times 6$ 个，锚框的回归数就有 $4K \times 5 \times 6$ 个。
+
+<img class="center-picture" src="../assets/14-10.png" width=600 />
+
+但是单阶段检测器面临着一个主要问题是：极端的类别不平衡/Class Imbalance，绝大多数锚框都是背景，只有极少数物品属于前景。解决方法是使用新的损失函数，Focal Loss，让训练过程聚焦于难以分类的样本。详情见论文。同样，RetinaNet 也使用 FPN。
+
+<img class="center-picture" src="../assets/14-11.png" width=600 />
+
+FCOS 是一种不基于锚框的检测器。方法是直接将特征图上的每一个点分类为正样本或者负样本，如果其落在某一个物体的真实边界框内部，那么就认为其是正样本，否则为负样本。也训练一个独立的类别分类器，来预测每一个点对每一个类别的分数。
+
+对于正样本，使用 L2 损失回归其到真实边界框的四个边界的距离，输出维度为 4。同时使用 Centerness/中心度分数，衡量其距离其负责的物体的中心有多远。
+
+$$\mathrm{Centerness} = \sqrt{\frac{\min(L, R)}{\max(L, R)} \times \frac{\min(T, B)}{\max(T, B)}}.$$
+
+<img class="center-picture" src="../assets/14-12.png" width=600 />
+
+<img class="center-picture" src="../assets/14-13.png" width=600 />
 
 ## Lecture 15: Image Segmentation
+
+语义分割：将每一个像素分类为不同的类别，不区分物体实例，只关心像素。
+
+古老/Naive 的想法是使用滑动窗口，但是效率非常低，不能在相互覆盖的小块间复用特征。现代的方法是使用全卷积网络/Fully Convolutional Network/FCN 以及 argmax：
+
+<img class="center-picture" src="../assets_1/15-1.png" width=600 />
+
+但是会出现两个问题：
+
+- 一个是有效感受野的大小会随着卷积层数的增加线性增长，会导致分辨率下降，分割结果会变得模糊；
+- 另一个问题就是对高分辨率的卷积其实非常昂贵，经典的网络（比如 ResNet）积极的进行下采样。
+
+解决方法之一是先进行下采样再进行**上采样/Upsampling**，问题此时变成了：既然我们可以通过池化和带步长的卷积来下采样，那么上采样应该怎么做？
+
+<img class="center-picture" src="../assets_1/15-2.png" width=600 />
+
+反池化/Unpooling：将每一个小块池化后的值赋给这个小块内的每一个值：
+
+<img class="center-picture" src="../assets_1/15-3.png" width=600 />
+
+也有一种方法是在最大池化的时候记住最大值的位置，再在上采样的时候将最大值的位置填回去：
+
+<img class="center-picture" src="../assets_1/15-4.png" width=600 />
+
+同理还有双线性插值/Bilinear Interpolation 以及双三次插值/Bicubic Interpolation：
+
+<img class="center-picture" src="../assets_1/15-5.png" width=600 />
+
+<img class="center-picture" src="../assets_1/15-6.png" width=600 />
+
+Transposed Convolution/反卷积/转置卷积是一种可学习的上采样方法，其本质是卷积层的转置：
+
+<img class="center-picture" src="../assets_1/15-7.png" width=600 />
+
+<img class="center-picture" src="../assets_1/15-8.png" width=600 />
+
+<img class="center-picture" src="../assets_1/15-9.png" width=600 />
+
+回顾计算机视觉的任务：分类、语义分割、目标检测、实例分割。语义分割会将相邻的同类实例合并在一起，并且不区分 Things 和 Stuff，目标检测检测目标实例，区分 Things 和 Stuff，但是只给出框框。实例分割会检测出图片中的所有物体，将 Things 的每一个像素鉴定出属于哪一个物体。方法是执行目标检测，然后预测出一个 Segmentation Mask。
+
+<img class="center-picture" src="../assets_1/15-10.png" width=600 />
+
+对应地，我们实现了 Mask R-CNN，其在 Faster R-CNN 的基础上，添加了一个 Mask Prediction 分支，来预测每一个 RoI 的二值掩码。
+
+比实例分割更丰富的任务是全景分割/Panoptic Segmentation，其旨在统一实例分割和语义分割，目标是为图像中的每一个像素分配一个语义标签，同时区分不同的物体实例。
+
+<img class="center-picture" src="../assets_1/15-11.png" width=600 />
+
+另一个任务是 Human Keypoint Detection/人体关键点检测，也称为 Pose Estimation/姿态估计，目标是通过定位一组关键点来描述人体姿态。
+
+<img class="center-picture" src="../assets_1/15-12.png" width=600 />
+
+对神经网络的想法也不复杂，在 Mask R-CNN 的基础上加一个关键点预测分支即可。
+
+更一般的想法是在 Faster/Mask R-CNN 上加入 Per-Region Heads，其在 RoI Pool 和 RoI Align 之后接收特征并且做出预测。我们通过修改任务头来扩展功能，比如 Dense Captioning/密集字幕，其目标是预测图像中所有可能的物体实例的密集描述；3D Shape Prediction/3D 形状预测，其目标是预测图像中物体的 3D 形状……等等。
+
+<img class="center-picture" src="../assets_1/15-13.png" width=600 />
 
 ## Lecture 16: Recurrent Neural Networks
 

@@ -17,7 +17,7 @@ Hi！欢迎来到我的笔记本，我会在这里更新我的**课程笔记**
 - [ ] 机器学习基础: [Machine Learning Basis](./AI/ML%20Basis/index.md)
 - [ ] 面向对象程序设计：[Object-Oriented Programming](./Computer%20Science/Programming%20Language/C++/index.md)
 - [ ] 在线学习引论：[Online Learning](./AI/Online%20Learning/index.md)
-- [ ] 编译原理：[Compiler](./Computer%20Science/Compilers/index.md)
+- [ ] 编译原理：[Principles of Compilers](./Computer%20Science/Compilers/index.md)
 - [ ] 进行一个化的优：[Foundations of Convex Optimization](./Math/Optimization/1%20Introduction.md)
 
 ## 学不完了

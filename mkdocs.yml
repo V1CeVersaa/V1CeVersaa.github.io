@@ -8,12 +8,12 @@ extra:
     social:
         - icon: fontawesome/brands/github
           link: https://github.com/V1CeVersaa
-    analytics:
-        provider: vercel
+    # analytics:
+        # provider: vercel
 
 theme:
     name: material
-    custom_dir: overrides
+    # custom_dir: overrides
     language: 'zh'
     icon:
         logo: material/notebook-outline
@@ -77,13 +77,12 @@ nav:
                       - CS106L 笔记: Computer Science/Programming Language/C++/CS106L.md
                 - Python:
                       - Computer Science/Programming Language/Python/index.md
-                      - Variable and Types: Computer Science/Programming Language/Python/VAT.md
-                      - Input and Output: Computer Science/Programming Language/Python/IO.md
-                      - Object Oriented Programming: Computer Science/Programming Language/Python/OOP.md
-                      - Standard Library: Computer Science/Programming Language/Python/Lib-std.md
-                    #   - Pwntools: Computer Science/Programming Language/Python/Lib-Pwntools.md
-                      - Numpy: Computer Science/Programming Language/Python/Lib-Numpy.md
-                    #   - Pandas: Computer Science/Programming Language/Python/Lib-Pandas.md
+                      - 备忘知识: Computer Science/Programming Language/Python/misc.md 
+                      - 第一部分：Python 数据结构: Computer Science/Programming Language/Python/1 Data Structures.md
+                      - 第二部分：函数即对象: Computer Science/Programming Language/Python/2 Functions.md
+                      - 第三部分：类和协议: Computer Science/Programming Language/Python/3 Classes.md
+                      - 第四部分：控制流: Computer Science/Programming Language/Python/4 Control Flow.md
+                      - 第五部分：元编程: Computer Science/Programming Language/Python/5 Metaprogramming.md
                 - Rust:
                       - Computer Science/Programming Language/Rust/index.md
                       - Basic Syntax: Computer Science/Programming Language/Rust/Basic Syntax.md
@@ -107,7 +106,10 @@ nav:
                 - Topic 2：语法分析: Computer Science/Compilers/2 parse.md
                 - Topic 3：抽象语法: Computer Science/Compilers/3 ast.md
                 - Topic 4：语义分析: Computer Science/Compilers/4 semantic.md
-                - Topic 5：激活记录: Computer Science/Compilers/5 activation.md
+                - Topic 5：活动记录: Computer Science/Compilers/5 activation.md
+                - Topic 6：中间表示生成: Computer Science/Compilers/6 IR.md
+                - Topic 7：基本块与 Traces: Computer Science/Compilers/7 block.md
+                - Topic 8：指令选择: Computer Science/Compilers/8 instruction.md
           - Quantum Computing:
                 - Computer Science/Quantum Computing/index.md
                 - Quantum Basis: Computer Science/Quantum Computing/basis.md

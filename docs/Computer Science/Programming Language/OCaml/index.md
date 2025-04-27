@@ -1,4 +1,4 @@
-# OCaml && Functional Programming
+# OCaml
 
 !!! Info 
 
@@ -150,6 +150,28 @@ match expr with
             ∣	 module-path .{ pattern }
     ```
 
+关于模式匹配如何求值：
+
+- 首先对 `expr` 进行求值，假设结果为 `v`；
+- 尝试将 `v` 与 `pattern1`、`pattern2`、...、`patternN` 进行模式匹配，按照其出现在模式匹配中的顺序进行；
+- 如果 `v` 没有出现在任何一个模式之中，则抛出 `Match_failure` 异常；
+- 否则，令 `pattern` 为第一个与 `v` 匹配的模式，并且令 `b` 为将 `v` 匹配到 `pattern` 过程中生成的变量绑定；
+- 在 `pattern` 对应的 `result` 中，将 `b` 代入其中，得到新的表达式 `result'`；
+- 对 `result'` 进行求值，得到结果 `v'`；
+- 整个表达式的结果就是 `v'`。
+
+除了类型检查规则，编译器还会对**完整性/Exhaustiveness** 和 **冗余/Redundancy**/Unused Branches 进行检查：
+
+- 完整性：编译器尝试保证至少会有一个模式可以和表达式 `expr` 进行匹配，而不论其在运行时产生了什么值，`#!ocaml let head lst = match lst with h :: _ -> h` 就会产生一个 Warning；
+- 冗余：编译器会检查是否有永远都不会被匹配的模式，比如其前面的某个模式一定会匹配成功，`#!ocaml let rec sum lst = match lst with [] -> 0 | h :: t -> h + sum t | [h] -> h` 就会产生一个 Warning。
+
+Unused Branches 一般代表着程序员写了其本不想写的内容，编译器来帮助程序员检查。
+
+- `_ :: []` 匹配所有**恰好有一个元素**的列表
+- `_ :: _` 匹配所有**至少有一个元素**的列表
+- `_ :: _ :: []` 匹配所有**恰好有两个元素**的列表
+- `_ :: _ :: _ :: _` 匹配所有**至少有三个元素**的列表
+
 列表是不可变的，没有办法将列表的元素从一个值更改为另一个值。如果需要修改（真的是修改吗）列表，就需要从旧列表中创建新列表。
 
 ```ocaml
@@ -161,7 +183,12 @@ let rec inc_first lst =
 
 OCaml 中，列表的元素类型必须相同。
 
+Variant 类似于 C 的枚举类型：
 
+```ocaml
+type day = Sun | Mon | Tue | Wed | Thu | Fri | Sat
+let d = Tue
+```
 
 
 

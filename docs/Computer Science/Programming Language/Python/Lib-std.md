@@ -1,4 +1,0 @@
-# Standard Library
-
-## itertools
-
