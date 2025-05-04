@@ -1,4 +1,4 @@
-# Part 3: Lecture 12 to Lecture 18
+# Part 3: Lecture 12 to Lecture 15
 
 !!! Abstract "Table of Contents"
 
@@ -6,13 +6,10 @@
     - [x] [Lecture 13: Object Detection](#lecture-13-object-detection)
     - [x] [Lecture 14: Object Detectors](#lecture-14-object-detectors)
     - [x] [Lecture 15: Image Segmentation](#lecture-15-image-segmentation)
-    - [ ] [Lecture 16: Recurrent Neural Networks](#lecture-16-recurrent-neural-networks)
-    - [ ] [Lecture 17: Attention](#lecture-17-attention)
-    - [ ] [Lecture 18: Vision Transformers](#lecture-18-vision-transformers)
 
 ## Lecture 12: Deep Learning Software
 
-> 这段有点过时了，PPT 上介绍的是 PyTorch 1.10，现在版本都到 2.6 了。但是 PyTorch 的 API 变化不大，所以还是可以参考的。
+> 这段有点过时了，PPT 上介绍的是 PyTorch 1.10，现在版本都到 2.7（2025.04.28） 了。但是 PyTorch 的 API 变化不大，所以还是可以参考的。
 
 深度学习框架的核心价值：
 
@@ -559,9 +556,3 @@ Transposed Convolution/反卷积/转置卷积是一种可学习的上采样方�
 更一般的想法是在 Faster/Mask R-CNN 上加入 Per-Region Heads，其在 RoI Pool 和 RoI Align 之后接收特征并且做出预测。我们通过修改任务头来扩展功能，比如 Dense Captioning/密集字幕，其目标是预测图像中所有可能的物体实例的密集描述；3D Shape Prediction/3D 形状预测，其目标是预测图像中物体的 3D 形状……等等。
 
 <img class="center-picture" src="../assets_1/15-13.png" width=600 />
-
-## Lecture 16: Recurrent Neural Networks
-
-## Lecture 17: Attention
-
-## Lecture 18: Vision Transformers

@@ -77,12 +77,13 @@ nav:
                       - CS106L 笔记: Computer Science/Programming Language/C++/CS106L.md
                 - Python:
                       - Computer Science/Programming Language/Python/index.md
-                      - 备忘知识: Computer Science/Programming Language/Python/misc.md 
+                      - 备忘知识: Computer Science/Programming Language/Python/0 Misc.md 
                       - 第一部分：Python 数据结构: Computer Science/Programming Language/Python/1 Data Structures.md
                       - 第二部分：函数即对象: Computer Science/Programming Language/Python/2 Functions.md
                       - 第三部分：类和协议: Computer Science/Programming Language/Python/3 Classes.md
                       - 第四部分：控制流: Computer Science/Programming Language/Python/4 Control Flow.md
                       - 第五部分：元编程: Computer Science/Programming Language/Python/5 Metaprogramming.md
+                      - Python 新版本特性: Computer Science/Programming Language/Python/6 News.md
                 - Rust:
                       - Computer Science/Programming Language/Rust/index.md
                       - Basic Syntax: Computer Science/Programming Language/Rust/Basic Syntax.md
@@ -274,6 +275,7 @@ nav:
                 - Part 2：卷积神经网络: AI/Computer Vision/part 2.md
                 - Part 3：深度学习 I: AI/Computer Vision/part 3.md
                 - Part 4：深度学习 II: AI/Computer Vision/part 4.md
+                - Part 5：深度学习 III: AI/Computer Vision/part 5.md
     - Math:
           - Basic Courses: Math/index.md
           - Abstract Algebra:
@@ -316,11 +318,6 @@ nav:
                 - Trees: Math/Discrete Mathematics/11 Trees.md
     - Research:
           - Research/index.md
-          - 1 Dueling Bandits Near Optimal: Research/1 Dueling Bandits Near Optimal.md
-          - 2 Action Elimination for RL: Research/2 Action Elimination for RL.md
-          - 3 Dueling Bandits with Weak Regret: Research/3 Dueling Bandits with Weak Regret.md
-          - 4 Beat the Mean Bandit: Research/4 Beat the Mean Bandit.md
-          - 5 Maximum Selection and Ranking: Research/5 Maximum Selection and Ranking under Noisy Comparisons.md
     - Varia:
           - Learning Plan: Varia/Learning Plan.md
           - Typst Learning Report: Varia/Typst.md

@@ -8,6 +8,7 @@
 
 - [ ] [Part 1: Lecture 1 to Lecture 6](./part%201.md)
 - [ ] [Part 2: Lecture 7 to Lecture 11](./part%202.md)
-- [ ] [Part 3: Lecture 12 to Lecture 18](./part%203.md)
-- [ ] [Part 4: Lecture 19 to Lecture 25](./part%204.md)
+- [ ] [Part 3: Lecture 12 to Lecture 15](./part%203.md)
+- [ ] [Part 4: Lecture 16 to Lecture 18](./part%204.md)
+- [ ] [Part 5: Lecture 19 to Lecture 25](./part%205.md)
 

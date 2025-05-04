@@ -41,8 +41,11 @@
 - [ ] [Priciples of Compilers: Lexical Analysis](./Compilers/1%20lex.md)
 - [ ] [Priciples of Compilers: Syntax Analysis](./Compilers/2%20parse.md)
 - [ ] [Priciples of Compilers: Abstract Syntax](./Compilers/3%20ast.md)
-- [ ] [Priciples of Compilers: Semantic Analysis](./Compilers/4%20semantic.md)
-- [ ] [Priciples of Compilers: Activation Records](./Compilers/5%20activation.md)
+- [x] [Priciples of Compilers: Semantic Analysis](./Compilers/4%20semantic.md)
+- [x] [Priciples of Compilers: Activation Records](./Compilers/5%20activation.md)
+- [ ] [Priciples of Compilers: Translating into IR](./Compilers/6%20IR.md)
+- [ ] [Priciples of Compilers: Basic Blocks and Traces](./Compilers/7%20block.md)
+- [ ] [Priciples of Compilers: Instruction Selection](./Compilers/8%20instruction.md)
 
 ### Computer Networks 
 
