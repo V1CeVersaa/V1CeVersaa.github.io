@@ -149,34 +149,35 @@ $$m \geq \frac{2n}{\epsilon}\ln\frac{2n}{\delta}.$$
 
 轴平行矩形/Axis-Parallel Rectangle/APR 是平面 $\mathbb{R}^2$ 上四条边均与坐标轴平行的矩形区域。$\mathbb{R}^2$ 中每个点对应于一个数据样本，即 $\mathcal{X} = \mathbb{R}^2$。概念 $c$ 是某个特定的轴平行矩形，对该矩形内的点 $x$ 有 $c(x) = 1$，对该矩形之外的点有 $c(x) = -1$。概念类 $\mathcal{C}$ 是 $\mathbb{R}^2$ 上所有轴平行矩形的集合。我们的目标是证明轴平行矩形概念类是 PAC 可学的。证明梗概类似于估计面积：
 
-<!-- 
+<img class="center-picture" src="../assets/1-1.png" width=550 />
 
-图 2.1 中轴平行矩形 $R$ 表示目标概念，$\hat{R}$ 表示一个假设。由图中可看出，$\hat{R}$ 的错误区域为 $(R - \hat{R}) \cup (\hat{R} - R)$，即位于 $R$ 内但在 $\hat{R}$ 外的区域，以及在 $\hat{R}$ 内但在 $R$ 外的区域。$R$ 会将前一个区域中的点错误地判断为反例，而将后一个区域中的点错误地判断为正例。
+上图中轴平行矩形 $R$ 来自目标概念，$\hat{R}$ 表示一个假设，$R$ 和 $\hat{R}$ 的错误区域为 $(R - \hat{R}) \cup (\hat{R} - R)$，即位于 $R$ 内但在 $\hat{R}$ 外的区域，以及在 $\hat{R}$ 内但在 $R$ 外的区域。$R$ 会将前一个区域中的点错误地判断为反例，而将后一个区域中的点错误地判断为正例。
 
-考虑这样一个简单的学习算法 $\\mathfrak{L}$：对于训练集 $D$，$\\mathfrak{L}$ 输出一个包含了 $D$ 中所有正例的最小轴平行矩形 $R^D$，如图 2.2 所示。显然，$R^D$ 中的点一定包含在目标概念 $R$ 中，因此 $R^D$ 不会将负例判别为正例，它把错误的区域都包含在了 $R$ 中。
+考虑一个简单的学习算法 $\mathfrak{L}$：对于训练集 $D$，$\mathfrak{L}$ 输出一个包含了 $D$ 中所有正例的最小轴平行矩形 $R^D$。显然，$R^D$ 中的点一定包含在目标概念 $R$ 中，因此 $R^D$ 不会将负例判别为正例，它把错误的区域都包含在了 $R$ 中。
 
-令 $P(R)$ 表示 $R$ 区域的概率质量，即按照分布 $\mathcal{D}$ 随机生成的点落在区域 $R$ 中的概率。由于学习算法 $\\mathfrak{L}$ 的错误仅可能出现在 $R$ 内的点上，不妨设 $P(R) > \epsilon$，否则无论输入什么训练集 $D$，$R^D$ 的错误率都不会超过 $\epsilon$。
+<img class="center-picture" src="../assets/1-2.png" width=550 />
 
-因为 $P(R) > \epsilon$，所以我们可以沿 $R$ 的四条边定义 4 个轴平行矩形区域 $r_1,r_2,r_3,r_4$，使得每个区域的概率质量均为 $\epsilon/4$，如图 2.3 所示。于是，我们有 $P(r_1 \cup r_2 \cup r_3 \cup r_4) \leq \epsilon$。
+令 $P(R)$ 表示 $R$ 区域的概率质量，即按照分布 $\mathcal{D}$ 随机生成的点落在区域 $R$ 中的概率。由于学习算法 $\mathfrak{L}$ 的错误仅可能出现在 $R$ 内的点上，不妨设 $P(R) > \epsilon$，否则无论输入什么训练集 $D$，$R^D$ 的错误率都不会超过 $\epsilon$。
 
-我们有一个重要的观察：由于 $R^D$ 位于 $R$ 内部，且它和 $r_1,r_2,r_3,r_4$ 都是轴平行矩形，因此若 $R^D$ 与 $r_1,r_2,r_3,r_4$ 都相交，则对于任何一个 $r_i\enspace (i \in \{1,2,3,4\})$，$R^D$ 都必有一条边落在 $r_i$ 之内。此时 $R^D$ 的错误区域被这 4 个区域完全覆盖，其泛化误差 $E(R^D) \leq \epsilon$。
+因为 $P(R) > \epsilon$，所以我们可以沿 $R$ 的四条边定义 4 个轴平行矩形区域 $r_1,r_2,r_3,r_4$，使得每个区域的概率质量均为 $\epsilon/4$。于是，我们有 $P(r_1 \cup r_2 \cup r_3 \cup r_4) \leq \epsilon$。
 
-于是，若泛化误差 $E(R^D) > \epsilon$，则 $R^D$ 必然至少与 $r_1,r_2,r_3,r_4$ 中的某一个不相交。训练集 $D$ 中的每个样本是从分布 $\mathcal{D}$ 随机采样得到的，某出现在 $r_i$ 中的概率为 $\epsilon/4$。设 $D$ 包含 $m$ 个样本，则有
+有一个关键的观察是：由于 $R^D$ 位于 $R$ 内部，且它和 $r_1,r_2,r_3,r_4$ 都是轴平行矩形，因此若 $R^D$ 与 $r_1,r_2,r_3,r_4$ 都相交，则对于任何一个 $r_i$（$i\in \{1,2,3,4\}$），$R^D$ 都必有一条边落在 $r_i$ 之内。此时 $R^D$ 的错误区域被这 4 个区域完全覆盖，其泛化误差 $E(R^D) \leq \epsilon$。直接计算其概率是比较困难的，因此我们通过估计其反面来证明：
 
+若泛化误差 $E(R^D) > \epsilon$，则 $R^D$ 必然至少与 $r_1,r_2,r_3,r_4$ 中的某一个不相交。训练集 $D$ 中的每个样本是从分布 $\mathcal{D}$ 随机采样得到的，其出现在 $r_i$ 中的概率为 $\epsilon/4$。设 $D$ 包含 $m$ 个样本，则有
 
 $$\begin{aligned}
 P_{\mathcal{D}\sim\mathcal{D}^m}(E(R^D) > \epsilon) &\leq P_{\mathcal{D}\sim\mathcal{D}^m}(\cup_{i=1}^4\{R^D \cap r_i = \emptyset\})\\
 &\leq \sum_{i=1}^4 P_{\mathcal{D}\sim\mathcal{D}^m}(\{R^D \cap r_i = \emptyset\})\\
 &\leq 4(1-\epsilon/4)^m\\
-&\leq 4e^{-m\epsilon/4}.$$ (2.21)
+&\leq 4e^{-m\epsilon/4}.
+\end{aligned}$$
 
 令 $4e^{-m\epsilon/4} \leq \delta$，即可确保
 
-$$P_{\mathcal{D}\sim\mathcal{D}^m}(E(R^D) \leq \epsilon) = 1-P_{\mathcal{D}\sim\mathcal{D}^m}(E(R^D) > \epsilon) \geq 1-\delta,$$ (2.22)
+$$P_{\mathcal{D}\sim\mathcal{D}^m}(E(R^D) \leq \epsilon) = 1-P_{\mathcal{D}\sim\mathcal{D}^m}(E(R^D) > \epsilon) \geq 1-\delta,$$
 
 于是可求解得到
 
-$$m \geq \frac{4}{\epsilon}\ln\frac{4}{\delta}.$$ (2.23)
+$$m \geq \frac{4}{\epsilon}\ln\frac{4}{\delta}.$$
 
-上面构造的学习算法仅需 (2.23) 所示的样本数就能以至少 $1-\delta$ 的概率得到满足 $E(R^D) \leq \epsilon$ 的假设 $R^D$，且该学习算法所涉及的 $\mathbb{R}^2$ 中轴平行矩形的计算时间为常数，于是可知轴平行矩形概念类是高效 PAC 可学的。
- -->
+这样就可以知道轴平行矩形概念类是高效 PAC 可学的，这是因为该学习算法涉及到的计算时间仅仅为常数。
