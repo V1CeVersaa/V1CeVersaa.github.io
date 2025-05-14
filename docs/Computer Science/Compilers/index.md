@@ -13,9 +13,11 @@
 - [ ] [Topic 3：抽象语法](./3%20ast.md)
 - [x] [Topic 4：语义分析](./4%20semantic.md)
 - [x] [Topic 5：活动记录](./5%20activation.md)
-- [ ] [Topic 6：中间表示生成](./6%20IR.md)
-- [ ] [Topic 7：基本块与 Traces](./7%20block.md)
-- [ ] [Topic 8：指令选择](./8%20instruction.md)
+- [x] [Topic 6：中间表示生成](./6%20IR.md)
+- [x] [Topic 7：基本块与 Traces](./7%20block.md)
+- [x] [Topic 8：指令选择](./8%20instruction.md)
+- [ ] [Topic 9：活跃变量分析](./9%20liveness.md)
+- [ ] [Topic 10：寄存器分配](./10%20register.md)
 
 ## Introduction
 

@@ -32,4 +32,4 @@ Hi！欢迎来到我的笔记本，我会在这里更新我的 **课程笔记** 
 - [x] 真是离离又散散啊: [Discrete Mathematics](./Math/Discrete%20Mathematics/Discrete%20Mathematics.md)
 - [x] CPU给我干烧了: [Algorithms and Data Structure](./Computer%20Science/Algorithm/index.md)
 - [x] 拼搏百天，我要成为概率大神：[Math: Probability Basis](./Math/Probability%20Basis/index.md)
-- [x] 机器学习理论导引: [Intro to Machine Learning Theory](./AI/ML%20Theory/index.md)
+- [x] 机器学习理论导引: [Introduction to Machine Learning Theory](./AI/ML%20Theory/ML%20Theory%20Intro/index.md)

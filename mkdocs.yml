@@ -2,7 +2,7 @@ site_name: V1CeVersa's Notebook
 site_url: https://note.v1ceversaa.cc
 repo_name: V1CeVersaa/notebook
 repo_url: https://github.com/V1CeVersaa/V1CeVersaa.github.io
-copyright: Copyright &copy; 2024 V1CeVersa
+copyright: Copyright &copy; 2024 till now V1CeVersa
 
 extra:
     social:
@@ -111,6 +111,8 @@ nav:
                 - Topic 6：中间表示生成: Computer Science/Compilers/6 IR.md
                 - Topic 7：基本块与 Traces: Computer Science/Compilers/7 block.md
                 - Topic 8：指令选择: Computer Science/Compilers/8 instruction.md
+                - Topic 9：活跃变量分析: Computer Science/Compilers/9 liveness.md
+                - Topic 10：寄存器分配: Computer Science/Compilers/10 register.md
           - Quantum Computing:
                 - Computer Science/Quantum Computing/index.md
                 - Quantum Basis: Computer Science/Quantum Computing/basis.md
@@ -206,7 +208,9 @@ nav:
                 - OSC: System/OSC/OSC.md
                 - OSTEP: System/OSTEP/OSTEP.md
     - AI:
-          - AI/index.md
+          - AI/index.md          
+          - 机器学习框架:
+                - AI/ML Framework/index.md
           - 人工智能逻辑:
                 - AI/AIL/index.md
                 - 第1节：绪论: AI/AIL/1 Introduction.md
@@ -238,37 +242,43 @@ nav:
                 - 第14章：概率图模型: AI/ML Basis/14 Graphical.md
                 - 第15章：规则学习: AI/ML Basis/15 Rule.md
                 - 第16章：强化学习: AI/ML Basis/16 Reinforcement.md
-          - 机器学习理论导引:
+          - Machine Learning Theory:
                 - AI/ML Theory/index.md
-                - 第1章：预备知识: AI/ML Theory/1 Preliminaries.md
-                - 第2章：可学性: AI/ML Theory/2 Learnability.md
-                - 第3章：复杂度: AI/ML Theory/3 Complexity.md
-                - 第4章：泛化界: AI/ML Theory/4 Generalization.md
-                - 第5章：稳定性: AI/ML Theory/5 Stability.md
-                - 第6章：一致性: AI/ML Theory/6 Consistency.md
-                - 第7章：收敛率: AI/ML Theory/7 Convergence.md
-                - 第8章：遗憾界: AI/ML Theory/8 Regret.md
-          - Foundations of Machine Learning:
-                - AI/ML Foundations/index.md
-          - Intro to Online Learning: 
+                - 机器学习理论导引:
+                    - AI/ML Theory/ML Theory Intro/index.md
+                    - 第1章：预备知识: AI/ML Theory/ML Theory Intro/1 Preliminaries.md
+                    - 第2章：可学性: AI/ML Theory/ML Theory Intro/2 Learnability.md
+                    - 第3章：复杂度: AI/ML Theory/ML Theory Intro/3 Complexity.md
+                    - 第4章：泛化界: AI/ML Theory/ML Theory Intro/4 Generalization.md
+                    - 第5章：稳定性: AI/ML Theory/ML Theory Intro/5 Stability.md
+                    - 第6章：一致性: AI/ML Theory/ML Theory Intro/6 Consistency.md
+                    - 第7章：收敛率: AI/ML Theory/ML Theory Intro/7 Convergence.md
+                    - 第8章：遗憾界: AI/ML Theory/ML Theory Intro/8 Regret.md
+                - Foundations of Machine Learning:
+                    - AI/ML Theory/ML Foundations/index.md
+                - Mathematical Analysis of Machine Learning Algorithms:
+                    - AI/ML Theory/Math Analysis/index.md
+                    - 1 Introduction: AI/ML Theory/Math Analysis/1 Intro.md
+                    - 2 Probability Inequalities: AI/ML Theory/Math Analysis/2 Probability.md
+                    - 3 Uniform Convergence: AI/ML Theory/Math Analysis/3 Convergence.md
+                    - 4 Empirical Covering Number Analysis: AI/ML Theory/Math Analysis/4 Covering.md
+                    - 5 Covering Number Estimates: AI/ML Theory/Math Analysis/5 Estimates.md
+          - Reinforcement Learning:
+                - AI/Reinforcement Learning/index.md
+                - Introduction to Reinforcement Learning:
+                    - AI/Reinforcement Learning/RL Basis/index.md
+                - Deep Reinforcement Learning:
+                    - AI/Reinforcement Learning/RL Deep/index.md
+                - Theory of Reinforcement Learning:
+                    - AI/Reinforcement Learning/RL Theory/index.md
+          - Online Learning: 
                 - AI/Online Learning/index.md
                 - "Topic 1: Online Learning and OCO": AI/Online Learning/Lecture 1.md
                 - "Topic 2: Multi-Armed Bandits": AI/Online Learning/Lecture 2.md
-          - Mathematical Analysis of Machine Learning Algorithms:
-                - AI/Math Analysis/index.md
-                - 1 Introduction: AI/Math Analysis/1 Intro.md
-                - 2 Probability Inequalities: AI/Math Analysis/2 Probability.md
-                - 3 Uniform Convergence: AI/Math Analysis/3 Convergence.md
-                - 4 Empirical Covering Number Analysis: AI/Math Analysis/4 Covering.md
-                - 5 Covering Number Estimates: AI/Math Analysis/5 Estimates.md
-          - Foundations of Reinforcement Learning:
-                - AI/RL Theory/index.md
-          - Introduction to Casual Inference:
+          - Casual Inference:
                 - AI/Causal Inference/index.md
-          - 机器学习框架:
-                - AI/ML Framework/index.md
           - Deep Learning for NLP:
-                - AI/CS224N/index.md
+                - AI/Natural Language Processing/index.md
           - Deep Learning for CV:
                 - AI/Computer Vision/index.md
                 - Part 1：线性分类器与简单神经网络: AI/Computer Vision/part 1.md

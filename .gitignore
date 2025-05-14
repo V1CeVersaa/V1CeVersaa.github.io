@@ -1,11 +1,13 @@
-ProblemSet.md
+.cursor
 .idea
 .vscode
 .fleet
+
 *.sh
 .DS_Store
 site
+
 .prettierrc.yml
 .prettierignore
-.cursor
+
 *.mdc
