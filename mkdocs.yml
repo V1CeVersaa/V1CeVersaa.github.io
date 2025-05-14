@@ -131,6 +131,7 @@ nav:
                       - Javascript: Computer Science/Web/Javascript/Javascript.md
                       - Vue: Computer Science/Web/Javascript/Vue.md
                 - YAML: Computer Science/Web/YAML.md
+                - TOML: Computer Science/Web/TOML.md
           - CTF:
                 - DNS Protocol: Computer Science/CTF/DNS.md
                 - Cryptography:
